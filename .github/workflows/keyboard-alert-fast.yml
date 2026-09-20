@@ -47,6 +47,7 @@ jobs:
           GUHEYO_DISCORD_WEBHOOK_URL: ${{ secrets.GUHEYO_DISCORD_WEBHOOK_URL }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
+          GUHEYO_DIAGNOSTIC: '1'
         shell: bash
         run: |
           status=ok
