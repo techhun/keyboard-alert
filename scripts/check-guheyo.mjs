@@ -10,6 +10,7 @@ const MAX_SEEN = 300;
 const MAX_NEW_LISTINGS = 30;
 const NTFY_CHUNK_BYTES = 2800;
 const DISCORD_DETAIL_CHARS = 3600;
+const DIAGNOSTIC = process.env.GUHEYO_DIAGNOSTIC === '1';
 
 function hash(value) {
   return crypto.createHash('sha256').update(value).digest('hex').slice(0, 20);
@@ -298,6 +299,12 @@ try {
       detail: ''
     };
   });
+
+  if (DIAGNOSTIC && items[0]) {
+    const diagnosticDetail = await fetchListingDetail(items[0]);
+    console.log('GUHEYO diagnostic item:', items[0].title, items[0].url);
+    console.log('GUHEYO diagnostic detail:', JSON.stringify(diagnosticDetail.slice(0, 1600)));
+  }
 
   const state = loadState();
   const seen = new Set(Array.isArray(state.seen) ? state.seen : []);
