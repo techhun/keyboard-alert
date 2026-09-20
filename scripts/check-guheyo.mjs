@@ -10,7 +10,6 @@ const MAX_SEEN = 300;
 const MAX_NEW_LISTINGS = 30;
 const NTFY_CHUNK_BYTES = 2800;
 const DISCORD_DETAIL_CHARS = 3600;
-const DIAGNOSTIC = process.env.GUHEYO_DIAGNOSTIC === '1';
 
 function hash(value) {
   return crypto.createHash('sha256').update(value).digest('hex').slice(0, 20);
@@ -81,6 +80,28 @@ function normalizeDetail(text) {
     .trim();
 }
 
+function sanitizeDetail(text, item) {
+  const normalized = normalizeDetail(text);
+  if (!normalized) return '';
+
+  const lines = normalized.split('\n');
+  const boundary = lines.findIndex((line) =>
+    line === '공유'
+    || line === '종료 임박 경매'
+    || line === '판매자의 다른 상품'
+    || line === '추천 상품'
+  );
+  const trimmed = normalizeDetail((boundary >= 0 ? lines.slice(0, boundary) : lines).join('\n'));
+  if (!trimmed) return '';
+
+  const compact = trimmed.replace(/\s+/g, ' ').trim();
+  const title = String(item?.title || '').replace(/\s+/g, ' ').trim();
+  const price = String(item?.price || '').replace(/\s+/g, ' ').trim();
+  if (compact === title || compact === price || compact === `${title} ${price}`.trim()) return '';
+
+  return trimmed;
+}
+
 function cleanMetaDescription(text) {
   return normalizeDetail(text).replace(/^[\d,]+\s*원\s*-\s*[^-]+?\s*-\s*/, '').trim();
 }
@@ -125,7 +146,7 @@ async function fetchListingDetail(item) {
     await detailPage.waitForTimeout(700);
 
     const graphqlDetail = graphqlContents
-      .map((text) => normalizeDetail(text))
+      .map((text) => sanitizeDetail(text, item))
       .filter(Boolean)
       .sort((a, b) => b.length - a.length)[0] || '';
 
@@ -134,27 +155,29 @@ async function fetchListingDetail(item) {
       return graphqlDetail;
     }
 
-    const detail = await detailPage.evaluate(({ title, price }) => {
+    const detailCandidates = await detailPage.evaluate(({ title, price }) => {
+      const jsonLd = [];
       for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
         try {
           const parsed = JSON.parse(script.textContent || 'null');
           const nodes = Array.isArray(parsed) ? parsed : [parsed];
           for (const node of nodes) {
             if (node && node['@type'] === 'Product' && typeof node.description === 'string') {
-              return { source: 'json-ld', text: node.description };
+              jsonLd.push(node.description);
             }
           }
         } catch {}
       }
 
-      const meta = document.querySelector('meta[property="og:description"], meta[name="description"]');
-      if (meta?.getAttribute('content')) return { source: 'meta', text: meta.getAttribute('content') || '' };
+      const meta = document.querySelector('meta[property="og:description"], meta[name="description"]')
+        ?.getAttribute('content') || '';
 
       const lines = (document.body?.innerText || '')
         .split(/\r?\n/)
         .map((x) => x.trim())
         .filter(Boolean);
 
+      let body = '';
       const titleIndex = lines.findIndex((x) => x === title);
       if (titleIndex >= 0) {
         let start = titleIndex + 1;
@@ -170,17 +193,27 @@ async function fetchListingDetail(item) {
           )
         );
         const end = boundary >= start ? boundary : lines.length;
-        const body = lines.slice(start, end).join('\n');
-        if (body) return { source: 'body-slice', text: body };
+        body = lines.slice(start, end).join('\n');
       }
 
-      return { source: 'none', text: '' };
+      return { jsonLd, meta, body };
     }, { title: item.title, price: item.price });
 
-    let text = normalizeDetail(detail.text);
-    if (detail.source === 'meta') text = cleanMetaDescription(text);
-    console.log(`Detail source for ${item.title}: ${detail.source}, ${Buffer.byteLength(text, 'utf8')} bytes`);
-    return text;
+    const candidates = [
+      ...detailCandidates.jsonLd.map((text) => ['json-ld', text]),
+      ['meta', cleanMetaDescription(detailCandidates.meta)],
+      ['body-slice', detailCandidates.body]
+    ];
+
+    for (const [source, candidate] of candidates) {
+      const text = sanitizeDetail(candidate, item);
+      if (!text) continue;
+      console.log(`Detail source for ${item.title}: ${source}, ${Buffer.byteLength(text, 'utf8')} bytes`);
+      return text;
+    }
+
+    console.log(`Detail source for ${item.title}: none, 0 bytes`);
+    return '';
   } catch (error) {
     console.warn(`Could not load listing detail for ${item.url}:`, error?.message || error);
     return '';
@@ -309,12 +342,6 @@ try {
       detail: ''
     };
   });
-
-  if (DIAGNOSTIC && items[0]) {
-    const diagnosticDetail = await fetchListingDetail(items[0]);
-    console.log('GUHEYO diagnostic item:', items[0].title, items[0].url);
-    console.log('GUHEYO diagnostic detail:', JSON.stringify(diagnosticDetail.slice(0, 1600)));
-  }
 
   const state = loadState();
   const seen = new Set(Array.isArray(state.seen) ? state.seen : []);
