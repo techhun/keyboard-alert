@@ -135,21 +135,6 @@ async function fetchListingDetail(item) {
     }
 
     const detail = await detailPage.evaluate(({ title, price }) => {
-      const lines = (document.body?.innerText || '')
-        .split(/\r?\n/)
-        .map((x) => x.trim())
-        .filter(Boolean);
-
-      const titleIndex = lines.findIndex((x) => x === title);
-      if (titleIndex >= 0) {
-        let start = titleIndex + 1;
-        if (price && lines[start] === price) start += 1;
-        if (start < lines.length && /택배|배송|직거래|착불/.test(lines[start])) start += 1;
-        const endIndex = lines.findIndex((x, i) => i >= start && x === '공유');
-        const body = lines.slice(start, endIndex > start ? endIndex : lines.length).join('\n');
-        if (body) return { source: 'body-slice', text: body };
-      }
-
       for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
         try {
           const parsed = JSON.parse(script.textContent || 'null');
@@ -164,6 +149,31 @@ async function fetchListingDetail(item) {
 
       const meta = document.querySelector('meta[property="og:description"], meta[name="description"]');
       if (meta?.getAttribute('content')) return { source: 'meta', text: meta.getAttribute('content') || '' };
+
+      const lines = (document.body?.innerText || '')
+        .split(/\r?\n/)
+        .map((x) => x.trim())
+        .filter(Boolean);
+
+      const titleIndex = lines.findIndex((x) => x === title);
+      if (titleIndex >= 0) {
+        let start = titleIndex + 1;
+        if (price && lines[start] === price) start += 1;
+        if (start < lines.length && /택배|배송|직거래|착불/.test(lines[start])) start += 1;
+
+        const boundary = lines.findIndex((x, i) =>
+          i >= start && (
+            x === '공유'
+            || x === '종료 임박 경매'
+            || x === '판매자의 다른 상품'
+            || x === '추천 상품'
+          )
+        );
+        const end = boundary >= start ? boundary : lines.length;
+        const body = lines.slice(start, end).join('\n');
+        if (body) return { source: 'body-slice', text: body };
+      }
+
       return { source: 'none', text: '' };
     }, { title: item.title, price: item.price });
 
