@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T09:21:35.229Z",
+  "updatedAt": "2026-09-21T09:31:34.678Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1208,16 +1208,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Cross-Impact-3d604233415480a791d0f745e9c477d3",
-      "product": "KKB Cross Impact",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Feralis-3d60423341548073abc0ec711ae9a7df",
       "product": "SWG Feralis",
       "status": "In Group Buy",
@@ -1784,8 +1774,5 @@
       "expectedShipping": "Q1 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-09-21T09:21:21.254Z",
-    "keyset": "2026-09-21T09:21:33.663Z"
-  }
+  "fallbackSince": {}
 }
