@@ -10,6 +10,7 @@ const MAX_SEEN = 300;
 const MAX_NEW_LISTINGS = 30;
 const NTFY_CHUNK_BYTES = 2800;
 const DISCORD_DETAIL_CHARS = 3600;
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function hash(value) {
   return crypto.createHash('sha256').update(value).digest('hex').slice(0, 20);
@@ -230,19 +231,48 @@ async function sendNtfy(item) {
   const chunks = splitUtf8(fullMessage);
 
   for (let i = 0; i < chunks.length; i += 1) {
-    const response = await fetch('https://ntfy.sh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        topic: NTFY_TOPIC,
-        title: chunks.length > 1 ? `키캡 새 매물 (${i + 1}/${chunks.length})` : '키캡 새 매물',
-        message: chunks[i],
-        priority: 4,
-        tags: ['shopping_cart'],
-        click: item.url
-      })
-    });
-    if (!response.ok) throw new Error(`ntfy failed: ${response.status} ${await response.text()}`);
+    const payload = {
+      topic: NTFY_TOPIC,
+      title: chunks.length > 1 ? `키캡 새 매물 (${i + 1}/${chunks.length})` : '키캡 새 매물',
+      message: chunks[i],
+      priority: 4,
+      tags: ['shopping_cart'],
+      click: item.url
+    };
+
+    let lastError;
+    for (let attempt = 1; attempt <= 3; attempt += 1) {
+      try {
+        const response = await fetch('https://ntfy.sh', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          signal: AbortSignal.timeout(12_000)
+        });
+
+        if (response.ok) {
+          lastError = null;
+          break;
+        }
+
+        const responseText = await response.text();
+        const retryable = response.status === 429 || response.status >= 500;
+        if (!retryable || attempt === 3) {
+          throw new Error(`ntfy failed: ${response.status} ${responseText}`);
+        }
+
+        const retryAfter = Number(response.headers.get('retry-after')) || attempt * 2;
+        console.warn(`ntfy attempt ${attempt} failed with HTTP ${response.status}; retrying in ${retryAfter}s...`);
+        await sleep(Math.ceil(retryAfter * 1000));
+      } catch (error) {
+        lastError = error;
+        if (attempt === 3) break;
+        console.warn(`ntfy attempt ${attempt} failed: ${error?.message || error}; retrying...`);
+        await sleep(attempt * 2000);
+      }
+    }
+
+    if (lastError) throw lastError;
   }
 }
 
