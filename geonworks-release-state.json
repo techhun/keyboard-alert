@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T06:20:45.505Z",
+  "updatedAt": "2026-09-21T06:30:47.057Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -68,10 +68,22 @@
       "fixed": "확정 / Fixed",
       "start": "2026-09-21",
       "end": "2026-10-04"
+    },
+    {
+      "product": "DCS SMRT R2",
+      "manufacturer": "Signature Plastics",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-09-21",
+      "end": "2026-10-18"
     }
   ],
   "sentChanges": {
     "5b8b090fc0e0f1a0503eac68": "2026-09-21T01:20:48.286Z",
-    "1245d2d4716f3746a298ce81": "2026-09-21T06:20:45.418Z"
+    "1245d2d4716f3746a298ce81": "2026-09-21T06:20:45.418Z",
+    "4a058bf66e89e56f15d10541": "2026-09-21T06:30:47.057Z"
   }
 }
