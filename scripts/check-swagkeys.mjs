@@ -599,8 +599,7 @@ async function main() {
         rows: previousRows,
         fallbackSince: verificationSnapshot.fallbackSince
       });
-      console.warn(`SWAGKEYS removal verification was inconclusive because ${staleVerificationSources.join(' and ')} used stored fallback. Previous verified content was kept; verification will be retried on a later run.`);
-      return;
+      throw new Error(`SWAGKEYS removal verification was inconclusive because ${staleVerificationSources.join(' and ')} used stored fallback. Previous verified content was kept; verification will be retried on a later run.`);
     }
 
     const secondRemovalSignature = removalSignature(verificationCalculated.quarterChanges, verificationCalculated.changes);
