@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-16T09:16:01.458Z",
+  "updatedAt": "2026-09-21T00:30:41.631Z",
   "rows": [
     {
       "product": "GMK DIVINAPAPAYA",
@@ -320,8 +320,8 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "In progress",
-      "update": "2026. 9. 9",
-      "note": "CNC 가공 완료. 레이저 각인 작업 진행 중. / CNC machining complete. Laser engraving in progress."
+      "update": "2026. 9. 21",
+      "note": "10월 2주에 제작자가 중국 공장에 가서 QC 예정 / The manufacturer is scheduled to visit the factory in China for quality control during the second week of October."
     },
     {
       "product": "Grit Jahre 65",
@@ -398,7 +398,7 @@
       "gbStart": "2026. 5. 26",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
-      "manufacturer": "—",
+      "manufacturer": "",
       "status": "In progress",
       "update": "2026. 9. 9",
       "note": "Cnc 85% 완료. 플레이트 완성. pcb 생산 중 / CNC 85% complete. Plate completed. PCB in production."
@@ -438,7 +438,7 @@
       "gbStart": "2026. 6. 4",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
-      "manufacturer": "—",
+      "manufacturer": "",
       "status": "In progress",
       "update": "2026. 6. 16",
       "note": "—"
@@ -528,7 +528,7 @@
       "gbStart": "2026. 7. 3",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
-      "manufacturer": "—",
+      "manufacturer": "",
       "status": "In progress",
       "update": "2026. 7. 29",
       "note": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks."
@@ -548,7 +548,7 @@
       "gbStart": "2026. 7. 9",
       "eta": "2027. 3. 31",
       "type": "Keyboard",
-      "manufacturer": "—",
+      "manufacturer": "",
       "status": "In progress",
       "update": "2026. 7. 22",
       "note": "—"
@@ -673,5 +673,8 @@
       "update": "2026. 9. 7",
       "note": "—"
     }
-  ]
+  ],
+  "sentChanges": {
+    "02c34f6677a29bd1d84a141d": "2026-09-21T00:30:41.631Z"
+  }
 }
