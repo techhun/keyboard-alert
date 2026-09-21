@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T09:31:34.678Z",
+  "updatedAt": "2026-09-21T11:01:12.336Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1498,16 +1498,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/MW-Gesha-36404233415480969687db753cceae29",
-      "product": "MW Gesha",
-      "status": "In Quality Control",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/KKB-Kintsugi-Shiro-30d0423341548050ab4fc90f2890e241",
       "product": "KKB Kintsugi Shiro",
       "status": "In Quality Control",
@@ -1522,6 +1512,16 @@
       "product": "CRP r7",
       "status": "In Quality Control",
       "expectedShipping": "Late Q3 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/MW-Gesha-36404233415480969687db753cceae29",
+      "product": "MW Gesha",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q3 2026"
     },
     {
       "sourceId": "keyset",
