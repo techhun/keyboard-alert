@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T00:40:33.186Z",
+  "updatedAt": "2026-09-21T01:20:44.964Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -60,8 +60,8 @@
       "type": "Keyboard",
       "manufacturer": "KEZEWA",
       "status": "GB on sale",
-      "update": "2026. 9. 16",
-      "note": "9월 21일 판매 예정 /Scheduled for sale on September 21"
+      "update": "2026. 9. 21",
+      "note": "9월 22일 판매 예정 /Scheduled for sale on September 22"
     },
     {
       "product": "GMK CYL MOTIF",
@@ -680,6 +680,7 @@
     "6c0e339747c1ae07f3e6a8b3": "2026-09-21T00:40:32.676Z",
     "41fbe63b4afe26d1052a8276": "2026-09-21T00:40:32.788Z",
     "8891921326c2e00a91916118": "2026-09-21T00:40:33.030Z",
-    "ae0ae1dd1bbf04c36bb2b0a5": "2026-09-21T00:40:33.185Z"
+    "ae0ae1dd1bbf04c36bb2b0a5": "2026-09-21T00:40:33.185Z",
+    "a900f563d875c15a5022b890": "2026-09-21T01:20:44.964Z"
   }
 }

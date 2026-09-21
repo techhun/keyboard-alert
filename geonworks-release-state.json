@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-18T00:20:50.562Z",
+  "updatedAt": "2026-09-21T01:20:48.287Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -66,8 +66,11 @@
       "type": "Keyboard",
       "status": "For Sale",
       "fixed": "확정 / Fixed",
-      "start": "2026-09-21",
+      "start": "2026-09-22",
       "end": "2026-10-04"
     }
-  ]
+  ],
+  "sentChanges": {
+    "5b8b090fc0e0f1a0503eac68": "2026-09-21T01:20:48.286Z"
+  }
 }
