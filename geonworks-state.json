@@ -1,26 +1,16 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T00:30:41.631Z",
+  "updatedAt": "2026-09-21T00:40:33.186Z",
   "rows": [
     {
-      "product": "GMK DIVINAPAPAYA",
-      "gbStart": "2025. 12. 16",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "inspecting",
-      "update": "2026. 9. 16",
-      "note": "9월 17일 발송 예정 / Scheduled to ship on September 17"
-    },
-    {
-      "product": "Supernova",
-      "gbStart": "2026. 8. 20",
+      "product": "Keykobo Cobalt",
+      "gbStart": "2026. 8. 31",
       "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
       "status": "GB on sale",
-      "update": "2026. 9. 16",
+      "update": "2026. 9. 21",
       "note": "—"
     },
     {
@@ -74,26 +64,6 @@
       "note": "9월 21일 판매 예정 /Scheduled for sale on September 21"
     },
     {
-      "product": "Keykobo Cross Impact",
-      "gbStart": "2026. 8. 13",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "KEYKOBO",
-      "status": "In progress",
-      "update": "2026. 9. 15",
-      "note": "—"
-    },
-    {
-      "product": "KBDfans Tofull",
-      "gbStart": "2026. 8. 14",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "KBDfans",
-      "status": "In progress",
-      "update": "2026. 9. 15",
-      "note": "—"
-    },
-    {
       "product": "GMK CYL MOTIF",
       "gbStart": "2025. 2. 13",
       "eta": "2026. 10. 22",
@@ -110,8 +80,8 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "In progress",
-      "update": "2026. 9. 16",
-      "note": "컬러매칭 완료 / Color Matching Complete"
+      "update": "2026. 9. 21",
+      "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
     },
     {
       "product": "LILY R2 HHKB Barebone Kit",
@@ -150,8 +120,8 @@
       "type": "Keyboard",
       "manufacturer": "MACHINA",
       "status": "In progress",
-      "update": "2026. 9. 11",
-      "note": "PVD 코팅 제외 유닛 : 입고 검수 중. PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) / Units without PVD coating: Currently undergoing incoming inspection. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
+      "update": "2026. 9. 21",
+      "note": "PVD 코팅 제외 유닛 : 9월 21일 발송 PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) /Units without PVD coating: Shipping on September 21. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
     },
     {
       "product": "Keycult Wristrest",
@@ -644,6 +614,36 @@
       "note": "—"
     },
     {
+      "product": "Keykobo Cross Impact",
+      "gbStart": "2026. 8. 13",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
+      "status": "In progress",
+      "update": "2026. 9. 15",
+      "note": "—"
+    },
+    {
+      "product": "KBDfans Tofull",
+      "gbStart": "2026. 8. 14",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "In progress",
+      "update": "2026. 9. 15",
+      "note": "—"
+    },
+    {
+      "product": "Supernova",
+      "gbStart": "2026. 8. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "In progress",
+      "update": "2026. 9. 21",
+      "note": "—"
+    },
+    {
       "product": "Black Snail Deskmat",
       "gbStart": "2026. 8. 21",
       "eta": "2026. 12. 31",
@@ -675,6 +675,11 @@
     }
   ],
   "sentChanges": {
-    "02c34f6677a29bd1d84a141d": "2026-09-21T00:30:41.631Z"
+    "02c34f6677a29bd1d84a141d": "2026-09-21T00:30:41.631Z",
+    "7c02057d3a8b09c027f692f0": "2026-09-21T00:40:31.925Z",
+    "6c0e339747c1ae07f3e6a8b3": "2026-09-21T00:40:32.676Z",
+    "41fbe63b4afe26d1052a8276": "2026-09-21T00:40:32.788Z",
+    "8891921326c2e00a91916118": "2026-09-21T00:40:33.030Z",
+    "ae0ae1dd1bbf04c36bb2b0a5": "2026-09-21T00:40:33.185Z"
   }
 }
