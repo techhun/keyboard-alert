@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T06:20:41.976Z",
+  "updatedAt": "2026-09-21T06:50:31.867Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -59,6 +59,16 @@
       "eta": "2026. 12. 31",
       "type": "Keyboard",
       "manufacturer": "KEZEWA",
+      "status": "GB on sale",
+      "update": "2026. 9. 21",
+      "note": "—"
+    },
+    {
+      "product": "DCS SMRT R2",
+      "gbStart": "2026. 9. 21",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
       "status": "GB on sale",
       "update": "2026. 9. 21",
       "note": "—"
@@ -682,6 +692,7 @@
     "8891921326c2e00a91916118": "2026-09-21T00:40:33.030Z",
     "ae0ae1dd1bbf04c36bb2b0a5": "2026-09-21T00:40:33.185Z",
     "a900f563d875c15a5022b890": "2026-09-21T01:20:44.964Z",
-    "1842908789fe7cd7419d434c": "2026-09-21T06:20:41.976Z"
+    "1842908789fe7cd7419d434c": "2026-09-21T06:20:41.976Z",
+    "6dece336ef039b53e62a7438": "2026-09-21T06:50:31.866Z"
   }
 }
