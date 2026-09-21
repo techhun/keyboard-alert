@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T11:01:12.336Z",
+  "updatedAt": "2026-09-21T13:01:21.973Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -298,16 +298,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/MW-Mass-80-30d042334154802bb2dee53f796518b1",
-      "product": "MW Mass 80",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Replacement-GMK-Trays-3a3042334154808b8e5ece4904e0413f",
       "product": "Replacement GMK Trays",
       "status": "Shipping to Prototypist",
@@ -378,16 +368,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Batch-2-orders-3a00423341548085ba3ae07aa4e7cb37",
-      "product": "Neo98/ Neo75 Batch 2 orders",
-      "status": "In Quality Control",
-      "expectedShipping": ""
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
       "product": "Ramune60",
       "status": "In Quality Control",
@@ -422,6 +402,26 @@
       "product": "Smurve80",
       "status": "Shipping to Customers",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/MW-Mass-80-30d042334154802bb2dee53f796518b1",
+      "product": "MW Mass 80",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Batch-2-orders-3a00423341548085ba3ae07aa4e7cb37",
+      "product": "Neo98/ Neo75 Batch 2 orders",
+      "status": "Shipping to Customers",
+      "expectedShipping": ""
     },
     {
       "sourceId": "keyboard",
