@@ -100,11 +100,28 @@ public class GateActivity extends Activity {
         loginLp.topMargin = dp(34);
         group.addView(login, loginLp);
 
+        TextView skip = new TextView(this);
+        skip.setText("로그인 없이 시작");
+        skip.setTextSize(14f);
+        skip.setTextColor(BLUE);
+        skip.setTypeface(null, Typeface.BOLD);
+        skip.setGravity(Gravity.CENTER);
+        skip.setPadding(0, dp(14), 0, dp(14));
+        skip.setOnClickListener(v -> openMain());
+        Motion.press(skip);
+        LinearLayout.LayoutParams skipLp = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        skipLp.topMargin = dp(8);
+        group.addView(skip, skipLp);
+
         setContentView(root);
         root.requestApplyInsets();
         Motion.enter(icon, 20L);
         Motion.enter(name, 70L);
         Motion.enter(login, 130L);
+        Motion.enter(skip, 170L);
     }
 
     private void launchLogin() {
