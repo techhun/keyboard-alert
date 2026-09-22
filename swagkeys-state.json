@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-22T19:42:33.274Z",
+  "updatedAt": "2026-09-22T21:12:11.097Z",
   "announcement": {
     "heading": "업데이트(26.09.08)",
     "content": "SWG Bolch 실사가 추가되었습니다. / SWG Bolch photos have been added.\n프로젝트 진행 상황 페이지가 업데이트 되었습니다. 전반적인 로고들이 재작업 후 업데이트 되었습니다. / Keycap Status Page has been updated. New Logos have been updated."
@@ -285,7 +285,7 @@
     }
   ],
   "fallbackSince": {
-    "roadmap": "2026-09-22T19:42:24.208Z",
-    "status": "2026-09-22T19:42:33.187Z"
+    "roadmap": "2026-09-22T21:12:02.186Z",
+    "status": "2026-09-22T21:12:10.933Z"
   }
 }
