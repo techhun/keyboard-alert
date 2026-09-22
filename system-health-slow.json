@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-22T08:20:37.354Z",
+  "updatedAt": "2026-09-22T09:12:10.433Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -9,7 +9,10 @@
     },
     "geonworks-release": {
       "status": "ok",
-      "changedAt": "2026-09-17T18:40:53.461Z"
+      "changedAt": "2026-09-17T18:40:53.461Z",
+      "consecutiveFailures": 1,
+      "lastFailureRunId": "35708867525",
+      "lastFailureAt": "2026-09-22T09:12:10.433Z"
     },
     "prototypist": {
       "status": "ok",
