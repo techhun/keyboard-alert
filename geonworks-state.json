@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T06:50:31.867Z",
+  "updatedAt": "2026-09-22T00:30:42.113Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -70,7 +70,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "GB on sale",
-      "update": "2026. 9. 21",
+      "update": "2026. 9. 22",
       "note": "—"
     },
     {
@@ -693,6 +693,7 @@
     "ae0ae1dd1bbf04c36bb2b0a5": "2026-09-21T00:40:33.185Z",
     "a900f563d875c15a5022b890": "2026-09-21T01:20:44.964Z",
     "1842908789fe7cd7419d434c": "2026-09-21T06:20:41.976Z",
-    "6dece336ef039b53e62a7438": "2026-09-21T06:50:31.866Z"
+    "6dece336ef039b53e62a7438": "2026-09-21T06:50:31.866Z",
+    "e0d2af430241113beadf4d64": "2026-09-22T00:30:42.113Z"
   }
 }
