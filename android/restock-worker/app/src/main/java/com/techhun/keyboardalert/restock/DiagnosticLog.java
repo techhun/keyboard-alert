@@ -13,10 +13,69 @@ import java.util.Locale;
 final class DiagnosticLog {
     private static final String NAME = "restock_diagnostics";
     private static final String KEY_ENTRIES = "entries";
+    private static final String KEY_SUCCESS = "success_count";
+    private static final String KEY_FAILURE = "failure_count";
+    private static final String KEY_RATE_LIMIT = "rate_limit_count";
+    private static final String KEY_TIMEOUT = "timeout_count";
+    private static final String KEY_BLOCKED_NAV = "blocked_nav_count";
+    private static final String KEY_RESTOCK = "restock_count";
+    private static final String KEY_SINCE = "since";
+    private static final String KEY_LAST_SUCCESS = "last_success";
     private static final int MAX_ENTRIES = 500;
     private static final long RETENTION_MS = 7L * 24L * 60L * 60L * 1000L;
 
     private DiagnosticLog() {}
+
+    static void recordSuccess(Context context) {
+        SharedPreferences p = prefs(context);
+        long now = System.currentTimeMillis();
+        ensureSince(p, now);
+        p.edit()
+            .putLong(KEY_SUCCESS, p.getLong(KEY_SUCCESS, 0L) + 1L)
+            .putLong(KEY_LAST_SUCCESS, now)
+            .apply();
+    }
+
+    static void recordFailure(Context context, String event, JSONObject product, String detail) {
+        SharedPreferences p = prefs(context);
+        ensureSince(p, System.currentTimeMillis());
+        p.edit().putLong(KEY_FAILURE, p.getLong(KEY_FAILURE, 0L) + 1L).apply();
+        add(context, event, product, detail);
+    }
+
+    static void recordRateLimit(Context context, JSONObject product, String detail) {
+        SharedPreferences p = prefs(context);
+        ensureSince(p, System.currentTimeMillis());
+        p.edit()
+            .putLong(KEY_FAILURE, p.getLong(KEY_FAILURE, 0L) + 1L)
+            .putLong(KEY_RATE_LIMIT, p.getLong(KEY_RATE_LIMIT, 0L) + 1L)
+            .apply();
+        add(context, "RATE_LIMIT", product, detail);
+    }
+
+    static void recordTimeout(Context context, JSONObject product) {
+        SharedPreferences p = prefs(context);
+        ensureSince(p, System.currentTimeMillis());
+        p.edit()
+            .putLong(KEY_FAILURE, p.getLong(KEY_FAILURE, 0L) + 1L)
+            .putLong(KEY_TIMEOUT, p.getLong(KEY_TIMEOUT, 0L) + 1L)
+            .apply();
+        add(context, "TIMEOUT", product, "20초 내 응답 없음");
+    }
+
+    static void recordBlockedNavigation(Context context, JSONObject product, String host) {
+        SharedPreferences p = prefs(context);
+        ensureSince(p, System.currentTimeMillis());
+        p.edit().putLong(KEY_BLOCKED_NAV, p.getLong(KEY_BLOCKED_NAV, 0L) + 1L).apply();
+        add(context, "BLOCKED_NAV", product, host);
+    }
+
+    static void recordRestock(Context context, JSONObject product, String detail) {
+        SharedPreferences p = prefs(context);
+        ensureSince(p, System.currentTimeMillis());
+        p.edit().putLong(KEY_RESTOCK, p.getLong(KEY_RESTOCK, 0L) + 1L).apply();
+        add(context, "RESTOCK", product, detail);
+    }
 
     static synchronized void add(Context context, String event, JSONObject product, String detail) {
         try {
@@ -57,12 +116,36 @@ final class DiagnosticLog {
     }
 
     static synchronized void clear(Context context) {
-        prefs(context).edit().remove(KEY_ENTRIES).apply();
+        prefs(context).edit().clear().apply();
+    }
+
+    static String summary(Context context) {
+        SharedPreferences p = prefs(context);
+        long success = p.getLong(KEY_SUCCESS, 0L);
+        long failure = p.getLong(KEY_FAILURE, 0L);
+        long total = success + failure;
+        StringBuilder out = new StringBuilder();
+        out.append("정상 ").append(success)
+            .append(" · 실패 ").append(failure)
+            .append(" · 429 ").append(p.getLong(KEY_RATE_LIMIT, 0L))
+            .append(" · 타임아웃 ").append(p.getLong(KEY_TIMEOUT, 0L))
+            .append("\n차단 ").append(p.getLong(KEY_BLOCKED_NAV, 0L))
+            .append(" · 재입고 ").append(p.getLong(KEY_RESTOCK, 0L));
+        if (total > 0) {
+            double rate = success * 100.0 / total;
+            out.append(" · 성공률 ").append(String.format(Locale.KOREA, "%.1f%%", rate));
+        }
+        long last = p.getLong(KEY_LAST_SUCCESS, 0L);
+        if (last > 0) {
+            out.append("\n마지막 정상 조회 ")
+                .append(new SimpleDateFormat("MM-dd HH:mm:ss", Locale.KOREA).format(new Date(last)));
+        }
+        return out.toString();
     }
 
     static String formatRecent(Context context, int limit) {
         JSONArray entries = read(context);
-        if (entries.length() == 0) return "저장된 진단 로그가 없어요.";
+        if (entries.length() == 0) return "저장된 이벤트 로그가 없어요.";
         StringBuilder out = new StringBuilder();
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm:ss", Locale.KOREA);
         int start = Math.max(0, entries.length() - Math.max(1, limit));
@@ -85,6 +168,10 @@ final class DiagnosticLog {
 
     static int count(Context context) {
         return read(context).length();
+    }
+
+    private static void ensureSince(SharedPreferences p, long now) {
+        if (p.getLong(KEY_SINCE, 0L) == 0L) p.edit().putLong(KEY_SINCE, now).apply();
     }
 
     private static SharedPreferences prefs(Context context) {
