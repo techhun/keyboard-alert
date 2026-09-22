@@ -43,6 +43,7 @@ public class SettingsActivity extends Activity {
     private TextView[] chips;
     private TextView notificationStatus;
     private TextView batteryStatus;
+    private TextView diagnosticStatus;
     private int interval;
 
     @Override
@@ -198,7 +199,47 @@ public class SettingsActivity extends Activity {
             }
         });
 
-        LinearLayout backupCard = surface(20, 18);
+        LinearLayout diagnosticCard = surface(20, 18);
+        LinearLayout.LayoutParams diagnosticLp = matchWrap();
+        diagnosticLp.topMargin = dp(10);
+        root.addView(diagnosticCard, diagnosticLp);
+
+        LinearLayout diagnosticHeader = new LinearLayout(this);
+        diagnosticHeader.setGravity(Gravity.CENTER_VERTICAL);
+        diagnosticCard.addView(diagnosticHeader, matchWrap());
+        diagnosticHeader.addView(text("진단 로그", 15, TEXT, Typeface.BOLD), new LinearLayout.LayoutParams(
+            0,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            1f
+        ));
+        diagnosticStatus = text("", 12, SUB, Typeface.BOLD);
+        diagnosticStatus.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        diagnosticHeader.addView(diagnosticStatus);
+
+        TextView diagnosticNote = text(
+            "최근 7일 이벤트와 누적 조회 성공/실패를 기기에만 저장해요. 로그인 쿠키·응답 본문·개인정보는 기록하지 않아요.",
+            12,
+            SUB,
+            Typeface.NORMAL
+        );
+        diagnosticNote.setPadding(0, dp(10), 0, 0);
+        diagnosticCard.addView(diagnosticNote);
+
+        LinearLayout diagnosticRow = new LinearLayout(this);
+        diagnosticRow.setPadding(0, dp(12), 0, 0);
+        diagnosticCard.addView(diagnosticRow, matchWrap());
+
+        TextView viewDiagnostics = actionButton("로그 보기", BLUE, BLUE_SOFT);
+        viewDiagnostics.setOnClickListener(v -> showDiagnostics());
+        diagnosticRow.addView(viewDiagnostics, new LinearLayout.LayoutParams(0, dp(52), 1f));
+
+        TextView clearDiagnostics = actionButton("로그 지우기", TEXT, FIELD);
+        clearDiagnostics.setOnClickListener(v -> confirmClearDiagnostics());
+        LinearLayout.LayoutParams clearDiagnosticsLp = new LinearLayout.LayoutParams(0, dp(52), 1f);
+        clearDiagnosticsLp.leftMargin = dp(8);
+        diagnosticRow.addView(clearDiagnostics, clearDiagnosticsLp);
+
+                LinearLayout backupCard = surface(20, 18);
         LinearLayout.LayoutParams backupLp = matchWrap();
         backupLp.topMargin = dp(10);
         root.addView(backupCard, backupLp);
@@ -236,13 +277,15 @@ public class SettingsActivity extends Activity {
         root.requestApplyInsets();
         refreshNotificationStatus();
         refreshBatteryStatus();
+        refreshDiagnosticStatus();
 
         Motion.enter(header, 0L);
         Motion.enter(intervalCard, 35L);
         Motion.enter(notificationCard, 70L);
         Motion.enter(batteryCard, 105L);
-        Motion.enter(backupCard, 140L);
-        Motion.enter(version, 170L);
+        Motion.enter(diagnosticCard, 140L);
+        Motion.enter(backupCard, 175L);
+        Motion.enter(version, 205L);
     }
 
     private void exportBackup() {
@@ -338,6 +381,35 @@ public class SettingsActivity extends Activity {
         if (changed) Motion.valueChange(batteryStatus);
     }
 
+    private void refreshDiagnosticStatus() {
+        if (diagnosticStatus == null) return;
+        diagnosticStatus.setText(DiagnosticLog.count(this) + "건");
+    }
+
+    private void showDiagnostics() {
+        String message = DiagnosticLog.summary(this)
+            + "\n\n최근 이벤트\n"
+            + DiagnosticLog.formatRecent(this, 80);
+        new AlertDialog.Builder(this)
+            .setTitle("Restock 진단 로그")
+            .setMessage(message)
+            .setPositiveButton("닫기", null)
+            .show();
+    }
+
+    private void confirmClearDiagnostics() {
+        new AlertDialog.Builder(this)
+            .setTitle("진단 로그를 지울까요?")
+            .setMessage("누적 통계와 최근 이벤트 기록을 모두 초기화해요.")
+            .setNegativeButton("취소", null)
+            .setPositiveButton("지우기", (dialog, which) -> {
+                DiagnosticLog.clear(this);
+                refreshDiagnosticStatus();
+                toast("진단 로그를 지웠어요.");
+            })
+            .show();
+    }
+
     private String versionName() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -410,6 +482,7 @@ public class SettingsActivity extends Activity {
         super.onResume();
         refreshNotificationStatus();
         refreshBatteryStatus();
+        refreshDiagnosticStatus();
     }
 
     @Override
