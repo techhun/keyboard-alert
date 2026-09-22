@@ -147,6 +147,21 @@ final class ProductStore {
         save(context, products);
     }
 
+    static void disableSite(Context context, String siteType) {
+        JSONArray products = list(context);
+        for (int i = 0; i < products.length(); i++) {
+            JSONObject product = products.optJSONObject(i);
+            if (product == null) continue;
+            String currentSite = product.optString("siteType", SiteSupport.detect(product.optString("url", "")));
+            if (!siteType.equals(currentSite)) continue;
+            try {
+                product.put("enabled", false);
+                product.put("lastStatus", "");
+            } catch (Exception ignored) {}
+        }
+        save(context, products);
+    }
+
     static void updateRuntime(Context context, JSONObject runtime) {
         if (runtime == null) return;
         String id = runtime.optString("id", "");
