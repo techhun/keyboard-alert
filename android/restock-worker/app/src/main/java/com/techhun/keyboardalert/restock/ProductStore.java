@@ -28,9 +28,15 @@ final class ProductStore {
             boolean legacyRunning = MonitorPrefs.prefs(context).getBoolean(MonitorPrefs.KEY_RUNNING, false);
             for (int i = 0; i < products.length(); i++) {
                 JSONObject product = products.optJSONObject(i);
-                if (product == null || product.has("enabled")) continue;
-                product.put("enabled", legacyRunning);
-                changed = true;
+                if (product == null) continue;
+                if (!product.has("enabled")) {
+                    product.put("enabled", legacyRunning);
+                    changed = true;
+                }
+                if (product.optString("siteType", "").isBlank()) {
+                    product.put("siteType", SiteSupport.detect(product.optString("url", "")));
+                    changed = true;
+                }
             }
             if (changed) save(context, products);
             return products;
@@ -58,9 +64,7 @@ final class ProductStore {
     }
 
     static String idFromUrl(String url) {
-        Matcher matcher = PRODUCT_ID.matcher(url == null ? "" : url);
-        if (matcher.find()) return matcher.group(1);
-        return "url-" + Math.abs((url == null ? "" : url).hashCode());
+        return SiteSupport.productId(url);
     }
 
     static JSONObject find(Context context, String id) {
@@ -199,6 +203,7 @@ final class ProductStore {
             copyIfPresent(source, item, "apiUrl");
             copyIfPresent(source, item, "channelUid");
             copyIfPresent(source, item, "productNo");
+            copyIfPresent(source, item, "siteType");
             item.put("enabled", source.optBoolean("enabled", false));
             exported.put(item);
         }
@@ -239,6 +244,9 @@ final class ProductStore {
             restored.put("apiUrl", item.optString("apiUrl", ""));
             restored.put("channelUid", item.optString("channelUid", ""));
             restored.put("productNo", item.optString("productNo", ""));
+            String siteType = item.optString("siteType", SiteSupport.detect(url));
+            if (SiteSupport.UNKNOWN.equals(siteType)) siteType = SiteSupport.detect(url);
+            restored.put("siteType", siteType);
             boolean enabled = item.optBoolean("enabled", false) && canEnable;
             restored.put("enabled", enabled);
             restored.put("lastAvailability", new JSONObject());
@@ -281,9 +289,7 @@ final class ProductStore {
     }
 
     private static boolean isSupportedProductUrl(String url) {
-        return url.startsWith("https://")
-            && url.contains("smartstore.naver.com/")
-            && url.contains("/products/");
+        return SiteSupport.isSupportedProductUrl(url);
     }
 
     private static void preserveRuntime(JSONObject oldProduct, JSONObject next) {
