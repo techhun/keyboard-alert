@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.net.Uri;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -27,6 +28,7 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
@@ -237,17 +239,31 @@ public class MainActivity extends Activity {
 
         webView = new WebView(this);
         configureWebView(webView);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false);
         webView.setVisibility(View.INVISIBLE);
         webView.addJavascriptInterface(new InventoryBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request == null || !request.isForMainFrame()) return false;
+                return blockUntrustedNavigation(request.getUrl().toString());
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return blockUntrustedNavigation(url);
+            }
+
             @Override public void onPageFinished(WebView view, String url) {
-                if (isLoginUrl(url)) {
+                String siteType = SiteSupport.detect(pendingUrl);
+                if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) {
                     if (!pendingUrl.isBlank()) launchLogin(pendingUrl);
                     return;
                 }
-                if (isProductUrl(url) && autoInspect) {
+                if (SiteSupport.isProductPage(siteType, url) && autoInspect) {
                     autoInspect = false;
-                    handler.postDelayed(MainActivity.this::inspectInventory, 700L);
+                    long delay = SiteSupport.SWAGKEY_IMWEB.equals(siteType) ? 1200L : 700L;
+                    handler.postDelayed(MainActivity.this::inspectInventory, delay);
                 }
             }
         });
@@ -318,7 +334,7 @@ public class MainActivity extends Activity {
         Motion.press(close);
         header.addView(close);
 
-        TextView label = text("SmartStore 상품 주소", 13, SUB, Typeface.NORMAL);
+        TextView label = text("상품 주소", 13, SUB, Typeface.NORMAL);
         label.setPadding(0, dp(16), 0, dp(8));
         panel.addView(label);
 
@@ -336,7 +352,7 @@ public class MainActivity extends Activity {
         input.setTextSize(14);
         input.setTextColor(TEXT);
         input.setHintTextColor(SUB);
-        input.setHint("https://smartstore.naver.com/...");
+        input.setHint("SmartStore 또는 SWAGKEY 상품 링크");
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
         input.setBackgroundColor(Color.TRANSPARENT);
         input.setPadding(0, 0, dp(8), 0);
@@ -346,7 +362,7 @@ public class MainActivity extends Activity {
             1f
         ));
 
-        String clipboardUrl = readClipboardSmartStoreUrl();
+        String clipboardUrl = readClipboardProductUrl();
         ImageView paste = new ImageView(this);
         paste.setImageResource(R.drawable.ic_clipboard);
         paste.setPadding(dp(9), dp(9), dp(9), dp(9));
@@ -355,9 +371,9 @@ public class MainActivity extends Activity {
         field.addView(paste, new LinearLayout.LayoutParams(dp(42), dp(42)));
         Motion.press(paste);
         paste.setOnClickListener(v -> {
-            String value = readClipboardSmartStoreUrl();
+            String value = readClipboardProductUrl();
             if (value.isBlank()) {
-                toast("클립보드에 SmartStore 상품 링크가 없어요.");
+                toast("클립보드에 지원하는 상품 링크가 없어요.");
                 return;
             }
             input.setText(value);
@@ -382,7 +398,7 @@ public class MainActivity extends Activity {
         Motion.press(load);
         load.setOnClickListener(v -> {
             String url = input.getText().toString().trim();
-            if (!isSmartStoreProductUrl(url)) return;
+            if (!SiteSupport.isSupportedProductUrl(url)) return;
             Motion.dismissDialog(dialog, panel, () -> loadProductForEdit(url, null));
         });
 
@@ -394,7 +410,7 @@ public class MainActivity extends Activity {
         Motion.dialogIn(panel);
     }
 
-    private String readClipboardSmartStoreUrl() {
+    private String readClipboardProductUrl() {
         try {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             if (clipboard == null || !clipboard.hasPrimaryClip()) return "";
@@ -402,14 +418,14 @@ public class MainActivity extends Activity {
             if (clip == null || clip.getItemCount() == 0) return "";
             CharSequence text = clip.getItemAt(0).coerceToText(this);
             String value = text == null ? "" : text.toString().trim();
-            return isSmartStoreProductUrl(value) ? value : "";
+            return SiteSupport.isSupportedProductUrl(value) ? value : "";
         } catch (Exception ignored) {
             return "";
         }
     }
 
     private void updateLoadButton(TextView button, String value) {
-        boolean valid = isSmartStoreProductUrl(value == null ? "" : value.trim());
+        boolean valid = SiteSupport.isSupportedProductUrl(value == null ? "" : value.trim());
         button.setBackground(roundRect(valid ? BLUE : Color.rgb(190, 198, 207), 14));
         button.setAlpha(valid ? 1f : 0.7f);
     }
@@ -427,8 +443,8 @@ public class MainActivity extends Activity {
     }
 
     private void loadProductForEdit(String url, String id) {
-        if (!isSmartStoreProductUrl(url)) {
-            toast("SmartStore 상품 URL을 확인해주세요.");
+        if (!SiteSupport.isSupportedProductUrl(url)) {
+            toast("지원하는 상품 URL인지 확인해주세요.");
             return;
         }
         if (optionFlowBusy()) return;
@@ -447,8 +463,19 @@ public class MainActivity extends Activity {
     }
 
     private void inspectInventory() {
-        if (!isProductUrl(webView.getUrl()) || !optionLoadInProgress) return;
-        webView.evaluateJavascript(InventoryScript.SCRIPT, ignored -> {});
+        if (!optionLoadInProgress) return;
+        String siteType = SiteSupport.detect(pendingUrl);
+        String currentUrl = webView.getUrl();
+        if (!SiteSupport.isProductPage(siteType, currentUrl)) {
+            optionLoadInProgress = false;
+            clearPendingEdit();
+            toast("상품 페이지를 확인하지 못했어요.");
+            return;
+        }
+        String script = SiteSupport.SWAGKEY_IMWEB.equals(siteType)
+            ? SwagkeyScript.SCRIPT
+            : InventoryScript.SCRIPT;
+        webView.evaluateJavascript(script, ignored -> {});
     }
 
     private class InventoryBridge {
@@ -463,7 +490,9 @@ public class MainActivity extends Activity {
             JSONObject result = new JSONObject(json);
             if (!result.optBoolean("ok")) {
                 int status = result.optInt("status", 0);
-                boolean authFailure = status == 401 || status == 403 || !hasNaverSession();
+                String siteType = SiteSupport.detect(pendingUrl);
+                boolean authFailure = SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                    && (status == 401 || status == 403 || !hasNaverSession());
                 if (authFailure && !pendingUrl.isBlank()) {
                     launchLogin(pendingUrl);
                 } else {
@@ -474,7 +503,8 @@ public class MainActivity extends Activity {
                 return;
             }
 
-            latestTitle = result.optString("title", "SmartStore 상품");
+            String siteType = SiteSupport.detect(pendingUrl);
+            latestTitle = result.optString("title", SiteSupport.label(siteType) + " 상품");
             latestOptions = result.optJSONArray("options");
             latestApiUrl = result.optString("apiUrl", "");
             latestChannelUid = result.optString("channelUid", "");
@@ -830,6 +860,7 @@ public class MainActivity extends Activity {
             product.put("apiUrl", apiUrl);
             product.put("channelUid", channelUid);
             product.put("productNo", productNo);
+            product.put("siteType", SiteSupport.detect(targetUrl));
             ProductStore.upsert(this, product);
             clearPendingEdit();
             return true;
@@ -1315,6 +1346,12 @@ public class MainActivity extends Activity {
         settings.setDomStorageEnabled(true);
         settings.setLoadsImagesAutomatically(true);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+        settings.setAllowFileAccess(false);
+        settings.setAllowContentAccess(false);
+        settings.setAllowFileAccessFromFileURLs(false);
+        settings.setAllowUniversalAccessFromFileURLs(false);
+        settings.setJavaScriptCanOpenWindowsAutomatically(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) settings.setSafeBrowsingEnabled(true);
         settings.setUserAgentString(settings.getUserAgentString()
             .replace("; wv)", ")")
             .replace("Version/4.0 ", ""));
@@ -1322,17 +1359,26 @@ public class MainActivity extends Activity {
         CookieManager.getInstance().setAcceptThirdPartyCookies(view, true);
     }
 
-    private boolean isSmartStoreProductUrl(String url) {
-        if (url == null || !url.startsWith("https://")) return false;
-        return url.contains("smartstore.naver.com/") && url.contains("/products/");
+    private boolean blockUntrustedNavigation(String url) {
+        if (pendingUrl == null || pendingUrl.isBlank() || url == null || url.isBlank()) return false;
+        String siteType = SiteSupport.detect(pendingUrl);
+        if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) return false;
+        if (SiteSupport.isAllowedPage(siteType, url)) return false;
+        JSONObject product = ProductStore.find(this, editingProductId == null
+            ? ProductStore.idFromUrl(pendingUrl)
+            : editingProductId);
+        DiagnosticLog.add(this, "BLOCKED_NAV", product, safeHost(url));
+        toast("허용되지 않은 사이트 이동을 차단했어요.");
+        return true;
     }
 
-    private boolean isProductUrl(String url) {
-        return url != null && url.contains("smartstore.naver.com/") && url.contains("/products/");
-    }
-
-    private boolean isLoginUrl(String url) {
-        return url != null && (url.contains("nid.naver.com") || url.contains("nidlogin.login"));
+    private String safeHost(String url) {
+        try {
+            String host = Uri.parse(url).getHost();
+            return host == null ? "unknown" : host;
+        } catch (Exception ignored) {
+            return "unknown";
+        }
     }
 
     private void sizeDialog(Dialog dialog, float widthRatio) {
