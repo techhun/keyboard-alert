@@ -32,12 +32,13 @@ final class SwagkeyScript {
               && !el.disabled
               && el.getAttribute('aria-disabled') !== 'true'
             );
-            const soldOutText = /품절된\s*상품입니다|품절|sold\s*out/i.test(bodyText);
+            const unavailableText = /품절된\s*상품입니다|판매\s*기간이\s*마감된\s*상품입니다|판매대기|sold\s*out/i.test(bodyText);
+            const genericSoldOutText = /품절|sold\s*out/i.test(bodyText);
 
             let available = null;
-            if (soldOutControl || /품절된\s*상품입니다/i.test(bodyText)) available = false;
+            if (soldOutControl || unavailableText) available = false;
             else if (buyControl) available = true;
-            else if (!soldOutText && document.querySelector('[data-product-code], [data-product-no], .shop_view')) available = true;
+            else if (!genericSoldOutText && document.querySelector('[data-product-code], [data-product-no], .shop_view')) available = true;
 
             if (available === null) {
               send({ ok: false, error: 'STATE_UNKNOWN', title: String(title).trim() });
