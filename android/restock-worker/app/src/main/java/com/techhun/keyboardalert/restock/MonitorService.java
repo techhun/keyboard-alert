@@ -482,10 +482,22 @@ public class MonitorService extends Service {
         setStatus("로그인 필요");
         DiagnosticLog.add(this, "LOGIN_REQUIRED", currentProduct, "Naver 세션 만료");
         notifyLoginRequired();
+        ProductStore.disableSite(this, SiteSupport.NAVER_SMARTSTORE);
         CookieManager cookies = CookieManager.getInstance();
         cookies.removeAllCookies(value -> cookies.flush());
         WebStorage.getInstance().deleteAllData();
-        stopSelf();
+
+        products = ProductStore.enabledList(this);
+        if (products.length() == 0) {
+            stopSelf();
+            return;
+        }
+
+        updateOngoingNotification(products.length() + "개 알림 켜짐");
+        bootstrapReady = false;
+        currentIndex = 0;
+        currentProduct = null;
+        handler.postDelayed(this::bootstrapSession, 500L);
     }
 
     private void markCurrentFailure(String message) {
