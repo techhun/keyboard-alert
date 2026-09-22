@@ -286,7 +286,7 @@ public class MainActivity extends Activity {
             .setMessage("켜진 재입고 알림도 함께 꺼져요.")
             .setNegativeButton("취소", null)
             .setPositiveButton("로그아웃", (d, w) -> {
-                ProductStore.disableAll(this);
+                ProductStore.disableSite(this, SiteSupport.NAVER_SMARTSTORE);
                 syncMonitorService();
                 clearAppLogin();
             })
@@ -1214,7 +1214,8 @@ public class MainActivity extends Activity {
         if (id.isBlank()) return;
         boolean enable = !product.optBoolean("enabled", false);
 
-        if (enable && !hasNaverSession()) {
+        String siteType = product.optString("siteType", SiteSupport.detect(product.optString("url", "")));
+        if (enable && SiteSupport.NAVER_SMARTSTORE.equals(siteType) && !hasNaverSession()) {
             pendingEnableProductId = id;
             launchLogin(product.optString("url", SMARTSTORE_HOME));
             return;
@@ -1251,15 +1252,24 @@ public class MainActivity extends Activity {
     private void openLoginForExistingProduct() {
         JSONArray products = ProductStore.list(this);
         String target = SMARTSTORE_HOME;
-        if (products.length() > 0) {
-            JSONObject first = products.optJSONObject(0);
-            if (first != null && !first.optString("url").isBlank()) target = first.optString("url");
+        for (int i = 0; i < products.length(); i++) {
+            JSONObject product = products.optJSONObject(i);
+            if (product == null) continue;
+            String url = product.optString("url", "");
+            if (SiteSupport.NAVER_SMARTSTORE.equals(SiteSupport.detect(url))) {
+                target = url;
+                break;
+            }
         }
         launchLogin(target);
     }
 
     private void launchLogin(String targetUrl) {
-        if (loginLaunching || targetUrl == null || targetUrl.isBlank()) return;
+        if (loginLaunching) return;
+        if (targetUrl == null || targetUrl.isBlank()
+            || !SiteSupport.NAVER_SMARTSTORE.equals(SiteSupport.detect(targetUrl))) {
+            targetUrl = SMARTSTORE_HOME;
+        }
         loginLaunching = true;
         Intent intent = new Intent(this, LoginActivity.class);
         intent.putExtra(LoginActivity.EXTRA_TARGET_URL, targetUrl);
