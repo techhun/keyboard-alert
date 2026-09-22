@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.os.PowerManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
@@ -50,7 +51,7 @@ public class MonitorService extends Service {
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 5 * 60_000L;
 
-    private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY }
+    private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private WebView webView;
@@ -64,11 +65,12 @@ public class MonitorService extends Service {
     private JSONObject currentProduct;
     private long rateLimitBackoffMs;
     private long backoffUntil;
+    private boolean networkWaiting;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping) return;
         awaitingResult = false;
-        markCurrentFailure("조회 시간 초과");
+        markCurrentFailure("조회 시간 초과", "TIMEOUT");
         scheduleNextProduct();
     };
 
@@ -87,6 +89,7 @@ public class MonitorService extends Service {
 
         stopping = false;
         products = ProductStore.enabledList(this);
+        DiagnosticLog.add(this, "SERVICE_START", null, products.length() + "개 알림");
         if (products.length() == 0) {
             MonitorPrefs.setRunning(this, false);
             stopSelf();
@@ -127,18 +130,37 @@ public class MonitorService extends Service {
         settings.setDomStorageEnabled(true);
         settings.setLoadsImagesAutomatically(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+        settings.setAllowFileAccess(false);
+        settings.setAllowContentAccess(false);
+        settings.setAllowFileAccessFromFileURLs(false);
+        settings.setAllowUniversalAccessFromFileURLs(false);
+        settings.setJavaScriptCanOpenWindowsAutomatically(false);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) settings.setSafeBrowsingEnabled(true);
         settings.setUserAgentString(settings.getUserAgentString()
             .replace("; wv)", ")")
             .replace("Version/4.0 ", ""));
         CookieManager.getInstance().setAcceptCookie(true);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false);
 
         webView.addJavascriptInterface(new RestockBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {
             @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (request == null || !request.isForMainFrame()) return false;
+                return blockUntrustedNavigation(request.getUrl().toString());
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return blockUntrustedNavigation(url);
+            }
+
+            @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if (stopping) return;
-                if (isLoginUrl(url)) {
+                String siteType = currentSiteType();
+                if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) {
                     setStatus("로그인 필요");
                     updateOngoingNotification("로그인이 필요해요");
                 }
@@ -147,11 +169,12 @@ public class MonitorService extends Service {
             @Override
             public void onPageFinished(WebView view, String url) {
                 if (stopping) return;
-                if (isLoginUrl(url)) {
+                String siteType = currentSiteType();
+                if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) {
                     invalidateSessionAndStop();
                     return;
                 }
-                if (!isProductUrl(url)) return;
+                if (!SiteSupport.isProductPage(siteType, url)) return;
 
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
@@ -159,6 +182,8 @@ public class MonitorService extends Service {
                     handler.postDelayed(MonitorService.this::checkCurrentProduct, 500L);
                 } else if (mode == Mode.DISCOVERY) {
                     handler.postDelayed(MonitorService.this::runDiscoveryCheck, 700L);
+                } else if (mode == Mode.SWAGKEY) {
+                    handler.postDelayed(MonitorService.this::runSwagkeyCheck, 1200L);
                 }
             }
         });
@@ -171,6 +196,7 @@ public class MonitorService extends Service {
             stopSelf();
             return;
         }
+        currentProduct = first;
         mode = Mode.BOOTSTRAP;
         bootstrapReady = false;
         webView.loadUrl(first.optString("url"));
@@ -191,13 +217,37 @@ public class MonitorService extends Service {
         if (!isNetworkAvailable()) {
             setStatus("네트워크 연결 대기");
             updateOngoingNotification("네트워크 연결을 기다리는 중");
+            if (!networkWaiting) {
+                networkWaiting = true;
+                DiagnosticLog.add(this, "NETWORK_WAIT", currentProduct, "네트워크 연결 없음");
+            }
             handler.postDelayed(this::checkCurrentProduct, NETWORK_RETRY_MS);
             return;
         }
+        networkWaiting = false;
         if (currentIndex >= products.length()) currentIndex = 0;
         currentProduct = products.optJSONObject(currentIndex);
         if (currentProduct == null) {
             scheduleNextProduct();
+            return;
+        }
+
+        String siteType = currentSiteType();
+        if (!SiteSupport.isSupportedProductUrl(currentProduct.optString("url", ""))) {
+            markCurrentFailure("지원하지 않는 상품 주소");
+            scheduleNextProduct();
+            return;
+        }
+
+        if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)) {
+            mode = Mode.SWAGKEY;
+            webView.loadUrl(currentProduct.optString("url"));
+            return;
+        }
+
+        if (!SiteSupport.isAllowedPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
+            mode = Mode.DISCOVERY;
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
 
@@ -222,15 +272,50 @@ public class MonitorService extends Service {
             return;
         }
         currentProduct = latest;
+        if (!SiteSupport.isProductPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
+            markCurrentFailure("상품 페이지 확인 실패");
+            scheduleNextProduct();
+            return;
+        }
         awaitingResult = true;
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
         webView.evaluateJavascript(InventoryScript.SCRIPT, ignored -> {});
     }
 
+    private void runSwagkeyCheck() {
+        if (stopping || awaitingResult || currentProduct == null) return;
+        JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
+        if (latest == null || !latest.optBoolean("enabled", false)) {
+            scheduleNextProduct();
+            return;
+        }
+        currentProduct = latest;
+        if (!SiteSupport.isProductPage(SiteSupport.SWAGKEY_IMWEB, webView.getUrl())) {
+            markCurrentFailure("SWAGKEY 상품 페이지 확인 실패");
+            scheduleNextProduct();
+            return;
+        }
+        awaitingResult = true;
+        handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
+        webView.evaluateJavascript(SwagkeyScript.SCRIPT, ignored -> {});
+    }
+
     private class RestockBridge {
         @JavascriptInterface
         public void onResult(String json) {
-            handler.post(() -> handleInventoryResult(json));
+            handler.post(() -> {
+                if (currentProduct == null) return;
+                String siteType = currentSiteType();
+                if (!SiteSupport.isAllowedPage(siteType, webView == null ? null : webView.getUrl())) {
+                    DiagnosticLog.recordBlockedNavigation(
+                        MonitorService.this,
+                        currentProduct,
+                        safeHost(webView == null ? null : webView.getUrl())
+                    );
+                    return;
+                }
+                handleInventoryResult(json);
+            });
         }
     }
 
@@ -255,7 +340,8 @@ public class MonitorService extends Service {
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
-                if (status == 401 || status == 403) {
+                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                    && (status == 401 || status == 403)) {
                     invalidateSessionAndStop();
                     return;
                 }
@@ -266,7 +352,7 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (mode == Mode.DIRECT && (
+                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
                     "PRODUCT_API_FAILED".equals(error)
                         || "API_URL_MISSING".equals(error)
                         || status == 204
@@ -290,9 +376,9 @@ public class MonitorService extends Service {
                 currentProduct.put("apiUrl", result.optString("apiUrl", ""));
                 currentProduct.put("channelUid", result.optString("channelUid", ""));
                 currentProduct.put("productNo", result.optString("productNo", ""));
-                if (!result.optString("title", "").isBlank()) {
-                    currentProduct.put("title", result.optString("title"));
-                }
+            }
+            if (!result.optString("title", "").isBlank()) {
+                currentProduct.put("title", result.optString("title"));
             }
 
             if (!processSuccessfulSnapshot(currentProduct, result)) {
@@ -367,8 +453,10 @@ public class MonitorService extends Service {
             .putLong(MonitorPrefs.KEY_LAST_CHECK, System.currentTimeMillis())
             .apply();
         updateOngoingNotification(enabledCount + "개 알림 켜짐");
+        DiagnosticLog.recordSuccess(this);
 
         if (restocked.length() > 0) {
+            DiagnosticLog.recordRestock(this, product, restocked.toString());
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
         }
         return true;
@@ -380,7 +468,7 @@ public class MonitorService extends Service {
             : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, rateLimitBackoffMs * 2L);
         backoffUntil = System.currentTimeMillis() + rateLimitBackoffMs;
         long seconds = Math.max(1L, rateLimitBackoffMs / 1000L);
-        markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도");
+        markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
         updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
     }
 
@@ -392,6 +480,7 @@ public class MonitorService extends Service {
     private void invalidateSessionAndStop() {
         if (stopping) return;
         setStatus("로그인 필요");
+        DiagnosticLog.add(this, "LOGIN_REQUIRED", currentProduct, "Naver 세션 만료");
         notifyLoginRequired();
         CookieManager cookies = CookieManager.getInstance();
         cookies.removeAllCookies(value -> cookies.flush());
@@ -400,12 +489,23 @@ public class MonitorService extends Service {
     }
 
     private void markCurrentFailure(String message) {
+        markCurrentFailure(message, "CHECK_FAIL");
+    }
+
+    private void markCurrentFailure(String message, String event) {
         if (currentProduct != null) {
             try {
                 currentProduct.put("lastStatus", message);
                 currentProduct.put("lastCheck", System.currentTimeMillis());
                 ProductStore.updateRuntime(this, currentProduct);
             } catch (Exception ignored) {}
+        }
+        if ("TIMEOUT".equals(event)) {
+            DiagnosticLog.recordTimeout(this, currentProduct);
+        } else if ("RATE_LIMIT".equals(event)) {
+            DiagnosticLog.recordRateLimit(this, currentProduct, message);
+        } else {
+            DiagnosticLog.recordFailure(this, event, currentProduct, message);
         }
         setStatus(message);
     }
@@ -438,12 +538,31 @@ public class MonitorService extends Service {
         return label.length() > 0 ? label.toString() : option.optString("id", "옵션");
     }
 
-    private boolean isProductUrl(String url) {
-        return url != null && url.contains("smartstore.naver.com/") && url.contains("/products/");
+    private String currentSiteType() {
+        if (currentProduct == null) return SiteSupport.UNKNOWN;
+        String siteType = currentProduct.optString("siteType", "");
+        if (siteType.isBlank() || SiteSupport.UNKNOWN.equals(siteType)) {
+            siteType = SiteSupport.detect(currentProduct.optString("url", ""));
+        }
+        return siteType;
     }
 
-    private boolean isLoginUrl(String url) {
-        return url != null && (url.contains("nid.naver.com") || url.contains("nidlogin.login"));
+    private boolean blockUntrustedNavigation(String url) {
+        if (currentProduct == null || url == null || url.isBlank()) return false;
+        String siteType = currentSiteType();
+        if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) return false;
+        if (SiteSupport.isAllowedPage(siteType, url)) return false;
+        DiagnosticLog.recordBlockedNavigation(this, currentProduct, safeHost(url));
+        return true;
+    }
+
+    private String safeHost(String url) {
+        try {
+            String host = Uri.parse(url == null ? "" : url).getHost();
+            return host == null ? "unknown" : host;
+        } catch (Exception ignored) {
+            return "unknown";
+        }
     }
 
     private void setStatus(String status) {
@@ -583,6 +702,7 @@ public class MonitorService extends Service {
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
         stopForeground(STOP_FOREGROUND_REMOVE);
+        DiagnosticLog.add(this, "SERVICE_STOP", currentProduct, null);
         super.onDestroy();
     }
 
