@@ -383,7 +383,7 @@ public class SettingsActivity extends Activity {
 
     private void refreshDiagnosticStatus() {
         if (diagnosticStatus == null) return;
-        diagnosticStatus.setText(DiagnosticLog.count(this) + "건");
+        diagnosticStatus.setText("이벤트 " + DiagnosticLog.count(this) + "건");
     }
 
     private void showDiagnostics() {
