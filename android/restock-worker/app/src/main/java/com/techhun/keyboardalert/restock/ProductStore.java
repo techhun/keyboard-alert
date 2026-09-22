@@ -259,9 +259,7 @@ final class ProductStore {
             restored.put("apiUrl", item.optString("apiUrl", ""));
             restored.put("channelUid", item.optString("channelUid", ""));
             restored.put("productNo", item.optString("productNo", ""));
-            String siteType = item.optString("siteType", SiteSupport.detect(url));
-            if (SiteSupport.UNKNOWN.equals(siteType)) siteType = SiteSupport.detect(url);
-            restored.put("siteType", siteType);
+            restored.put("siteType", SiteSupport.detect(url));
             boolean enabled = item.optBoolean("enabled", false) && canEnable;
             restored.put("enabled", enabled);
             restored.put("lastAvailability", new JSONObject());
