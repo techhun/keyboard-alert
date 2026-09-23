@@ -1,21 +1,86 @@
-# Restock Worker Android prototype
+# Restock Android
 
-Galaxy Tab S7에서 네이버 SmartStore 상품 페이지를 실제 WebView로 연 뒤, 같은 페이지 컨텍스트에서 상품 API를 호출해 옵션별 재고를 확인하는 1차 검증 앱입니다.
+키보드 관련 상품의 옵션별 재고를 주기적으로 확인하고 재입고 시 Android 알림을 보내는 개인용 모니터링 앱입니다.
 
-## 현재 범위
+## 현재 기능
 
-- 기본 테스트 URL: `https://m.smartstore.naver.com/swagkey/products/12348949592`
-- 앱 WebView 쿠키/세션 유지
-- WebView 원격 디버깅 비활성화
-- `__PRELOADED_STATE__` 또는 페이지 네트워크 리소스에서 `channelUid` 탐색
-- `/i/v2/channels/{channelUid}/products/{productNo}?withWindow=false`를 페이지 내부 `fetch()`로 호출
-- `optionCombinations`의 옵션명, `stockQuantity`, 구매 가능 여부 표시
+- 여러 상품 등록 및 상품별 알림 ON/OFF
+- 상품별 여러 옵션 선택 및 옵션 수정/삭제
+- 옵션명 검색, 그룹 접기/펼치기, 선택 옵션 필터
+- 재고 없음 → 재고 있음 전환 시 재입고 알림
+- SmartStore와 SWAGKEY 상품 동시 감시
+- Foreground Service 기반 주기 감시
+- 15초 / 30초 / 60초 조회 주기
+- 네트워크 끊김 자동 대기 및 복구
+- HTTP 429 요청 제한 시 지수 백오프
+- Android 재부팅 후 켜져 있던 상품 감시 자동 재개
+- 최근 7일 진단 이벤트 및 누적 성공/실패/429/타임아웃 통계
+- 등록 상품/선택 옵션/알림 상태/조회 주기 JSON 백업 및 복원
+- WebView 원격 디버깅 비활성화, cleartext 및 파일 접근 차단
 
-아직 Discord 제어, 주기 감시, Foreground Service는 연결하지 않습니다. 이 앱에서 상품 API가 `200`으로 조회되는지 먼저 검증한 뒤 추가합니다.
+## 지원 사이트
+
+### Naver SmartStore
+
+SmartStore 상품 감시는 네이버 로그인이 필요합니다.
+
+- 앱 내부 WebView 쿠키/세션 사용
+- 상품 페이지에서 옵션 및 재고 정보 탐색
+- 로그인 세션이 만료되면 SmartStore 상품만 자동으로 알림 OFF
+- 로그인 필요 상태 알림 표시
+- 같은 시점에 켜져 있는 SWAGKEY 감시는 계속 유지
+
+### SWAGKEY
+
+SWAGKEY 상품은 네이버 로그인 없이 사용할 수 있습니다.
+
+- 로그인 화면에서 `로그인 없이 시작`으로 메인 화면 진입 가능
+- SWAGKEY 상품만 등록하고 감시 가능
+- 앱 재진입 및 기기 재부팅 후에도 켜진 상품이 있으면 감시 재개
+
+## 재입고 판정
+
+처음 조회한 상태는 기준값으로 저장하며 즉시 재입고 알림을 보내지 않습니다.
+
+이후 선택한 옵션이 `품절 → 재고 있음`으로 바뀐 경우에만 재입고 알림을 보냅니다. 정상 응답에서 선택 옵션 일부가 누락되면 품절로 간주하지 않고 해당 조회를 실패 처리하여 마지막 정상 상태를 유지합니다.
+
+## 백그라운드 동작
+
+감시는 Foreground Service와 partial WakeLock을 사용합니다. Android 또는 제조사 절전 정책으로 서비스가 중단되는 경우 앱의 **설정 > 백그라운드 실행**에서 배터리 설정을 열고 제한 없는 실행을 허용하는 것을 권장합니다.
+
+재부팅 시 등록된 알림 ON 상품이 있고 Android 알림 권한이 허용되어 있으면 `BootReceiver`가 감시 서비스를 다시 시작합니다.
+
+## 진단
+
+앱의 **설정 > 진단 로그**에서 다음 정보를 확인할 수 있습니다.
+
+- 정상 조회 횟수
+- 실패 횟수
+- 429 요청 제한 횟수
+- 타임아웃 횟수
+- 차단된 외부 이동
+- 재입고 이벤트
+- 마지막 정상 조회 시각
+- 최근 7일 이벤트
+
+로그인 쿠키와 상품 응답 본문은 진단 로그에 저장하지 않습니다.
+
+## 데이터 백업
+
+**설정 > 데이터 백업**에서 JSON 파일을 내보내거나 가져올 수 있습니다.
+
+백업 대상:
+
+- 등록 상품
+- 선택 옵션
+- 상품별 알림 ON/OFF
+- 조회 주기
+
+네이버 로그인 쿠키와 세션 정보는 백업하지 않습니다.
 
 ## 빌드
 
-Android Studio에서 이 디렉터리(`android/restock-worker`)를 프로젝트로 열어 빌드할 수 있습니다.
+Android Studio에서 `android/restock-worker` 디렉터리를 프로젝트로 열어 빌드할 수 있습니다.
 
 - JDK 17
 - Android Gradle Plugin 9.4.0
@@ -24,22 +89,30 @@ Android Studio에서 이 디렉터리(`android/restock-worker`)를 프로젝트�
 - minSdk 26
 - targetSdk 35
 
-또는 저장소의 `Android Restock Worker APK` GitHub Actions workflow를 실행하면 debug APK artifact가 생성됩니다.
+GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 검증합니다.
 
-## 태블릿 테스트
+```text
+:app:lintDebug
+:app:assembleDebug
+```
 
-1. APK를 Galaxy Tab S7에 설치합니다.
-2. 집 Wi-Fi에 연결합니다.
-3. 앱을 실행합니다.
-4. 기본 SmartStore 상품이 정상 표시되는지 확인합니다.
-5. `옵션 재고 읽기`를 누릅니다.
-6. 성공 시 화면 하단에 각 옵션별 `[재고]`/`[품절]` 및 수량이 표시됩니다.
+검증이 모두 성공하면 `restock-worker-debug-apk` artifact가 생성됩니다.
 
-실패 시 화면의 오류 코드만 확인하면 됩니다.
+## 마감 회귀 테스트
 
-- `CHANNEL_UID_NOT_FOUND`: 상품 페이지는 열렸지만 채널 식별자를 찾지 못함
-- `PRODUCT_API_FAILED` + `status: 429`: WebView 세션도 SmartStore에서 제한됨
-- `PRODUCT_API_FAILED` + 기타 상태: 응답 상태 확인 필요
-- `JS_ERROR`: 페이지 내부 스크립트 실행 오류
+릴리스 후보 APK에서는 최소한 다음 흐름을 확인합니다.
 
-로그인 페이지로 이동한다면 우선 로그인하지 말고 그 상태를 기록합니다. 비로그인 WebView 자체가 허용되는지부터 확인하는 것이 1차 목적입니다.
+1. SWAGKEY만 ON + 네이버 로그아웃 상태에서 감시 및 앱 재진입
+2. SmartStore + SWAGKEY 동시 ON 상태에서 네이버 세션 만료 후 SWAGKEY 지속 감시
+3. Wi-Fi/모바일 네트워크 끊김 후 자동 복구
+4. 기기 재부팅 후 켜진 상품 감시 자동 재개
+5. 동일 재고 상태에서 중복 재입고 알림이 발생하지 않음
+6. 품절 → 재고 있음 전환 시 1회 재입고 알림
+7. 429 발생 시 백오프 후 정상 복구
+8. JSON 백업/복원 후 상품, 옵션, ON/OFF, 조회 주기 확인
+9. 상품 삭제/옵션 수정/알림 OFF·ON 후 감시 서비스 상태 확인
+10. 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
+
+## 버전
+
+현재 앱 버전: **0.14.2**

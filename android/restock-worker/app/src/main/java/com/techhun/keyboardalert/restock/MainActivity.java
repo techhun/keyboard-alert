@@ -1485,11 +1485,10 @@ public class MainActivity extends Activity {
 
     private void resumeMonitorIfNeeded() {
         if (ProductStore.enabledCount(this) > 0
-            && hasNaverSession()
             && NotificationAccess.isAllowed(this)) {
-            // Defer this work until the screen transition has settled so
-            // foreground-service startup and card rebuilding do not fight
-            // the animation frames.
+            // SWAGKEY monitoring does not require a Naver session. SmartStore
+            // session failures are handled per site inside MonitorService.
+            // Defer startup until the screen transition has settled.
             startForegroundService(new Intent(this, MonitorService.class));
         }
     }
