@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T13:01:21.973Z",
+  "updatedAt": "2026-09-23T10:52:29.329Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -41,7 +41,7 @@
       "itemUrl": "https://prototypist.notion.site/Float-65-317042334154803cb6abd475c33f25d2",
       "product": "Float 65",
       "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "keyboard",
@@ -71,7 +71,7 @@
       "itemUrl": "https://prototypist.notion.site/21XX-22904233415480e29398fdf5d2db9b3a",
       "product": "21XX",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -81,17 +81,7 @@
       "itemUrl": "https://prototypist.notion.site/Lotus80-292042334154804bab21fd038a5ff082",
       "product": "Lotus80",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Matrix-Lab-Noostation-29204233415480498305c3d006e10de8",
-      "product": "Matrix Lab Noostation",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q2 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -101,17 +91,7 @@
       "itemUrl": "https://prototypist.notion.site/Keycult-No-3-29204233415480e5b12ed190db47d473",
       "product": "Keycult No. 3",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Etar87-2920423341548027b82dc8e7cce3371e",
-      "product": "Etar87",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -121,7 +101,7 @@
       "itemUrl": "https://prototypist.notion.site/Minimi40-2ca04233415480d7abf8f3aa709ca93e",
       "product": "Minimi40",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -131,7 +111,7 @@
       "itemUrl": "https://prototypist.notion.site/Synovia-2ca042334154801ba78cd47ebed6abcf",
       "product": "Synovia",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -141,7 +121,7 @@
       "itemUrl": "https://prototypist.notion.site/Matrix-Lab-Carnival-TKL-30d042334154802da104c94b66f0578a",
       "product": "Matrix Lab Carnival TKL",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -151,7 +131,7 @@
       "itemUrl": "https://prototypist.notion.site/Gehirn60-31704233415480d29cd3fe5488a557ce",
       "product": "Gehirn60",
       "status": "In Manufacturing",
-      "expectedShipping": "Late Q3 2026"
+      "expectedShipping": "Late Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -161,17 +141,7 @@
       "itemUrl": "https://prototypist.notion.site/Kafka-30d042334154807e8728c846d9ce8d67",
       "product": "Kafka",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/New-Retro-66-V3-364042334154801eb021f186f880ca8e",
-      "product": "New Retro #66 V3",
-      "status": "In Manufacturing",
-      "expectedShipping": ""
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -181,7 +151,7 @@
       "itemUrl": "https://prototypist.notion.site/Enso-E-36404233415480ec8614f69293a7ec7a",
       "product": "Enso-E",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -201,7 +171,7 @@
       "itemUrl": "https://prototypist.notion.site/Neson-NoryTek70-3640423341548097ab05e9e0f5eca710",
       "product": "Neson NoryTek70",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -278,10 +248,40 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-10-All-Boards-3640423341548085a0eec2618333b209",
-      "product": "QK & Neo Batch 10 (All Boards)",
+      "itemUrl": "https://prototypist.notion.site/S46-R3-40-364042334154803d9345d0b3c6db60c0",
+      "product": "S46 R3 40%",
       "status": "In Manufacturing",
-      "expectedShipping": "Late Q3 2026"
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Slate-Zero-36404233415480a58dd1fc3706404ab1",
+      "product": "Slate Zero",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Tofu65-Pad-36404233415480dd9e6dc02997acf367",
+      "product": "Tofu65 Pad",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Juna60-3640423341548021aaa0decbaf4608c1",
+      "product": "Juna60",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -310,6 +310,36 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/QK65-Mk3-prebuilt-Version-2ca042334154803f8a57e87bff128691",
       "product": "QK65 Mk3 prebuilt Version",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-10-All-Boards-3640423341548085a0eec2618333b209",
+      "product": "QK & Neo Batch 10 (All Boards)",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Late Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/New-Retro-66-V3-364042334154801eb021f186f880ca8e",
+      "product": "New Retro #66 V3",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": ""
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Etar87-2920423341548027b82dc8e7cce3371e",
+      "product": "Etar87",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q3 2026"
     },
@@ -378,19 +408,19 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Jan-2026-Orders-31f04233415480f9a20ac14c17674ec9",
-      "product": "Neo98 / Neo75 Jan 2026 Orders",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Late Q2 2026"
+      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Batch-2-orders-3a00423341548085ba3ae07aa4e7cb37",
+      "product": "Neo98/ Neo75 Batch 2 orders",
+      "status": "Completed",
+      "expectedShipping": ""
     },
     {
       "sourceId": "keyboard",
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/GDK-Lab-NV-70-30d0423341548032a631ede43f4deaa9",
-      "product": "GDK Lab NV-70",
-      "status": "Shipping to Customers",
+      "itemUrl": "https://prototypist.notion.site/MW-Mass-80-30d042334154802bb2dee53f796518b1",
+      "product": "MW Mass 80",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -400,7 +430,7 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Smurve80-3170423341548059ba61e3e35e5c0df0",
       "product": "Smurve80",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -408,9 +438,9 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/MW-Mass-80-30d042334154802bb2dee53f796518b1",
-      "product": "MW Mass 80",
-      "status": "Shipping to Customers",
+      "itemUrl": "https://prototypist.notion.site/GDK-Lab-NV-70-30d0423341548032a631ede43f4deaa9",
+      "product": "GDK Lab NV-70",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -418,10 +448,10 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Batch-2-orders-3a00423341548085ba3ae07aa4e7cb37",
-      "product": "Neo98/ Neo75 Batch 2 orders",
-      "status": "Shipping to Customers",
-      "expectedShipping": ""
+      "itemUrl": "https://prototypist.notion.site/Neo98-Neo75-Jan-2026-Orders-31f04233415480f9a20ac14c17674ec9",
+      "product": "Neo98 / Neo75 Jan 2026 Orders",
+      "status": "Completed",
+      "expectedShipping": "Late Q2 2026"
     },
     {
       "sourceId": "keyboard",
@@ -620,56 +650,6 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Pangea-Mini-17a0423341548071b07fc54b139cf2a8",
       "product": "Pangea Mini",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Toro60-1a104233415480beacd9d0ec118224e8",
-      "product": "Toro60",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-6-All-Boards-20e042334154803e9502da3306c24118",
-      "product": "QK & Neo Batch 6 (All Boards)",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-5-2025-All-Boards-1f304233415480759384f99794cbd690",
-      "product": "QK & Neo Batch 5 2025 (All Boards)",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-4-2025-All-Boards-1c804233415480ee8bbecf40a1c29aad",
-      "product": "QK & Neo Batch 4 2025 (All Boards)",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Oblique-2c4042334154803394abefde88518834",
-      "product": "Oblique",
       "status": "Completed",
       "expectedShipping": "Q1 2026"
     },
@@ -1774,5 +1754,8 @@
       "expectedShipping": "Q1 2026"
     }
   ],
-  "fallbackSince": {}
+  "fallbackSince": {
+    "gmk": "2026-09-23T10:51:32.941Z",
+    "keyset": "2026-09-23T10:51:45.330Z"
+  }
 }
