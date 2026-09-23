@@ -18,11 +18,15 @@ final class SwagkeyScript {
             ).replace(/\s+/g, ' ').trim();
 
             const bodyText = textOf(document.body);
+            const cleanTitle = (value) => String(value || '')
+              .replace(/\s+/g, ' ')
+              .replace(/\s*[:|\-]\s*스웨그키\s*공식\s*온라인\s*스토어\s*$/i, '')
+              .trim();
             const title =
-              document.querySelector('meta[property="og:title"]')?.content
-              || document.querySelector('h1')?.innerText
-              || document.querySelector('.shop-title')?.innerText
-              || document.title
+              cleanTitle(document.querySelector('h1')?.innerText)
+              || cleanTitle(document.querySelector('.shop-title')?.innerText)
+              || cleanTitle(document.querySelector('meta[property="og:title"]')?.content)
+              || cleanTitle(document.title)
               || 'SWAGKEY 상품';
 
             const controls = [...document.querySelectorAll('button, a, input[type="button"], input[type="submit"]')];
@@ -41,13 +45,13 @@ final class SwagkeyScript {
             else if (!genericSoldOutText && document.querySelector('[data-product-code], [data-product-no], .shop_view')) available = true;
 
             if (available === null) {
-              send({ ok: false, error: 'STATE_UNKNOWN', title: String(title).trim() });
+              send({ ok: false, error: 'STATE_UNKNOWN', title });
               return 'UNKNOWN';
             }
 
             send({
               ok: true,
-              title: String(title).replace(/\s+/g, ' ').trim(),
+              title,
               stockQuantity: available ? null : 0,
               options: [{
                 id: 'default',
