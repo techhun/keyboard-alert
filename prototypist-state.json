@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-23T11:01:54.295Z",
+  "updatedAt": "2026-09-23T11:12:05.707Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -701,7 +701,7 @@
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
       "product": "GMK CYL Gurokawa",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "gmk",
@@ -711,7 +711,7 @@
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Motif-19804233415480ab8d9accb56bf9309e",
       "product": "GMK CYL Motif",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "gmk",
@@ -908,9 +908,9 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-King-of-the-Seas-3640423341548040a0a7ed99012077a8",
-      "product": "GMK CYL King of the Seas",
-      "status": "Shipping to Customers",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Ramune-36404233415480c186dac89814cc92ec",
+      "product": "GMK CYL Ramune",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -918,9 +918,9 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Ramune-36404233415480c186dac89814cc92ec",
-      "product": "GMK CYL Ramune",
-      "status": "Shipping to Customers",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-King-of-the-Seas-3640423341548040a0a7ed99012077a8",
+      "product": "GMK CYL King of the Seas",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1154,26 +1154,6 @@
       "expectedShipping": "Q2 2026"
     },
     {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Unobtainium-Blue-2f604233415480fe9d98ceaaf871992c",
-      "product": "GMK CYL Unobtainium Blue",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Cherry-Love-2ca04233415480a2a519ca0136d63c1b",
-      "product": "GMK CYL Cherry Love",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
       "sourceId": "keyset",
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
@@ -1221,7 +1201,7 @@
       "itemUrl": "https://prototypist.notion.site/DMK-Choco-Donuts-R2-f357a09de0594e6787cbaef1b5944d55",
       "product": "DMK Choco Donuts R2",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1231,7 +1211,7 @@
       "itemUrl": "https://prototypist.notion.site/KKB-Angel-3170423341548002b892d3d1bb09c823",
       "product": "KKB Angel",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1241,7 +1221,7 @@
       "itemUrl": "https://prototypist.notion.site/KKB-Beige-31704233415480e89f37f396e2164653",
       "product": "KKB Beige",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1251,7 +1231,7 @@
       "itemUrl": "https://prototypist.notion.site/PBS-WoB-317042334154803aa932d0e916927d87",
       "product": "PBS WoB",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1261,7 +1241,7 @@
       "itemUrl": "https://prototypist.notion.site/PFF-Verdant-Retro-36404233415480ebb764d17053de6a15",
       "product": "PFF Verdant Retro",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1271,7 +1251,7 @@
       "itemUrl": "https://prototypist.notion.site/DCS-Cream-Cheese-Green-R3-36404233415480e494eae3a020d55e81",
       "product": "DCS Cream Cheese & Green R3",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1281,7 +1261,7 @@
       "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
       "product": "DCS Hangul PBT",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1291,7 +1271,7 @@
       "itemUrl": "https://prototypist.notion.site/SWG-Bolch-36404233415480cfa432c40a51158339",
       "product": "SWG Bolch",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1301,7 +1281,7 @@
       "itemUrl": "https://prototypist.notion.site/SWG-Classic-Red-36404233415480bc9a96cdd3ca69953a",
       "product": "SWG Classic Red",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1321,7 +1301,7 @@
       "itemUrl": "https://prototypist.notion.site/KKB-Emoji-3640423341548021b237d6a584f9c48e",
       "product": "KKB Emoji",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1341,7 +1321,7 @@
       "itemUrl": "https://prototypist.notion.site/PBS-Retro-S-M-AG-36404233415480abadf0cde1440021ab",
       "product": "PBS Retro S.M AG",
       "status": "In Manufacturing",
-      "expectedShipping": "Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
@@ -1478,16 +1458,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Kintsugi-Shiro-30d0423341548050ab4fc90f2890e241",
-      "product": "KKB Kintsugi Shiro",
-      "status": "In Quality Control",
-      "expectedShipping": "Late Q3 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
       "product": "CRP r7",
       "status": "In Quality Control",
@@ -1500,8 +1470,18 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/MW-Gesha-36404233415480969687db753cceae29",
       "product": "MW Gesha",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Kintsugi-Shiro-30d0423341548050ab4fc90f2890e241",
+      "product": "KKB Kintsugi Shiro",
+      "status": "Completed",
+      "expectedShipping": "Late Q3 2026"
     },
     {
       "sourceId": "keyset",
@@ -1732,30 +1712,7 @@
       "product": "KAP MV Classic",
       "status": "Completed",
       "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-ABS-Flex-Sets-2ca0423341548095b3e2d94db8f59326",
-      "product": "DCS ABS Flex Sets",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/PBS-Modern-Abacus-MoAb-20e0423341548087ae39d06c6c09086b",
-      "product": "PBS Modern Abacus (MoAb)",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-09-23T11:01:40.323Z",
-    "keyset": "2026-09-23T11:01:52.725Z"
-  }
+  "fallbackSince": {}
 }
