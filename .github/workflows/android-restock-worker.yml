@@ -37,14 +37,14 @@ jobs:
 
       - name: Upload lint reports
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: restock-worker-lint
           path: android/restock-worker/app/build/reports/lint-results-debug.*
           if-no-files-found: warn
           retention-days: 7
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: restock-worker-debug-apk
           path: android/restock-worker/app/build/outputs/apk/debug/app-debug.apk
