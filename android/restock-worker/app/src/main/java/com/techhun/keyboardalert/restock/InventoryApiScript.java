@@ -92,6 +92,6 @@ final class InventoryApiScript {
               })();
               return 'STARTED';
             })()
-            """.replaceFirst("%s", productId)\n                .replaceFirst("%s", apiUrl)\n                .replaceFirst("%s", fallbackTitle);
+            """, productId, apiUrl, fallbackTitle);
     }
 }
