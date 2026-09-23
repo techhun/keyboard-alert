@@ -2,6 +2,8 @@ package com.techhun.keyboardalert.restock;
 
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 final class InventoryApiScript {
     private InventoryApiScript() {}
 
@@ -9,7 +11,7 @@ final class InventoryApiScript {
         String productId = JSONObject.quote(product.optString("id", ""));
         String apiUrl = JSONObject.quote(product.optString("apiUrl", ""));
         String fallbackTitle = JSONObject.quote(product.optString("title", "SmartStore 상품"));
-        return """
+        return String.format(Locale.ROOT, """
             (() => {
               const send = (value) => window.RestockBridge.onResult(JSON.stringify(value));
               (async () => {
