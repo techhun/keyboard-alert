@@ -35,6 +35,15 @@ jobs:
       - name: Lint and build debug APK
         run: gradle :app:lintDebug :app:assembleDebug --stacktrace
 
+      - name: Upload lint reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: restock-worker-lint
+          path: android/restock-worker/app/build/reports/lint-results-debug.*
+          if-no-files-found: warn
+          retention-days: 7
+
       - uses: actions/upload-artifact@v4
         with:
           name: restock-worker-debug-apk
