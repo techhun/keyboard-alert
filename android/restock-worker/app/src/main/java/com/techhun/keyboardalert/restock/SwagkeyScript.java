@@ -20,7 +20,7 @@ final class SwagkeyScript {
             const bodyText = textOf(document.body);
             const cleanTitle = (value) => String(value || '')
               .replace(/\s+/g, ' ')
-              .replace(/\s*[:|\-]\s*스웨그키\s*공식\s*온라인\s*스토어\s*$/i, '')
+              .replace(/\s*[:|-]\s*스웨그키\s*공식\s*온라인\s*스토어\s*$/i, '')
               .trim();
             const title =
               cleanTitle(document.querySelector('h1')?.innerText)
