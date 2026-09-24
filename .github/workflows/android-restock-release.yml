@@ -31,13 +31,11 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.RESTOCK_RELEASE_KEYSTORE_BASE64 }}
           STORE_PASSWORD: ${{ secrets.RESTOCK_RELEASE_STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.RESTOCK_RELEASE_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.RESTOCK_RELEASE_KEY_PASSWORD }}
         shell: bash
         run: |
           test -n "$KEYSTORE_BASE64" || { echo "RESTOCK_RELEASE_KEYSTORE_BASE64 is missing"; exit 1; }
           test -n "$STORE_PASSWORD" || { echo "RESTOCK_RELEASE_STORE_PASSWORD is missing"; exit 1; }
           test -n "$KEY_ALIAS" || { echo "RESTOCK_RELEASE_KEY_ALIAS is missing"; exit 1; }
-          test -n "$KEY_PASSWORD" || { echo "RESTOCK_RELEASE_KEY_PASSWORD is missing"; exit 1; }
 
           keystore_path="$RUNNER_TEMP/restock-release.jks"
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$keystore_path"
@@ -45,7 +43,9 @@ jobs:
           echo "RESTOCK_KEYSTORE_PATH=$keystore_path" >> "$GITHUB_ENV"
           echo "RESTOCK_KEYSTORE_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
           echo "RESTOCK_KEY_ALIAS=$KEY_ALIAS" >> "$GITHUB_ENV"
-          echo "RESTOCK_KEY_PASSWORD=$KEY_PASSWORD" >> "$GITHUB_ENV"
+          # The release keystore is PKCS12. PKCS12 uses the store password
+          # for the private key as well, so keep Gradle signing consistent.
+          echo "RESTOCK_KEY_PASSWORD=$STORE_PASSWORD" >> "$GITHUB_ENV"
 
       - name: Verify release signing credentials
         shell: bash
@@ -56,13 +56,13 @@ jobs:
             -srckeystore "$RESTOCK_KEYSTORE_PATH" \
             -srcstorepass "$RESTOCK_KEYSTORE_PASSWORD" \
             -srcalias "$RESTOCK_KEY_ALIAS" \
-            -srckeypass "$RESTOCK_KEY_PASSWORD" \
+            -srckeypass "$RESTOCK_KEYSTORE_PASSWORD" \
             -destkeystore "$verify_store" \
             -deststoretype PKCS12 \
             -deststorepass "RestockVerify123!" \
             -destkeypass "RestockVerify123!" \
             -noprompt >/dev/null 2>&1; then
-            echo "::error::Release signing credentials do not match the keystore. Recheck RESTOCK_RELEASE_KEYSTORE_BASE64, RESTOCK_RELEASE_STORE_PASSWORD, RESTOCK_RELEASE_KEY_ALIAS, and especially RESTOCK_RELEASE_KEY_PASSWORD."
+            echo "::error::Release signing credentials do not match the keystore. Recheck RESTOCK_RELEASE_KEYSTORE_BASE64, RESTOCK_RELEASE_STORE_PASSWORD, and RESTOCK_RELEASE_KEY_ALIAS."
             exit 1
           fi
           rm -f "$verify_store"
