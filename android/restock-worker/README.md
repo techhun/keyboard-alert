@@ -92,26 +92,40 @@ Android Studio에서 `android/restock-worker` 디렉터리를 프로젝트로 �
 GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 검증합니다.
 
 ```text
+:app:testDebugUnitTest
 :app:lintDebug
 :app:assembleDebug
 ```
 
-검증이 모두 성공하면 `restock-worker-debug-apk` artifact가 생성됩니다.
+검증이 모두 성공하면 debug APK, unit test report, lint report artifact가 생성됩니다.
+
+## Release signing
+
+장기 업데이트 설치를 위해 release APK는 고정 keystore로 서명합니다. keystore 파일은 저장소에 커밋하지 않습니다.
+
+수동 실행용 **Android Restock Release APK** workflow는 다음 GitHub Actions Secrets를 사용합니다.
+
+- `RESTOCK_RELEASE_KEYSTORE_BASE64`
+- `RESTOCK_RELEASE_STORE_PASSWORD`
+- `RESTOCK_RELEASE_KEY_ALIAS`
+- `RESTOCK_RELEASE_KEY_PASSWORD`
+
+모든 secret이 등록된 뒤 workflow를 수동 실행하면 unit test와 lint를 다시 수행한 후 서명된 `app-release.apk`를 artifact로 생성합니다.
 
 ## 마감 회귀 테스트
 
 릴리스 후보 APK에서는 최소한 다음 흐름을 확인합니다.
 
-1. SWAGKEY만 ON + 네이버 로그아웃 상태에서 감시 및 앱 재진입
-2. SmartStore + SWAGKEY 동시 ON 상태에서 네이버 세션 만료 후 SWAGKEY 지속 감시
-3. Wi-Fi/모바일 네트워크 끊김 후 자동 복구
-4. 기기 재부팅 후 켜진 상품 감시 자동 재개
-5. 동일 재고 상태에서 중복 재입고 알림이 발생하지 않음
-6. 품절 → 재고 있음 전환 시 1회 재입고 알림
-7. 429 발생 시 백오프 후 정상 복구
-8. JSON 백업/복원 후 상품, 옵션, ON/OFF, 조회 주기 확인
-9. 상품 삭제/옵션 수정/알림 OFF·ON 후 감시 서비스 상태 확인
-10. 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
+- [x] SWAGKEY만 ON + 네이버 로그아웃 상태에서 감시 및 앱 재진입 (2026-09-24 실기기 확인)
+- [ ] SmartStore + SWAGKEY 동시 ON 상태에서 네이버 세션 만료 후 SWAGKEY 지속 감시
+- [ ] Wi-Fi/모바일 네트워크 끊김 후 자동 복구
+- [ ] 기기 재부팅 후 켜진 상품 감시 자동 재개
+- [ ] 동일 재고 상태에서 중복 재입고 알림이 발생하지 않음
+- [ ] 품절 → 재고 있음 전환 시 1회 재입고 알림
+- [ ] 429 발생 시 백오프 후 정상 복구
+- [ ] JSON 백업/복원 후 상품, 옵션, ON/OFF, 조회 주기 확인
+- [ ] 상품 삭제/옵션 수정/알림 OFF·ON 후 감시 서비스 상태 확인
+- [ ] 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
 
 ## 버전
 

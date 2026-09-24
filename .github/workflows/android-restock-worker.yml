@@ -32,8 +32,17 @@ jobs:
         with:
           gradle-version: '9.6.0'
 
-      - name: Lint and build debug APK
-        run: gradle :app:lintDebug :app:assembleDebug --stacktrace
+      - name: Test, lint and build debug APK
+        run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --stacktrace
+
+      - name: Upload unit test report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: restock-worker-unit-tests
+          path: android/restock-worker/app/build/reports/tests/testDebugUnitTest/**
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Upload lint reports
         if: always()

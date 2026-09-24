@@ -17,3 +17,8 @@ android/restock-worker/**/build/
 
 # Local logs/runtime files
 *.log
+
+# Android release signing
+*.jks
+*.keystore
+android/restock-worker/signing.properties
