@@ -112,6 +112,8 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 
 모든 secret이 등록된 뒤 workflow를 수동 실행하면 unit test와 lint를 다시 수행한 후 서명된 `app-release.apk`를 artifact로 생성합니다.
 
+기존 debug APK에서 고정 release key로 처음 전환할 때는 서명이 달라 일반 업데이트 설치가 되지 않습니다. 최초 1회는 **JSON 백업 → 기존 debug APK 삭제 → release APK 설치 → JSON 복원 → 네이버 재로그인** 순서로 전환합니다. 이후 release APK는 같은 keystore를 계속 사용하므로 일반 업데이트 설치가 가능합니다.
+
 ## 마감 회귀 테스트
 
 릴리스 후보 APK에서는 최소한 다음 흐름을 확인합니다.
