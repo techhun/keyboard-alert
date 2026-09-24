@@ -47,6 +47,26 @@ jobs:
           echo "RESTOCK_KEY_ALIAS=$KEY_ALIAS" >> "$GITHUB_ENV"
           echo "RESTOCK_KEY_PASSWORD=$KEY_PASSWORD" >> "$GITHUB_ENV"
 
+      - name: Verify release signing credentials
+        shell: bash
+        run: |
+          verify_store="$RUNNER_TEMP/signing-verify.p12"
+          rm -f "$verify_store"
+          if ! keytool -importkeystore \
+            -srckeystore "$RESTOCK_KEYSTORE_PATH" \
+            -srcstorepass "$RESTOCK_KEYSTORE_PASSWORD" \
+            -srcalias "$RESTOCK_KEY_ALIAS" \
+            -srckeypass "$RESTOCK_KEY_PASSWORD" \
+            -destkeystore "$verify_store" \
+            -deststoretype PKCS12 \
+            -deststorepass "RestockVerify123!" \
+            -destkeypass "RestockVerify123!" \
+            -noprompt >/dev/null 2>&1; then
+            echo "::error::Release signing credentials do not match the keystore. Recheck RESTOCK_RELEASE_KEYSTORE_BASE64, RESTOCK_RELEASE_STORE_PASSWORD, RESTOCK_RELEASE_KEY_ALIAS, and especially RESTOCK_RELEASE_KEY_PASSWORD."
+            exit 1
+          fi
+          rm -f "$verify_store"
+
       - name: Test, lint and build signed release APK
         run: gradle :app:testDebugUnitTest :app:lintRelease :app:assembleRelease --stacktrace
 
