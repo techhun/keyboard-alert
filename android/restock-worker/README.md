@@ -108,7 +108,8 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 - `RESTOCK_RELEASE_KEYSTORE_BASE64`
 - `RESTOCK_RELEASE_STORE_PASSWORD`
 - `RESTOCK_RELEASE_KEY_ALIAS`
-- `RESTOCK_RELEASE_KEY_PASSWORD`
+
+현재 release keystore는 PKCS12 형식이므로 개인키 비밀번호는 store password와 동일하게 사용합니다. 별도의 `RESTOCK_RELEASE_KEY_PASSWORD` Secret은 필요하지 않습니다. 기존에 등록되어 있다면 삭제해도 됩니다.
 
 모든 secret이 등록된 뒤 workflow를 수동 실행하면 unit test와 lint를 다시 수행한 후 서명된 `app-release.apk`를 artifact로 생성합니다.
 
