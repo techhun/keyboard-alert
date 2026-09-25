@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-25T09:51:18.774Z",
+  "updatedAt": "2026-09-25T11:11:07.391Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -718,16 +718,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
-      "product": "GMK Centinela Extension Kit",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
       "product": "GMK Spark",
       "status": "In Manufacturing",
@@ -750,16 +740,6 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Selene-36404233415480a0b1e6f15b1b16f3c7",
       "product": "GMK CYL Selene",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Prussian-Alert-36404233415480c88628d1f6c4ded985",
-      "product": "GMK CYL Prussian Alert",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -902,6 +882,26 @@
       "product": "GMK CYL Orange Alert",
       "status": "In Manufacturing",
       "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Prussian-Alert-36404233415480c88628d1f6c4ded985",
+      "product": "GMK CYL Prussian Alert",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
+      "product": "GMK Centinela Extension Kit",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "gmk",
