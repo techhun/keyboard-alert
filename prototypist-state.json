@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-23T11:12:05.707Z",
+  "updatedAt": "2026-09-25T09:51:18.774Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1448,20 +1448,20 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Olivetti-36404233415480f9b87bde3ad5e9e1ac",
-      "product": "DCS Olivetti",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q3 2026"
+      "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
+      "product": "CRP r7",
+      "status": "In Quality Control",
+      "expectedShipping": "Late Q3 2026"
     },
     {
       "sourceId": "keyset",
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
-      "product": "CRP r7",
-      "status": "In Quality Control",
-      "expectedShipping": "Late Q3 2026"
+      "itemUrl": "https://prototypist.notion.site/DCS-Olivetti-36404233415480f9b87bde3ad5e9e1ac",
+      "product": "DCS Olivetti",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q3 2026"
     },
     {
       "sourceId": "keyset",
