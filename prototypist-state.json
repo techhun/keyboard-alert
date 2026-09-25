@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-25T11:11:07.391Z",
+  "updatedAt": "2026-09-25T11:21:33.654Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -388,8 +388,8 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/MM-Class100-3170423341548049bf7eee6556316a70",
-      "product": "MM Class100",
+      "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
+      "product": "Ramune60",
       "status": "In Quality Control",
       "expectedShipping": "Q3 2026"
     },
@@ -398,9 +398,9 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
-      "product": "Ramune60",
-      "status": "In Quality Control",
+      "itemUrl": "https://prototypist.notion.site/MM-Class100-3170423341548049bf7eee6556316a70",
+      "product": "MM Class100",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q3 2026"
     },
     {
