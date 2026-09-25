@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-25T03:32:18.649Z",
+  "updatedAt": "2026-09-25T03:41:35.189Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -17,10 +17,7 @@
     },
     "swagkeys": {
       "status": "ok",
-      "changedAt": "2026-09-23T09:31:44.252Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "36090634847",
-      "lastFailureAt": "2026-09-25T03:32:18.648Z"
+      "changedAt": "2026-09-23T09:31:44.252Z"
     }
   }
 }
