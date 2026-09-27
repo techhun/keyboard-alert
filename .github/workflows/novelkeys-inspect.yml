@@ -1,0 +1,36 @@
+name: NovelKeys inspect
+
+on:
+  push:
+    branches: [feat/novelkeys-alert]
+    paths:
+      - '.github/workflows/novelkeys-inspect.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Inspect NovelKeys HTML
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          const url='https://novelkeys.com/pages/product-updates';
+          const r=await fetch(url,{headers:{'user-agent':'keyboard-alert/1.0','accept':'text/html'}});
+          console.log('status',r.status);
+          const html=await r.text();
+          console.log('bytes',html.length);
+          const needle='Current Status';
+          let from=0, count=0;
+          while(count<4){
+            const i=html.indexOf(needle,from);
+            if(i<0) break;
+            console.log('\n--- sample '+(count+1)+' ---');
+            console.log(html.slice(Math.max(0,i-900),Math.min(html.length,i+1200)).replace(/\s+/g,' '));
+            from=i+needle.length;
+            count++;
+          }
+          NODE
