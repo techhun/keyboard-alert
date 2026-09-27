@@ -10,6 +10,7 @@
     "check:geonworks-release": "node scripts/check-geonworks-release.mjs",
     "check:prototypist": "node scripts/check-prototypist.mjs",
     "check:swagkeys": "node scripts/check-swagkeys.mjs",
+    "check:oblotzky": "node scripts/check-oblotzky.mjs",
     "check:restock": "node scripts/check-restock.mjs",
     "system:health": "node scripts/system-health.mjs",
     "restock:bot": "node scripts/restock-bot.mjs",
