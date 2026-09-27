@@ -14,6 +14,9 @@ on:
       - 'scripts/check-novelkeys.mjs'
       - 'scripts/novelkeys-safety.mjs'
       - 'tests/novelkeys-safety.test.mjs'
+      - 'scripts/check-kbdfans.mjs'
+      - 'scripts/kbdfans-safety.mjs'
+      - 'tests/kbdfans-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/geonworks-tests.yml'
@@ -29,6 +32,9 @@ on:
       - 'scripts/check-novelkeys.mjs'
       - 'scripts/novelkeys-safety.mjs'
       - 'tests/novelkeys-safety.test.mjs'
+      - 'scripts/check-kbdfans.mjs'
+      - 'scripts/kbdfans-safety.mjs'
+      - 'tests/kbdfans-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
 
@@ -58,3 +64,5 @@ jobs:
         run: npm run check:oblotzky
       - name: Smoke check NovelKeys Product Updates
         run: npm run check:novelkeys
+      - name: Smoke check KBDfans Product Updates
+        run: npm run check:kbdfans
