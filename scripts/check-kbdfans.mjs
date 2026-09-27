@@ -167,6 +167,10 @@ console.log('KBDfans category counts:', JSON.stringify(
     .map((category) => [category, rows.filter((row) => row.category === category).length]))
 ));
 console.log('KBDfans sample:', JSON.stringify(rows[0], null, 2));
+const latestUpdateSample = rows
+  .filter((row) => clean(row.latestUpdateDate))
+  .sort((a, b) => Date.parse(b.latestUpdateDate) - Date.parse(a.latestUpdateDate))[0];
+if (latestUpdateSample) console.log('KBDfans latest update sample:', JSON.stringify(latestUpdateSample, null, 2));
 
 const state = loadState();
 const previousRows = Array.isArray(state?.rows) ? state.rows : [];
