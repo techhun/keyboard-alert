@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-21T06:30:47.057Z",
+  "updatedAt": "2026-09-27T23:50:37.755Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -13,28 +13,6 @@
       "fixed": "확정 / Fixed",
       "start": "2026-08-31",
       "end": "2026-10-06"
-    },
-    {
-      "product": "GMK CYL Mothman",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-04",
-      "end": "2026-09-25"
-    },
-    {
-      "product": "GMK CYL Varenye",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-04",
-      "end": "2026-09-25"
     },
     {
       "product": "GMK MTNU Oblivion",
@@ -84,6 +62,8 @@
   "sentChanges": {
     "5b8b090fc0e0f1a0503eac68": "2026-09-21T01:20:48.286Z",
     "1245d2d4716f3746a298ce81": "2026-09-21T06:20:45.418Z",
-    "4a058bf66e89e56f15d10541": "2026-09-21T06:30:47.057Z"
+    "4a058bf66e89e56f15d10541": "2026-09-21T06:30:47.057Z",
+    "dd99b9f77c081a5c72228acc": "2026-09-27T23:50:37.557Z",
+    "08fd0ca0e6dbc18eb22260f5": "2026-09-27T23:50:37.755Z"
   }
 }
