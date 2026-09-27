@@ -144,7 +144,7 @@ jobs:
         run: |
           git fetch origin watcher-state
           changed_files=()
-          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json system-health-slow.json; do
+          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json system-health-slow.json; do
             if [ -f "$file" ] && ! git diff --quiet origin/watcher-state -- "$file"; then
               changed_files+=("$file")
             fi
