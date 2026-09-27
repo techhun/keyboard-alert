@@ -11,6 +11,9 @@ on:
       - 'scripts/check-oblotzky.mjs'
       - 'scripts/oblotzky-safety.mjs'
       - 'tests/oblotzky-safety.test.mjs'
+      - 'scripts/check-novelkeys.mjs'
+      - 'scripts/novelkeys-safety.mjs'
+      - 'tests/novelkeys-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/geonworks-tests.yml'
@@ -23,6 +26,9 @@ on:
       - 'scripts/check-oblotzky.mjs'
       - 'scripts/oblotzky-safety.mjs'
       - 'tests/oblotzky-safety.test.mjs'
+      - 'scripts/check-novelkeys.mjs'
+      - 'scripts/novelkeys-safety.mjs'
+      - 'tests/novelkeys-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
 
@@ -50,3 +56,5 @@ jobs:
         run: npm run check:geonworks-release
       - name: Smoke check Oblotzky Schedule
         run: npm run check:oblotzky
+      - name: Smoke check NovelKeys Product Updates
+        run: npm run check:novelkeys
