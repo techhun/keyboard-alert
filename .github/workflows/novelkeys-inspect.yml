@@ -23,7 +23,7 @@ jobs:
           console.log('status',r.status);
           const html=await r.text();
           console.log('bytes',html.length);
-          const needle='Current Status';
+          for (const heading of ['KEYBOARDS','KEYCAPS','DESKPADS','MISC.']) { const hi=html.indexOf('>'+heading+'<'); console.log('\n--- heading '+heading+' ---'); console.log(hi>=0 ? html.slice(Math.max(0,hi-500),Math.min(html.length,hi+700)).replace(/\\s+/g,' ') : 'not found'); }\n          const needle='Current Status';
           let from=0, count=0;
           while(count<4){
             const i=html.indexOf(needle,from);
