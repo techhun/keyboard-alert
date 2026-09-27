@@ -23,13 +23,22 @@ jobs:
           console.log('status',r.status);
           const html=await r.text();
           console.log('bytes',html.length);
-          for (const heading of ['KEYBOARDS','KEYCAPS','DESKPADS','MISC.']) { const hi=html.indexOf('>'+heading+'<'); console.log('\n--- heading '+heading+' ---'); console.log(hi>=0 ? html.slice(Math.max(0,hi-500),Math.min(html.length,hi+700)).replace(/\\s+/g,' ') : 'not found'); }\n          const needle='Current Status';
+
+          for (const heading of ['KEYBOARDS','KEYCAPS','DESKPADS','MISC.']) {
+            const hi=html.indexOf('>'+heading+'<');
+            console.log('\n--- heading '+heading+' ---');
+            console.log(hi>=0
+              ? html.slice(Math.max(0,hi-500),Math.min(html.length,hi+700)).replace(/\s+/g,' ')
+              : 'not found');
+          }
+
+          const needle='Current Status';
           let from=0, count=0;
-          while(count<4){
+          while(count<2){
             const i=html.indexOf(needle,from);
             if(i<0) break;
             console.log('\n--- sample '+(count+1)+' ---');
-            console.log(html.slice(Math.max(0,i-900),Math.min(html.length,i+1200)).replace(/\s+/g,' '));
+            console.log(html.slice(Math.max(0,i-700),Math.min(html.length,i+900)).replace(/\s+/g,' '));
             from=i+needle.length;
             count++;
           }
