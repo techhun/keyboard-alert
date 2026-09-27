@@ -34,7 +34,7 @@ jobs:
         shell: bash
         run: |
           git fetch origin watcher-state
-          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json system-health-slow.json; do
+          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json kbdfans-state.json system-health-slow.json; do
             if git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
               git show "origin/watcher-state:$file" > "$file"
             fi
@@ -159,13 +159,34 @@ jobs:
           fi
           npm run system:health -- transition slow novelkeys "$status" 'NovelKeys' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
+      - name: Check KBDfans product updates
+        if: always()
+        env:
+          KBDFANS_DISCORD_WEBHOOK_URL: ${{ secrets.KBDFANS_DISCORD_WEBHOOK_URL }}
+          SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          status=ok
+          if npm run check:kbdfans; then
+            :
+          else
+            echo 'KBDfans read failed once; retrying...'
+            if npm run check:kbdfans; then
+              :
+            else
+              status=fail
+              echo 'KBDfans is temporarily unavailable after retries. Keeping the previous verified state and continuing.'
+            fi
+          fi
+          npm run system:health -- transition slow kbdfans "$status" 'KBDfans' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
+
       - name: Persist slow watcher state
         if: always()
         shell: bash
         run: |
           git fetch origin watcher-state
           changed_files=()
-          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json system-health-slow.json; do
+          for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json kbdfans-state.json system-health-slow.json; do
             if [ -f "$file" ] && ! git diff --quiet origin/watcher-state -- "$file"; then
               changed_files+=("$file")
             fi
