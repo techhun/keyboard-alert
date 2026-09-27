@@ -1,0 +1,344 @@
+{
+  "version": 1,
+  "initialized": true,
+  "updatedAt": "2026-09-27T23:11:41.366Z",
+  "rows": [
+    {
+      "category": "Keyboard",
+      "product": "KeyBoy Advance",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/key-boy-advance"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keycult No. 2/60",
+      "status": "Order placed.",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/keycult-no-2-60-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Artifact Stratum 80",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/artifact-stratum-80-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Hope Keyboard",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/hope-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Matrix Carnival",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/matrix-carnival-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "NESON NoryTek70",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/neson-norytek-70"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keycult No. 2/TKL",
+      "status": "In queue for production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/keycult-no-2-tkl"
+    },
+    {
+      "category": "Keyboard",
+      "product": "CLASSIC-TKL Mictlan Edition",
+      "status": "In production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/classic-tkl-mictlan-edition-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "[Extra Case] Cloudnine 2",
+      "status": "All Cloudnine Parts are currently in transit to NovelKeys via sea shipment except for the PVD keyboards. We expect to receive the shipment by the end of October.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/extra-case-cloudnine-2"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Cloudnine 2 | Grand Machina Version",
+      "status": "All Cloudnine Parts are currently in transit to NovelKeys via sea shipment except for the PVD keyboards. We expect to receive the shipment by the end of October. PVD Units are expected to complete during Q4 2026",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/cloudnine-ii-grand-machina-version-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Cloudnine 2",
+      "status": "All Cloudnine Parts are currently in transit to NovelKeys via sea shipment except for the PVD keyboards. We expect to receive the shipment by the end of October.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/cloudnine-2-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Beetle 60",
+      "status": "In queue for production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/beetle-60-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "CLASSIC-TKL Hatsune Miku Edition",
+      "status": "In production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/classic-tkl-hatsune-miku-edition"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Lily R2 MX Keyboard Kit",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/lily-r2-mx-keyboard-kit"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Lily R2 Extra Components",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/lily-r2-extra-components"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Lily R2 EC Keyboard Kit",
+      "status": "Estimated to complete end of July and ship to customers early August.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/lily-r2"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keycult No. 3 / TKL",
+      "status": "No. 3/TKL manufacturing and packaging is complete. Currently receiving a production unit to inspect before shipment begins. Estimated to ship out from China by end of September after unit is QC'd and inspected. Arrival to NovelKeys is expected end of October.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/keycult-no-3-tkl-keyboard"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keycult No.1 / TKL Series 22",
+      "status": "PCBs and Wrist Rests are complete. Currently in production on all the other parts. Estimated to complete during Q4.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/keycult-no-1-tkl-series-22-keyboard"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Varenye",
+      "status": "Open for orders",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/gmk-cyl-varenye"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Mothman",
+      "status": "Open for orders",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/gmk-cyl-mothman"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Solarized Reborn",
+      "status": "Order placed.",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/gmk-cyl-solarized-reborn-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK MTNU JUST",
+      "status": "Order placed.",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/gmk-mtnu-just-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Mini Orange Accent Pack",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-mini-orange-accent-pack"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Noire",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-noire-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Hyperfuse Origins R3",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-hyperfuse-r3-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "CYL Finer Things R2",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-finer-things-r2-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK Analog Dreams R3",
+      "status": "Order placed.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/gmk-analog-dreams-r3-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK 2Pack",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-2pack-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "DCS Mudbeam",
+      "status": "Color sampling.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/dcs-mudbeam-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Masterpiece R2",
+      "status": "In queue for production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK Centinela Extension Kit",
+      "status": "In queue for production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-centinela-extension-kit"
+    },
+    {
+      "category": "Keycap",
+      "product": "GMK CYL Prussian Alert",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-prussian-alert-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "DCS Cream Cheese and Green R3",
+      "status": "In production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/dcs-cream-cheese-r3"
+    },
+    {
+      "category": "Keycap",
+      "product": "CYL Gurokawa",
+      "status": "In queue for production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-gurokawa-keycaps"
+    },
+    {
+      "category": "Keycap",
+      "product": "Motif ENTER Artisan",
+      "status": "In queue for production.",
+      "eta": "Q1 2026",
+      "url": "https://novelkeys.com/products/motif-enter-artisan"
+    },
+    {
+      "category": "Keycap",
+      "product": "Motif 1u Artisan",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q4 2025",
+      "url": "https://novelkeys.com/products/motif-aiglatson-studio-artisan"
+    },
+    {
+      "category": "Keycap",
+      "product": "CYL Motif",
+      "status": "Final color sample currently being discussed with GMK and designer.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-motif-keycaps"
+    },
+    {
+      "category": "Deskpad",
+      "product": "NovelKeys Glasspad",
+      "status": "Order placed.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/novelkeys-glasspad"
+    },
+    {
+      "category": "Deskpad",
+      "product": "Noire Deskpad",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/noire-deskpad"
+    },
+    {
+      "category": "Deskpad",
+      "product": "Finer Things R2 Deskpad",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/finer-things-r2-deskpad"
+    },
+    {
+      "category": "Deskpad",
+      "product": "Masterpiece R2 Deskpad",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-deskpad"
+    },
+    {
+      "category": "Deskpad",
+      "product": "GREG 2 Deskpad",
+      "status": "In production.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/greg-2-deskpad"
+    },
+    {
+      "category": "Deskpad",
+      "product": "Gurokawa Deskpads",
+      "status": "Fulfilled!",
+      "eta": "",
+      "url": "https://novelkeys.com/products/gurokawa-deskpads"
+    },
+    {
+      "category": "Misc.",
+      "product": "Typeplus Hi! Viz Switches",
+      "status": "Sampling.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/typeplus-hi-viz-switches"
+    },
+    {
+      "category": "Misc.",
+      "product": "Beetle 60 PCBs",
+      "status": "In queue for production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/beetle-60-pcbs"
+    },
+    {
+      "category": "Misc.",
+      "product": "Beetle 60 Plates",
+      "status": "In queue for production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/beetle-60-plates"
+    },
+    {
+      "category": "Misc.",
+      "product": "Keycult Wrist Rests",
+      "status": "In transit to NovelKeys.",
+      "eta": "Q4 2026",
+      "url": "https://novelkeys.com/products/keycult-wrist-rests"
+    },
+    {
+      "category": "Misc.",
+      "product": "Motif Cable",
+      "status": "In queue for production.",
+      "eta": "Q3 2026",
+      "url": "https://novelkeys.com/products/motif-cable"
+    }
+  ],
+  "sentChanges": {}
+}
