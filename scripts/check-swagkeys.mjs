@@ -6,6 +6,8 @@ const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
 const ROADMAP_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 const STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
+const STATUS_PAGE_ID = '3b5f75d5-3601-8064-b051-e6a663b41d35';
+const NOTION_API_BASE = 'https://swagkeys.notion.site/api/v3';
 const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
 const STAGES = [
   { key: 'groupBuy', label: '공제' },
@@ -251,6 +253,171 @@ async function extractRows(page) {
   });
 }
 
+
+function unwrapNotionRecord(record) {
+  return record?.value?.value ?? record?.value ?? record ?? null;
+}
+
+function notionText(value) {
+  if (!Array.isArray(value)) return clean(value);
+  return value.map((part) => {
+    if (Array.isArray(part)) return String(part[0] ?? '');
+    return String(part ?? '');
+  }).join('').trim();
+}
+
+function notionDate(value) {
+  let found = '';
+  const visit = (node) => {
+    if (found || node == null) return;
+    if (Array.isArray(node)) {
+      for (const item of node) visit(item);
+      return;
+    }
+    if (typeof node === 'object') {
+      if (typeof node.start_date === 'string') {
+        found = node.start_date;
+        return;
+      }
+      for (const item of Object.values(node)) visit(item);
+    }
+  };
+  visit(value);
+  return found;
+}
+
+function findSchemaPropertyId(schema, matcher, fallbackId) {
+  const entry = Object.entries(schema || {}).find(([, definition]) => matcher.test(clean(definition?.name)));
+  return entry?.[0] || fallbackId;
+}
+
+function notionStatusText(properties, propertyId, schema) {
+  const value = notionText(properties?.[propertyId]);
+  if (value) return value;
+  return clean(schema?.[propertyId]?.defaultOption);
+}
+
+function notionProgressPercent(properties, propertyId, schema) {
+  const raw = Number(notionText(properties?.[propertyId]));
+  if (!Number.isFinite(raw)) return 0;
+  const maxValue = Number(schema?.[propertyId]?.show_as?.maxValue);
+  const value = Number.isFinite(maxValue) && maxValue > 0 ? (raw / maxValue) * 100 : raw;
+  return Math.round(value * 10) / 10;
+}
+
+export function parseSwagkeysStatusApi(pageData, collectionData) {
+  const pageRecord = unwrapNotionRecord(pageData?.recordMap?.block?.[STATUS_PAGE_ID]);
+  const collectionId = pageRecord?.collection_id;
+  if (!collectionId) throw new Error('SWAGKEYS status collection id was missing from Notion page data');
+
+  const collectionRecord = unwrapNotionRecord(
+    pageData?.recordMap?.collection?.[collectionId]
+    || collectionData?.recordMap?.collection?.[collectionId]
+  );
+  const schema = collectionRecord?.schema || {};
+
+  const ids = {
+    groupBuy: findSchemaPropertyId(schema, /Group-Buy/i, 'Zr<U'),
+    waitingProduction: findSchemaPropertyId(schema, /Waiting Production/i, 'z\\dm'),
+    inProduction: findSchemaPropertyId(schema, /In Production/i, ':z^h'),
+    shipping: findSchemaPropertyId(schema, /Shipping/i, 'aDOQ'),
+    fulfilled: findSchemaPropertyId(schema, /Fulfilled/i, 'Dmnh'),
+    inStock: findSchemaPropertyId(schema, /In-Stock/i, 'zIZq'),
+    colorMatching: findSchemaPropertyId(schema, /Color Matching/i, '?CvY'),
+    eta: findSchemaPropertyId(schema, /ETA/i, 'U}^t'),
+    currentStatus: findSchemaPropertyId(schema, /Current Status/i, 'nF;r')
+  };
+
+  const blocks = collectionData?.recordMap?.block || {};
+  const blockIds = collectionData?.result?.reducerResults?.collection_group_results?.blockIds
+    || Object.keys(blocks);
+
+  return blockIds.map((blockId) => {
+    const block = unwrapNotionRecord(blocks[blockId]);
+    const properties = block?.properties || {};
+    return {
+      product: notionText(properties.title),
+      groupBuy: notionProgressPercent(properties, ids.groupBuy, schema),
+      waitingProduction: notionProgressPercent(properties, ids.waitingProduction, schema),
+      inProduction: notionProgressPercent(properties, ids.inProduction, schema),
+      shipping: notionProgressPercent(properties, ids.shipping, schema),
+      fulfilled: notionProgressPercent(properties, ids.fulfilled, schema),
+      inStock: notionProgressPercent(properties, ids.inStock, schema),
+      colorMatching: notionStatusText(properties, ids.colorMatching, schema),
+      eta: notionDate(properties[ids.eta]),
+      currentStatus: notionStatusText(properties, ids.currentStatus, schema)
+    };
+  }).filter((row) => row.product);
+}
+
+async function postNotionPublicApi(path, body, headers = {}) {
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    try {
+      const response = await fetch(`${NOTION_API_BASE}/${path}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...headers },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(15000)
+      });
+      if (!response.ok) {
+        throw new Error(`Notion public API HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`);
+      }
+      return await response.json();
+    } catch (error) {
+      lastError = error;
+      if (attempt < 3) await sleep(attempt * 1500);
+    }
+  }
+  throw lastError;
+}
+
+async function fetchStatusRowsFromNotionApi() {
+  const pageData = await postNotionPublicApi('loadPageChunk', {
+    pageId: STATUS_PAGE_ID,
+    limit: 100,
+    chunkNumber: 0,
+    cursor: { stack: [] },
+    verticalColumns: false
+  });
+
+  const pageRecord = unwrapNotionRecord(pageData?.recordMap?.block?.[STATUS_PAGE_ID]);
+  const collectionId = pageRecord?.collection_id;
+  const collectionViewId = pageRecord?.view_ids?.[0];
+  const spaceId = pageData?.recordMap?.block?.[STATUS_PAGE_ID]?.spaceId;
+  if (!collectionId || !collectionViewId) {
+    throw new Error('SWAGKEYS status collection/view id was missing from Notion page data');
+  }
+
+  const viewRecord = unwrapNotionRecord(pageData?.recordMap?.collection_view?.[collectionViewId]);
+  const query = viewRecord?.query2 || {};
+  const collectionData = await postNotionPublicApi('queryCollection?src=initial_load', {
+    collection: { id: collectionId },
+    collectionView: { id: collectionViewId },
+    source: { type: 'collection', id: collectionId },
+    loader: {
+      type: 'reducer',
+      reducers: {
+        collection_group_results: {
+          type: 'results',
+          limit: 100,
+          loadContentCover: true
+        }
+      },
+      ...query,
+      filter: query.filter || { filters: [], operator: 'and' },
+      searchQuery: '',
+      userTimeZone: 'Asia/Seoul'
+    }
+  }, spaceId ? { 'x-notion-space-id': spaceId } : {});
+
+  const rows = parseSwagkeysStatusApi(pageData, collectionData);
+  if (rows.length < 10) throw new Error(`Notion public API returned too few SWAGKEYS status rows: ${rows.length}`);
+  const uniqueProducts = new Set(rows.map((row) => clean(row.product).toLowerCase()));
+  if (uniqueProducts.size !== rows.length) throw new Error('Notion public API returned duplicate SWAGKEYS products');
+  return rows;
+}
+
 async function fetchSnapshot(fallback = {}) {
   const fallbackSince = { ...(fallback.fallbackSince || {}) };
   let fallbackMetadataChanged = false;
@@ -302,7 +469,14 @@ async function fetchSnapshot(fallback = {}) {
     let statusFresh = true;
     let statusError = null;
     try {
-      const candidateRows = await openWithRetry(context, STATUS_URL, 'status table', extractRows);
+      let candidateRows;
+      try {
+        candidateRows = await fetchStatusRowsFromNotionApi();
+        console.log(`SWAGKEYS status table direct API rows: ${candidateRows.length}`);
+      } catch (apiError) {
+        console.warn(`SWAGKEYS status direct API failed; using browser fallback: ${apiError?.message || apiError}`);
+        candidateRows = await openWithRetry(context, STATUS_URL, 'status table browser fallback', extractRows);
+      }
       if (candidateRows.length < 10) throw new Error(`status table returned too few rows: ${candidateRows.length}`);
       rows = candidateRows;
       if (fallbackSince.status) {
@@ -550,65 +724,6 @@ async function postDiscord(embed) {
 }
 
 async function main() {
-  try {
-    const pageId = '3b5f75d5-3601-8064-b051-e6a663b41d35';
-    const response = await fetch('https://swagkeys.notion.site/api/v3/loadPageChunk', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        pageId,
-        limit: 100,
-        chunkNumber: 0,
-        cursor: { stack: [] },
-        verticalColumns: false
-      }),
-      signal: AbortSignal.timeout(15000)
-    });
-    const body = await response.text();
-    console.log(`SWAGKEYS Notion API diagnostic HTTP ${response.status}`);
-    const pageData = JSON.parse(body);
-    const pageRecord = pageData?.recordMap?.block?.[pageId]?.value?.value;
-    const collectionId = pageRecord?.collection_id;
-    const collectionViewId = pageRecord?.view_ids?.[0];
-    const spaceId = pageData?.recordMap?.block?.[pageId]?.spaceId;
-    console.log(`SWAGKEYS Notion API ids: collection=${collectionId}; view=${collectionViewId}; space=${spaceId}`);
-
-    if (collectionId && collectionViewId) {
-      const collectionResponse = await fetch('https://swagkeys.notion.site/api/v3/queryCollection?src=initial_load', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(spaceId ? { 'x-notion-space-id': spaceId } : {})
-        },
-        body: JSON.stringify({
-          collection: { id: collectionId },
-          collectionView: { id: collectionViewId },
-          source: { type: 'collection', id: collectionId },
-          loader: {
-            type: 'reducer',
-            reducers: {
-              collection_group_results: {
-                type: 'results',
-                limit: 100,
-                loadContentCover: true
-              }
-            },
-            sort: [],
-            filter: { filters: [], operator: 'and' },
-            searchQuery: '',
-            userTimeZone: 'Asia/Seoul'
-          }
-        }),
-        signal: AbortSignal.timeout(15000)
-      });
-      const collectionBody = await collectionResponse.text();
-      console.log(`SWAGKEYS queryCollection diagnostic HTTP ${collectionResponse.status}`);
-      console.log('SWAGKEYS queryCollection diagnostic body:', collectionBody.slice(0, 24000).replace(/\n/g, ' | '));
-    }
-  } catch (error) {
-    console.warn(`SWAGKEYS Notion API diagnostic failed: ${error?.message || error}`);
-  }
-
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
