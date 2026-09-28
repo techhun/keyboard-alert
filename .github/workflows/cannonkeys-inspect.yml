@@ -23,7 +23,7 @@ jobs:
           console.log('status',r.status);
           const html=await r.text();
           console.log('bytes',html.length);
-          for (const needle of ['Project Updates','Manufacturing','Ordered','Complete','data-project','project-card','update-card','Touchstone','British Racing Green']) {
+          for (const needle of ['Project Updates','Search for a project','project-status','project_status','projectStatus','project updates','projectUpdates','project_updates','Ordered','Manufacturing','En Route','Shipping','Complete','Keyboards','Keysets','Deskmats']) {
             const i=html.indexOf(needle);
             console.log('\n--- '+needle+' @ '+i+' ---');
             console.log(i>=0 ? html.slice(Math.max(0,i-1600),Math.min(html.length,i+3000)).replace(/\s+/g,' ') : 'not found');
