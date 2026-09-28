@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-27T23:11:41.525Z",
+  "updatedAt": "2026-09-28T00:01:56.363Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -17,7 +17,10 @@
     },
     "swagkeys": {
       "status": "ok",
-      "changedAt": "2026-09-23T09:31:44.252Z"
+      "changedAt": "2026-09-23T09:31:44.252Z",
+      "consecutiveFailures": 1,
+      "lastFailureRunId": "36360587295",
+      "lastFailureAt": "2026-09-28T00:01:53.822Z"
     },
     "oblotzky": {
       "status": "ok",
@@ -26,6 +29,10 @@
     "novelkeys": {
       "status": "ok",
       "changedAt": "2026-09-27T23:11:41.525Z"
+    },
+    "kbdfans": {
+      "status": "ok",
+      "changedAt": "2026-09-28T00:01:56.363Z"
     }
   }
 }
