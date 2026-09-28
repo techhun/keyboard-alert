@@ -110,7 +110,10 @@ jobs:
         run: |
           status=ok
           if npm run check:swagkeys; then
-            :
+            if node -e "const fs=require('fs'); const s=JSON.parse(fs.readFileSync('swagkeys-state.json','utf8')); process.exit(Object.keys(s.fallbackSince || {}).length ? 0 : 1)"; then
+              status=degraded
+              echo 'SWAGKEYS is using a bounded stored fallback. Health state will not be recovered or reset by this run.'
+            fi
           else
             status=fail
             echo 'SWAGKEYS is temporarily unavailable after its built-in retries. Keeping the previous verified state and continuing.'
