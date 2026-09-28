@@ -17,6 +17,9 @@ on:
       - 'scripts/check-kbdfans.mjs'
       - 'scripts/kbdfans-safety.mjs'
       - 'tests/kbdfans-safety.test.mjs'
+      - 'scripts/check-cannonkeys.mjs'
+      - 'scripts/cannonkeys-safety.mjs'
+      - 'tests/cannonkeys-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/geonworks-tests.yml'
@@ -35,6 +38,9 @@ on:
       - 'scripts/check-kbdfans.mjs'
       - 'scripts/kbdfans-safety.mjs'
       - 'tests/kbdfans-safety.test.mjs'
+      - 'scripts/check-cannonkeys.mjs'
+      - 'scripts/cannonkeys-safety.mjs'
+      - 'tests/cannonkeys-safety.test.mjs'
       - 'package.json'
       - 'package-lock.json'
 
@@ -66,3 +72,5 @@ jobs:
         run: npm run check:novelkeys
       - name: Smoke check KBDfans Product Updates
         run: npm run check:kbdfans
+      - name: Smoke check CannonKeys Project Updates
+        run: npm run check:cannonkeys
