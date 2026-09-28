@@ -561,6 +561,9 @@ async function main() {
   let snapshot = await fetchSnapshot(fallback);
   console.log(`SWAGKEYS announcement: ${snapshot.announcement.heading}${snapshot.roadmapFresh ? '' : ' (stored fallback)'}`);
   console.log(`SWAGKEYS status rows: ${snapshot.rows.length}${snapshot.statusFresh ? '' : ' (stored fallback)'}`);
+  if (snapshot.statusFresh) {
+    console.log('SWAGKEYS status diagnostic:', JSON.stringify(snapshot.rows));
+  }
 
   if (!state?.initialized || previousRows.length === 0) {
     console.log(`Baseline initialization: storing ${snapshot.rows.length} SWAGKEYS rows without notifying.`);
