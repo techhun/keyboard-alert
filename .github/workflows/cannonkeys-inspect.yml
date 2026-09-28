@@ -14,17 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Inspect CannonKeys update app bundle
+      - name: Inspect CannonKeys public updates API
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          const src='https://cdn.shopify.com/s/files/1/0238/7342/1376/files/main.e19fb963.js?v=1715695075';
-          const r=await fetch(src,{headers:{'user-agent':'keyboard-alert/1.0'}});
+          const url='https://backend.cannonkeys.com/api/v1/public/updates/';
+          const r=await fetch(url,{headers:{'user-agent':'keyboard-alert/1.0','accept':'application/json'}});
           console.log('status',r.status);
-          const js=await r.text();
-          console.log('bytes',js.length);
-          const strings=[...js.matchAll(/["'`](.{0,200}?(?:project|status|update|api|graphql|airtable|notion).{0,200}?)["'`]/gi)].map(m=>m[1]);
-          for(const s of [...new Set(strings)].slice(0,200)) console.log('str',s.replace(/\s+/g,' '));
-          const urls=[...js.matchAll(/https?:\\?\/\\?\/[^"'\s<>]+/gi)].map(m=>m[0]);
-          for(const u of [...new Set(urls)].slice(0,100)) console.log('url',u);
+          console.log('content-type',r.headers.get('content-type'));
+          const text=await r.text();
+          console.log('bytes',text.length);
+          console.log(text.slice(0,12000));
           NODE
