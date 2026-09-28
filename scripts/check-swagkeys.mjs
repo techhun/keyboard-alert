@@ -30,7 +30,6 @@ const truncate = (value, maxLength = 1000) => {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const isNotionChallengeTitle = (value) => /just a moment|잠시만 기다리십시오/i.test(String(value || ''));
 const FALLBACK_MAX_AGE_MS = 6 * 60 * 60 * 1000;
-const STATUS_PROXY_DIAGNOSTIC_URL = 'https://r.jina.ai/http://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 
 
 const ENGLISH_MONTHS = new Map([
@@ -551,15 +550,6 @@ async function postDiscord(embed) {
 }
 
 async function main() {
-  try {
-    const response = await fetch(STATUS_PROXY_DIAGNOSTIC_URL, { signal: AbortSignal.timeout(15000) });
-    const body = await response.text();
-    console.log(`SWAGKEYS proxy diagnostic HTTP ${response.status}`);
-    console.log('SWAGKEYS proxy diagnostic body:', body.slice(0, 8000).replace(/\n/g, ' | '));
-  } catch (error) {
-    console.warn(`SWAGKEYS proxy diagnostic failed: ${error?.message || error}`);
-  }
-
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
