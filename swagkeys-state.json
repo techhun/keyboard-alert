@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T08:11:46.984Z",
+  "updatedAt": "2026-09-28T11:01:55.350Z",
   "announcement": {
     "heading": "업데이트(26.09.08)",
     "content": "SWG Bolch 실사가 추가되었습니다. / SWG Bolch photos have been added.\n프로젝트 진행 상황 페이지가 업데이트 되었습니다. 전반적인 로고들이 재작업 후 업데이트 되었습니다. / Keycap Status Page has been updated. New Logos have been updated."
@@ -73,22 +73,22 @@
       "waitingProduction": 100,
       "inProduction": 100,
       "shipping": 100,
-      "fulfilled": 0,
-      "inStock": 0,
+      "fulfilled": 100,
+      "inStock": 100,
       "colorMatching": "Complete",
       "eta": "2026-09-18",
-      "currentStatus": "배송중 (Shipping)"
+      "currentStatus": "인스탁 판매중 (In-Stock)"
     },
     {
       "product": "Classic Red",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 33.3,
+      "inProduction": 50,
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-09-28",
+      "eta": "2026-10-19",
       "currentStatus": "생산중 (In Production)"
     },
     {
@@ -100,8 +100,8 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-05",
-      "currentStatus": "생산 대기중 (Awaiting Production)"
+      "eta": "2026-10-26",
+      "currentStatus": "생산중 (In Production)"
     },
     {
       "product": "WoB",
@@ -112,7 +112,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-12",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -124,7 +124,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-19",
+      "eta": "2026-11-13",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -136,7 +136,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-31",
+      "eta": "2026-11-20",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -148,7 +148,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-11-16",
+      "eta": "2026-12-11",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -160,7 +160,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2026-11-30",
+      "eta": "2026-12-18",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -172,7 +172,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-11-30",
+      "eta": "2026-12-25",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -285,7 +285,7 @@
     }
   ],
   "fallbackSince": {
-    "roadmap": "2026-09-28T08:11:37.842Z",
-    "status": "2026-09-28T08:11:46.874Z"
+    "roadmap": "2026-09-28T11:01:44.351Z",
+    "status": "2026-09-28T11:01:53.101Z"
   }
 }
