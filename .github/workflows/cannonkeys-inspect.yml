@@ -14,15 +14,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Inspect CannonKeys public updates API
+      - name: Inspect CannonKeys API base
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          const url='https://backend.cannonkeys.com/api/v1/public/updates/';
-          const r=await fetch(url,{headers:{'user-agent':'keyboard-alert/1.0','accept':'application/json'}});
-          console.log('status',r.status);
-          console.log('content-type',r.headers.get('content-type'));
-          const text=await r.text();
-          console.log('bytes',text.length);
-          console.log(text.slice(0,12000));
+          const src='https://cdn.shopify.com/s/files/1/0238/7342/1376/files/main.e19fb963.js?v=1715695075';
+          const r=await fetch(src);
+          const js=await r.text();
+          for(const needle of ['backend.cannonkeys.com','api/v1/public/updates/','fetchUpdates']){
+            let from=0,count=0;
+            while(count<5){
+              const i=js.indexOf(needle,from);
+              if(i<0) break;
+              console.log('\n--- '+needle+' @ '+i+' ---');
+              console.log(js.slice(Math.max(0,i-1200),Math.min(js.length,i+2200)));
+              from=i+needle.length;
+              count++;
+            }
+          }
           NODE
