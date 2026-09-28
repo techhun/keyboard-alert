@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T00:01:56.256Z",
+  "updatedAt": "2026-09-28T09:41:34.959Z",
   "rows": [
     {
       "category": "KEYCAPS",
@@ -178,17 +178,6 @@
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
       "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Basic Weeb",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "09-07 Schedule Spot Sale on September 11th",
-      "latestUpdateDate": "2026-09-07",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "09-07 Schedule Spot Sale on September 11th"
     },
     {
       "category": "KEYCAPS",
@@ -1093,5 +1082,7 @@
       "latestUpdateBody": ""
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "40d5d7ecc3790fbce885df74": "2026-09-28T09:41:34.958Z"
+  }
 }
