@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T05:00:51.212Z",
+  "updatedAt": "2026-09-28T05:40:32.465Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -210,8 +210,8 @@
       "type": "Keyboard",
       "manufacturer": "Artifact Inderstry",
       "status": "In progress",
-      "update": "2026. 9. 3",
-      "note": "CNC 가공 중, 가방 제작중, PCB 제작 중 / CNC is underway, Carry Case is underway, PCB is also underway"
+      "update": "2026. 9. 28",
+      "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
     },
     {
       "product": "DCS Olivetti",
@@ -279,9 +279,9 @@
       "eta": "2026. 12. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 16",
-      "note": "키캡 검수 완료. 데스크 매트 대기 중 / Keycap inspection complete. Waiting for the desk mat."
+      "status": "inspecting",
+      "update": "2026. 9. 28",
+      "note": "키캡, 데스크매트 입고 완료. / Keycaps and desk mats have arrived."
     },
     {
       "product": "Atelier Magnus Slate Zero",
@@ -331,16 +331,6 @@
       "manufacturer": "KBDfans",
       "status": "In progress",
       "update": "2026. 6. 1",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL RAMUNE",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 24",
       "note": "—"
     },
     {
@@ -696,6 +686,9 @@
     "1249c294f24433e7e1b4b819": "2026-09-28T04:30:41.824Z",
     "dc280b22c2195c223490d46b": "2026-09-28T04:30:42.027Z",
     "b048e3d1b75c11427a4c6f23": "2026-09-28T05:00:50.365Z",
-    "d4b6f55f1127c1ee1e40c77a": "2026-09-28T05:00:51.212Z"
+    "d4b6f55f1127c1ee1e40c77a": "2026-09-28T05:00:51.212Z",
+    "17743edb02921f6d25b8d856": "2026-09-28T05:40:32.136Z",
+    "038f919aaaf26d2c12d4344a": "2026-09-28T05:40:32.282Z",
+    "ab9ed8b22d19312957dfb038": "2026-09-28T05:40:32.464Z"
   }
 }
