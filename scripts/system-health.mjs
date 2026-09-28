@@ -105,7 +105,7 @@ function clearPendingFailure(source) {
 }
 
 async function transition(group, sourceKey, status, label, detail = '') {
-  if (!['ok', 'fail'].includes(status)) throw new Error(`Unknown health status: ${status}`);
+  if (!['ok', 'fail', 'degraded'].includes(status)) throw new Error(`Unknown health status: ${status}`);
 
   const state = loadState(group);
   state.sources ||= {};
@@ -114,6 +114,11 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const previousStatus = previous.status || null;
   const runId = currentRunId();
   const now = new Date().toISOString();
+
+  if (status === 'degraded') {
+    console.log(`[system] ${label}: degraded fallback; health state unchanged`);
+    return;
+  }
 
   if (status === 'fail') {
     const previousFailures = failureCount(previous);
@@ -242,5 +247,5 @@ if (command === 'transition') {
   const [label, detail = ''] = args;
   await incident(label, detail);
 } else {
-  throw new Error('Usage: system-health.mjs transition <fast|slow> <source-key> <ok|fail> <label> [detail] | incident <label> [detail]');
+  throw new Error('Usage: system-health.mjs transition <fast|slow> <source-key> <ok|fail|degraded> <label> [detail] | incident <label> [detail]');
 }
