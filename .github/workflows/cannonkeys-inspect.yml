@@ -14,22 +14,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Inspect CannonKeys API base
+      - name: Inspect CannonKeys public update responses
         shell: bash
         run: |
           node --input-type=module <<'NODE'
-          const src='https://cdn.shopify.com/s/files/1/0238/7342/1376/files/main.e19fb963.js?v=1715695075';
-          const r=await fetch(src);
-          const js=await r.text();
-          for(const needle of ['backend.cannonkeys.com','api/v1/public/updates/','fetchUpdates']){
-            let from=0,count=0;
-            while(count<5){
-              const i=js.indexOf(needle,from);
-              if(i<0) break;
-              console.log('\n--- '+needle+' @ '+i+' ---');
-              console.log(js.slice(Math.max(0,i-1200),Math.min(js.length,i+2200)));
-              from=i+needle.length;
-              count++;
-            }
-          }
+          const base='https://backend.cannonkeys.com/api/v1/public/updates/';
+          const indexResp=await fetch(base+'index',{headers:{accept:'application/json','user-agent':'keyboard-alert/1.0'}});
+          console.log('index status',indexResp.status);
+          const index=await indexResp.json();
+          console.log('index isArray',Array.isArray(index),'length',index?.length);
+          console.log('index sample',JSON.stringify(index?.slice?.(0,8) ?? index,null,2));
+
+          const ids=(Array.isArray(index)?index:[]).slice(0,5).map(x=>x.id).filter(Boolean);
+          const bulkResp=await fetch(base+'bulk?ids='+encodeURIComponent(ids.join(',')),{headers:{accept:'application/json','user-agent':'keyboard-alert/1.0'}});
+          console.log('bulk status',bulkResp.status);
+          const bulk=await bulkResp.json();
+          console.log('bulk',JSON.stringify(bulk,null,2).slice(0,18000));
           NODE
