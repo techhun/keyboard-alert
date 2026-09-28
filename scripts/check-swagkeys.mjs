@@ -550,6 +550,27 @@ async function postDiscord(embed) {
 }
 
 async function main() {
+  try {
+    const pageId = '3b5f75d5-3601-8064-b051-e6a663b41d35';
+    const response = await fetch('https://swagkeys.notion.site/api/v3/loadPageChunk', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pageId,
+        limit: 100,
+        chunkNumber: 0,
+        cursor: { stack: [] },
+        verticalColumns: false
+      }),
+      signal: AbortSignal.timeout(15000)
+    });
+    const body = await response.text();
+    console.log(`SWAGKEYS Notion API diagnostic HTTP ${response.status}`);
+    console.log('SWAGKEYS Notion API diagnostic body:', body.slice(0, 12000).replace(/\n/g, ' | '));
+  } catch (error) {
+    console.warn(`SWAGKEYS Notion API diagnostic failed: ${error?.message || error}`);
+  }
+
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
