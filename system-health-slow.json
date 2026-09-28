@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T08:21:45.258Z",
+  "updatedAt": "2026-09-28T09:51:30.322Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -30,6 +30,10 @@
     "kbdfans": {
       "status": "ok",
       "changedAt": "2026-09-28T00:01:56.363Z"
+    },
+    "cannonkeys": {
+      "status": "ok",
+      "changedAt": "2026-09-28T09:51:30.322Z"
     }
   }
 }
