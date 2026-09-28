@@ -566,7 +566,45 @@ async function main() {
     });
     const body = await response.text();
     console.log(`SWAGKEYS Notion API diagnostic HTTP ${response.status}`);
-    console.log('SWAGKEYS Notion API diagnostic body:', body.slice(0, 12000).replace(/\n/g, ' | '));
+    const pageData = JSON.parse(body);
+    const pageRecord = pageData?.recordMap?.block?.[pageId]?.value?.value;
+    const collectionId = pageRecord?.collection_id;
+    const collectionViewId = pageRecord?.view_ids?.[0];
+    const spaceId = pageData?.recordMap?.block?.[pageId]?.spaceId;
+    console.log(`SWAGKEYS Notion API ids: collection=${collectionId}; view=${collectionViewId}; space=${spaceId}`);
+
+    if (collectionId && collectionViewId) {
+      const collectionResponse = await fetch('https://swagkeys.notion.site/api/v3/queryCollection?src=initial_load', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(spaceId ? { 'x-notion-space-id': spaceId } : {})
+        },
+        body: JSON.stringify({
+          collection: { id: collectionId },
+          collectionView: { id: collectionViewId },
+          source: { type: 'collection', id: collectionId },
+          loader: {
+            type: 'reducer',
+            reducers: {
+              collection_group_results: {
+                type: 'results',
+                limit: 100,
+                loadContentCover: true
+              }
+            },
+            sort: [],
+            filter: { filters: [], operator: 'and' },
+            searchQuery: '',
+            userTimeZone: 'Asia/Seoul'
+          }
+        }),
+        signal: AbortSignal.timeout(15000)
+      });
+      const collectionBody = await collectionResponse.text();
+      console.log(`SWAGKEYS queryCollection diagnostic HTTP ${collectionResponse.status}`);
+      console.log('SWAGKEYS queryCollection diagnostic body:', collectionBody.slice(0, 24000).replace(/\n/g, ' | '));
+    }
   } catch (error) {
     console.warn(`SWAGKEYS Notion API diagnostic failed: ${error?.message || error}`);
   }
