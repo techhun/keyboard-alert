@@ -724,6 +724,35 @@ async function postDiscord(embed) {
 }
 
 async function main() {
+  try {
+    const roadmapPageId = '374f75d5-3601-80c4-8736-e9893ea18e62';
+    const data = await postNotionPublicApi('loadPageChunk', {
+      pageId: roadmapPageId,
+      limit: 100,
+      chunkNumber: 0,
+      cursor: { stack: [] },
+      verticalColumns: false
+    });
+    const root = unwrapNotionRecord(data?.recordMap?.block?.[roadmapPageId]);
+    const summaries = (root?.content || []).map((id) => {
+      const block = unwrapNotionRecord(data?.recordMap?.block?.[id]);
+      if (!block) return { id, missing: true };
+      const collectionId = block.collection_id || block.format?.collection_pointer?.id;
+      const collection = collectionId ? unwrapNotionRecord(data?.recordMap?.collection?.[collectionId]) : null;
+      return {
+        id,
+        type: block.type,
+        title: notionText(block.properties?.title),
+        collectionId: collectionId || '',
+        collectionName: notionText(collection?.name),
+        viewIds: block.view_ids || []
+      };
+    });
+    console.log('SWAGKEYS roadmap API block summaries:', JSON.stringify(summaries));
+  } catch (error) {
+    console.warn(`SWAGKEYS roadmap API diagnostic failed: ${error?.message || error}`);
+  }
+
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
