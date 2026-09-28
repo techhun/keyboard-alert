@@ -1,0 +1,136 @@
+name: Vendor one-shot notification test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vendor-one-shot-test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Send NovelKeys test notification
+        env:
+          NOVELKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.NOVELKEYS_DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { parseNovelKeysUpdatesHtml } from './scripts/novelkeys-safety.mjs';
+
+          const PAGE_URL = 'https://novelkeys.com/pages/product-updates';
+          const webhook = (process.env.NOVELKEYS_DISCORD_WEBHOOK_URL || '').trim();
+          if (!webhook) throw new Error('NOVELKEYS_DISCORD_WEBHOOK_URL secret is not configured');
+
+          const response = await fetch(PAGE_URL, {
+            headers: {
+              accept: 'text/html,application/xhtml+xml',
+              'user-agent': 'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'
+            },
+            signal: AbortSignal.timeout(15000)
+          });
+          if (!response.ok) throw new Error('NovelKeys Product Updates HTTP ' + response.status);
+
+          const rows = parseNovelKeysUpdatesHtml(await response.text());
+          const sample = rows.find((row) => row.category === 'Keyboard') || rows[0];
+          if (!sample) throw new Error('No NovelKeys rows found');
+
+          const sent = await fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: 'NovelKeys Alert',
+              allowed_mentions: { parse: [] },
+              embeds: [{
+                title: '🧪 테스트 · NovelKeys · ' + sample.product,
+                url: sample.url || PAGE_URL,
+                description: '현재 Product Updates에서 읽은 1건 테스트입니다. 운영 state는 변경하지 않습니다.',
+                fields: [
+                  { name: '분류', value: sample.category || '—', inline: true },
+                  { name: '예상 입고', value: sample.eta || '—', inline: true },
+                  { name: '상태', value: sample.status || '—', inline: false }
+                ],
+                footer: { text: 'NovelKeys · 1회 테스트' },
+                timestamp: new Date().toISOString()
+              }]
+            })
+          });
+
+          if (!sent.ok) throw new Error('NovelKeys Discord webhook failed: ' + sent.status + ' ' + await sent.text());
+          console.log('Sent NovelKeys one-shot test: ' + sample.product + ' | ' + sample.status + ' | ' + sample.eta);
+          NODE
+
+      - name: Send KBDfans test notification
+        env:
+          KBDFANS_DISCORD_WEBHOOK_URL: ${{ secrets.KBDFANS_DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { parseKbdFansUpdatesHtml } from './scripts/kbdfans-safety.mjs';
+
+          const PAGE_URL = 'https://kbdfans.com/apps/kbd-notify/product-updates';
+          const webhook = (process.env.KBDFANS_DISCORD_WEBHOOK_URL || '').trim();
+          if (!webhook) throw new Error('KBDFANS_DISCORD_WEBHOOK_URL secret is not configured');
+
+          const response = await fetch(PAGE_URL, {
+            headers: {
+              accept: 'text/html,application/xhtml+xml',
+              'user-agent': 'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'
+            },
+            signal: AbortSignal.timeout(15000)
+          });
+          if (!response.ok) throw new Error('KBDfans Product Updates HTTP ' + response.status);
+
+          const rows = parseKbdFansUpdatesHtml(await response.text());
+          const latest = rows
+            .filter((row) => row.latestUpdateDate)
+            .sort((a, b) => Date.parse(b.latestUpdateDate) - Date.parse(a.latestUpdateDate))[0] || rows[0];
+          if (!latest) throw new Error('No KBDfans rows found');
+
+          const fields = [
+            { name: '분류', value: latest.category || '—', inline: true },
+            { name: '상태', value: latest.status || '—', inline: true },
+            { name: 'ETA', value: latest.eta || '—', inline: true },
+            { name: '진행률', value: String(latest.progress ?? 0) + '%', inline: true }
+          ];
+
+          if (latest.latestUpdateDate || latest.latestUpdateTitle || latest.latestUpdateBody) {
+            fields.push({
+              name: '최근 업데이트',
+              value: [latest.latestUpdateDate, latest.latestUpdateTitle, latest.latestUpdateBody].filter(Boolean).join('\n'),
+              inline: false
+            });
+          }
+
+          const sent = await fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: 'KBDfans Alert',
+              allowed_mentions: { parse: [] },
+              embeds: [{
+                title: '🧪 테스트 · KBDfans · ' + latest.product,
+                url: PAGE_URL,
+                description: '최근 업데이트 일자 기준 1건 테스트입니다. 운영 state는 변경하지 않습니다.',
+                fields,
+                footer: { text: 'KBDfans · 1회 테스트' },
+                timestamp: new Date().toISOString()
+              }]
+            })
+          });
+
+          if (!sent.ok) throw new Error('KBDfans Discord webhook failed: ' + sent.status + ' ' + await sent.text());
+          console.log('Sent KBDfans one-shot test: ' + latest.product + ' | ' + latest.latestUpdateDate + ' | ' + latest.status);
+          NODE
