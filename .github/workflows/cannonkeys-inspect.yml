@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-      - name: Inspect CannonKeys Project Updates HTML
+      - name: Inspect CannonKeys Project Updates internals
         shell: bash
         run: |
           node --input-type=module <<'NODE'
@@ -23,9 +23,18 @@ jobs:
           console.log('status',r.status);
           const html=await r.text();
           console.log('bytes',html.length);
-          for (const needle of ['Project Updates','Search for a project','project-status','project_status','projectStatus','project updates','projectUpdates','project_updates','Ordered','Manufacturing','En Route','Shipping','Complete','Keyboards','Keysets','Deskmats']) {
+
+          const scripts=[...html.matchAll(/<script\b[^>]*src=["']([^"']+)["'][^>]*>/gi)].map(m=>m[1]);
+          console.log('script count',scripts.length);
+          for(const src of scripts.filter(x=>/project|update|app|cdn|shopify/i.test(x)).slice(-40)) console.log('script',src);
+
+          const urls=[...html.matchAll(/https?:\\?\/\\?\/[^"'\s<>]+/gi)].map(m=>m[0]);
+          for(const u of [...new Set(urls.filter(x=>/project|update|status|api/i.test(x)))].slice(0,80)) console.log('url',u);
+
+          const markers=['iframe','data-page','data-section','shopify-section','ProjectStatus','projectUpdate','status_data','projectData','fetch('];
+          for(const needle of markers){
             const i=html.indexOf(needle);
             console.log('\n--- '+needle+' @ '+i+' ---');
-            console.log(i>=0 ? html.slice(Math.max(0,i-1600),Math.min(html.length,i+3000)).replace(/\s+/g,' ') : 'not found');
+            console.log(i>=0 ? html.slice(Math.max(0,i-1200),Math.min(html.length,i+2600)).replace(/\s+/g,' ') : 'not found');
           }
           NODE
