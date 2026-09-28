@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
 const ROADMAP_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
-const STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35?v=c68f75d5360182a89e8588a1aec3a749';
+const STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
 const STAGES = [
   { key: 'groupBuy', label: '공제' },
