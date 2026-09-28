@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T19:01:41.057Z",
+  "updatedAt": "2026-09-28T19:11:37.135Z",
   "announcement": {
     "heading": "업데이트(26.09.08)",
     "content": "SWG Bolch 실사가 추가되었습니다. / SWG Bolch photos have been added.\n프로젝트 진행 상황 페이지가 업데이트 되었습니다. 전반적인 로고들이 재작업 후 업데이트 되었습니다. / Keycap Status Page has been updated. New Logos have been updated."
@@ -34,15 +34,15 @@
       "SWG Lavender",
       "SWG Feralis",
       "SWG Art",
-      "SWG Bolch (국내 인스탁 판매)",
+      "SWG Bolch",
       "SWG x ??????",
-      "SWG Parkway",
-      "SWG WoB (In-Stock)"
+      "SWG Parkway"
     ],
     "Q4": [
       "SWG Space Cadet",
       "SWG Crimson Cadet",
       "SWG Nightshift",
+      "SWG WoB (In-Stock)",
       "SWG Retroguardia",
       "SWG Retro Red Light",
       "SWG Koyo",
@@ -284,7 +284,5 @@
       "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-09-28T19:01:40.612Z"
-  }
+  "fallbackSince": {}
 }
