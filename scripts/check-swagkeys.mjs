@@ -374,7 +374,7 @@ function rowMap(rows) {
   return new Map(rows.map((row) => [clean(row.product).toLowerCase(), row]));
 }
 
-function diffRows(previousRows, currentRows) {
+export function diffRows(previousRows, currentRows) {
   const previous = rowMap(previousRows);
   const current = rowMap(currentRows);
   const changes = [];
@@ -403,6 +403,24 @@ function diffRows(previousRows, currentRows) {
     if (!current.has(key)) changes.push({ kind: 'removed', row });
   }
   return changes;
+}
+
+export function preserveIndependentFreshChanges({
+  state,
+  previousRows,
+  snapshot,
+  verificationSnapshot,
+  removalNeedsRoadmapFresh,
+  removalNeedsStatusFresh
+}) {
+  return {
+    ...snapshot,
+    announcement: removalNeedsRoadmapFresh ? state.announcement : snapshot.announcement,
+    quarters: removalNeedsRoadmapFresh ? state.quarters : snapshot.quarters,
+    rows: removalNeedsStatusFresh ? previousRows : snapshot.rows,
+    fallbackSince: verificationSnapshot.fallbackSince,
+    fallbackMetadataChanged: true
+  };
 }
 
 export function diffQuarters(previousQuarters = {}, currentQuarters = {}) {
@@ -577,6 +595,7 @@ async function main() {
 
   validateRows(snapshot);
   let calculated = calculateChanges(snapshot);
+  let removalVerificationInconclusive = '';
   const firstRemovalSignature = removalSignature(calculated.quarterChanges, calculated.changes);
   if (firstRemovalSignature) {
     const removalNeedsRoadmapFresh = calculated.quarterChanges.removed.length > 0;
@@ -593,26 +612,30 @@ async function main() {
     ].filter(Boolean);
 
     if (staleVerificationSources.length) {
-      saveState({
-        announcement: state.announcement,
-        quarters: state.quarters,
-        rows: previousRows,
-        fallbackSince: verificationSnapshot.fallbackSince
+      removalVerificationInconclusive = `SWAGKEYS removal verification was inconclusive because ${staleVerificationSources.join(' and ')} used stored fallback. Unverified removal changes were deferred, while independent fresh changes were kept.`;
+      snapshot = preserveIndependentFreshChanges({
+        state,
+        previousRows,
+        snapshot,
+        verificationSnapshot,
+        removalNeedsRoadmapFresh,
+        removalNeedsStatusFresh
       });
-      throw new Error(`SWAGKEYS removal verification was inconclusive because ${staleVerificationSources.join(' and ')} used stored fallback. Previous verified content was kept; verification will be retried on a later run.`);
-    }
-
-    const secondRemovalSignature = removalSignature(verificationCalculated.quarterChanges, verificationCalculated.changes);
-    if (secondRemovalSignature && secondRemovalSignature !== firstRemovalSignature) {
-      throw new Error('SWAGKEYS removal set changed during verification. State was not updated.');
-    }
-
-    if (secondRemovalSignature) {
-      console.log('SWAGKEYS removal confirmed by two consecutive fresh reads.');
+      calculated = calculateChanges(snapshot);
+      console.warn(removalVerificationInconclusive);
     } else {
-      snapshot = verificationSnapshot;
-      calculated = verificationCalculated;
-      console.log('SWAGKEYS removal disappeared on a fresh verification read; using the verified second snapshot.');
+      const secondRemovalSignature = removalSignature(verificationCalculated.quarterChanges, verificationCalculated.changes);
+      if (secondRemovalSignature && secondRemovalSignature !== firstRemovalSignature) {
+        throw new Error('SWAGKEYS removal set changed during verification. State was not updated.');
+      }
+
+      if (secondRemovalSignature) {
+        console.log('SWAGKEYS removal confirmed by two consecutive fresh reads.');
+      } else {
+        snapshot = verificationSnapshot;
+        calculated = verificationCalculated;
+        console.log('SWAGKEYS removal disappeared on a fresh verification read; using the verified second snapshot.');
+      }
     }
   }
 
@@ -628,6 +651,7 @@ async function main() {
     } else {
       console.log('No SWAGKEYS state update needed.');
     }
+    if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
     return;
   }
   if (!DISCORD_WEBHOOK_URL) {
@@ -644,6 +668,7 @@ async function main() {
   }
   saveState(snapshot);
   console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged)} SWAGKEYS notification(s) and updated state.`);
+  if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await main();
