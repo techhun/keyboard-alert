@@ -13,7 +13,7 @@ const PAGE_URL = 'https://cannonkeys.com/pages/project-updates';
 const API_BASE = 'https://backend.cannonkeys.com/api/v1/public/updates/';
 const STATE_PATH = 'cannonkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.CANNONKEYS_DISCORD_WEBHOOK_URL || '').trim();
-const DETAIL_CHUNK_SIZE = 40;
+const DETAIL_CHUNK_SIZE = 120;
 
 const STATUS_LABELS = {
   ordered: 'Ordered',
@@ -51,15 +51,43 @@ function stripMarkdown(value) {
 }
 
 async function fetchJson(url) {
-  const response = await fetch(url, {
-    headers: {
-      accept: 'application/json',
-      'user-agent': 'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'
-    },
-    signal: AbortSignal.timeout(15000)
-  });
-  if (!response.ok) throw new Error('CannonKeys API HTTP ' + response.status + ': ' + url);
-  return response.json();
+  let lastError;
+
+  for (let attempt = 1; attempt <= 4; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          accept: 'application/json',
+          'user-agent': 'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'
+        },
+        signal: AbortSignal.timeout(15000)
+      });
+
+      if (response.ok) return response.json();
+
+      const retryable = response.status === 429 || response.status >= 500;
+      if (!retryable || attempt === 4) {
+        throw new Error('CannonKeys API HTTP ' + response.status + ': ' + url);
+      }
+
+      const retryAfterHeader = Number(response.headers.get('retry-after'));
+      const delayMs = Number.isFinite(retryAfterHeader) && retryAfterHeader > 0
+        ? Math.ceil(retryAfterHeader * 1000)
+        : 1500 * attempt;
+
+      console.warn('CannonKeys API HTTP ' + response.status + '; retrying in ' + delayMs + 'ms (attempt ' + attempt + '/4).');
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    } catch (error) {
+      lastError = error;
+      if (attempt === 4 || (error instanceof Error && /CannonKeys API HTTP/.test(error.message))) throw error;
+
+      const delayMs = 1500 * attempt;
+      console.warn('CannonKeys API request failed; retrying in ' + delayMs + 'ms (attempt ' + attempt + '/4): ' + String(error));
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+
+  throw lastError || new Error('CannonKeys API request failed');
 }
 
 async function fetchRows() {
