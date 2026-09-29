@@ -59,7 +59,7 @@ final class InventoryScript {
                 );
               }
 
-              let channelUid = configuredChannelUid || null;
+              let channelUid = null;
               let observedApiUrl = null;
 
               function inspectCurrentPage() {
@@ -104,6 +104,10 @@ final class InventoryScript {
                 if (!channelUid && attempt < 6) {
                   await new Promise((resolve) => setTimeout(resolve, 600));
                 }
+              }
+
+              if (!channelUid && configuredChannelUid) {
+                channelUid = configuredChannelUid;
               }
 
               if (!channelUid) {
