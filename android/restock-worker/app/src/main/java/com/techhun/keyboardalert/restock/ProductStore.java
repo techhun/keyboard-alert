@@ -188,6 +188,19 @@ final class ProductStore {
         save(context, products);
     }
 
+    static void resetLowStockState(Context context) {
+        JSONArray products = list(context);
+        for (int i = 0; i < products.length(); i++) {
+            JSONObject product = products.optJSONObject(i);
+            if (product == null) continue;
+            try {
+                product.put("lastStockQuantity", new JSONObject());
+                product.put("lowStockAfterRestock", new JSONObject());
+            } catch (Exception ignored) {}
+        }
+        save(context, products);
+    }
+
     static void remove(Context context, String id) {
         JSONArray products = list(context);
         JSONArray updated = new JSONArray();
