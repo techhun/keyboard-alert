@@ -1,13 +1,7 @@
 name: Android Restock Release APK
 
-# Temporary feature-branch validation trigger; remove before merge.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feat/restock-low-stock-alert
-    paths:
-      - '.github/workflows/android-restock-release.yml'
 
 permissions:
   contents: read
