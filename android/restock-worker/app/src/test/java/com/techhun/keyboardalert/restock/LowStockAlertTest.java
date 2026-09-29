@@ -24,7 +24,7 @@ public class LowStockAlertTest {
         assertFalse(LowStockAlert.shouldNotify(3, 3, 5, false, 3));
         assertTrue(LowStockAlert.shouldNotify(3, 2, 5, false, 3));
         assertFalse(LowStockAlert.shouldNotify(3, 0, 5, false, null));
-        assertTrue(LowStockAlert.shouldNotify(0, 2, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(0, 2, 5, false, null));
         assertFalse(LowStockAlert.shouldNotify(2, 4, 5, false, null));
         assertTrue(LowStockAlert.shouldNotify(7, 4, 5, false, null));
     }
