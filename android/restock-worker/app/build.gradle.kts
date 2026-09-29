@@ -21,8 +21,8 @@ android {
         applicationId = "com.techhun.keyboardalert.restock"
         minSdk = 26
         targetSdk = 35
-        versionCode = 38
-        versionName = "0.14.4"
+        versionCode = 39
+        versionName = "0.14.5"
     }
 
     signingConfigs {
