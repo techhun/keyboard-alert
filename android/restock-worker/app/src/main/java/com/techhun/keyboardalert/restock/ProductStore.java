@@ -96,6 +96,7 @@ final class ProductStore {
             try {
                 if (!next.has("enabled")) next.put("enabled", false);
                 if (!next.has("lastAvailability")) next.put("lastAvailability", new JSONObject());
+                if (!next.has("lastStockQuantity")) next.put("lastStockQuantity", new JSONObject());
                 if (!next.has("lastStatus")) next.put("lastStatus", "");
                 if (!next.has("lastCheck")) next.put("lastCheck", 0L);
             } catch (Exception ignored) {}
@@ -123,6 +124,7 @@ final class ProductStore {
                 product.put("enabled", enabled);
                 if (!wasEnabled && enabled) {
                     product.put("lastAvailability", new JSONObject());
+                    product.put("lastStockQuantity", new JSONObject());
                     product.put("lastStatus", "준비 중");
                     product.put("lastCheck", 0L);
                 } else if (!enabled) {
@@ -175,6 +177,7 @@ final class ProductStore {
             copyIfPresent(runtime, target, "productNo");
             copyIfPresent(runtime, target, "title");
             copyIfPresent(runtime, target, "lastAvailability");
+            copyIfPresent(runtime, target, "lastStockQuantity");
             copyIfPresent(runtime, target, "lastStatus");
             copyIfPresent(runtime, target, "lastCheck");
             break;
@@ -203,6 +206,7 @@ final class ProductStore {
         root.put("format", BACKUP_FORMAT);
         root.put("version", BACKUP_VERSION);
         root.put("intervalSeconds", MonitorPrefs.intervalSeconds(context));
+        root.put("lowStockThreshold", MonitorPrefs.lowStockThreshold(context));
 
         JSONArray exported = new JSONArray();
         JSONArray products = list(context);
@@ -263,6 +267,7 @@ final class ProductStore {
             boolean enabled = item.optBoolean("enabled", false) && canEnable;
             restored.put("enabled", enabled);
             restored.put("lastAvailability", new JSONObject());
+            restored.put("lastStockQuantity", new JSONObject());
             restored.put("lastStatus", enabled ? "준비 중" : "");
             restored.put("lastCheck", 0L);
             imported.put(restored);
@@ -270,7 +275,12 @@ final class ProductStore {
 
         int interval = root.optInt("intervalSeconds", MonitorPrefs.intervalSeconds(context));
         if (interval != 15 && interval != 30 && interval != 60) interval = 30;
-        MonitorPrefs.prefs(context).edit().putInt(MonitorPrefs.KEY_INTERVAL, interval).apply();
+        int threshold = root.optInt("lowStockThreshold", 5);
+        if (threshold < 1 || threshold > 999) threshold = 5;
+        MonitorPrefs.prefs(context).edit()
+            .putInt(MonitorPrefs.KEY_INTERVAL, interval)
+            .putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, threshold)
+            .apply();
         save(context, imported);
         return imported.length();
     }
@@ -313,10 +323,12 @@ final class ProductStore {
             boolean sameSelection = oldIds != null && nextIds != null && oldIds.toString().equals(nextIds.toString());
             if (sameSelection) {
                 next.put("lastAvailability", oldProduct.optJSONObject("lastAvailability") == null ? new JSONObject() : oldProduct.optJSONObject("lastAvailability"));
+                next.put("lastStockQuantity", oldProduct.optJSONObject("lastStockQuantity") == null ? new JSONObject() : oldProduct.optJSONObject("lastStockQuantity"));
                 next.put("lastStatus", oldProduct.optString("lastStatus", ""));
                 next.put("lastCheck", oldProduct.optLong("lastCheck", 0L));
             } else {
                 next.put("lastAvailability", new JSONObject());
+                next.put("lastStockQuantity", new JSONObject());
                 next.put("lastStatus", oldProduct.optBoolean("enabled", false) ? "준비 중" : "");
                 next.put("lastCheck", 0L);
             }

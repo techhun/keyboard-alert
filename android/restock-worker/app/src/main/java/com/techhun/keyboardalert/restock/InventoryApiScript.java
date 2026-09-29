@@ -55,7 +55,7 @@ final class InventoryApiScript {
                     ? optionInfo.optionCombinations
                     : [];
                   const options = combinations.map((option) => {
-                    const stock = Number(option.stockQuantity);
+                    const stock = option.stockQuantity == null ? NaN : Number(option.stockQuantity);
                     return {
                       id: String(option.id ?? ''),
                       optionName1: option.optionName1 ?? null,
@@ -67,7 +67,8 @@ final class InventoryApiScript {
                   });
 
                   if (!options.length) {
-                    const stock = Number(originProduct?.stockQuantity ?? data?.stockQuantity);
+                    const rawStock = originProduct?.stockQuantity ?? data?.stockQuantity;
+                    const stock = rawStock == null ? NaN : Number(rawStock);
                     options.push({
                       id: 'default',
                       optionName1: '기본 상품',

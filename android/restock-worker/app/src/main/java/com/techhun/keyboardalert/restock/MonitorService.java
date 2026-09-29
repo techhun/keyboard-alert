@@ -410,6 +410,7 @@ public class MonitorService extends Service {
         JSONArray options = result.optJSONArray("options");
         if (options == null) options = new JSONArray();
         Map<String, Boolean> current = new HashMap<>();
+        Map<String, Integer> quantities = new HashMap<>();
         Map<String, String> currentLabels = new HashMap<>();
         int availableCount = 0;
         for (int i = 0; i < options.length(); i++) {
@@ -419,6 +420,13 @@ public class MonitorService extends Service {
             if (!selected.contains(id)) continue;
             boolean available = option.optBoolean("available", false);
             current.put(id, available);
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && !option.isNull("stockQuantity")) {
+                double quantity = option.optDouble("stockQuantity", Double.NaN);
+                if (Double.isFinite(quantity) && quantity >= 0 && quantity <= Integer.MAX_VALUE
+                    && quantity == Math.floor(quantity)) {
+                    quantities.put(id, (int) quantity);
+                }
+            }
             currentLabels.put(id, optionLabel(option));
             if (available) availableCount++;
         }
@@ -433,17 +441,33 @@ public class MonitorService extends Service {
 
         JSONObject previous = product.optJSONObject("lastAvailability");
         if (previous == null) previous = new JSONObject();
+        JSONObject previousQuantities = product.optJSONObject("lastStockQuantity");
+        if (previousQuantities == null) previousQuantities = new JSONObject();
         JSONArray restocked = new JSONArray();
+        JSONArray lowStock = new JSONArray();
+        int threshold = MonitorPrefs.lowStockThreshold(this);
         for (String id : selected) {
             boolean now = current.getOrDefault(id, false);
-            if (previous.has(id) && !previous.optBoolean(id, false) && now) {
+            boolean isRestocked = previous.has(id) && !previous.optBoolean(id, false) && now;
+            if (isRestocked) {
                 restocked.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id)));
+            }
+            Integer quantity = quantities.get(id);
+            if (quantity != null) {
+                Integer lastQuantity = previousQuantities.has(id) && !previousQuantities.isNull(id)
+                    ? previousQuantities.optInt(id) : null;
+                if (now && LowStockAlert.shouldNotify(lastQuantity, quantity, threshold, isRestocked)) {
+                    lowStock.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id))
+                        + " · " + quantity + "개 남음");
+                }
+                previousQuantities.put(id, quantity);
             }
             previous.put(id, now);
         }
 
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
+        product.put("lastStockQuantity", previousQuantities);
         product.put("lastStatus", "재고 있음 " + availableCount + "/" + selected.size() + " · " + time);
         product.put("lastCheck", System.currentTimeMillis());
 
@@ -458,6 +482,9 @@ public class MonitorService extends Service {
         if (restocked.length() > 0) {
             DiagnosticLog.recordRestock(this, product, restocked.toString());
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
+        }
+        if (lowStock.length() > 0) {
+            notifyLowStock(product.optString("title", "상품"), product.optString("url", ""), lowStock);
         }
         return true;
     }
@@ -611,7 +638,7 @@ public class MonitorService extends Service {
 
         NotificationChannel alert = new NotificationChannel(
             CHANNEL_ALERT,
-            "재입고 알림",
+            "재고 알림",
             NotificationManager.IMPORTANCE_HIGH
         );
         alert.enableVibration(true);
@@ -696,6 +723,38 @@ public class MonitorService extends Service {
             .build();
         getSystemService(NotificationManager.class).notify(
             42000 + Math.abs((title + text).hashCode() % 1000),
+            notification
+        );
+    }
+
+    private void notifyLowStock(String title, String productUrl, JSONArray labels) {
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < labels.length(); i++) {
+            if (i > 0) text.append(" · ");
+            text.append(labels.optString(i));
+        }
+        Intent open = productUrl == null || productUrl.isBlank()
+            ? new Intent(this, GateActivity.class)
+            : new Intent(Intent.ACTION_VIEW, Uri.parse(productUrl));
+        open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+            this,
+            Math.abs(("low-stock:" + productUrl).hashCode()),
+            open,
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        Notification notification = new Notification.Builder(this, CHANNEL_ALERT)
+            .setSmallIcon(android.R.drawable.stat_notify_more)
+            .setContentTitle("⚠️ 재고 부족 · " + title)
+            .setContentText(text.toString())
+            .setStyle(new Notification.BigTextStyle().bigText(text.toString()))
+            .setContentIntent(contentIntent)
+            .setAutoCancel(true)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setCategory(Notification.CATEGORY_EVENT)
+            .build();
+        getSystemService(NotificationManager.class).notify(
+            43000 + Math.abs(productUrl.hashCode() % 1000),
             notification
         );
     }
