@@ -108,7 +108,10 @@ test('fresh ok clears degraded metadata without touching normal status', () => {
     changedAt: '2026-09-27T00:00:00.000Z',
     mode: 'degraded',
     degradedSince: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
-    fallbackSources: ['roadmap', 'status']
+    fallbackSources: ['roadmap', 'status'],
+    consecutiveFailures: 2,
+    lastFailureRunId: '12222',
+    lastFailureAt: new Date(Date.now() - 5 * 60 * 1000).toISOString()
   };
 
   const { source, stdout } = runTransition(initial, 'ok', {});
