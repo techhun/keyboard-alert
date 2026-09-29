@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-29T15:12:39.265Z",
+  "updatedAt": "2026-09-29T15:21:05.159Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -216,7 +216,7 @@
     {
       "category": "Keycap",
       "product": "GMK Centinela Extension Kit",
-      "status": "In queue for production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-centinela-extension-kit"
     },
@@ -341,6 +341,7 @@
     }
   ],
   "sentChanges": {
-    "84a270ef39007002c37f3024": "2026-09-29T15:12:39.265Z"
+    "84a270ef39007002c37f3024": "2026-09-29T15:12:39.265Z",
+    "9bdb684e8a1cd75c033c48f1": "2026-09-29T15:21:05.158Z"
   }
 }
