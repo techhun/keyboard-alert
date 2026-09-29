@@ -282,7 +282,7 @@ public class MonitorService extends Service {
         }
         awaitingResult = true;
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        webView.evaluateJavascript(InventoryScript.SCRIPT, ignored -> {});
+        webView.evaluateJavascript(InventoryScript.build(currentProduct), ignored -> {});
     }
 
     private void runSwagkeyCheck() {
@@ -557,8 +557,16 @@ public class MonitorService extends Service {
     }
 
     private void retryCurrentCheck() {
-        if (mode == Mode.SWAGKEY) runSwagkeyCheck();
-        else runDiscoveryCheck();
+        if (mode == Mode.SWAGKEY) {
+            runSwagkeyCheck();
+            return;
+        }
+        if (mode == Mode.DISCOVERY && currentProduct != null) {
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
+            return;
+        }
+        runDiscoveryCheck();
     }
 
     private void markCurrentFailure(String message) {
