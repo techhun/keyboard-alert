@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T09:41:34.959Z",
+  "updatedAt": "2026-09-29T01:11:48.887Z",
   "rows": [
     {
       "category": "KEYCAPS",
@@ -164,17 +164,6 @@
       "eta": "September 25",
       "progress": 70,
       "summary": "Awaiting Injection Molding",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Calkis",
-      "status": "In production",
-      "eta": "September 15",
-      "progress": 70,
-      "summary": "In the Injection Molding Process",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
       "latestUpdateBody": ""
@@ -885,28 +874,6 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "Athena 1800 with PBTfans Calkis",
-      "status": "In production",
-      "eta": "September 30",
-      "progress": 70,
-      "summary": "Keycaps are in the injection molding process",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "Agar wired hotswap version with PBTfans Calkis",
-      "status": "In production",
-      "eta": "September 30",
-      "progress": 70,
-      "summary": "Keycaps are in the injection molding process",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYBOARDS",
       "product": "Styx 60",
       "status": "In progress",
       "eta": "TBD",
@@ -1083,6 +1050,9 @@
     }
   ],
   "sentChanges": {
-    "40d5d7ecc3790fbce885df74": "2026-09-28T09:41:34.958Z"
+    "40d5d7ecc3790fbce885df74": "2026-09-28T09:41:34.958Z",
+    "7d58ee866a3093abfbd14647": "2026-09-29T01:11:48.416Z",
+    "a7856473d5dc3b7ad20709d2": "2026-09-29T01:11:48.714Z",
+    "7d8a979583574e16d20f14e5": "2026-09-29T01:11:48.886Z"
   }
 }
