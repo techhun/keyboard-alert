@@ -5,7 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.json.JSONObject;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
+@RunWith(RobolectricTestRunner.class)
 public class InventoryScriptTest {
     @Test
     public void buildInjectsSavedChannelUidAsFallback() throws Exception {
