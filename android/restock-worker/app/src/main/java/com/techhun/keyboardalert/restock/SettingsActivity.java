@@ -331,7 +331,9 @@ public class SettingsActivity extends Activity {
             try {
                 int value = Integer.parseInt(input.getText().toString().trim());
                 if (value < 1 || value > 999) throw new NumberFormatException();
+                int previous = MonitorPrefs.lowStockThreshold(this);
                 MonitorPrefs.prefs(this).edit().putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, value).apply();
+                if (value != previous) ProductStore.resetLowStockState(this);
                 lowStockValue.setText("기준 수량  " + value + "개 이하");
                 dialog.dismiss();
             } catch (NumberFormatException error) {
