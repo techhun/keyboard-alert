@@ -1,7 +1,14 @@
 package com.techhun.keyboardalert.restock;
 
+import org.json.JSONObject;
+
 final class InventoryScript {
     private InventoryScript() {}
+
+    static String build(JSONObject product) {
+        String channelUid = product == null ? "" : product.optString("channelUid", "");
+        return SCRIPT.replace("__RESTOCK_CONFIGURED_CHANNEL_UID__", JSONObject.quote(channelUid));
+    }
 
     static final String SCRIPT = """
         (() => {
@@ -10,6 +17,7 @@ final class InventoryScript {
             try {
               const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
               const productNo = productMatch ? productMatch[1] : null;
+              const configuredChannelUid = __RESTOCK_CONFIGURED_CHANNEL_UID__;
               if (!productNo) {
                 send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
                 return;
@@ -48,27 +56,51 @@ final class InventoryScript {
                 );
               }
 
-              let channelUid = null;
+              let channelUid = configuredChannelUid || null;
               let observedApiUrl = null;
-              const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
-              for (const root of roots) {
-                channelUid = findChannelUid(root);
-                if (channelUid) break;
+
+              function inspectCurrentPage() {
+                const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
+                if (!channelUid) {
+                  for (const root of roots) {
+                    channelUid = findChannelUid(root);
+                    if (channelUid) break;
+                  }
+                }
+
+                const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
+                for (const resourceUrl of resources) {
+                  try {
+                    const parsed = new URL(resourceUrl, location.href);
+                    const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
+                    if (!anyProductMatch) continue;
+                    if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
+
+                    const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
+                    if (exactProductMatch && exactProductMatch[2] === productNo) {
+                      observedApiUrl = parsed.toString();
+                    }
+                  } catch (ignored) {}
+                }
+
+                if (!channelUid) {
+                  for (const script of [...document.scripts]) {
+                    const scriptText = script.textContent || '';
+                    if (!scriptText || !scriptText.includes('channelUid')) continue;
+                    const match = scriptText.match(/["']channelUid["']\\s*:\\s*["']([^"']{8,})["']/);
+                    if (match) {
+                      channelUid = match[1];
+                      break;
+                    }
+                  }
+                }
               }
 
-              const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
-              for (const resourceUrl of resources) {
-                try {
-                  const parsed = new URL(resourceUrl, location.href);
-                  const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
-                  if (!anyProductMatch) continue;
-                  if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
-
-                  const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
-                  if (exactProductMatch && exactProductMatch[2] === productNo) {
-                    observedApiUrl = parsed.toString();
-                  }
-                } catch (ignored) {}
+              for (let attempt = 0; attempt < 7 && !channelUid; attempt++) {
+                inspectCurrentPage();
+                if (!channelUid && attempt < 6) {
+                  await new Promise((resolve) => setTimeout(resolve, 600));
+                }
               }
 
               if (!channelUid) {
