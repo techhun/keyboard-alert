@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-27T23:11:41.366Z",
+  "updatedAt": "2026-09-29T15:12:39.265Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -223,7 +223,7 @@
     {
       "category": "Keycap",
       "product": "GMK CYL Prussian Alert",
-      "status": "In production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-prussian-alert-keycaps"
     },
@@ -340,5 +340,7 @@
       "url": "https://novelkeys.com/products/motif-cable"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "84a270ef39007002c37f3024": "2026-09-29T15:12:39.265Z"
+  }
 }
