@@ -399,7 +399,10 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
   }
 
   if (!announcement?.heading || !announcement?.content) {
-    throw new Error('SWAGKEYS roadmap announcement was missing from Notion page data');
+    const callout = Object.values(blocks)
+      .map(unwrapNotionRecord)
+      .find((block) => block?.type === 'callout');
+    throw new Error(`SWAGKEYS roadmap announcement was missing from Notion page data; callout=${JSON.stringify(callout).slice(0, 1200)}`);
   }
 
   const missing = QUARTERS.filter((quarter) => !sources[quarter]);
