@@ -178,6 +178,15 @@ public class MonitorService extends Service {
                     return;
                 }
                 if (!SiteSupport.isProductPage(siteType, url)) return;
+                if (mode != Mode.DIRECT && currentProduct != null
+                    && !SiteSupport.isSameProductPage(
+                        siteType,
+                        currentProduct.optString("url", ""),
+                        url
+                    )) {
+                    DiagnosticLog.add(MonitorService.this, "STALE_PAGE", currentProduct, safeHost(url));
+                    return;
+                }
 
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
@@ -268,16 +277,21 @@ public class MonitorService extends Service {
     }
 
     private void runDiscoveryCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || awaitingResult || currentProduct == null || mode != Mode.DISCOVERY) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
-            markCurrentFailure("상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.NAVER_SMARTSTORE,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
@@ -286,16 +300,21 @@ public class MonitorService extends Service {
     }
 
     private void runSwagkeyCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || awaitingResult || currentProduct == null || mode != Mode.SWAGKEY) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.SWAGKEY_IMWEB, webView.getUrl())) {
-            markCurrentFailure("SWAGKEY 상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.SWAGKEY_IMWEB,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
@@ -323,23 +342,29 @@ public class MonitorService extends Service {
     }
 
     private void handleInventoryResult(String json) {
-        if (stopping) return;
-        awaitingResult = false;
-        handler.removeCallbacks(resultTimeout);
-        if (currentProduct == null) {
-            scheduleNextProduct();
-            return;
-        }
-
-        JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
-        if (latest == null || !latest.optBoolean("enabled", false)) {
-            scheduleNextProduct();
-            return;
-        }
-        currentProduct = latest;
+        if (stopping || currentProduct == null) return;
 
         try {
             JSONObject result = new JSONObject(json);
+            if (!isResultForCurrentProduct(result)) {
+                DiagnosticLog.add(
+                    this,
+                    "STALE_RESULT",
+                    currentProduct,
+                    result.optString("productId", result.optString("pageUrl", "unknown"))
+                );
+                return;
+            }
+
+            awaitingResult = false;
+            handler.removeCallbacks(resultTimeout);
+
+            JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
+            if (latest == null || !latest.optBoolean("enabled", false)) {
+                scheduleNextProduct();
+                return;
+            }
+            currentProduct = latest;
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
@@ -358,6 +383,7 @@ public class MonitorService extends Service {
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
                     "PRODUCT_API_FAILED".equals(error)
                         || "API_URL_MISSING".equals(error)
+                        || "API_PRODUCT_MISMATCH".equals(error)
                         || "JS_ERROR".equals(error)
                         || status == 204
                         || status == 404
@@ -410,6 +436,25 @@ public class MonitorService extends Service {
             markCurrentFailure("결과 처리 실패");
             scheduleNextProduct();
         }
+    }
+
+    private boolean isResultForCurrentProduct(JSONObject result) {
+        if (currentProduct == null || result == null) return false;
+        String currentId = currentProduct.optString("id", "");
+        String resultProductId = result.optString("productId", "");
+        if (!resultProductId.isBlank()) {
+            return currentId.equals(resultProductId);
+        }
+
+        String pageUrl = result.optString("pageUrl", "");
+        if (!pageUrl.isBlank()) {
+            return SiteSupport.isSameProductPage(
+                currentSiteType(),
+                currentProduct.optString("url", ""),
+                pageUrl
+            );
+        }
+        return false;
     }
 
     private boolean processSuccessfulSnapshot(JSONObject product, JSONObject result) throws Exception {
