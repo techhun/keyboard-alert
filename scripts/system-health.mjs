@@ -286,7 +286,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
         ]
       });
     }
-    state.sources[sourceKey] = clearDegraded(previous);
+    state.sources[sourceKey] = clearDegraded(clearPendingFailure(previous));
     saveState(group, state);
     console.log(`[system] ${label}: degraded -> ok`);
     return;
