@@ -1,5 +1,6 @@
 name: Android Restock Release APK
 
+# Temporary feature-branch validation trigger; remove before merge.
 on:
   workflow_dispatch:
   push:
