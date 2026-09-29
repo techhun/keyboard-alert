@@ -7,6 +7,7 @@ const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process
 const ROADMAP_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 const STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 const STATUS_PAGE_ID = '3b5f75d5-3601-8064-b051-e6a663b41d35';
+const ROADMAP_PAGE_ID = '374f75d5-3601-80c4-8736-e9893ea18e62';
 const NOTION_API_BASE = 'https://swagkeys.notion.site/api/v3';
 const QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4'];
 const STAGES = [
@@ -350,6 +351,88 @@ export function parseSwagkeysStatusApi(pageData, collectionData) {
   }).filter((row) => row.product);
 }
 
+export function parseSwagkeysRoadmapPageApi(pageData) {
+  const blocks = pageData?.recordMap?.block || {};
+  const collections = pageData?.recordMap?.collection || {};
+  const views = pageData?.recordMap?.collection_view || {};
+  let announcement = null;
+  const sources = {};
+
+  for (const record of Object.values(blocks)) {
+    const block = unwrapNotionRecord(record);
+    if (!block) continue;
+
+    if (block.type === 'callout' && !announcement) {
+      const lines = notionText(block.properties?.title)
+        .replace(/\r/g, '')
+        .split('\n')
+        .map(clean)
+        .filter(Boolean);
+      const headingIndex = lines.findIndex((line) => /^업데이트\s*\(/.test(line));
+      if (headingIndex >= 0) {
+        announcement = {
+          heading: lines[headingIndex],
+          content: lines.slice(headingIndex + 1).join('\n')
+        };
+      }
+    }
+
+    if (block.type !== 'collection_view') continue;
+    const collectionId = block.collection_id || block.format?.collection_pointer?.id;
+    const viewId = block.view_ids?.[0];
+    if (!collectionId || !viewId) continue;
+
+    const collection = unwrapNotionRecord(collections[collectionId]);
+    const collectionName = notionText(collection?.name);
+    const match = collectionName.match(/^([1-4])분기\s*\(Q([1-4])\)$/i);
+    if (!match) continue;
+
+    const quarter = `Q${match[2]}`;
+    const view = unwrapNotionRecord(views[viewId]);
+    sources[quarter] = {
+      collectionId,
+      viewId,
+      query: view?.query2 || {}
+    };
+  }
+
+  if (!announcement?.heading || !announcement?.content) {
+    throw new Error('SWAGKEYS roadmap announcement was missing from Notion page data');
+  }
+
+  const missing = QUARTERS.filter((quarter) => !sources[quarter]);
+  if (missing.length) {
+    throw new Error(`SWAGKEYS roadmap collection/view ids were missing for: ${missing.join(', ')}`);
+  }
+
+  return { announcement, sources };
+}
+
+export function parseSwagkeysRoadmapCollectionApi(collectionData) {
+  const blocks = collectionData?.recordMap?.block || {};
+  const blockIds = collectionData?.result?.reducerResults?.collection_group_results?.blockIds
+    || Object.keys(blocks);
+  return [...new Set(blockIds
+    .map((blockId) => notionText(unwrapNotionRecord(blocks[blockId])?.properties?.title))
+    .map(clean)
+    .filter((product) => product && !isInvalidRoadmapValue(product)))];
+}
+
+export function notionRetryDelayMs(status, retryAfterValue, attempt, nowMs = Date.now()) {
+  if (Number(status) === 429) {
+    const raw = clean(retryAfterValue);
+    if (/^\d+(?:\.\d+)?$/.test(raw)) {
+      return Math.min(120000, Math.max(1000, Math.ceil(Number(raw) * 1000)));
+    }
+    const retryAt = Date.parse(raw);
+    if (Number.isFinite(retryAt)) {
+      return Math.min(120000, Math.max(1000, retryAt - nowMs));
+    }
+    return Math.min(60000, 10000 * Math.max(1, attempt));
+  }
+  return Math.min(10000, 1500 * Math.max(1, attempt));
+}
+
 async function postNotionPublicApi(path, body, headers = {}) {
   let lastError;
   for (let attempt = 1; attempt <= 3; attempt += 1) {
@@ -361,15 +444,78 @@ async function postNotionPublicApi(path, body, headers = {}) {
         signal: AbortSignal.timeout(15000)
       });
       if (!response.ok) {
-        throw new Error(`Notion public API HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`);
+        const error = new Error(`Notion public API HTTP ${response.status}: ${(await response.text()).slice(0, 300)}`);
+        error.status = response.status;
+        error.retryAfter = response.headers.get('retry-after') || '';
+        throw error;
       }
       return await response.json();
     } catch (error) {
       lastError = error;
-      if (attempt < 3) await sleep(attempt * 1500);
+      if (attempt < 3) {
+        const delayMs = notionRetryDelayMs(error?.status, error?.retryAfter, attempt);
+        console.warn(`SWAGKEYS Notion API retry in ${Math.ceil(delayMs / 1000)}s after ${error?.message || error}`);
+        await sleep(delayMs);
+      }
     }
   }
   throw lastError;
+}
+
+async function queryNotionCollection(collectionId, collectionViewId, query = {}, spaceId = '') {
+  return postNotionPublicApi('queryCollection?src=initial_load', {
+    collection: { id: collectionId },
+    collectionView: { id: collectionViewId },
+    source: { type: 'collection', id: collectionId },
+    loader: {
+      type: 'reducer',
+      reducers: {
+        collection_group_results: {
+          type: 'results',
+          limit: 100,
+          loadContentCover: true
+        }
+      },
+      ...query,
+      filter: query.filter || { filters: [], operator: 'and' },
+      searchQuery: '',
+      userTimeZone: 'Asia/Seoul'
+    }
+  }, spaceId ? { 'x-notion-space-id': spaceId } : {});
+}
+
+async function fetchRoadmapFromNotionApi() {
+  const pageData = await postNotionPublicApi('loadPageChunk', {
+    pageId: ROADMAP_PAGE_ID,
+    limit: 100,
+    chunkNumber: 0,
+    cursor: { stack: [] },
+    verticalColumns: false
+  });
+
+  const { announcement, sources } = parseSwagkeysRoadmapPageApi(pageData);
+  const spaceId = pageData?.recordMap?.block?.[ROADMAP_PAGE_ID]?.spaceId || '';
+  const quarters = {};
+
+  for (const quarter of QUARTERS) {
+    const source = sources[quarter];
+    const collectionData = await queryNotionCollection(
+      source.collectionId,
+      source.viewId,
+      source.query,
+      spaceId
+    );
+    const products = parseSwagkeysRoadmapCollectionApi(collectionData);
+    if (!products.length) {
+      throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
+    }
+    quarters[quarter] = products;
+  }
+
+  if (!quarterSnapshotIsValid(quarters)) {
+    throw new Error('Notion public API returned an invalid SWAGKEYS roadmap snapshot');
+  }
+  return { announcement, quarters };
 }
 
 async function fetchStatusRowsFromNotionApi() {
@@ -391,25 +537,12 @@ async function fetchStatusRowsFromNotionApi() {
 
   const viewRecord = unwrapNotionRecord(pageData?.recordMap?.collection_view?.[collectionViewId]);
   const query = viewRecord?.query2 || {};
-  const collectionData = await postNotionPublicApi('queryCollection?src=initial_load', {
-    collection: { id: collectionId },
-    collectionView: { id: collectionViewId },
-    source: { type: 'collection', id: collectionId },
-    loader: {
-      type: 'reducer',
-      reducers: {
-        collection_group_results: {
-          type: 'results',
-          limit: 100,
-          loadContentCover: true
-        }
-      },
-      ...query,
-      filter: query.filter || { filters: [], operator: 'and' },
-      searchQuery: '',
-      userTimeZone: 'Asia/Seoul'
-    }
-  }, spaceId ? { 'x-notion-space-id': spaceId } : {});
+  const collectionData = await queryNotionCollection(
+    collectionId,
+    collectionViewId,
+    query,
+    spaceId || ''
+  );
 
   const rows = parseSwagkeysStatusApi(pageData, collectionData);
   if (rows.length < 10) throw new Error(`Notion public API returned too few SWAGKEYS status rows: ${rows.length}`);
@@ -437,7 +570,14 @@ async function fetchSnapshot(fallback = {}) {
     let roadmapFresh = true;
     let roadmapError = null;
     try {
-      const candidate = await openWithRetry(context, ROADMAP_URL, 'roadmap', extractRoadmap);
+      let candidate;
+      try {
+        candidate = await fetchRoadmapFromNotionApi();
+        console.log(`SWAGKEYS roadmap direct API counts: ${Object.entries(candidate.quarters).map(([quarter, products]) => `${quarter}=${products.length}`).join(', ')}`);
+      } catch (apiError) {
+        console.warn(`SWAGKEYS roadmap direct API failed; using browser fallback: ${apiError?.message || apiError}`);
+        candidate = await openWithRetry(context, ROADMAP_URL, 'roadmap browser fallback', extractRoadmap);
+      }
       if (!candidate.announcement.heading || !candidate.announcement.content) throw new Error('roadmap announcement was empty');
       if (!quarterSnapshotIsValid(candidate.quarters)) throw new Error('quarter roadmap snapshot failed validation');
       if (Object.values(candidate.quarters).flat().length < 5) throw new Error('quarter roadmap returned too few products');
