@@ -9,6 +9,7 @@ final class InventoryRetry {
         return "CHANNEL_UID_NOT_FOUND".equals(error)
             || "PRODUCT_DATA_NOT_FOUND".equals(error)
             || "PRODUCT_API_FAILED".equals(error)
+            || "STATE_UNKNOWN".equals(error)
             || "JS_ERROR".equals(error);
     }
 }
