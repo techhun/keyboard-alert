@@ -7,7 +7,10 @@ final class InventoryScript {
 
     static String build(JSONObject product) {
         String channelUid = product == null ? "" : product.optString("channelUid", "");
-        return SCRIPT.replace("__RESTOCK_CONFIGURED_CHANNEL_UID__", JSONObject.quote(channelUid));
+        return SCRIPT.replace(
+            "const configuredChannelUid = '';",
+            "const configuredChannelUid = " + JSONObject.quote(channelUid) + ";"
+        );
     }
 
     static final String SCRIPT = """
@@ -17,7 +20,7 @@ final class InventoryScript {
             try {
               const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
               const productNo = productMatch ? productMatch[1] : null;
-              const configuredChannelUid = __RESTOCK_CONFIGURED_CHANNEL_UID__;
+              const configuredChannelUid = '';
               if (!productNo) {
                 send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
                 return;
