@@ -11,6 +11,7 @@ public class InventoryRetryTest {
         assertTrue(InventoryRetry.shouldRetry("CHANNEL_UID_NOT_FOUND", 0));
         assertTrue(InventoryRetry.shouldRetry("PRODUCT_DATA_NOT_FOUND", 200));
         assertTrue(InventoryRetry.shouldRetry("PRODUCT_API_FAILED", 0));
+        assertTrue(InventoryRetry.shouldRetry("STATE_UNKNOWN", 0));
         assertTrue(InventoryRetry.shouldRetry("JS_ERROR", 0));
         assertTrue(InventoryRetry.shouldRetry("PRODUCT_API_FAILED", 500));
         assertTrue(InventoryRetry.shouldRetry("UNKNOWN", 503));
