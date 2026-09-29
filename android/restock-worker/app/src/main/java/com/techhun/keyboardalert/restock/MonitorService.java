@@ -68,7 +68,7 @@ public class MonitorService extends Service {
     private long rateLimitBackoffMs;
     private long backoffUntil;
     private boolean networkWaiting;
-    private int discoveryRetryCount;
+    private int transientRetryCount;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping) return;
@@ -358,34 +358,34 @@ public class MonitorService extends Service {
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
                     "PRODUCT_API_FAILED".equals(error)
                         || "API_URL_MISSING".equals(error)
+                        || "JS_ERROR".equals(error)
                         || status == 204
                         || status == 404
                 )) {
                     currentProduct.put("apiUrl", "");
                     ProductStore.updateRuntime(this, currentProduct);
-                    discoveryRetryCount = 0;
+                    transientRetryCount = 0;
                     mode = Mode.DISCOVERY;
                     webView.loadUrl(currentProduct.optString("url"));
                     return;
                 }
 
-                if (mode == Mode.DISCOVERY
+                if ((mode == Mode.DISCOVERY || mode == Mode.SWAGKEY)
                     && InventoryRetry.shouldRetry(error, status)
-                    && discoveryRetryCount < MAX_DISCOVERY_RETRIES) {
-                    discoveryRetryCount++;
+                    && transientRetryCount < MAX_DISCOVERY_RETRIES) {
+                    transientRetryCount++;
                     String retryDetail = error
                         + (status > 0 ? " · HTTP " + status : "")
-                        + " · " + discoveryRetryCount + "/" + MAX_DISCOVERY_RETRIES;
+                        + " · " + transientRetryCount + "/" + MAX_DISCOVERY_RETRIES;
                     DiagnosticLog.add(this, "CHECK_RETRY", currentProduct, retryDetail);
-                    handler.postDelayed(this::runDiscoveryCheck,
-                        DISCOVERY_RETRY_DELAY_MS * discoveryRetryCount);
+                    handler.postDelayed(this::retryCurrentCheck,
+                        DISCOVERY_RETRY_DELAY_MS * transientRetryCount);
                     return;
                 }
 
                 String detail = status > 0 ? "조회 실패 · HTTP " + status : "조회 실패";
-                DiagnosticLog.add(this, "CHECK_ERROR", currentProduct,
-                    error + (status > 0 ? " · HTTP " + status : ""));
-                markCurrentFailure(detail);
+                String diagnosticDetail = error + (status > 0 ? " · HTTP " + status : "");
+                markCurrentFailure(detail, "CHECK_FAIL", diagnosticDetail);
                 scheduleNextProduct();
                 return;
             }
@@ -556,11 +556,20 @@ public class MonitorService extends Service {
         handler.postDelayed(this::bootstrapSession, 500L);
     }
 
+    private void retryCurrentCheck() {
+        if (mode == Mode.SWAGKEY) runSwagkeyCheck();
+        else runDiscoveryCheck();
+    }
+
     private void markCurrentFailure(String message) {
-        markCurrentFailure(message, "CHECK_FAIL");
+        markCurrentFailure(message, "CHECK_FAIL", message);
     }
 
     private void markCurrentFailure(String message, String event) {
+        markCurrentFailure(message, event, message);
+    }
+
+    private void markCurrentFailure(String message, String event, String diagnosticDetail) {
         if (currentProduct != null) {
             try {
                 currentProduct.put("lastStatus", message);
@@ -573,14 +582,14 @@ public class MonitorService extends Service {
         } else if ("RATE_LIMIT".equals(event)) {
             DiagnosticLog.recordRateLimit(this, currentProduct, message);
         } else {
-            DiagnosticLog.recordFailure(this, event, currentProduct, message);
+            DiagnosticLog.recordFailure(this, event, currentProduct, diagnosticDetail);
         }
         setStatus(message);
     }
 
     private void scheduleNextProduct() {
         if (stopping) return;
-        discoveryRetryCount = 0;
+        transientRetryCount = 0;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
