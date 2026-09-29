@@ -363,7 +363,14 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
     if (!block) continue;
 
     if (block.type === 'callout' && !announcement) {
-      const lines = notionText(block.properties?.title)
+      const directText = notionText(block.properties?.title);
+      const childText = (block.content || [])
+        .map((childId) => notionText(unwrapNotionRecord(blocks[childId])?.properties?.title))
+        .filter(Boolean)
+        .join('\n');
+      const lines = [directText, childText]
+        .filter(Boolean)
+        .join('\n')
         .replace(/\r/g, '')
         .split('\n')
         .map(clean)
@@ -399,10 +406,7 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
   }
 
   if (!announcement?.heading || !announcement?.content) {
-    const callout = Object.values(blocks)
-      .map(unwrapNotionRecord)
-      .find((block) => block?.type === 'callout');
-    throw new Error(`SWAGKEYS roadmap announcement was missing from Notion page data; callout=${JSON.stringify(callout).slice(0, 1200)}`);
+    throw new Error('SWAGKEYS roadmap announcement was missing from Notion page data');
   }
 
   const missing = QUARTERS.filter((quarter) => !sources[quarter]);
