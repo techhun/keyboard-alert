@@ -50,6 +50,8 @@ public class MonitorService extends Service {
     private static final long MIN_PRODUCT_SPACING_MS = 1_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 5 * 60_000L;
+    private static final int MAX_DISCOVERY_RETRIES = 2;
+    private static final long DISCOVERY_RETRY_DELAY_MS = 1_500L;
 
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
@@ -66,6 +68,7 @@ public class MonitorService extends Service {
     private long rateLimitBackoffMs;
     private long backoffUntil;
     private boolean networkWaiting;
+    private int discoveryRetryCount;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping) return;
@@ -360,12 +363,28 @@ public class MonitorService extends Service {
                 )) {
                     currentProduct.put("apiUrl", "");
                     ProductStore.updateRuntime(this, currentProduct);
+                    discoveryRetryCount = 0;
                     mode = Mode.DISCOVERY;
                     webView.loadUrl(currentProduct.optString("url"));
                     return;
                 }
 
+                if (mode == Mode.DISCOVERY
+                    && InventoryRetry.shouldRetry(error, status)
+                    && discoveryRetryCount < MAX_DISCOVERY_RETRIES) {
+                    discoveryRetryCount++;
+                    String retryDetail = error
+                        + (status > 0 ? " · HTTP " + status : "")
+                        + " · " + discoveryRetryCount + "/" + MAX_DISCOVERY_RETRIES;
+                    DiagnosticLog.add(this, "CHECK_RETRY", currentProduct, retryDetail);
+                    handler.postDelayed(this::runDiscoveryCheck,
+                        DISCOVERY_RETRY_DELAY_MS * discoveryRetryCount);
+                    return;
+                }
+
                 String detail = status > 0 ? "조회 실패 · HTTP " + status : "조회 실패";
+                DiagnosticLog.add(this, "CHECK_ERROR", currentProduct,
+                    error + (status > 0 ? " · HTTP " + status : ""));
                 markCurrentFailure(detail);
                 scheduleNextProduct();
                 return;
@@ -561,6 +580,7 @@ public class MonitorService extends Service {
 
     private void scheduleNextProduct() {
         if (stopping) return;
+        discoveryRetryCount = 0;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
