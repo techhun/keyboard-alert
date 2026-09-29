@@ -24,6 +24,16 @@ final class InventoryApiScript {
                     return;
                   }
                   const parsed = new URL(configuredApiUrl, location.href);
+                  const apiProductMatch = parsed.pathname.match(/\/products\/(\d+)(?:\/|$)/);
+                  if (!apiProductMatch || apiProductMatch[1] !== productId) {
+                    send({
+                      ok: false,
+                      error: 'API_PRODUCT_MISMATCH',
+                      productId,
+                      apiUrl: configuredApiUrl
+                    });
+                    return;
+                  }
                   const apiUrl = location.origin + parsed.pathname + parsed.search;
                   const response = await fetch(apiUrl, {
                     credentials: 'include',
