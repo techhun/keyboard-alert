@@ -370,9 +370,11 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
         .filter(Boolean);
       const headingIndex = lines.findIndex((line) => /^업데이트\s*\(/.test(line));
       if (headingIndex >= 0) {
+        const headingMatch = lines[headingIndex].match(/^(업데이트\s*\([^)]+\))\s*(.*)$/);
+        const inlineContent = clean(headingMatch?.[2]);
         announcement = {
-          heading: lines[headingIndex],
-          content: lines.slice(headingIndex + 1).join('\n')
+          heading: clean(headingMatch?.[1] || lines[headingIndex]),
+          content: [inlineContent, ...lines.slice(headingIndex + 1)].filter(Boolean).join('\n')
         };
       }
     }
