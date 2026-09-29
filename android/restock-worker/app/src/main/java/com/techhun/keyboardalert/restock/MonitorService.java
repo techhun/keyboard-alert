@@ -443,6 +443,8 @@ public class MonitorService extends Service {
         if (previous == null) previous = new JSONObject();
         JSONObject previousQuantities = product.optJSONObject("lastStockQuantity");
         if (previousQuantities == null) previousQuantities = new JSONObject();
+        JSONObject afterRestock = product.optJSONObject("lowStockAfterRestock");
+        if (afterRestock == null) afterRestock = new JSONObject();
         JSONArray restocked = new JSONArray();
         JSONArray lowStock = new JSONArray();
         int threshold = MonitorPrefs.lowStockThreshold(this);
@@ -456,9 +458,16 @@ public class MonitorService extends Service {
             if (quantity != null) {
                 Integer lastQuantity = previousQuantities.has(id) && !previousQuantities.isNull(id)
                     ? previousQuantities.optInt(id) : null;
-                if (now && LowStockAlert.shouldNotify(lastQuantity, quantity, threshold, isRestocked)) {
+                Integer restockQuantity = afterRestock.has(id) ? afterRestock.optInt(id) : null;
+                if (now && LowStockAlert.shouldNotify(lastQuantity, quantity, threshold,
+                    isRestocked, restockQuantity)) {
                     lowStock.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id))
                         + " · " + quantity + "개 남음");
+                    afterRestock.remove(id);
+                } else if (isRestocked && quantity > 0 && quantity <= threshold) {
+                    afterRestock.put(id, quantity);
+                } else if (quantity == 0 || quantity > threshold) {
+                    afterRestock.remove(id);
                 }
                 previousQuantities.put(id, quantity);
             }
@@ -468,6 +477,7 @@ public class MonitorService extends Service {
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
         product.put("lastStockQuantity", previousQuantities);
+        product.put("lowStockAfterRestock", afterRestock);
         product.put("lastStatus", "재고 있음 " + availableCount + "/" + selected.size() + " · " + time);
         product.put("lastCheck", System.currentTimeMillis());
 

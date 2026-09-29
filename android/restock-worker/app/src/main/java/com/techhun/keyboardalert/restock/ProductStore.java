@@ -97,6 +97,7 @@ final class ProductStore {
                 if (!next.has("enabled")) next.put("enabled", false);
                 if (!next.has("lastAvailability")) next.put("lastAvailability", new JSONObject());
                 if (!next.has("lastStockQuantity")) next.put("lastStockQuantity", new JSONObject());
+                if (!next.has("lowStockAfterRestock")) next.put("lowStockAfterRestock", new JSONObject());
                 if (!next.has("lastStatus")) next.put("lastStatus", "");
                 if (!next.has("lastCheck")) next.put("lastCheck", 0L);
             } catch (Exception ignored) {}
@@ -125,6 +126,7 @@ final class ProductStore {
                 if (!wasEnabled && enabled) {
                     product.put("lastAvailability", new JSONObject());
                     product.put("lastStockQuantity", new JSONObject());
+                    product.put("lowStockAfterRestock", new JSONObject());
                     product.put("lastStatus", "준비 중");
                     product.put("lastCheck", 0L);
                 } else if (!enabled) {
@@ -178,6 +180,7 @@ final class ProductStore {
             copyIfPresent(runtime, target, "title");
             copyIfPresent(runtime, target, "lastAvailability");
             copyIfPresent(runtime, target, "lastStockQuantity");
+            copyIfPresent(runtime, target, "lowStockAfterRestock");
             copyIfPresent(runtime, target, "lastStatus");
             copyIfPresent(runtime, target, "lastCheck");
             break;
@@ -268,6 +271,7 @@ final class ProductStore {
             restored.put("enabled", enabled);
             restored.put("lastAvailability", new JSONObject());
             restored.put("lastStockQuantity", new JSONObject());
+            restored.put("lowStockAfterRestock", new JSONObject());
             restored.put("lastStatus", enabled ? "준비 중" : "");
             restored.put("lastCheck", 0L);
             imported.put(restored);
@@ -324,11 +328,13 @@ final class ProductStore {
             if (sameSelection) {
                 next.put("lastAvailability", oldProduct.optJSONObject("lastAvailability") == null ? new JSONObject() : oldProduct.optJSONObject("lastAvailability"));
                 next.put("lastStockQuantity", oldProduct.optJSONObject("lastStockQuantity") == null ? new JSONObject() : oldProduct.optJSONObject("lastStockQuantity"));
+                next.put("lowStockAfterRestock", oldProduct.optJSONObject("lowStockAfterRestock") == null ? new JSONObject() : oldProduct.optJSONObject("lowStockAfterRestock"));
                 next.put("lastStatus", oldProduct.optString("lastStatus", ""));
                 next.put("lastCheck", oldProduct.optLong("lastCheck", 0L));
             } else {
                 next.put("lastAvailability", new JSONObject());
                 next.put("lastStockQuantity", new JSONObject());
+                next.put("lowStockAfterRestock", new JSONObject());
                 next.put("lastStatus", oldProduct.optBoolean("enabled", false) ? "준비 중" : "");
                 next.put("lastCheck", 0L);
             }

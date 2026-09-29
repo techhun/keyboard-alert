@@ -7,23 +7,25 @@ import org.junit.Test;
 
 public class LowStockAlertTest {
     @Test public void alertsOnceWhenStockFallsBelowThreshold() {
-        assertTrue(LowStockAlert.shouldNotify(6, 5, 5, false));
-        assertFalse(LowStockAlert.shouldNotify(5, 4, 5, false));
-        assertFalse(LowStockAlert.shouldNotify(4, 4, 5, false));
-        assertTrue(LowStockAlert.shouldNotify(8, 3, 5, false));
+        assertTrue(LowStockAlert.shouldNotify(6, 5, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(5, 4, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(4, 4, 5, false, null));
+        assertTrue(LowStockAlert.shouldNotify(8, 3, 5, false, null));
     }
 
     @Test public void alertsOnFirstLowSnapshotButNotUnknownOrSoldOut() {
-        assertTrue(LowStockAlert.shouldNotify(null, 2, 5, false));
-        assertFalse(LowStockAlert.shouldNotify(null, 0, 5, false));
-        assertFalse(LowStockAlert.shouldNotify(null, 6, 5, false));
+        assertTrue(LowStockAlert.shouldNotify(null, 2, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(null, 0, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(null, 6, 5, false, null));
     }
 
     @Test public void restockTakesPrecedenceAndRearmsAfterRecovery() {
-        assertFalse(LowStockAlert.shouldNotify(0, 3, 5, true));
-        assertFalse(LowStockAlert.shouldNotify(3, 0, 5, false));
-        assertTrue(LowStockAlert.shouldNotify(0, 2, 5, false));
-        assertFalse(LowStockAlert.shouldNotify(2, 4, 5, false));
-        assertTrue(LowStockAlert.shouldNotify(7, 4, 5, false));
+        assertFalse(LowStockAlert.shouldNotify(0, 3, 5, true, null));
+        assertFalse(LowStockAlert.shouldNotify(3, 3, 5, false, 3));
+        assertTrue(LowStockAlert.shouldNotify(3, 2, 5, false, 3));
+        assertFalse(LowStockAlert.shouldNotify(3, 0, 5, false, null));
+        assertTrue(LowStockAlert.shouldNotify(0, 2, 5, false, null));
+        assertFalse(LowStockAlert.shouldNotify(2, 4, 5, false, null));
+        assertTrue(LowStockAlert.shouldNotify(7, 4, 5, false, null));
     }
 }
