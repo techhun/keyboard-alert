@@ -24,8 +24,10 @@ final class InventoryApiScript {
                     return;
                   }
                   const parsed = new URL(configuredApiUrl, location.href);
-                  const apiProductMatch = parsed.pathname.match(/\/products\/(\d+)(?:\/|$)/);
-                  if (!apiProductMatch || apiProductMatch[1] !== productId) {
+                  const apiParts = parsed.pathname.split('/').filter(Boolean);
+                  const productIndex = apiParts.lastIndexOf('products');
+                  const apiProductNo = productIndex >= 0 ? String(apiParts[productIndex + 1] || '') : '';
+                  if (!apiProductNo || apiProductNo !== productId) {
                     send({
                       ok: false,
                       error: 'API_PRODUCT_MISMATCH',
