@@ -15,6 +15,7 @@
 - 네트워크 끊김 자동 대기 및 복구
 - HTTP 429 요청 제한 시 지수 백오프
 - 알림 ON 직후 SmartStore/SWAGKEY 페이지 초기화가 늦을 때 일시 조회 오류를 최대 2회 자동 재시도
+- SmartStore 채널 정보 탐색 실패 시 페이지를 새로 로드하고, 페이지 상태/리소스를 최대 약 4초 기다린 뒤 저장된 channelUid를 fallback으로 사용
 - Android 재부팅 후 켜져 있던 상품 감시 자동 재개
 - 최근 7일 진단 이벤트 및 누적 성공/실패/429/타임아웃 통계
 - 등록 상품/선택 옵션/알림 상태/조회 주기 JSON 백업 및 복원
@@ -135,8 +136,9 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 - [ ] JSON 백업/복원 후 상품, 옵션, ON/OFF, 조회 주기 확인
 - [ ] 상품 삭제/옵션 수정/알림 OFF·ON 후 감시 서비스 상태 확인
 - [ ] 알림 ON 직후 일시 조회 오류가 발생해도 자동 재시도 후 정상 복구
+- [ ] SmartStore CHANNEL_UID_NOT_FOUND 발생 시 페이지 reload 후 정상 조회 복구
 - [ ] 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
 
 ## 버전
 
-현재 앱 버전: **0.14.4**
+현재 앱 버전: **0.14.5**
