@@ -2,6 +2,7 @@ import fs from 'node:fs';
 
 const DISCORD_WEBHOOK_URL = (process.env.SYSTEM_DISCORD_WEBHOOK_URL || '').trim();
 const FAILURE_THRESHOLD = 3;
+const DEGRADED_ALERT_AFTER_MS = 60 * 60 * 1000;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function clean(value) {
@@ -104,6 +105,34 @@ function clearPendingFailure(source) {
   return next;
 }
 
+function clearDegraded(source) {
+  const next = { ...source };
+  delete next.mode;
+  delete next.degradedSince;
+  delete next.fallbackSources;
+  delete next.degradedAlertedAt;
+  return next;
+}
+
+function loadDegradedInfo(sourceKey) {
+  if (sourceKey !== 'swagkeys') return { sources: [], since: '' };
+  try {
+    const parsed = JSON.parse(fs.readFileSync('swagkeys-state.json', 'utf8'));
+    const fallbackSince = parsed?.fallbackSince && typeof parsed.fallbackSince === 'object'
+      ? parsed.fallbackSince
+      : {};
+    const entries = Object.entries(fallbackSince)
+      .filter(([, value]) => Number.isFinite(Date.parse(value)));
+    entries.sort((a, b) => Date.parse(a[1]) - Date.parse(b[1]));
+    return {
+      sources: entries.map(([key]) => key),
+      since: entries[0]?.[1] || ''
+    };
+  } catch {
+    return { sources: [], since: '' };
+  }
+}
+
 async function transition(group, sourceKey, status, label, detail = '') {
   if (!['ok', 'fail', 'degraded'].includes(status)) throw new Error(`Unknown health status: ${status}`);
 
@@ -116,7 +145,47 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const now = new Date().toISOString();
 
   if (status === 'degraded') {
-    console.log(`[system] ${label}: degraded fallback; health state unchanged`);
+    const degraded = loadDegradedInfo(sourceKey);
+    const degradedSince = previous.degradedSince || degraded.since || now;
+    const fallbackSources = degraded.sources.length
+      ? degraded.sources
+      : Array.isArray(previous.fallbackSources) ? previous.fallbackSources : [];
+    const degradedAgeMs = Math.max(0, Date.parse(now) - Date.parse(degradedSince));
+
+    const next = {
+      ...previous,
+      mode: 'degraded',
+      degradedSince,
+      fallbackSources
+    };
+
+    if (degradedAgeMs >= DEGRADED_ALERT_AFTER_MS && !previous.degradedAlertedAt) {
+      if (DISCORD_WEBHOOK_URL) {
+        const durationMinutes = Math.floor(degradedAgeMs / 60000);
+        await postDiscord({
+          ...baseEmbed(`⚠️ 수집 지연 · ${label}`),
+          description: 'fresh 수집이 1시간 이상 확인되지 않아 저장된 검증 데이터를 사용하고 있습니다.',
+          fields: [
+            { name: '그룹', value: group.toUpperCase(), inline: true },
+            { name: '상태', value: 'DEGRADED', inline: true },
+            { name: '지연', value: `${durationMinutes}분`, inline: true },
+            {
+              name: 'Fallback',
+              value: fallbackSources.length ? fallbackSources.join(', ') : 'unknown',
+              inline: false
+            }
+          ]
+        });
+        next.degradedAlertedAt = now;
+        console.log(`[system] ${label}: degraded warning sent after ${durationMinutes}m`);
+      } else {
+        console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} degraded warning remains pending.`);
+      }
+    }
+
+    const changed = JSON.stringify(previous) !== JSON.stringify(next);
+    if (changed) saveState(group, { ...state, sources: { ...state.sources, [sourceKey]: next } });
+    console.log(`[system] ${label}: degraded fallback; health status preserved as ${previousStatus || 'unknown'}`);
     return;
   }
 
@@ -165,7 +234,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
     });
 
     state.sources[sourceKey] = {
-      ...previous,
+      ...clearDegraded(previous),
       status: 'fail',
       changedAt: now,
       consecutiveFailures,
@@ -195,12 +264,31 @@ async function transition(group, sourceKey, status, label, detail = '') {
     });
 
     state.sources[sourceKey] = {
-      ...clearPendingFailure(previous),
+      ...clearDegraded(clearPendingFailure(previous)),
       status: 'ok',
       changedAt: now
     };
     saveState(group, state);
     console.log(`[system] ${label}: fail -> ok`);
+    return;
+  }
+
+  const hadDegradedWarning = Boolean(previous.degradedAlertedAt);
+  const wasDegraded = previous.mode === 'degraded' || Boolean(previous.degradedSince);
+  if (wasDegraded) {
+    if (hadDegradedWarning && DISCORD_WEBHOOK_URL) {
+      await postDiscord({
+        ...baseEmbed(`✅ 수집 지연 해소 · ${label}`),
+        description: 'fresh 수집이 다시 확인되었습니다.',
+        fields: [
+          { name: '그룹', value: group.toUpperCase(), inline: true },
+          { name: '상태', value: '정상', inline: true }
+        ]
+      });
+    }
+    state.sources[sourceKey] = clearDegraded(previous);
+    saveState(group, state);
+    console.log(`[system] ${label}: degraded -> ok`);
     return;
   }
 
