@@ -47,6 +47,13 @@ final class SiteSupport {
         return false;
     }
 
+    static boolean isSameProductPage(String siteType, String expectedUrl, String actualUrl) {
+        if (!isProductPage(siteType, expectedUrl) || !isProductPage(siteType, actualUrl)) return false;
+        String expected = productId(expectedUrl);
+        String actual = productId(actualUrl);
+        return !expected.isBlank() && expected.equals(actual);
+    }
+
     static boolean isNaverLoginUrl(String url) {
         try {
             Uri uri = Uri.parse(url == null ? "" : url);
