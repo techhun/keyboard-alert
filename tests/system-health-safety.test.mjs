@@ -8,7 +8,9 @@ import { spawnSync } from 'node:child_process';
 
 const scriptPath = fileURLToPath(new URL('../scripts/system-health.mjs', import.meta.url));
 
-function runTransition(initialSource, status) {
+function runTransition(initialSource, status, fallbackSince = {
+  roadmap: new Date(Date.now() - 30 * 60 * 1000).toISOString()
+}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'keyboard-health-'));
   const statePath = path.join(dir, 'system-health-slow.json');
   fs.writeFileSync(statePath, JSON.stringify({
@@ -16,6 +18,11 @@ function runTransition(initialSource, status) {
     initialized: true,
     updatedAt: '2026-09-28T00:00:00.000Z',
     sources: { swagkeys: initialSource }
+  }, null, 2));
+  fs.writeFileSync(path.join(dir, 'swagkeys-state.json'), JSON.stringify({
+    version: 1,
+    initialized: true,
+    fallbackSince
   }, null, 2));
 
   const result = spawnSync(process.execPath, [
@@ -52,8 +59,12 @@ test('degraded fallback does not falsely recover a failed source', () => {
   };
 
   const { source, stdout } = runTransition(initial, 'degraded');
-  assert.deepEqual(source, initial);
-  assert.match(stdout, /degraded fallback; health state unchanged/);
+  assert.equal(source.status, 'fail');
+  assert.equal(source.consecutiveFailures, 3);
+  assert.equal(source.mode, 'degraded');
+  assert.deepEqual(source.fallbackSources, ['roadmap']);
+  assert.ok(source.degradedSince);
+  assert.match(stdout, /degraded fallback; health status preserved as fail/);
 });
 
 test('degraded fallback does not clear pending transient failures', () => {
@@ -66,5 +77,44 @@ test('degraded fallback does not clear pending transient failures', () => {
   };
 
   const { source } = runTransition(initial, 'degraded');
-  assert.deepEqual(source, initial);
+  assert.equal(source.status, 'ok');
+  assert.equal(source.consecutiveFailures, 2);
+  assert.equal(source.mode, 'degraded');
+  assert.deepEqual(source.fallbackSources, ['roadmap']);
+});
+
+test('degraded state records all fallback sources and keeps warning pending without webhook', () => {
+  const old = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString();
+  const initial = {
+    status: 'ok',
+    changedAt: '2026-09-27T00:00:00.000Z'
+  };
+
+  const { source, stdout } = runTransition(initial, 'degraded', {
+    roadmap: old,
+    status: new Date(Date.now() - 90 * 60 * 1000).toISOString()
+  });
+
+  assert.equal(source.mode, 'degraded');
+  assert.deepEqual(source.fallbackSources, ['roadmap', 'status']);
+  assert.equal(source.degradedSince, old);
+  assert.equal(source.degradedAlertedAt, undefined);
+  assert.match(stdout, /degraded warning remains pending/);
+});
+
+test('fresh ok clears degraded metadata without touching normal status', () => {
+  const initial = {
+    status: 'ok',
+    changedAt: '2026-09-27T00:00:00.000Z',
+    mode: 'degraded',
+    degradedSince: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+    fallbackSources: ['roadmap', 'status']
+  };
+
+  const { source, stdout } = runTransition(initial, 'ok', {});
+  assert.deepEqual(source, {
+    status: 'ok',
+    changedAt: '2026-09-27T00:00:00.000Z'
+  });
+  assert.match(stdout, /degraded -> ok/);
 });
