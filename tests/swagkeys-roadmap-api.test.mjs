@@ -16,10 +16,11 @@ test('parses SWAGKEYS roadmap announcement and quarter collection sources from N
       block: {
         callout: wrapped({
           type: 'callout',
-          properties: {
-            title: text('업데이트(26.09.29)\n진행 상황이 변경되었습니다.\n두 번째 줄')
-          }
+          content: ['notice-title', 'notice-body-1', 'notice-body-2']
         }),
+        'notice-title': wrapped({ type: 'text', properties: { title: text('업데이트(26.09.29)') } }),
+        'notice-body-1': wrapped({ type: 'text', properties: { title: text('진행 상황이 변경되었습니다.') } }),
+        'notice-body-2': wrapped({ type: 'text', properties: { title: text('두 번째 줄') } }),
         q1: wrapped({ type: 'collection_view', collection_id: 'c1', view_ids: ['v1'] }),
         q2: wrapped({ type: 'collection_view', collection_id: 'c2', view_ids: ['v2'] }),
         q3: wrapped({ type: 'collection_view', collection_id: 'c3', view_ids: ['v3'] }),
