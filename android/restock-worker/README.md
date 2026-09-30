@@ -21,6 +21,8 @@
 - stale Naver 쿠키가 남아 있어도 실제 페이지/API가 로그인을 요구하면 AUTH_REQUIRED로 판정하고 옵션 조회에서는 로그인 화면으로 복구
 - 옵션 조회 중 일시적인 SmartStore/SWAGKEY 파싱 오류는 페이지를 1회 다시 불러온 뒤 재시도
 - 로그인 성공 후 옵션 조회용 WebView 캐시/히스토리를 초기화하고 쿠키를 flush한 뒤 상품 페이지를 다시 불러와 옵션 조회 재개
+- 기존 상품 옵션 조회는 저장된 channelUid를 fallback으로 재사용하고, 새 상품 등록은 기존 discovery를 유지
+- 옵션 조회 재시도/최종 실패는 진단 로그에 OPTION_CHECK_RETRY / OPTION_CHECK_FAIL로 기록
 - 로그아웃 완료 시 초기 Gate 화면(네이버 로그인 / 로그인 없이 시작)으로 복귀
 - Android 재부팅 후 켜져 있던 상품 감시 자동 재개
 - 최근 7일 진단 이벤트 및 누적 성공/실패/429/타임아웃 통계
@@ -151,4 +153,4 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 
 ## 버전
 
-현재 앱 버전: **0.14.8**
+현재 앱 버전: **0.14.9**
