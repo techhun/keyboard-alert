@@ -16,6 +16,7 @@
 | NovelKeys | Product Updates | 신규/Current Status·Estimated Arrival 변경/목록 제거 | `novelkeys-state.json` |
 | KBDfans | Product Updates | 신규/상태·ETA·진행률·최신 업데이트 변경/목록 제거 | `kbdfans-state.json` |
 | CannonKeys | Project Updates | 신규/상태·ETA·GB 일정·최신 업데이트 변경/목록 제거 | `cannonkeys-state.json` |
+| Deskhero | Keyboard / Keyset / Deskmat / Accessory Group Buy/Preorder Updates | 신규/전체 Status·Notes 변경/목록 제거. 동일 제품이 최근 갱신 강조행과 전체 목록에 중복되면 서로 다른 메모를 합쳐 보존 | `deskhero-state.json` |
 
 ## 실행 구조
 
@@ -42,6 +43,7 @@ Fast/Slow 수집은 외부 스케줄러 **cron-job.org**를 사용하며 GitHub 
 - NovelKeys
 - KBDfans
 - CannonKeys
+- Deskhero
 - 실행 주기: **10분**
 - concurrency: `keyboard-alerts-slow`
 
@@ -91,6 +93,7 @@ npm run check:oblotzky
 npm run check:novelkeys
 npm run check:kbdfans
 npm run check:cannonkeys
+npm run check:deskhero
 npm run check:watchdog
 npm run system:health -- ...
 ```
@@ -113,6 +116,7 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 | `NOVELKEYS_DISCORD_WEBHOOK_URL` | NovelKeys Product Updates 알림 |
 | `KBDFANS_DISCORD_WEBHOOK_URL` | KBDfans Product Updates 알림 |
 | `CANNONKEYS_DISCORD_WEBHOOK_URL` | CannonKeys Project Updates 알림 |
+| `DESKHERO_DISCORD_WEBHOOK_URL` | Deskhero Group Buy/Preorder Updates 알림 |
 | `SYSTEM_DISCORD_WEBHOOK_URL` | `알림-시스템` 채널의 장애/복구/워크플로 오류/실행 감시 알림 |
 
 각 서비스의 webhook은 서로 분리해 운용하는 것을 기본으로 합니다.
@@ -123,7 +127,7 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 - 알림을 보내야 하는 변경이 있는데 해당 알림 채널이 설정되지 않았거나 전송에 실패하면 가능한 범위에서 state를 넘기지 않아 다음 실행에서 다시 처리합니다.
 - Guheyo는 신규 글만 감시하며, 이미 본 URL의 수정은 의도적으로 무시합니다.
 - DCInside는 `search_head=110` 필터와 각 행의 `⚡떴냐` 카테고리를 함께 검증합니다.
-- GEONWORKS / ProtoTypist / SWAGKEYS / Oblotzky / NovelKeys / KBDfans / CannonKeys에서 기존 항목의 **목록 제거**가 감지되면 해당 소스를 즉시 한 번 더 읽고, 두 번 연속 같은 제거가 확인될 때만 제거 알림과 state 갱신을 수행합니다.
+- GEONWORKS / ProtoTypist / SWAGKEYS / Oblotzky / NovelKeys / KBDfans / CannonKeys / Deskhero에서 기존 항목의 **목록 제거**가 감지되면 해당 소스를 즉시 한 번 더 읽고, 두 번 연속 같은 제거가 확인될 때만 제거 알림과 state 갱신을 수행합니다.
 - 두 번째 확인에서 항목이 다시 나타나거나 제거 목록이 달라지면 해당 제거를 확정하지 않아 일시적인 부분 로딩을 삭제로 오인하지 않습니다.
 - SWAGKEYS는 Notion의 `Loading`, `No results`, 오류 placeholder 등을 정상 제품으로 저장하지 않으며, 상태표를 일시적으로 읽지 못하면 마지막 검증된 상태를 재사용합니다.
 - system health는 정상→오류, 오류→정상처럼 상태가 바뀔 때만 Discord 알림을 보내 중복 장애 알림을 막습니다.
@@ -144,6 +148,7 @@ scripts/
 ├─ check-novelkeys.mjs
 ├─ check-kbdfans.mjs
 ├─ check-cannonkeys.mjs
+├─ check-deskhero.mjs
 ├─ check-workflow-watchdog.mjs
 └─ system-health.mjs
 ```
