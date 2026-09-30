@@ -20,6 +20,11 @@ on:
       - 'scripts/check-cannonkeys.mjs'
       - 'scripts/cannonkeys-safety.mjs'
       - 'tests/cannonkeys-safety.test.mjs'
+      - 'scripts/system-health.mjs'
+      - 'tests/system-health-safety.test.mjs'
+      - 'scripts/check-workflow-watchdog.mjs'
+      - 'tests/workflow-watchdog.test.mjs'
+      - '.github/workflows/keyboard-alert-watchdog.yml'
       - 'package.json'
       - 'package-lock.json'
       - '.github/workflows/geonworks-tests.yml'
@@ -41,8 +46,14 @@ on:
       - 'scripts/check-cannonkeys.mjs'
       - 'scripts/cannonkeys-safety.mjs'
       - 'tests/cannonkeys-safety.test.mjs'
+      - 'scripts/system-health.mjs'
+      - 'tests/system-health-safety.test.mjs'
+      - 'scripts/check-workflow-watchdog.mjs'
+      - 'tests/workflow-watchdog.test.mjs'
+      - '.github/workflows/keyboard-alert-watchdog.yml'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/geonworks-tests.yml'
 
 permissions:
   contents: read
