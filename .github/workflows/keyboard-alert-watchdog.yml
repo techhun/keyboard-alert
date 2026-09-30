@@ -1,0 +1,93 @@
+name: Keyboard alerts watchdog
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: keyboard-alerts-watchdog
+  cancel-in-progress: false
+
+jobs:
+  monitor-watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore watchdog state
+        shell: bash
+        run: |
+          git fetch origin watcher-state
+          if git cat-file -e "origin/watcher-state:workflow-watchdog-state.json" 2>/dev/null; then
+            git show "origin/watcher-state:workflow-watchdog-state.json" > workflow-watchdog-state.json
+          fi
+
+      - name: Check Fast and Slow workflow freshness
+        env:
+          WATCHDOG_GITHUB_TOKEN: ${{ github.token }}
+          SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
+        run: npm run check:watchdog
+
+      - name: Persist watchdog state
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -f workflow-watchdog-state.json ]; then
+            echo 'Watchdog state was not created.'
+            exit 0
+          fi
+
+          git fetch origin watcher-state
+          if git cat-file -e "origin/watcher-state:workflow-watchdog-state.json" 2>/dev/null; then
+            if git diff --quiet origin/watcher-state -- workflow-watchdog-state.json; then
+              echo 'Watchdog state unchanged.'
+              exit 0
+            fi
+          fi
+
+          state_dir="/tmp/keyboard-alert-watcher-state-watchdog"
+          rm -rf "$state_dir"
+          git worktree add -B watcher-state "$state_dir" origin/watcher-state
+          cp workflow-watchdog-state.json "$state_dir/workflow-watchdog-state.json"
+
+          git -C "$state_dir" config user.name 'github-actions[bot]'
+          git -C "$state_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "$state_dir" add workflow-watchdog-state.json
+          git -C "$state_dir" commit -m 'Update workflow watchdog state'
+
+          for attempt in 1 2 3; do
+            if git -C "$state_dir" pull --rebase origin watcher-state && git -C "$state_dir" push origin HEAD:watcher-state; then
+              exit 0
+            fi
+            git -C "$state_dir" rebase --abort >/dev/null 2>&1 || true
+            echo "Watchdog state push attempt ${attempt} failed; retrying..."
+            sleep $((attempt * 2))
+          done
+
+          echo 'Failed to persist watchdog state after retries.'
+          exit 1
+
+      - name: Alert on watchdog workflow failure
+        if: failure()
+        env:
+          SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
+        run: npm run system:health -- incident 'Watchdog workflow' 'Fast/Slow 실행 감시 workflow 자체가 실패했습니다. 실행 로그를 확인하세요.'
