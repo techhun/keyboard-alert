@@ -25,4 +25,11 @@ public class InventoryScriptTest {
     public void defaultScriptKeepsFallbackEmptyForInteractiveLookup() {
         assertTrue(InventoryScript.SCRIPT.contains("const configuredChannelUid = '';"));
     }
+
+    @Test
+    public void interactiveLookupDoesNotTreatGenericLoginLinksAsExpiredSession() {
+        assertFalse(InventoryScript.SCRIPT.contains("pageNeedsLogin"));
+        assertTrue(InventoryScript.SCRIPT.contains("responseNeedsLogin"));
+        assertTrue(InventoryScript.SCRIPT.contains("error: 'CHANNEL_UID_NOT_FOUND'"));
+    }
 }
