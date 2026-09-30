@@ -18,6 +18,8 @@
 - SmartStore 채널 정보 탐색 실패 시 페이지를 새로 로드하고, 페이지 상태/리소스를 최대 약 4초 기다린 뒤 저장된 channelUid를 fallback으로 사용
 - 여러 상품 순회 중 다른 상품의 지연 응답/페이지가 현재 상품의 제목·API 정보를 덮어쓰지 않도록 상품 번호 일치 검증
 - SmartStore Direct API가 200이어도 상품 payload를 정상 인식하지 못하면 즉시 실패하지 않고 API 캐시를 버리고 discovery로 복구
+- stale Naver 쿠키가 남아 있어도 실제 페이지/API가 로그인을 요구하면 AUTH_REQUIRED로 판정하고 옵션 조회에서는 로그인 화면으로 복구
+- 옵션 조회 중 일시적인 SmartStore/SWAGKEY 파싱 오류는 페이지를 1회 다시 불러온 뒤 재시도
 - Android 재부팅 후 켜져 있던 상품 감시 자동 재개
 - 최근 7일 진단 이벤트 및 누적 성공/실패/429/타임아웃 통계
 - 등록 상품/선택 옵션/알림 상태/조회 주기 JSON 백업 및 복원
@@ -139,9 +141,10 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 - [ ] 상품 삭제/옵션 수정/알림 OFF·ON 후 감시 서비스 상태 확인
 - [ ] 알림 ON 직후 일시 조회 오류가 발생해도 자동 재시도 후 정상 복구
 - [ ] SmartStore CHANNEL_UID_NOT_FOUND 발생 시 페이지 reload 후 정상 조회 복구
+- [ ] Naver 세션 만료 상태에서 옵션 조회 시 실패 토스트로 끝나지 않고 로그인 화면이 열림
 - [ ] 여러 SmartStore 상품 동시 감시에서 상품 A 응답이 상품 B의 제목/API/상태를 덮어쓰지 않음
 - [ ] 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
 
 ## 버전
 
-현재 앱 버전: **0.14.6**
+현재 앱 버전: **0.14.7**
