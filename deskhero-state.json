@@ -1,0 +1,3824 @@
+{
+  "version": 1,
+  "initialized": true,
+  "updatedAt": "2026-09-30T23:35:40.042Z",
+  "rows": [
+    {
+      "category": "Keyboard",
+      "product": "QK 80 Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "QK 65 Keyboards",
+      "notes": "Estimated shipping late August.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bauer Lite 65% Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bauer 65 Keyboard",
+      "notes": "Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Boog75 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge 75 Keyboard Batch 1",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge 75 Keyboard Batch 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge 75 Keyboard March Batch /Batch 3",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge75 Keyboard July Batch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge75 October Batch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bridge 75 Plus Pre-order Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bubble 75",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Bulwark TKL",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Choice 65 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "CKW80 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Class65 V3 Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Cloudline Mechanical Keyboard",
+      "notes": "Shipping complete. Build Guide: https://jjwkb.com/pages/cloudline-assembly",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Crin Mechanical Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Crush80 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Crush80 Keyboard March Batch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Cyberpunk BOX60 Keyboard Case and Stand",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Derivative R1 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "DK1-60 GDK Labs x Wuque Keyboard Kit",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Drunkdeer A75 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ENSO-E Premium HHKB Keyboard Kit",
+      "notes": "Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ePBT Acid House Keyboard D60Lite",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ePBT Camo Keyboard Kit",
+      "notes": "D60Lite - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ePBT Cool Kids 2 Keyboard Kit",
+      "notes": "D60Lite - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Enso-E Keyboard",
+      "notes": "Estimated shipping early Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Etar87 Mechanical Keyboard Kit",
+      "notes": "Estimated shipping Q3, 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Evo75 Preorder",
+      "notes": "Delayed due to large-scale quality improvement program for LED. New estimated shipping end of September 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Evo80 Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Evo80 Preorder",
+      "notes": "Delayed. New estimated shipping late August/Early Sept 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Flame 60 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Gentoo Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "GMK Pharaoh Keyboard Kit",
+      "notes": "D60Lite - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Hope 75 Mechanical Keyboard",
+      "notes": "Shipping Complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "IKKI68 Aurora x Devoted Edition",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Iron 160 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Iron 165",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Iron 180",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "January Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "JJW Moment Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "JRIS75 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "KBDFans Blade Aluminum 60% Keyboard Case",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keychron Q1",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keylice Keyboards",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Keyno Y8 Mechanical Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Kindlestar Aquila 65% Mechanical Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Leviathan Keyboards",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Lulu Split Mechanical Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Magnus175 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Mark65",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Matrix 8XV",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Mode Sixtyfive Keyboard",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Monokei Systems Keyboard",
+      "notes": "Estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ND 75 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "ND104 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "NDTKL Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Nearfield Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 60/65 Batch 18",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 60/65 Cu Keyboard Batch 1",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 65 Batch 5",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 65 Cu Batch 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo Ergo Batch 1",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo Ergo Batch 45/46",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo Ergo Batch 58",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo Ergo",
+      "notes": "Re-stock late August",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo65 Core",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo65 Sonic He+",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo75 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 75 Keyboard",
+      "notes": "Re-stock August",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo80 Cu Keyboard Batch 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo98 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 98 Keyboard",
+      "notes": "Re-stock August",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "NK65 Oblivion Edition",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "NK65 Mictlan Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Onyx FRL TKL Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Onibi TKL Keyboard",
+      "notes": "Estimated shipping Q2, 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Paper80 Air Express",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Paragon Mechanical Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "QK Alice Duo Keyboard Round 1",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "QK Alice Duo Keyboard Round 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "QK 65 MK3 Keyboards",
+      "notes": "Estimated shipping late August",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "QK 80 MK2 Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Rainy 75 Keyboard March Batch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Rainy75 Keyboard",
+      "notes": "Batch one shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Rainy75 Keyboard July Batch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Saka 68 & Fuji 65",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Sisyphus65 Mechanical Keyboard",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Sun68 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Theseus Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Tilly 60 Keyboard",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Titan65 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Tsukuyomi",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Vanguard 65 Keyboard (Keebfront)",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Vany Alice Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Vida Keyboard",
+      "notes": "Still in production. New estimated TBD 2026.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Vortex Model M Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Wind Xlice Keyboard Kit",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom 64 Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom 65 Keyboards (Air Express orders)",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom TKL Dyna Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom75 EE and SE Keyboards",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom75 Tiga Keyboard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Zoom75 x Akuamarin Edition Keyboard",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Chocolatier R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hi Viz 2",
+      "notes": "Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Power 2048",
+      "notes": "Estimated shipping late August | Estimated shipping late August 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK British Racing Green R2",
+      "notes": "In transit to us. Estimated shipping September | In transit to us. Estimated shipping September 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Centinela Extensions",
+      "notes": "New Estimated shipping late September",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Motif Keycaps",
+      "notes": "Artisans received. Keysets further delayed again. New estimated shipping for keysets late October 2026/early November if last sample is approved by designer. Motif Cables still in production. | Artisans received. Further delayed again. New estimated shipping for keysets late October 2026/early November. Initial production samples not approved. Quality adjustments being made. Motif Cables still in production.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Awekeys Wild Ice",
+      "notes": "New estimated shipping late August 2026.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Aluvia Aluminum Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Awekeys Moonlanding Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "British Racing Green 2",
+      "notes": "Keycap shipping complete. British Racing Green 2 Artisans - Car and Flag artisans shipping complete. Awaiting RIM Artisan.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "CC ZeRo",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Copper Eagle Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Corne LP Keyboards",
+      "notes": "These have been shipped with one order missing a Pro Micro :( Getting Boardsource.xyz to ship more to us.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "CYL Nuclear Data R2",
+      "notes": "Keysets and HIBI shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DCS Alps Pingmaster",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DCS Cafe Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DCS Dark Sky",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DCS Deadbeats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DCS Guardian",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DMK Third Space",
+      "notes": "Shipping Complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DSA 1930 (Nineteen Thirty) Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DSA White on Lilac",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DSA/Cherry Milkshake",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "DSC Dark Sky",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Acadia",
+      "notes": "Monokei Artisan Received. Keysets shipping complete except for orders with THOK and Captus artisans. Awaiting THOK and Captus inventory.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Acid House & Sweet Girl",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Aesthetic",
+      "notes": "Asero Artisan received. Shipping Complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Brutalist",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Camo and Radio Silence",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Cool Kids 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Creative Studio Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Duo",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Fall",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Openkey Less But Better",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Origami",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Scandi",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Simple Baybayin",
+      "notes": "Shipping complete. Asero artisan received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Simple Hangul",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Sniper",
+      "notes": "Shipping complete. Ramas received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Soju",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT The One",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Travelling",
+      "notes": "Shipping complete except for those THOK or Monokei Artisan. Awaiting THOK and Monokei inventory to arrive.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Witch",
+      "notes": "Hibi artisans received. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "ePBT Yukihana",
+      "notes": "HIBI artisan received. Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Future Funk keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK 1520 Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK 80082",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK a",
+      "notes": "Shipping complete. Rama shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Abyssal Keycaps",
+      "notes": "Shipping complete except for those with Keybee Artisans.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Aegyptus",
+      "notes": "Shipping complete except for those with ENTER RAMAS. ESC Rama received. Awaiting for ENTER Rama.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Agent 01",
+      "notes": "Shipping complete. Thok's received. (Except for Rama) Awaiting Ramas.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Alter Redux",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Amethyst",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Analog Dreams 2",
+      "notes": "Shipping sets and Salvun complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Apollo",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Arctic",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Art",
+      "notes": "Shipping complete. THOK received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK ASCII Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Astral Light",
+      "notes": "Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Aurora Polaris",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Avanguardia",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Awaken",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Bae",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Bento R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Beta",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Bingsu R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Birch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Black & Gold Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Black Lotus",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Blossom",
+      "notes": "Keyset shipping complete. Awaiting deskmat.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Blue Alert Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Blurple",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Boneyard",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Boneyard R2 Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Botanical",
+      "notes": "Keysets shipping complete. Artisans received. Macropads shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Bread",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK British Racing Green",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Burgundy",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Carbon R3",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Centinela Extension Kit",
+      "notes": "New estimated shipping late September 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cherry Love",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Classic Arabic",
+      "notes": "Salvun Artisans shipped out. Keysets shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Classic BoW",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Classic Red",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cluck",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cobalt",
+      "notes": "Shipping complete except for orders with spacebars. Carrier lost spacebar and Blue Base kit shipment.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cojiro",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Colorchrome",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Copper R2 CYL Keycaps",
+      "notes": "Salvun shipping complete. Keycap shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Copper R2 MTNU Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cosmos Keycaps",
+      "notes": "Keycaps shipping complete. Salvun shipping complete. HIBI shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cosmos x Seal Keyboard Kit",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Creme Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Crimson Royal Cadet",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Cyrillic Beige & WoB",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dandy",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Darling R2",
+      "notes": "Shipping complete. Hibis have arrived and shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Deep Navy",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Deepwell",
+      "notes": "Shipping sets and Rama complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Deku",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Delta R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Demon Sword",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Devoted",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK DMG 3",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dolch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dots 2",
+      "notes": "Shipping complete (except with those with Ramas)",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dracula V2.0",
+      "notes": "Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dragon Witch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dualshot 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Dune Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Earth Tones",
+      "notes": "Shipping complete except for those with Ramas. Awaiting Ramas.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Euler",
+      "notes": "HIBI shipping complete. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Expo",
+      "notes": "Keysets and Salvuns have arrived. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Extended 2048",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Firefly R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Flare Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Fleuriste",
+      "notes": "HIBI Artisans shipped out. Keysets shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Foundation",
+      "notes": "Shipping complete. Rama shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Fox",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Frost Witch",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Frost Witch 2",
+      "notes": "HIBI artisan received. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK FTRO Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Fuji",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Future Funk 2 Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Galaxy",
+      "notes": "HIBI and THOK artisans received. Keyset shipping in progress except for those with Keybee artisans.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gateway",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gladiator",
+      "notes": "Shipping complete. HIBI and Keyrelic Artisans received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gonzales",
+      "notes": "Estimated shipping October 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gorp Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Grand Prix",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Green Alert",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Grey on Black",
+      "notes": "Complete except for those with deskmats",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Griseann 2",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gurokawa Keycaps",
+      "notes": "Further Delayed. Designer tweaking purple Alpha colour. All other colours approved. New estimated shipping October 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Haku",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hallyu",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hammerhead",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hanami Dango",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Handarbeige",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Handarbeit R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hanok",
+      "notes": "Complete except for those with Casper Keys. Still awaiting Casper shipment.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hazakura",
+      "notes": "Shipping complete. Awaiting for complimentary Trading cards to arrive.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hi Viz Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hi Viz Keycaps 2",
+      "notes": "Keyset shipping complete. Awaiting artisans and switches.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Higanbana",
+      "notes": "Shipping complete. Asero and Salvuns and Rama received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Honor",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hooty",
+      "notes": "Keyset shipping complete. Cables received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Houhai",
+      "notes": "Complete except for those with Ramas. Awaiting Rama shipment.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Hyperbeige Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Iceberg",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Indigo",
+      "notes": "HIBI artisans received. Keyset shipping complete. Monokei shipping complete. Salvuns shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Infernal",
+      "notes": "Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Ishtar",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Jags",
+      "notes": "Shipping complete except those with Ramas. Awaiting Ramas.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Jamon",
+      "notes": "HIBI artisans received. Cables recieved. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Kitsune",
+      "notes": "Shipping in complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Klassiker",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Kouhai",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Lazurite",
+      "notes": "Shipping complete except for those with Ramas. Ramas will be shipped out separately.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Led Zep R2 Keycaps",
+      "notes": "Shipping keysets and artisans complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Lux",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Lychee",
+      "notes": "Shipping complete. Asero Lychee artisan complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Maestro",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Manta",
+      "notes": "Keyset shipping complete. Awaiting deskmats.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Maroon",
+      "notes": "HIBI artisans received. Complete except with Asero artisans",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Masterpiece",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Masterpiece R2",
+      "notes": "Estimated shipping October 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Matsu",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mecha-01",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mercury",
+      "notes": "Shipping complete except for those with HIBI artisans. Awaiting HIBI inventory to arrive.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Metropolis 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mictlan",
+      "notes": "Shipping complete. HIBI artisans complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mictlan R2 CYL/MTNU",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mika",
+      "notes": "Complete except for those with THOK artisans. Monokei artisan received. Asero artisan did not make MOQ.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Minimal 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mizu R2 Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Modern Ink",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Modern Materials",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Momo Yume",
+      "notes": "THOK artisan received. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Monarch",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Monokai Material",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Moomin",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK MTNU 800",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK MTNU Beige, Susu, and WoB",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK MTNU Granite",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK MTNU Modo",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK MTNU Modo Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Mudbeam",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Muted r2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Nightlife",
+      "notes": "HIBI and Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Nightlight",
+      "notes": "Complete keycaps and THOK artisans.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Nimbus Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Noel R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Noire",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Nord",
+      "notes": "Shipping complete except for artisans and deskmats.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Norse",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK November Fog",
+      "notes": "Shipping complete. Keylabs received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Oblivion V3",
+      "notes": "Complete except for those with Salvuns. Awaiting Salvuns.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK OG Spacekeys r2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Olive r2",
+      "notes": "Shipping complete. HIBI artisans received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Olivia No.3",
+      "notes": "Shipping complete. Hibi shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Oni keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Orange Boi",
+      "notes": "Shipping complete. HIBI artisans received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Orenji Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Panels",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Parcel",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Patisserie",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Peaches N' Cream Lite",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Phantom",
+      "notes": "Shipping complete. HIBI artisan received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Pharaoh",
+      "notes": "Keyset shipping complete. Thok artisan received. Ramas and deskmats shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Pink on Navy",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Pono",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Posh",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Prussian Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Prussian Alert",
+      "notes": "Estimated shipping October 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Purple Night",
+      "notes": "Shipping complete. Salvun received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rainy Day",
+      "notes": "Shipping complete apart from orders with matching deskmats.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rainy Day R2 Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rascals Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Red Alert",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Red Devils",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Red Dragon",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Red Line",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Redline",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Regal",
+      "notes": "HIBI Artisans shipped out. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Retrowave",
+      "notes": "Complete except for those with Brass Shoe RAMAS",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK RGBYK",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rouge",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rouge R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Rudy 2",
+      "notes": "Keysets and Monokei Aritsans shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Serika 2",
+      "notes": "Shipping complete except for those with matching deskmats.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Shaded CYL Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Shadow",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Shanshui",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Shashin",
+      "notes": "Shipping Complete. Salvun shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Shoko R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Skyriter MTNU Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Sloth",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Space Cadet II Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Spark",
+      "notes": "Estimated shipping October 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Star",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Stargaze",
+      "notes": "Complete except for those with Ramas. Awaiting Rama shipment. THOK artisan received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Stealth",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Storm",
+      "notes": "Shipping complete (except those with Casper keys)",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Striker 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Sumi Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Symbiote",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Taegukgi",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Taiga",
+      "notes": "Shipping complete. HIBI artisans shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Tako",
+      "notes": "Keyset shipping compete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Tenshi",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Terror Below",
+      "notes": "Shipping complete. Asero and THOK received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Thai Tea",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Think Caps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Tiramisu",
+      "notes": "Shipping complete except for those with THOK. HIBI artisans shipped out. Awaiting THOK artisans to arrive.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Trackday",
+      "notes": "Shipping complete. HIBI's` received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Tribal",
+      "notes": "Keysets shipping complete. Salvun artisan only orders shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Truffelschwein",
+      "notes": "Keyset shipping complete. Ramas shipped.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Tuzi",
+      "notes": "Shipping complete. Rama artisans received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Umka",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Vamp",
+      "notes": "Shipping complete. HIBI Artisan received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Vaporwave Keysets",
+      "notes": "HIBI and Keyset shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Verdant Retro Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Villanelle",
+      "notes": "Shipping complete. HIBI's received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK WoB and BoW Hangul R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Yeeti",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Yuri 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Yuru",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Yutousu",
+      "notes": "HIBI artisans shipped. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Zen Pond",
+      "notes": "HIBI artisan received. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Zooted",
+      "notes": "Shipping complete. Salvun artisan received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK³ Keycaps",
+      "notes": "Shipping complete. HIBI artisan shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Infinikey Cabernet",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "IV Ashes",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "IV Kanketsu",
+      "notes": "Shipping complete. Switches and Artisans received.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "JCS Arabic Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "JTK Classic FC R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "JTK Illusion Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "JTK Night Sakura",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Kaiju R2 Keysets",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAM 80s After Dark",
+      "notes": "Nutcracker - Shipping complete. THOK shipping complete. Keycap shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAM Astha",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAM Ghost",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAM Playground",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAM Superuser",
+      "notes": "Ramas received. Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAP Ghost",
+      "notes": "Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAP Grey Alert",
+      "notes": "Estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAP MV Classic",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAP Retrobytes",
+      "notes": "Delayed. Issues with production. New estimated shipping Q3 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAP Soda",
+      "notes": "Estimated shipping early Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Atlantis",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Cat's Eye",
+      "notes": "Complete orders shipped out. Customers have been contacted on options available for outstanding orders.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Comet",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Crusader",
+      "notes": "Shipping complete except for those with Gold Rama. Gold Rama lost in transit, being reproduced.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Cyberspace",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Explosion",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Great Wave",
+      "notes": "Shipping complete (unless you ordered a THOK/Asero - still waiting for artisan inventory to arrive.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Iron",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Mizu",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Oasis",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Refined",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KAT Space Dust",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KBM Fairy",
+      "notes": "Shipping complete except for the artisans.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KDS Airborne",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KDS Deku",
+      "notes": "Shipping complete. HIBI did not make MOQ.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "KDS Solarized Dark",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Keykobo Poltergeist",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Lucky Jade",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Midnight Rainbow keycaps",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Milky Way Sogurt Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Milkyway Jade Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Milkyway Norse Keycaps",
+      "notes": "Estimated shipping Q1 2027",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Monokei Series Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Musubi",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "PBTFans Basin",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "PBTFans Deep Sea Predator",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "PBTFans X-ray Pre-order Batch 1",
+      "notes": "Shipping complete. Batch 1.5 - Keysets, artisans and Cable shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Ascii Keysets",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Bubble",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Copper",
+      "notes": "Shipping complete except for those with Deskmats and Salvuns. Awaiting Deskmat. Salvun shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Geoma",
+      "notes": "Shipping complete. HIBI artisan shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Mizu",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Nightlight",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Recall",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Silent Assassin",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SA Skyriter",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Series 00",
+      "notes": "These have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "SLK Dessau",
+      "notes": "HIBI shipping complete. Keysets shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "TKC 808 Boom",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "TMT Story",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "Tyche One",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "WS Entwined Flowers Keycaps",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "WS Mizu Keycaps",
+      "notes": "Keysets shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "WS Porquoise",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Nord Deskmats",
+      "notes": "Estimated shipping TBD 2026 | Estimated shipping TBD",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Modern Ink Deskmats",
+      "notes": "Awaiting outstanding variants. Estimated shipping TBD 2026 | The Modern Deskmat shipping complete. Awaiting other variants - estimated shipping TBC 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "808 Boom",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Arcana Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Birch Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Brushworks Collection Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Calm Palette",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Celestial Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ClackyCat Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Controller Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Crusader Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Cuddlespell Deskmat",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Cyber Meka Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "CyberCell Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Dandy Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Dixiemech Floral/9009",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "DRLNG Deskmat",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "DSA Nineteen Thirty Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Acadia Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Aesthetic Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Camo Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Cool Kids 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "EPBT Ivory Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Origami Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Sniper Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Soju Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "ePBT Witch Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "F*ck Clones Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK 80082 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK a (Waves/Under the Sea) Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Aegyptus Deskmats",
+      "notes": "New estimated shipping TBD",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Agent 01 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Americana Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Amethyst Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Analog Dreams 2 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Art Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Astral Deskmats",
+      "notes": "Customers emailed with options available.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Aurora Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Avanguardia Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Awaken Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Bingsu R2 Deskmats",
+      "notes": "New estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Black & Gold Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Blurple Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Botanical Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK British Racing Green Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Cadet Yuri Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Cherry Love Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Cojiro Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Colorchrome Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Deep Navy Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Deepwell Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Deku Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Devoted Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK DMG 3 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Dots 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Dracula Deskmats V2.0",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Dualshot 2 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Earth Tones Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Euler Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Foundation Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Frost Witch 2 Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Fuji Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Future Funk 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Galaxy Deskmats",
+      "notes": "TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Gateway Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Gorp Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Grey on Black Deskmats",
+      "notes": "Delayed. Est shipping TBD",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Hanami Dango Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Hanok Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Hazakura Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Hi Viz Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Higanbana Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Hooty Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Houhai Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Iceberg Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Indigo Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Ishtar Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Kitsune Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Kouhai Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Lazurite Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Led Zep Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Lychee Deskmats",
+      "notes": "Delayed. Estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Maestro Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Manta Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Masterpiece Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Mercury Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Mictlan Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Micltan 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Midnight Rainbow",
+      "notes": "Customers emailed for options.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Mika Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Momo Yume Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Moomin Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Nightlight Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Noire Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Norse Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK November Fog Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Oblivion Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Orange Boi Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Orenji Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Panels Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Parcel Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Patisserie Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Peaches N Cream Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Pharaoh Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Purple Night Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Red Devils Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Redline Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Retrowave Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Serika 2 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Shadow Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Sloth Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Stargaze Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Stealth Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Storm Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Striker 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Sumi Deskmats",
+      "notes": "Ghost Koi have shipped out.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Symbiote Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Tako Deskmats",
+      "notes": "Delayed. New estimated shipping TBD",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Tempest Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Terror Below Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK ThinkCaps Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Tiramisu Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Trackday Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Truffelschwein Deskmats",
+      "notes": "Delayed. Update to come.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Tuzi Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Yeeti Deskmats",
+      "notes": "Shipping complete. Received extras.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Yuru Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Zen Pond Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK Zooted Deskmats",
+      "notes": "Delayed. Update to come.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "GMK³ Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Gravikeys Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Gravity Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Great Retro Wave Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Hallyu Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Infinikey Cabernet Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "IV Ashes Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "IV Kanketsu Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "JTK Night Sakura Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAM 80'S Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAM Astha Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAM Superuser Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAT Cyberspace Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAT Great Wave Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "KAT Space Dust Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Keykobo Poltergeist Deskmats",
+      "notes": "Delayed. New estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Lemon Heaven Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Liquid Polarity Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Liquid WASD Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Lonely Nights Deskmat",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Magic Subway Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Marble Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "MECH Mat Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Metropolis 2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Minimal Series Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Monochrome Series",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Musubi Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Nigirimeshi Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Nono the Duck Deskmats & Plushie",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Nyap Time",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Plant Arcana Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Rainy Day R2 Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Ramen Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Redux Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "SA Copper Deskmats",
+      "notes": "Delayed. New estimated shipping TBD",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "SA Geoma Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "SA Mizu, GMK Bread, Winter Hour",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "SA Nightlight Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Sakura Deskmats",
+      "notes": "Sky and Dark - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Shanshui Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Stargaze Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Stone Lion Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Sushi Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Synthwave Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Taeha Types Studio Series Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Taiyaki Boba Deskmats",
+      "notes": "Delayed. Estimated shipping TBD.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "The Deep R3 Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Tinyland Deskmats",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "TMT Story Deskmat",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "To the Moon Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "UYU Milk Series",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "Winter Bunny Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
+      "product": "With Love Collection Deskmats",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Accessory",
+      "product": "Teevolution Emerald and Inferno",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Beast X Max",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "DOOM Switch Tactile",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Glorious Model O Pro Wireless Mouse",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Hitscan Mouse",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "is0GR Micropad",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Lamzu Mini Mouse Feb/March Pre-order",
+      "notes": "Polar White - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Lamzu OG Gaming Mouse Feb/March Pre-order",
+      "notes": "Matcha/Miami Blue - Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Maya X Mice",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Omnitype Keyboard Bags",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Play Tray",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "Play Tray 2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "TTC Matrix Switches",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    },
+    {
+      "category": "Accessory",
+      "product": "TTC Panda Switches",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
+    }
+  ],
+  "sentChanges": {}
+}
