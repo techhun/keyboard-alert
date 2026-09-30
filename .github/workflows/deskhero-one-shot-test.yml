@@ -1,0 +1,78 @@
+name: Deskhero one-shot Discord test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deskhero-one-shot-test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Send current Deskhero item
+        env:
+          DESKHERO_DISCORD_WEBHOOK_URL: ${{ secrets.DESKHERO_DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { DESKHERO_PAGES, parseDeskheroPageHtml } from './scripts/deskhero-safety.mjs';
+
+          const webhook=(process.env.DESKHERO_DISCORD_WEBHOOK_URL||'').trim();
+          if(!webhook) throw new Error('DESKHERO_DISCORD_WEBHOOK_URL is empty');
+
+          const page=DESKHERO_PAGES.find((item)=>item.category==='Keyset') || DESKHERO_PAGES[0];
+          const response=await fetch(page.url,{
+            headers:{
+              accept:'text/html,application/xhtml+xml',
+              'user-agent':'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'
+            },
+            signal:AbortSignal.timeout(15000)
+          });
+          if(!response.ok) throw new Error('Deskhero HTTP '+response.status);
+
+          const rows=parseDeskheroPageHtml(await response.text(),page);
+          if(!rows.length) throw new Error('Deskhero rows are empty');
+
+          const row=rows.find((item)=>/GMK Motif Keycaps/i.test(item.product))
+            || rows.find((item)=>!/shipping complete/i.test(item.notes))
+            || rows[0];
+
+          const clean=(value)=>String(value??'').replace(/\s+/g,' ').trim();
+          const payload={
+            username:'Deskhero Alert',
+            allowed_mentions:{parse:[]},
+            embeds:[{
+              title:'🧪 Deskhero 웹훅 테스트 · '+row.product,
+              url:row.sourceUrl,
+              description:'운영 state를 변경하지 않는 1회성 실제 전송 테스트입니다.',
+              fields:[
+                {name:'분류',value:clean(row.category)||'—',inline:true},
+                {name:'상태 / 상세 메모',value:(clean(row.notes)||'—').slice(0,1000),inline:false}
+              ],
+              footer:{text:'Deskhero · one-shot webhook test'},
+              timestamp:new Date().toISOString()
+            }]
+          };
+
+          const sent=await fetch(webhook,{
+            method:'POST',
+            headers:{'content-type':'application/json'},
+            body:JSON.stringify(payload)
+          });
+          if(!sent.ok) throw new Error('Discord webhook failed: '+sent.status+' '+await sent.text());
+
+          console.log('Sent Deskhero one-shot test:',row.category,'|',row.product,'|',clean(row.notes).slice(0,300));
+          NODE
