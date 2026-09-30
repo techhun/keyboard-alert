@@ -59,6 +59,43 @@ final class InventoryScript {
                 );
               }
 
+
+              function pageNeedsLogin() {
+                try {
+                  const candidates = [
+                    ...document.querySelectorAll('a[href]'),
+                    ...document.querySelectorAll('form[action]')
+                  ];
+                  return candidates.some((el) => {
+                    const value = el.getAttribute('href') || el.getAttribute('action') || '';
+                    if (!value) return false;
+                    const parsed = new URL(value, location.href);
+                    const host = (parsed.hostname || '').toLowerCase();
+                    return host === 'nid.naver.com'
+                      || host.endsWith('.nid.naver.com')
+                      || parsed.pathname.includes('nidlogin');
+                  });
+                } catch (ignored) {
+                  return false;
+                }
+              }
+
+              function responseNeedsLogin(response, body) {
+                try {
+                  const parsed = new URL(response?.url || location.href, location.href);
+                  const host = (parsed.hostname || '').toLowerCase();
+                  if (host === 'nid.naver.com' || host.endsWith('.nid.naver.com')) return true;
+                  const contentType = String(response?.headers?.get('content-type') || '').toLowerCase();
+                  if (!contentType.includes('text/html')) return false;
+                  const text = String(body || '').toLowerCase();
+                  return text.includes('nidlogin')
+                    || text.includes('nid.naver.com')
+                    || text.includes('로그인');
+                } catch (ignored) {
+                  return false;
+                }
+              }
+
               let channelUid = null;
               let observedApiUrl = null;
 
@@ -111,7 +148,12 @@ final class InventoryScript {
               }
 
               if (!channelUid) {
-                send({ ok: false, error: 'CHANNEL_UID_NOT_FOUND', pageUrl: location.href, title: document.title });
+                send({
+                  ok: false,
+                  error: pageNeedsLogin() ? 'AUTH_REQUIRED' : 'CHANNEL_UID_NOT_FOUND',
+                  pageUrl: location.href,
+                  title: document.title
+                });
                 return;
               }
 
@@ -143,7 +185,20 @@ final class InventoryScript {
                       validPayload = looksLikeProductPayload(currentData);
                     } catch (ignored) {}
                   }
-                  attempts.push({ url: apiUrl, status: current.status, validPayload });
+                  const authRequired = responseNeedsLogin(current, currentText);
+                  attempts.push({ url: apiUrl, status: current.status, validPayload, authRequired });
+
+                  if (authRequired) {
+                    send({
+                      ok: false,
+                      error: 'AUTH_REQUIRED',
+                      status: current.status,
+                      pageUrl: location.href,
+                      apiUrl,
+                      attempts
+                    });
+                    return;
+                  }
 
                   if (current.ok && validPayload) {
                     response = current;
