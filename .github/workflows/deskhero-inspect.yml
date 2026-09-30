@@ -1,0 +1,46 @@
+name: Inspect Deskhero pages
+
+on:
+  push:
+    branches: [feature/deskhero-watcher]
+    paths:
+      - '.github/workflows/deskhero-inspect.yml'
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Inspect Deskhero Help Center HTML
+        shell: bash
+        run: |
+          set -euo pipefail
+          urls=(
+            "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+            "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+            "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+          )
+          i=0
+          for url in "${urls[@]}"; do
+            i=$((i+1))
+            file="/tmp/deskhero-$i.html"
+            curl -fsSL --retry 3 --retry-all-errors               -A 'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'               "$url" -o "$file"
+            echo "=== URL $i ==="
+            echo "$url"
+            echo "bytes=$(wc -c < "$file")"
+            echo "tables=$(grep -o '<table\b' "$file" | wc -l)"
+            echo "trs=$(grep -o '<tr\b' "$file" | wc -l)"
+            echo "tds=$(grep -o '<td\b' "$file" | wc -l)"
+            echo "--- accessories links ---"
+            grep -oE 'href="[^"]+"[^>]*>[^<]*Accessories[^<]*<' "$file" | head -10 || true
+            grep -oE 'https?://[^" ]*accessor[^" ]*' "$file" | head -10 || true
+            echo "--- Product Name context ---"
+            node - "$file" <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync(process.argv[2],'utf8');
+          for (const needle of ['Product Name','Status / Notes','QK 80 Keyboards','GMK Motif','Accessories']) {
+            const i=html.indexOf(needle);
+            if(i>=0) console.log('\n['+needle+']\n'+html.slice(Math.max(0,i-700),i+1800).replace(/\s+/g,' '));
+          }
+          NODE
+          done
