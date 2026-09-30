@@ -22,7 +22,8 @@
     "restock:probe": "node scripts/restock-local-probe.mjs",
     "restock:profile:setup": "node scripts/restock-profile-setup.mjs",
     "restock:probe:profile": "node scripts/restock-profile-probe.mjs",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "check:deskhero": "node scripts/check-deskhero.mjs"
   },
   "dependencies": {
     "discord.js": "14.27.0",
