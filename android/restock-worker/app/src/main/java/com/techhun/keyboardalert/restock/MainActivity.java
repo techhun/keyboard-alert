@@ -110,6 +110,7 @@ public class MainActivity extends Activity {
     private boolean autoInspect;
     private boolean loginLaunching;
     private boolean optionLoadInProgress;
+    private int optionRetryCount;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -450,6 +451,7 @@ public class MainActivity extends Activity {
         if (optionFlowBusy()) return;
 
         optionLoadInProgress = true;
+        optionRetryCount = 0;
         pendingUrl = url;
         editingProductId = id;
         latestOptions = new JSONArray();
@@ -466,15 +468,26 @@ public class MainActivity extends Activity {
         if (!optionLoadInProgress) return;
         String siteType = SiteSupport.detect(pendingUrl);
         String currentUrl = webView.getUrl();
-        if (!SiteSupport.isProductPage(siteType, currentUrl)) {
+        if (!SiteSupport.isSameProductPage(siteType, pendingUrl, currentUrl)) {
+            JSONObject product = editingProductId == null
+                ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                : ProductStore.find(this, editingProductId);
+            DiagnosticLog.add(this, "OPTION_PAGE_MISMATCH", product, safeHost(currentUrl));
             optionLoadInProgress = false;
             clearPendingEdit();
             toast("상품 페이지를 확인하지 못했어요.");
             return;
         }
-        String script = SiteSupport.SWAGKEY_IMWEB.equals(siteType)
-            ? SwagkeyScript.SCRIPT
-            : InventoryScript.SCRIPT;
+
+        String script;
+        if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)) {
+            script = SwagkeyScript.SCRIPT;
+        } else {
+            JSONObject existing = editingProductId == null
+                ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                : ProductStore.find(this, editingProductId);
+            script = InventoryScript.build(existing);
+        }
         webView.evaluateJavascript(script, ignored -> {});
     }
 
@@ -490,16 +503,42 @@ public class MainActivity extends Activity {
             JSONObject result = new JSONObject(json);
             if (!result.optBoolean("ok")) {
                 int status = result.optInt("status", 0);
+                String error = result.optString("error", "UNKNOWN");
                 String siteType = SiteSupport.detect(pendingUrl);
-                boolean authFailure = SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                    && (status == 401 || status == 403 || !hasNaverSession());
-                if (authFailure && !pendingUrl.isBlank()) {
-                    launchLogin(pendingUrl);
-                } else {
-                    optionLoadInProgress = false;
-                    clearPendingEdit();
-                    toast("옵션 조회에 실패했어요.");
+                boolean smartStore = SiteSupport.NAVER_SMARTSTORE.equals(siteType);
+
+                if (smartStore && (InventoryRetry.isAuthFailure(error, status) || !hasNaverSession())) {
+                    if (!pendingUrl.isBlank()) launchFreshLogin(pendingUrl);
+                    return;
                 }
+
+                JSONObject diagnosticProduct = editingProductId == null
+                    ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                    : ProductStore.find(this, editingProductId);
+
+                if (InventoryRetry.shouldRetryInteractive(error, status) && optionRetryCount < 1) {
+                    optionRetryCount++;
+                    DiagnosticLog.add(
+                        this,
+                        "OPTION_CHECK_RETRY",
+                        diagnosticProduct,
+                        error + (status > 0 ? " · HTTP " + status : "") + " · 1/1"
+                    );
+                    autoInspect = true;
+                    webView.stopLoading();
+                    webView.loadUrl(pendingUrl);
+                    return;
+                }
+
+                DiagnosticLog.add(
+                    this,
+                    "OPTION_CHECK_FAIL",
+                    diagnosticProduct,
+                    error + (status > 0 ? " · HTTP " + status : "")
+                );
+                optionLoadInProgress = false;
+                clearPendingEdit();
+                toast("옵션 조회에 실패했어요.");
                 return;
             }
 
@@ -879,6 +918,7 @@ public class MainActivity extends Activity {
         latestChannelUid = "";
         latestProductNo = "";
         autoInspect = false;
+        optionRetryCount = 0;
     }
 
     private void renderProducts() {
@@ -1264,6 +1304,17 @@ public class MainActivity extends Activity {
         launchLogin(target);
     }
 
+    private void launchFreshLogin(String targetUrl) {
+        if (loginLaunching) return;
+        CookieManager cookies = CookieManager.getInstance();
+        String finalTargetUrl = targetUrl;
+        cookies.removeAllCookies(value -> {
+            cookies.flush();
+            WebStorage.getInstance().deleteAllData();
+            runOnUiThread(() -> launchLogin(finalTargetUrl));
+        });
+    }
+
     private void launchLogin(String targetUrl) {
         if (loginLaunching) return;
         if (targetUrl == null || targetUrl.isBlank()
@@ -1300,9 +1351,24 @@ public class MainActivity extends Activity {
         }
 
         if (!pendingUrl.isBlank() && optionLoadInProgress) {
-            autoInspect = true;
-            webView.loadUrl(pendingUrl);
+            resumeOptionLookupAfterLogin();
         }
+    }
+
+    private void resumeOptionLookupAfterLogin() {
+        if (webView == null || pendingUrl.isBlank() || !optionLoadInProgress) return;
+        CookieManager.getInstance().flush();
+        webView.stopLoading();
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.loadUrl("about:blank");
+        handler.postDelayed(() -> {
+            if (webView == null || pendingUrl.isBlank() || !optionLoadInProgress) return;
+            autoInspect = true;
+            webView.onResume();
+            webView.resumeTimers();
+            webView.loadUrl(pendingUrl);
+        }, 700L);
     }
 
     private void clearAppLogin() {
@@ -1316,8 +1382,14 @@ public class MainActivity extends Activity {
                 webView.loadUrl("about:blank");
             }
             runOnUiThread(() -> {
-                refreshSessionButton();
-                renderProducts();
+                Intent intent = new Intent(this, GateActivity.class);
+                intent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                );
+                startActivity(intent);
+                finish();
             });
         });
     }

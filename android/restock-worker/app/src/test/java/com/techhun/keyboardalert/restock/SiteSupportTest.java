@@ -97,6 +97,30 @@ public class SiteSupportTest {
     }
 
     @Test
+    public void matchesOnlyTheExactConfiguredProductPage() {
+        assertTrue(SiteSupport.isSameProductPage(
+            SiteSupport.NAVER_SMARTSTORE,
+            "https://smartstore.naver.com/store/products/123456789",
+            "https://m.smartstore.naver.com/store/products/123456789?NaPm=1"
+        ));
+        assertFalse(SiteSupport.isSameProductPage(
+            SiteSupport.NAVER_SMARTSTORE,
+            "https://smartstore.naver.com/store/products/123456789",
+            "https://smartstore.naver.com/store/products/987654321"
+        ));
+        assertTrue(SiteSupport.isSameProductPage(
+            SiteSupport.SWAGKEY_IMWEB,
+            "https://swagkey.kr/?idx=321",
+            "https://www.swagkey.kr/shop_view/321"
+        ));
+        assertFalse(SiteSupport.isSameProductPage(
+            SiteSupport.SWAGKEY_IMWEB,
+            "https://swagkey.kr/?idx=321",
+            "https://swagkey.kr/?idx=654"
+        ));
+    }
+
+    @Test
     public void detectsNaverLoginOnlyOnNaverIdentityHost() {
         assertTrue(SiteSupport.isNaverLoginUrl("https://nid.naver.com/nidlogin.login"));
         assertFalse(SiteSupport.isNaverLoginUrl("https://nid.naver.com.example.com/nidlogin.login"));

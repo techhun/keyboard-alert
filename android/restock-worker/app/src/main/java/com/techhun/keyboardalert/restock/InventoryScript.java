@@ -1,7 +1,27 @@
 package com.techhun.keyboardalert.restock;
 
+import org.json.JSONObject;
+
 final class InventoryScript {
     private InventoryScript() {}
+
+    static String build(JSONObject product) {
+        String channelUid = product == null ? "" : product.optString("channelUid", "");
+        if (channelUid.isBlank() && product != null) {
+            String apiUrl = product.optString("apiUrl", "");
+            String marker = "/channels/";
+            int start = apiUrl.indexOf(marker);
+            if (start >= 0) {
+                start += marker.length();
+                int end = apiUrl.indexOf('/', start);
+                if (end > start) channelUid = apiUrl.substring(start, end);
+            }
+        }
+        return SCRIPT.replace(
+            "const configuredChannelUid = '';",
+            "const configuredChannelUid = " + JSONObject.quote(channelUid) + ";"
+        );
+    }
 
     static final String SCRIPT = """
         (() => {
@@ -10,6 +30,7 @@ final class InventoryScript {
             try {
               const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
               const productNo = productMatch ? productMatch[1] : null;
+              const configuredChannelUid = '';
               if (!productNo) {
                 send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
                 return;
@@ -48,31 +69,81 @@ final class InventoryScript {
                 );
               }
 
-              let channelUid = null;
-              let observedApiUrl = null;
-              const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
-              for (const root of roots) {
-                channelUid = findChannelUid(root);
-                if (channelUid) break;
+
+              function responseNeedsLogin(response, body) {
+                try {
+                  const parsed = new URL(response?.url || location.href, location.href);
+                  const host = (parsed.hostname || '').toLowerCase();
+                  if (host === 'nid.naver.com' || host.endsWith('.nid.naver.com')) return true;
+                  const contentType = String(response?.headers?.get('content-type') || '').toLowerCase();
+                  if (!contentType.includes('text/html')) return false;
+                  const text = String(body || '').toLowerCase();
+                  return text.includes('nidlogin')
+                    || text.includes('nid.naver.com')
+                    || text.includes('로그인');
+                } catch (ignored) {
+                  return false;
+                }
               }
 
-              const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
-              for (const resourceUrl of resources) {
-                try {
-                  const parsed = new URL(resourceUrl, location.href);
-                  const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
-                  if (!anyProductMatch) continue;
-                  if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
+              let channelUid = null;
+              let observedApiUrl = null;
 
-                  const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
-                  if (exactProductMatch && exactProductMatch[2] === productNo) {
-                    observedApiUrl = parsed.toString();
+              function inspectCurrentPage() {
+                const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
+                if (!channelUid) {
+                  for (const root of roots) {
+                    channelUid = findChannelUid(root);
+                    if (channelUid) break;
                   }
-                } catch (ignored) {}
+                }
+
+                const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
+                for (const resourceUrl of resources) {
+                  try {
+                    const parsed = new URL(resourceUrl, location.href);
+                    const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
+                    if (!anyProductMatch) continue;
+                    if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
+
+                    const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
+                    if (exactProductMatch && exactProductMatch[2] === productNo) {
+                      observedApiUrl = parsed.toString();
+                    }
+                  } catch (ignored) {}
+                }
+
+                if (!channelUid) {
+                  for (const script of [...document.scripts]) {
+                    const scriptText = script.textContent || '';
+                    if (!scriptText || !scriptText.includes('channelUid')) continue;
+                    const match = scriptText.match(/["']channelUid["']\\s*:\\s*["']([^"']{8,})["']/);
+                    if (match) {
+                      channelUid = match[1];
+                      break;
+                    }
+                  }
+                }
+              }
+
+              for (let attempt = 0; attempt < 7 && !channelUid; attempt++) {
+                inspectCurrentPage();
+                if (!channelUid && attempt < 6) {
+                  await new Promise((resolve) => setTimeout(resolve, 600));
+                }
+              }
+
+              if (!channelUid && configuredChannelUid) {
+                channelUid = configuredChannelUid;
               }
 
               if (!channelUid) {
-                send({ ok: false, error: 'CHANNEL_UID_NOT_FOUND', pageUrl: location.href, title: document.title });
+                send({
+                  ok: false,
+                  error: 'CHANNEL_UID_NOT_FOUND',
+                  pageUrl: location.href,
+                  title: document.title
+                });
                 return;
               }
 
@@ -104,7 +175,20 @@ final class InventoryScript {
                       validPayload = looksLikeProductPayload(currentData);
                     } catch (ignored) {}
                   }
-                  attempts.push({ url: apiUrl, status: current.status, validPayload });
+                  const authRequired = responseNeedsLogin(current, currentText);
+                  attempts.push({ url: apiUrl, status: current.status, validPayload, authRequired });
+
+                  if (authRequired) {
+                    send({
+                      ok: false,
+                      error: 'AUTH_REQUIRED',
+                      status: current.status,
+                      pageUrl: location.href,
+                      apiUrl,
+                      attempts
+                    });
+                    return;
+                  }
 
                   if (current.ok && validPayload) {
                     response = current;
@@ -149,7 +233,7 @@ final class InventoryScript {
                 : [];
 
               const options = combinations.map((option) => {
-                const stock = Number(option.stockQuantity);
+                const stock = option.stockQuantity == null ? NaN : Number(option.stockQuantity);
                 return {
                   id: String(option.id ?? ''),
                   optionName1: option.optionName1 ?? null,
@@ -161,7 +245,8 @@ final class InventoryScript {
               });
 
               if (!options.length) {
-                const stock = Number(product?.stockQuantity ?? data?.stockQuantity);
+                const rawStock = product?.stockQuantity ?? data?.stockQuantity;
+                const stock = rawStock == null ? NaN : Number(rawStock);
                 options.push({
                   id: 'default',
                   optionName1: '기본 상품',
@@ -187,7 +272,12 @@ final class InventoryScript {
                 attempts
               });
             } catch (error) {
-              send({ ok: false, error: 'JS_ERROR', message: String(error && (error.stack || error.message) || error) });
+              send({
+                ok: false,
+                error: 'JS_ERROR',
+                message: String(error && (error.stack || error.message) || error),
+                pageUrl: location.href
+              });
             }
           })();
           return 'STARTED';

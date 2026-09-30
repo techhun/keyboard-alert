@@ -50,6 +50,8 @@ public class MonitorService extends Service {
     private static final long MIN_PRODUCT_SPACING_MS = 1_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 5 * 60_000L;
+    private static final int MAX_DISCOVERY_RETRIES = 2;
+    private static final long DISCOVERY_RETRY_DELAY_MS = 1_500L;
 
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
@@ -66,6 +68,7 @@ public class MonitorService extends Service {
     private long rateLimitBackoffMs;
     private long backoffUntil;
     private boolean networkWaiting;
+    private int transientRetryCount;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping) return;
@@ -175,6 +178,15 @@ public class MonitorService extends Service {
                     return;
                 }
                 if (!SiteSupport.isProductPage(siteType, url)) return;
+                if (mode != Mode.DIRECT && currentProduct != null
+                    && !SiteSupport.isSameProductPage(
+                        siteType,
+                        currentProduct.optString("url", ""),
+                        url
+                    )) {
+                    DiagnosticLog.add(MonitorService.this, "STALE_PAGE", currentProduct, safeHost(url));
+                    return;
+                }
 
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
@@ -265,34 +277,44 @@ public class MonitorService extends Service {
     }
 
     private void runDiscoveryCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || awaitingResult || currentProduct == null || mode != Mode.DISCOVERY) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
-            markCurrentFailure("상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.NAVER_SMARTSTORE,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        webView.evaluateJavascript(InventoryScript.SCRIPT, ignored -> {});
+        webView.evaluateJavascript(InventoryScript.build(currentProduct), ignored -> {});
     }
 
     private void runSwagkeyCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || awaitingResult || currentProduct == null || mode != Mode.SWAGKEY) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.SWAGKEY_IMWEB, webView.getUrl())) {
-            markCurrentFailure("SWAGKEY 상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.SWAGKEY_IMWEB,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
@@ -320,28 +342,34 @@ public class MonitorService extends Service {
     }
 
     private void handleInventoryResult(String json) {
-        if (stopping) return;
-        awaitingResult = false;
-        handler.removeCallbacks(resultTimeout);
-        if (currentProduct == null) {
-            scheduleNextProduct();
-            return;
-        }
-
-        JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
-        if (latest == null || !latest.optBoolean("enabled", false)) {
-            scheduleNextProduct();
-            return;
-        }
-        currentProduct = latest;
+        if (stopping || currentProduct == null) return;
 
         try {
             JSONObject result = new JSONObject(json);
+            if (!isResultForCurrentProduct(result)) {
+                DiagnosticLog.add(
+                    this,
+                    "STALE_RESULT",
+                    currentProduct,
+                    result.optString("productId", result.optString("pageUrl", "unknown"))
+                );
+                return;
+            }
+
+            awaitingResult = false;
+            handler.removeCallbacks(resultTimeout);
+
+            JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
+            if (latest == null || !latest.optBoolean("enabled", false)) {
+                scheduleNextProduct();
+                return;
+            }
+            currentProduct = latest;
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
-                    && (status == 401 || status == 403)) {
+                    && InventoryRetry.isAuthFailure(error, status)) {
                     invalidateSessionAndStop();
                     return;
                 }
@@ -352,21 +380,33 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
-                    "PRODUCT_API_FAILED".equals(error)
-                        || "API_URL_MISSING".equals(error)
-                        || status == 204
-                        || status == 404
-                )) {
+                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                    && mode == Mode.DIRECT
+                    && InventoryRetry.shouldRediscoverDirect(error, status)) {
                     currentProduct.put("apiUrl", "");
                     ProductStore.updateRuntime(this, currentProduct);
+                    transientRetryCount = 0;
                     mode = Mode.DISCOVERY;
                     webView.loadUrl(currentProduct.optString("url"));
                     return;
                 }
 
+                if ((mode == Mode.DISCOVERY || mode == Mode.SWAGKEY)
+                    && InventoryRetry.shouldRetry(error, status)
+                    && transientRetryCount < MAX_DISCOVERY_RETRIES) {
+                    transientRetryCount++;
+                    String retryDetail = error
+                        + (status > 0 ? " · HTTP " + status : "")
+                        + " · " + transientRetryCount + "/" + MAX_DISCOVERY_RETRIES;
+                    DiagnosticLog.add(this, "CHECK_RETRY", currentProduct, retryDetail);
+                    handler.postDelayed(this::retryCurrentCheck,
+                        DISCOVERY_RETRY_DELAY_MS * transientRetryCount);
+                    return;
+                }
+
                 String detail = status > 0 ? "조회 실패 · HTTP " + status : "조회 실패";
-                markCurrentFailure(detail);
+                String diagnosticDetail = error + (status > 0 ? " · HTTP " + status : "");
+                markCurrentFailure(detail, "CHECK_FAIL", diagnosticDetail);
                 scheduleNextProduct();
                 return;
             }
@@ -393,6 +433,25 @@ public class MonitorService extends Service {
         }
     }
 
+    private boolean isResultForCurrentProduct(JSONObject result) {
+        if (currentProduct == null || result == null) return false;
+        String currentId = currentProduct.optString("id", "");
+        String resultProductId = result.optString("productId", "");
+        if (!resultProductId.isBlank()) {
+            return currentId.equals(resultProductId);
+        }
+
+        String pageUrl = result.optString("pageUrl", "");
+        if (!pageUrl.isBlank()) {
+            return SiteSupport.isSameProductPage(
+                currentSiteType(),
+                currentProduct.optString("url", ""),
+                pageUrl
+            );
+        }
+        return false;
+    }
+
     private boolean processSuccessfulSnapshot(JSONObject product, JSONObject result) throws Exception {
         JSONArray selectedArray = product.optJSONArray("selectedIds");
         Set<String> selected = new HashSet<>();
@@ -410,6 +469,7 @@ public class MonitorService extends Service {
         JSONArray options = result.optJSONArray("options");
         if (options == null) options = new JSONArray();
         Map<String, Boolean> current = new HashMap<>();
+        Map<String, Integer> quantities = new HashMap<>();
         Map<String, String> currentLabels = new HashMap<>();
         int availableCount = 0;
         for (int i = 0; i < options.length(); i++) {
@@ -419,6 +479,13 @@ public class MonitorService extends Service {
             if (!selected.contains(id)) continue;
             boolean available = option.optBoolean("available", false);
             current.put(id, available);
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && !option.isNull("stockQuantity")) {
+                double quantity = option.optDouble("stockQuantity", Double.NaN);
+                if (Double.isFinite(quantity) && quantity >= 0 && quantity <= Integer.MAX_VALUE
+                    && quantity == Math.floor(quantity)) {
+                    quantities.put(id, (int) quantity);
+                }
+            }
             currentLabels.put(id, optionLabel(option));
             if (available) availableCount++;
         }
@@ -433,17 +500,43 @@ public class MonitorService extends Service {
 
         JSONObject previous = product.optJSONObject("lastAvailability");
         if (previous == null) previous = new JSONObject();
+        JSONObject previousQuantities = product.optJSONObject("lastStockQuantity");
+        if (previousQuantities == null) previousQuantities = new JSONObject();
+        JSONObject afterRestock = product.optJSONObject("lowStockAfterRestock");
+        if (afterRestock == null) afterRestock = new JSONObject();
         JSONArray restocked = new JSONArray();
+        JSONArray lowStock = new JSONArray();
+        int threshold = MonitorPrefs.lowStockThreshold(this);
         for (String id : selected) {
             boolean now = current.getOrDefault(id, false);
-            if (previous.has(id) && !previous.optBoolean(id, false) && now) {
+            boolean isRestocked = previous.has(id) && !previous.optBoolean(id, false) && now;
+            if (isRestocked) {
                 restocked.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id)));
+            }
+            Integer quantity = quantities.get(id);
+            if (quantity != null) {
+                Integer lastQuantity = previousQuantities.has(id) && !previousQuantities.isNull(id)
+                    ? previousQuantities.optInt(id) : null;
+                Integer restockQuantity = afterRestock.has(id) ? afterRestock.optInt(id) : null;
+                if (now && LowStockAlert.shouldNotify(lastQuantity, quantity, threshold,
+                    isRestocked, restockQuantity)) {
+                    lowStock.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id))
+                        + " · " + quantity + "개 남음");
+                    afterRestock.remove(id);
+                } else if (isRestocked && quantity > 0 && quantity <= threshold) {
+                    afterRestock.put(id, quantity);
+                } else if (quantity == 0 || quantity > threshold) {
+                    afterRestock.remove(id);
+                }
+                previousQuantities.put(id, quantity);
             }
             previous.put(id, now);
         }
 
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
+        product.put("lastStockQuantity", previousQuantities);
+        product.put("lowStockAfterRestock", afterRestock);
         product.put("lastStatus", "재고 있음 " + availableCount + "/" + selected.size() + " · " + time);
         product.put("lastCheck", System.currentTimeMillis());
 
@@ -458,6 +551,9 @@ public class MonitorService extends Service {
         if (restocked.length() > 0) {
             DiagnosticLog.recordRestock(this, product, restocked.toString());
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
+        }
+        if (lowStock.length() > 0) {
+            notifyLowStock(product.optString("title", "상품"), product.optString("url", ""), lowStock);
         }
         return true;
     }
@@ -500,11 +596,28 @@ public class MonitorService extends Service {
         handler.postDelayed(this::bootstrapSession, 500L);
     }
 
+    private void retryCurrentCheck() {
+        if (mode == Mode.SWAGKEY) {
+            runSwagkeyCheck();
+            return;
+        }
+        if (mode == Mode.DISCOVERY && currentProduct != null) {
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
+            return;
+        }
+        runDiscoveryCheck();
+    }
+
     private void markCurrentFailure(String message) {
-        markCurrentFailure(message, "CHECK_FAIL");
+        markCurrentFailure(message, "CHECK_FAIL", message);
     }
 
     private void markCurrentFailure(String message, String event) {
+        markCurrentFailure(message, event, message);
+    }
+
+    private void markCurrentFailure(String message, String event, String diagnosticDetail) {
         if (currentProduct != null) {
             try {
                 currentProduct.put("lastStatus", message);
@@ -517,13 +630,14 @@ public class MonitorService extends Service {
         } else if ("RATE_LIMIT".equals(event)) {
             DiagnosticLog.recordRateLimit(this, currentProduct, message);
         } else {
-            DiagnosticLog.recordFailure(this, event, currentProduct, message);
+            DiagnosticLog.recordFailure(this, event, currentProduct, diagnosticDetail);
         }
         setStatus(message);
     }
 
     private void scheduleNextProduct() {
         if (stopping) return;
+        transientRetryCount = 0;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
@@ -611,7 +725,7 @@ public class MonitorService extends Service {
 
         NotificationChannel alert = new NotificationChannel(
             CHANNEL_ALERT,
-            "재입고 알림",
+            "재고 알림",
             NotificationManager.IMPORTANCE_HIGH
         );
         alert.enableVibration(true);
@@ -696,6 +810,38 @@ public class MonitorService extends Service {
             .build();
         getSystemService(NotificationManager.class).notify(
             42000 + Math.abs((title + text).hashCode() % 1000),
+            notification
+        );
+    }
+
+    private void notifyLowStock(String title, String productUrl, JSONArray labels) {
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < labels.length(); i++) {
+            if (i > 0) text.append(" · ");
+            text.append(labels.optString(i));
+        }
+        Intent open = productUrl == null || productUrl.isBlank()
+            ? new Intent(this, GateActivity.class)
+            : new Intent(Intent.ACTION_VIEW, Uri.parse(productUrl));
+        open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+            this,
+            Math.abs(("low-stock:" + productUrl).hashCode()),
+            open,
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        Notification notification = new Notification.Builder(this, CHANNEL_ALERT)
+            .setSmallIcon(android.R.drawable.stat_notify_more)
+            .setContentTitle("⚠️ 재고 부족 · " + title)
+            .setContentText(text.toString())
+            .setStyle(new Notification.BigTextStyle().bigText(text.toString()))
+            .setContentIntent(contentIntent)
+            .setAutoCancel(true)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setCategory(Notification.CATEGORY_EVENT)
+            .build();
+        getSystemService(NotificationManager.class).notify(
+            43000 + Math.abs(productUrl.hashCode() % 1000),
             notification
         );
     }

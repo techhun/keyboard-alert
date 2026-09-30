@@ -10,8 +10,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.WindowInsets;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class SettingsActivity extends Activity {
     private TextView notificationStatus;
     private TextView batteryStatus;
     private TextView diagnosticStatus;
+    private TextView lowStockValue;
     private int interval;
 
     @Override
@@ -121,6 +124,24 @@ public class SettingsActivity extends Activity {
         intervalNote.setPadding(0, dp(10), 0, 0);
         intervalCard.addView(intervalNote);
 
+        LinearLayout lowStockCard = surface(20, 18);
+        LinearLayout.LayoutParams lowStockLp = matchWrap();
+        lowStockLp.topMargin = dp(10);
+        root.addView(lowStockCard, lowStockLp);
+        lowStockCard.addView(text("재고 부족 알림", 15, TEXT, Typeface.BOLD));
+        TextView lowStockNote = text(
+            "SmartStore 선택 옵션의 수량이 기준 이하로 줄면 알려줘요. SWAGKEY는 잔여 수량을 제공하지 않아요.",
+            12, SUB, Typeface.NORMAL
+        );
+        lowStockNote.setPadding(0, dp(8), 0, 0);
+        lowStockCard.addView(lowStockNote);
+        lowStockValue = actionButton("", BLUE, BLUE_SOFT);
+        lowStockValue.setText("기준 수량  " + MonitorPrefs.lowStockThreshold(this) + "개 이하");
+        LinearLayout.LayoutParams lowStockButtonLp = matchWrap();
+        lowStockButtonLp.topMargin = dp(12);
+        lowStockCard.addView(lowStockValue, lowStockButtonLp);
+        lowStockValue.setOnClickListener(v -> editLowStockThreshold());
+
         LinearLayout notificationCard = surface(20, 18);
         LinearLayout.LayoutParams notificationLp = matchWrap();
         notificationLp.topMargin = dp(10);
@@ -140,7 +161,7 @@ public class SettingsActivity extends Activity {
         notificationHeader.addView(notificationStatus);
 
         TextView notificationNote = text(
-            "재입고 알림을 받으려면 Android 알림 권한이 켜져 있어야 해요.",
+            "재입고·재고 부족 알림을 받으려면 Android 알림 권한이 켜져 있어야 해요.",
             12,
             SUB,
             Typeface.NORMAL
@@ -246,7 +267,7 @@ public class SettingsActivity extends Activity {
         backupCard.addView(text("데이터 백업", 15, TEXT, Typeface.BOLD));
 
         TextView backupNote = text(
-            "등록한 상품, 선택 옵션, 알림 ON/OFF와 조회 주기를 JSON 파일로 보관할 수 있어요. 로그인 정보는 포함하지 않아요.",
+            "등록한 상품, 선택 옵션, 알림 ON/OFF, 조회 주기와 재고 부족 기준을 JSON 파일로 보관할 수 있어요. 로그인 정보는 포함하지 않아요.",
             12,
             SUB,
             Typeface.NORMAL
@@ -281,11 +302,45 @@ public class SettingsActivity extends Activity {
 
         Motion.enter(header, 0L);
         Motion.enter(intervalCard, 35L);
+        Motion.enter(lowStockCard, 50L);
         Motion.enter(notificationCard, 70L);
         Motion.enter(batteryCard, 105L);
         Motion.enter(diagnosticCard, 140L);
         Motion.enter(backupCard, 175L);
         Motion.enter(version, 205L);
+    }
+
+    private void editLowStockThreshold() {
+        EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setSingleLine(true);
+        input.setText(String.valueOf(MonitorPrefs.lowStockThreshold(this)));
+        input.selectAll();
+        int padding = dp(24);
+        LinearLayout container = new LinearLayout(this);
+        container.setPadding(padding, dp(8), padding, 0);
+        container.addView(input, matchWrap());
+        AlertDialog dialog = new AlertDialog.Builder(this)
+            .setTitle("재고 부족 기준 수량")
+            .setMessage("1~999개 중에서 설정해주세요.")
+            .setView(container)
+            .setNegativeButton("취소", null)
+            .setPositiveButton("저장", null)
+            .create();
+        dialog.setOnShowListener(ignored -> dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            try {
+                int value = Integer.parseInt(input.getText().toString().trim());
+                if (value < 1 || value > 999) throw new NumberFormatException();
+                int previous = MonitorPrefs.lowStockThreshold(this);
+                MonitorPrefs.prefs(this).edit().putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, value).apply();
+                if (value != previous) ProductStore.resetLowStockState(this);
+                lowStockValue.setText("기준 수량  " + value + "개 이하");
+                dialog.dismiss();
+            } catch (NumberFormatException error) {
+                input.setError("1~999 사이 숫자를 입력해주세요.");
+            }
+        }));
+        dialog.show();
     }
 
     private void exportBackup() {
@@ -353,6 +408,7 @@ public class SettingsActivity extends Activity {
             int count = ProductStore.importBackup(this, json);
             interval = MonitorPrefs.intervalSeconds(this);
             refreshChips();
+            lowStockValue.setText("기준 수량  " + MonitorPrefs.lowStockThreshold(this) + "개 이하");
             toast(count + "개 상품을 가져왔어요.");
         } catch (Exception ignored) {
             toast("Restock 백업 파일을 확인해주세요.");

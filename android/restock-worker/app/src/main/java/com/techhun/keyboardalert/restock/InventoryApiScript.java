@@ -24,12 +24,47 @@ final class InventoryApiScript {
                     return;
                   }
                   const parsed = new URL(configuredApiUrl, location.href);
+                  const apiParts = parsed.pathname.split('/').filter(Boolean);
+                  const productIndex = apiParts.lastIndexOf('products');
+                  const apiProductNo = productIndex >= 0 ? String(apiParts[productIndex + 1] || '') : '';
+                  if (!apiProductNo || apiProductNo !== productId) {
+                    send({
+                      ok: false,
+                      error: 'API_PRODUCT_MISMATCH',
+                      productId,
+                      apiUrl: configuredApiUrl
+                    });
+                    return;
+                  }
                   const apiUrl = location.origin + parsed.pathname + parsed.search;
                   const response = await fetch(apiUrl, {
                     credentials: 'include',
                     headers: { accept: 'application/json, text/plain, */*' }
                   });
                   const text = await response.text();
+                  const responseUrl = new URL(response.url || apiUrl, location.href);
+                  const responseHost = (responseUrl.hostname || '').toLowerCase();
+                  const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+                  const loginHtml = contentType.includes('text/html')
+                    && (
+                      text.toLowerCase().includes('nidlogin')
+                      || text.toLowerCase().includes('nid.naver.com')
+                      || text.includes('로그인')
+                    );
+                  const authRequired = responseHost === 'nid.naver.com'
+                    || responseHost.endsWith('.nid.naver.com')
+                    || loginHtml;
+                  if (authRequired) {
+                    send({
+                      ok: false,
+                      error: 'AUTH_REQUIRED',
+                      productId,
+                      status: response.status,
+                      apiUrl
+                    });
+                    return;
+                  }
+
                   let data = null;
                   try { data = JSON.parse(text); } catch (ignored) {}
                   if (!response.ok || !data) {
@@ -55,7 +90,7 @@ final class InventoryApiScript {
                     ? optionInfo.optionCombinations
                     : [];
                   const options = combinations.map((option) => {
-                    const stock = Number(option.stockQuantity);
+                    const stock = option.stockQuantity == null ? NaN : Number(option.stockQuantity);
                     return {
                       id: String(option.id ?? ''),
                       optionName1: option.optionName1 ?? null,
@@ -67,7 +102,8 @@ final class InventoryApiScript {
                   });
 
                   if (!options.length) {
-                    const stock = Number(originProduct?.stockQuantity ?? data?.stockQuantity);
+                    const rawStock = originProduct?.stockQuantity ?? data?.stockQuantity;
+                    const stock = rawStock == null ? NaN : Number(rawStock);
                     options.push({
                       id: 'default',
                       optionName1: '기본 상품',
