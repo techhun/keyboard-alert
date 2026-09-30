@@ -60,26 +60,6 @@ final class InventoryScript {
               }
 
 
-              function pageNeedsLogin() {
-                try {
-                  const candidates = [
-                    ...document.querySelectorAll('a[href]'),
-                    ...document.querySelectorAll('form[action]')
-                  ];
-                  return candidates.some((el) => {
-                    const value = el.getAttribute('href') || el.getAttribute('action') || '';
-                    if (!value) return false;
-                    const parsed = new URL(value, location.href);
-                    const host = (parsed.hostname || '').toLowerCase();
-                    return host === 'nid.naver.com'
-                      || host.endsWith('.nid.naver.com')
-                      || parsed.pathname.includes('nidlogin');
-                  });
-                } catch (ignored) {
-                  return false;
-                }
-              }
-
               function responseNeedsLogin(response, body) {
                 try {
                   const parsed = new URL(response?.url || location.href, location.href);
@@ -150,7 +130,7 @@ final class InventoryScript {
               if (!channelUid) {
                 send({
                   ok: false,
-                  error: pageNeedsLogin() ? 'AUTH_REQUIRED' : 'CHANNEL_UID_NOT_FOUND',
+                  error: 'CHANNEL_UID_NOT_FOUND',
                   pageUrl: location.href,
                   title: document.title
                 });
