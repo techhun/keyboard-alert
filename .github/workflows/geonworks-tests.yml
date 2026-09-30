@@ -20,6 +20,9 @@ on:
       - 'scripts/check-cannonkeys.mjs'
       - 'scripts/cannonkeys-safety.mjs'
       - 'tests/cannonkeys-safety.test.mjs'
+      - 'scripts/check-deskhero.mjs'
+      - 'scripts/deskhero-safety.mjs'
+      - 'tests/deskhero-safety.test.mjs'
       - 'scripts/system-health.mjs'
       - 'tests/system-health-safety.test.mjs'
       - 'scripts/check-workflow-watchdog.mjs'
@@ -46,6 +49,9 @@ on:
       - 'scripts/check-cannonkeys.mjs'
       - 'scripts/cannonkeys-safety.mjs'
       - 'tests/cannonkeys-safety.test.mjs'
+      - 'scripts/check-deskhero.mjs'
+      - 'scripts/deskhero-safety.mjs'
+      - 'tests/deskhero-safety.test.mjs'
       - 'scripts/system-health.mjs'
       - 'tests/system-health-safety.test.mjs'
       - 'scripts/check-workflow-watchdog.mjs'
@@ -90,3 +96,5 @@ jobs:
         run: npm run check:kbdfans
       - name: Smoke check CannonKeys Project Updates
         run: npm run check:cannonkeys
+      - name: Smoke check Deskhero Group Buy/Preorder Updates
+        run: npm run check:deskhero
