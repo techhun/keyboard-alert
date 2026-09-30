@@ -42,6 +42,29 @@ final class InventoryApiScript {
                     headers: { accept: 'application/json, text/plain, */*' }
                   });
                   const text = await response.text();
+                  const responseUrl = new URL(response.url || apiUrl, location.href);
+                  const responseHost = (responseUrl.hostname || '').toLowerCase();
+                  const contentType = String(response.headers.get('content-type') || '').toLowerCase();
+                  const loginHtml = contentType.includes('text/html')
+                    && (
+                      text.toLowerCase().includes('nidlogin')
+                      || text.toLowerCase().includes('nid.naver.com')
+                      || text.includes('로그인')
+                    );
+                  const authRequired = responseHost === 'nid.naver.com'
+                    || responseHost.endsWith('.nid.naver.com')
+                    || loginHtml;
+                  if (authRequired) {
+                    send({
+                      ok: false,
+                      error: 'AUTH_REQUIRED',
+                      productId,
+                      status: response.status,
+                      apiUrl
+                    });
+                    return;
+                  }
+
                   let data = null;
                   try { data = JSON.parse(text); } catch (ignored) {}
                   if (!response.ok || !data) {
