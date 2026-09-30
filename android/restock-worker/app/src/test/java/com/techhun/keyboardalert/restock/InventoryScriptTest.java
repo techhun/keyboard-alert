@@ -22,6 +22,19 @@ public class InventoryScriptTest {
     }
 
     @Test
+    public void buildRecoversChannelUidFromSavedApiUrl() throws Exception {
+        JSONObject product = new JSONObject();
+        product.put(
+            "apiUrl",
+            "https://smartstore.naver.com/i/v2/channels/recovered-channel-uid/products/123456789?withWindow=false"
+        );
+
+        String script = InventoryScript.build(product);
+
+        assertTrue(script.contains("const configuredChannelUid = \"recovered-channel-uid\";"));
+    }
+
+    @Test
     public void defaultScriptKeepsFallbackEmptyForInteractiveLookup() {
         assertTrue(InventoryScript.SCRIPT.contains("const configuredChannelUid = '';"));
     }
