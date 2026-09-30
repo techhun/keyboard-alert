@@ -2,6 +2,17 @@ name: Android Restock Release APK
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - feat/restock-low-stock-alert
+    paths:
+      - 'android/restock-worker/app/**'
+      - 'android/restock-worker/build.gradle.kts'
+      - 'android/restock-worker/settings.gradle.kts'
+      - 'android/restock-worker/gradle.properties'
+      - 'android/restock-worker/gradle/**'
+      - '.github/workflows/android-restock-release.yml'
 
 permissions:
   contents: read
