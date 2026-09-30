@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-30T15:51:50.855Z",
+  "updatedAt": "2026-09-30T16:01:41.191Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -718,16 +718,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
-      "product": "GMK Spark",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
       "product": "GMK CYL Thunder God",
       "status": "In Manufacturing",
@@ -888,9 +878,19 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
+      "product": "GMK Spark",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Prussian-Alert-36404233415480c88628d1f6c4ded985",
       "product": "GMK CYL Prussian Alert",
-      "status": "Shipping to Prototypist",
+      "status": "In Quality Control",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -900,7 +900,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
       "product": "GMK Centinela Extension Kit",
-      "status": "Shipping to Prototypist",
+      "status": "In Quality Control",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1450,7 +1450,7 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
       "product": "CRP r7",
-      "status": "In Quality Control",
+      "status": "Shipping to Customers",
       "expectedShipping": "Late Q3 2026"
     },
     {
@@ -1460,7 +1460,7 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Olivetti-36404233415480f9b87bde3ad5e9e1ac",
       "product": "DCS Olivetti",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -1702,20 +1702,7 @@
       "product": "DCS Pink Alert",
       "status": "Completed",
       "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KAP-MV-Classic-24204233415480b19a35edbd63e28ba3",
-      "product": "KAP MV Classic",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-09-30T15:51:37.044Z",
-    "keyset": "2026-09-30T15:51:49.285Z"
-  }
+  "fallbackSince": {}
 }
