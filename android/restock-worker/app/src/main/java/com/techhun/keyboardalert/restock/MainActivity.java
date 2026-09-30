@@ -468,15 +468,26 @@ public class MainActivity extends Activity {
         if (!optionLoadInProgress) return;
         String siteType = SiteSupport.detect(pendingUrl);
         String currentUrl = webView.getUrl();
-        if (!SiteSupport.isProductPage(siteType, currentUrl)) {
+        if (!SiteSupport.isSameProductPage(siteType, pendingUrl, currentUrl)) {
+            JSONObject product = editingProductId == null
+                ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                : ProductStore.find(this, editingProductId);
+            DiagnosticLog.add(this, "OPTION_PAGE_MISMATCH", product, safeHost(currentUrl));
             optionLoadInProgress = false;
             clearPendingEdit();
             toast("상품 페이지를 확인하지 못했어요.");
             return;
         }
-        String script = SiteSupport.SWAGKEY_IMWEB.equals(siteType)
-            ? SwagkeyScript.SCRIPT
-            : InventoryScript.SCRIPT;
+
+        String script;
+        if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)) {
+            script = SwagkeyScript.SCRIPT;
+        } else {
+            JSONObject existing = editingProductId == null
+                ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                : ProductStore.find(this, editingProductId);
+            script = InventoryScript.build(existing);
+        }
         webView.evaluateJavascript(script, ignored -> {});
     }
 
@@ -501,14 +512,30 @@ public class MainActivity extends Activity {
                     return;
                 }
 
+                JSONObject diagnosticProduct = editingProductId == null
+                    ? ProductStore.find(this, ProductStore.idFromUrl(pendingUrl))
+                    : ProductStore.find(this, editingProductId);
+
                 if (InventoryRetry.shouldRetryInteractive(error, status) && optionRetryCount < 1) {
                     optionRetryCount++;
+                    DiagnosticLog.add(
+                        this,
+                        "OPTION_CHECK_RETRY",
+                        diagnosticProduct,
+                        error + (status > 0 ? " · HTTP " + status : "") + " · 1/1"
+                    );
                     autoInspect = true;
                     webView.stopLoading();
                     webView.loadUrl(pendingUrl);
                     return;
                 }
 
+                DiagnosticLog.add(
+                    this,
+                    "OPTION_CHECK_FAIL",
+                    diagnosticProduct,
+                    error + (status > 0 ? " · HTTP " + status : "")
+                );
                 optionLoadInProgress = false;
                 clearPendingEdit();
                 toast("옵션 조회에 실패했어요.");
