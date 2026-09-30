@@ -369,7 +369,7 @@ public class MonitorService extends Service {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
-                    && (status == 401 || status == 403)) {
+                    && InventoryRetry.isAuthFailure(error, status)) {
                     invalidateSessionAndStop();
                     return;
                 }
