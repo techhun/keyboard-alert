@@ -7,6 +7,16 @@ final class InventoryScript {
 
     static String build(JSONObject product) {
         String channelUid = product == null ? "" : product.optString("channelUid", "");
+        if (channelUid.isBlank() && product != null) {
+            String apiUrl = product.optString("apiUrl", "");
+            String marker = "/channels/";
+            int start = apiUrl.indexOf(marker);
+            if (start >= 0) {
+                start += marker.length();
+                int end = apiUrl.indexOf('/', start);
+                if (end > start) channelUid = apiUrl.substring(start, end);
+            }
+        }
         return SCRIPT.replace(
             "const configuredChannelUid = '';",
             "const configuredChannelUid = " + JSONObject.quote(channelUid) + ";"
