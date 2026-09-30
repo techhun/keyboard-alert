@@ -1,0 +1,104 @@
+name: CannonKeys one-shot Discord test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cannonkeys-one-shot-test.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Send current CannonKeys item
+        env:
+          CANNONKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.CANNONKEYS_DISCORD_WEBHOOK_URL }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          const webhook=(process.env.CANNONKEYS_DISCORD_WEBHOOK_URL||'').trim();
+          if(!webhook) throw new Error('CANNONKEYS_DISCORD_WEBHOOK_URL is empty');
+
+          const base='https://backend.cannonkeys.com/api/v1/public/updates/';
+          const headers={accept:'application/json','user-agent':'keyboard-alert/1.0 (+https://github.com/techhun/keyboard-alert)'};
+
+          async function getJson(url){
+            for(let attempt=1;attempt<=4;attempt++){
+              const r=await fetch(url,{headers,signal:AbortSignal.timeout(15000)});
+              if(r.ok) return r.json();
+              if((r.status===429||r.status>=500)&&attempt<4){
+                const ra=Number(r.headers.get('retry-after'));
+                const ms=Number.isFinite(ra)&&ra>0?Math.ceil(ra*1000):1500*attempt;
+                await new Promise(resolve=>setTimeout(resolve,ms));
+                continue;
+              }
+              throw new Error('CannonKeys API HTTP '+r.status);
+            }
+          }
+
+          const index=await getJson(base+'index');
+          if(!Array.isArray(index)||!index.length) throw new Error('CannonKeys index is empty');
+
+          const ids=index.slice(0,20).map(x=>x.id).join(',');
+          const bulk=await getJson(base+'bulk?ids='+encodeURIComponent(ids));
+          const rows=Array.isArray(bulk?.data)?bulk.data:[];
+          if(!rows.length) throw new Error('CannonKeys bulk data is empty');
+
+          const row=rows
+            .map(x=>({
+              ...x,
+              latest:Array.isArray(x.updates)&&x.updates.length
+                ? [...x.updates].sort((a,b)=>Date.parse(b.created_at)-Date.parse(a.created_at))[0]
+                : null
+            }))
+            .sort((a,b)=>Date.parse(b.latest?.created_at||0)-Date.parse(a.latest?.created_at||0))[0];
+
+          const statusLabels={
+            ordered:'Ordered',
+            manufacturing:'Manufacturing',
+            en_route:'En Route',
+            shipping:'Shipping',
+            complete:'Complete'
+          };
+          const categoryLabels={keyboard:'Keyboard',keyset:'Keyset',deskmat:'Deskmat',other:'Other'};
+          const clean=v=>String(v??'').replace(/\s+/g,' ').trim();
+          const desc=clean(row.latest?.description)
+            .replace(/!\[([^\]]*)\]\([^)]*\)/g,'$1')
+            .replace(/\[([^\]]+)\]\([^)]*\)/g,'$1')
+            .replace(/[*_~`>#]/g,'');
+
+          const payload={
+            username:'CannonKeys Alert',
+            allowed_mentions:{parse:[]},
+            embeds:[{
+              title:'🧪 CannonKeys 웹훅 테스트 · '+row.display_name,
+              url:'https://cannonkeys.com/pages/project-updates',
+              description:'운영 state를 변경하지 않는 1회성 실제 전송 테스트입니다.',
+              fields:[
+                {name:'분류',value:categoryLabels[row.category]||row.category||'—',inline:true},
+                {name:'상태',value:statusLabels[row.status]||row.status||'—',inline:true},
+                {name:'ETA',value:clean(row.eta)||'—',inline:true},
+                {name:'GB 기간',value:(row.start_date||'—')+' → '+(row.end_date||'—'),inline:false},
+                {name:'최근 업데이트',value:[row.latest?.created_at,desc].filter(Boolean).join('\n').slice(0,1000)||'—',inline:false}
+              ],
+              footer:{text:'CannonKeys · one-shot webhook test'},
+              timestamp:new Date().toISOString()
+            }]
+          };
+
+          const sent=await fetch(webhook,{
+            method:'POST',
+            headers:{'content-type':'application/json'},
+            body:JSON.stringify(payload)
+          });
+          if(!sent.ok) throw new Error('Discord webhook failed: '+sent.status+' '+await sent.text());
+
+          console.log('Sent CannonKeys one-shot test:',row.display_name,'|',row.latest?.created_at||'no update','|',row.status);
+          NODE
