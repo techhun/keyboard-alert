@@ -110,6 +110,7 @@ public class MainActivity extends Activity {
     private boolean autoInspect;
     private boolean loginLaunching;
     private boolean optionLoadInProgress;
+    private int optionRetryCount;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -450,6 +451,7 @@ public class MainActivity extends Activity {
         if (optionFlowBusy()) return;
 
         optionLoadInProgress = true;
+        optionRetryCount = 0;
         pendingUrl = url;
         editingProductId = id;
         latestOptions = new JSONArray();
@@ -490,16 +492,26 @@ public class MainActivity extends Activity {
             JSONObject result = new JSONObject(json);
             if (!result.optBoolean("ok")) {
                 int status = result.optInt("status", 0);
+                String error = result.optString("error", "UNKNOWN");
                 String siteType = SiteSupport.detect(pendingUrl);
-                boolean authFailure = SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                    && (status == 401 || status == 403 || !hasNaverSession());
-                if (authFailure && !pendingUrl.isBlank()) {
-                    launchLogin(pendingUrl);
-                } else {
-                    optionLoadInProgress = false;
-                    clearPendingEdit();
-                    toast("옵션 조회에 실패했어요.");
+                boolean smartStore = SiteSupport.NAVER_SMARTSTORE.equals(siteType);
+
+                if (smartStore && (InventoryRetry.isAuthFailure(error, status) || !hasNaverSession())) {
+                    if (!pendingUrl.isBlank()) launchFreshLogin(pendingUrl);
+                    return;
                 }
+
+                if (InventoryRetry.shouldRetryInteractive(error, status) && optionRetryCount < 1) {
+                    optionRetryCount++;
+                    autoInspect = true;
+                    webView.stopLoading();
+                    webView.loadUrl(pendingUrl);
+                    return;
+                }
+
+                optionLoadInProgress = false;
+                clearPendingEdit();
+                toast("옵션 조회에 실패했어요.");
                 return;
             }
 
@@ -879,6 +891,7 @@ public class MainActivity extends Activity {
         latestChannelUid = "";
         latestProductNo = "";
         autoInspect = false;
+        optionRetryCount = 0;
     }
 
     private void renderProducts() {
@@ -1262,6 +1275,17 @@ public class MainActivity extends Activity {
             }
         }
         launchLogin(target);
+    }
+
+    private void launchFreshLogin(String targetUrl) {
+        if (loginLaunching) return;
+        CookieManager cookies = CookieManager.getInstance();
+        String finalTargetUrl = targetUrl;
+        cookies.removeAllCookies(value -> {
+            cookies.flush();
+            WebStorage.getInstance().deleteAllData();
+            runOnUiThread(() -> launchLogin(finalTargetUrl));
+        });
     }
 
     private void launchLogin(String targetUrl) {
