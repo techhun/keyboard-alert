@@ -20,6 +20,8 @@
 - SmartStore Direct API가 200이어도 상품 payload를 정상 인식하지 못하면 즉시 실패하지 않고 API 캐시를 버리고 discovery로 복구
 - stale Naver 쿠키가 남아 있어도 실제 페이지/API가 로그인을 요구하면 AUTH_REQUIRED로 판정하고 옵션 조회에서는 로그인 화면으로 복구
 - 옵션 조회 중 일시적인 SmartStore/SWAGKEY 파싱 오류는 페이지를 1회 다시 불러온 뒤 재시도
+- 로그인 성공 후 옵션 조회용 WebView 캐시/히스토리를 초기화하고 쿠키를 flush한 뒤 상품 페이지를 다시 불러와 옵션 조회 재개
+- 로그아웃 완료 시 초기 Gate 화면(네이버 로그인 / 로그인 없이 시작)으로 복귀
 - Android 재부팅 후 켜져 있던 상품 감시 자동 재개
 - 최근 7일 진단 이벤트 및 누적 성공/실패/429/타임아웃 통계
 - 등록 상품/선택 옵션/알림 상태/조회 주기 JSON 백업 및 복원
@@ -142,9 +144,11 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 - [ ] 알림 ON 직후 일시 조회 오류가 발생해도 자동 재시도 후 정상 복구
 - [ ] SmartStore CHANNEL_UID_NOT_FOUND 발생 시 페이지 reload 후 정상 조회 복구
 - [ ] Naver 세션 만료 상태에서 옵션 조회 시 실패 토스트로 끝나지 않고 로그인 화면이 열림
+- [ ] 로그인 후 옵션 조회 자동 재개 및 옵션 목록 정상 표시
+- [ ] 로그아웃 후 초기 Gate 화면으로 복귀
 - [ ] 여러 SmartStore 상품 동시 감시에서 상품 A 응답이 상품 B의 제목/API/상태를 덮어쓰지 않음
 - [ ] 진단 로그에서 반복적인 TIMEOUT, RATE_LIMIT, SERVICE_STOP 여부 확인
 
 ## 버전
 
-현재 앱 버전: **0.14.7**
+현재 앱 버전: **0.14.8**
