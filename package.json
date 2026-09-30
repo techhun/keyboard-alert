@@ -15,6 +15,7 @@
     "check:kbdfans": "node scripts/check-kbdfans.mjs",
     "check:cannonkeys": "node scripts/check-cannonkeys.mjs",
     "check:restock": "node scripts/check-restock.mjs",
+    "check:watchdog": "node scripts/check-workflow-watchdog.mjs",
     "system:health": "node scripts/system-health.mjs",
     "restock:bot": "node scripts/restock-bot.mjs",
     "restock:register": "node scripts/register-restock-commands.mjs",

@@ -19,7 +19,7 @@
 
 ## 실행 구조
 
-외부 스케줄러는 **cron-job.org**를 사용합니다. GitHub Actions 자체의 `schedule:` 트리거는 사용하지 않습니다.
+Fast/Slow 수집은 외부 스케줄러 **cron-job.org**를 사용하며 GitHub Actions의 `schedule:` 트리거를 사용하지 않습니다. 별도의 workflow watchdog만 cron-job.org 자체 중단이나 dispatch/성공 실행 정체를 감지하기 위해 GitHub Actions `schedule:`을 보조적으로 사용합니다.
 
 ### Fast
 
@@ -47,6 +47,20 @@
 
 변경 빈도가 낮고 Notion 등 외부 페이지의 응답이 느릴 수 있는 감시원을 fast workflow와 분리해, 느린 소스가 Guheyo/DCInside 알림을 지연시키지 않도록 구성합니다.
 
+### Workflow Watchdog
+
+`.github/workflows/keyboard-alert-watchdog.yml`
+
+- GitHub Actions에서 **15분 간격**으로 실행
+- Fast 최근 `workflow_dispatch`: **5분 이내**
+- Fast 최근 성공 실행: **10분 이내**
+- Slow 최근 `workflow_dispatch`: **25분 이내**
+- Slow 최근 성공 실행: **35분 이내**
+- 같은 정체 상태에서는 반복 알림을 보내지 않고, 정상 범위로 돌아오면 복구 알림 1회 전송
+- 상태는 `workflow-watchdog-state.json`에 저장
+
+이 watchdog은 cron-job.org가 dispatch를 멈추거나 GitHub Actions 실행이 장시간 성공하지 못하는 상황을 감지합니다. 다만 GitHub Actions 플랫폼 자체가 전체적으로 중단되어 watchdog workflow도 실행되지 않는 경우까지는 자체적으로 감지할 수 없습니다.
+
 ## 시스템 상태 알림
 
 별도 Discord 채널(권장 이름: `알림-시스템`)로 감시 서비스 자체의 장애와 복구를 알릴 수 있습니다.
@@ -55,12 +69,14 @@
 - 같은 장애가 계속되는 동안에는 반복 알림을 보내지 않음
 - 이후 정상 수집이 확인되면 **복구 알림 1회** 전송
 - GitHub Actions의 state 저장 등 workflow 자체가 실패하면 별도 workflow 오류 알림 전송
+- workflow watchdog이 Fast/Slow 실행 정체를 감지하면 별도 실행 감시 오류/복구 알림 전송
 - 오류가 발생한 실행의 GitHub Actions 링크를 Discord 알림 제목에 연결
 
-상태는 Fast/Slow로 분리해 저장합니다.
+상태는 용도별로 분리해 저장합니다.
 
 - `system-health-fast.json`
 - `system-health-slow.json`
+- `workflow-watchdog-state.json`
 
 ## 실행 명령
 
@@ -75,6 +91,7 @@ npm run check:oblotzky
 npm run check:novelkeys
 npm run check:kbdfans
 npm run check:cannonkeys
+npm run check:watchdog
 npm run system:health -- ...
 ```
 
@@ -96,7 +113,7 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 | `NOVELKEYS_DISCORD_WEBHOOK_URL` | NovelKeys Product Updates 알림 |
 | `KBDFANS_DISCORD_WEBHOOK_URL` | KBDfans Product Updates 알림 |
 | `CANNONKEYS_DISCORD_WEBHOOK_URL` | CannonKeys Project Updates 알림 |
-| `SYSTEM_DISCORD_WEBHOOK_URL` | `알림-시스템` 채널의 장애/복구/워크플로 오류 알림 |
+| `SYSTEM_DISCORD_WEBHOOK_URL` | `알림-시스템` 채널의 장애/복구/워크플로 오류/실행 감시 알림 |
 
 각 서비스의 webhook은 서로 분리해 운용하는 것을 기본으로 합니다.
 
@@ -110,7 +127,8 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 - 두 번째 확인에서 항목이 다시 나타나거나 제거 목록이 달라지면 해당 제거를 확정하지 않아 일시적인 부분 로딩을 삭제로 오인하지 않습니다.
 - SWAGKEYS는 Notion의 `Loading`, `No results`, 오류 placeholder 등을 정상 제품으로 저장하지 않으며, 상태표를 일시적으로 읽지 못하면 마지막 검증된 상태를 재사용합니다.
 - system health는 정상→오류, 오류→정상처럼 상태가 바뀔 때만 Discord 알림을 보내 중복 장애 알림을 막습니다.
-- workflow의 state push는 `git pull --rebase` + `git push`를 재시도해 fast/slow 동시 실행 시 충돌 가능성을 줄입니다.
+- workflow watchdog도 정상→정체, 정체→정상 전환 때만 Discord 알림을 보내 반복 알림을 막습니다.
+- workflow의 state push는 `git pull --rebase` + `git push`를 재시도해 fast/slow/watchdog 동시 실행 시 충돌 가능성을 줄입니다.
 
 ## 주요 스크립트
 
@@ -126,6 +144,7 @@ scripts/
 ├─ check-novelkeys.mjs
 ├─ check-kbdfans.mjs
 ├─ check-cannonkeys.mjs
+├─ check-workflow-watchdog.mjs
 └─ system-health.mjs
 ```
 
@@ -137,6 +156,7 @@ GitHub의 **Actions** 탭에서 다음 workflow를 직접 실행할 수 있습�
 
 - `Keyboard alerts (fast)`
 - `Keyboard alerts (slow)`
+- `Keyboard alerts watchdog`
 
 테스트용 알림이 필요한 경우 production state를 변경하지 않는 별도 one-shot workflow를 사용하고, 테스트 후 제거하는 방식을 권장합니다.
 
@@ -145,4 +165,4 @@ GitHub의 **Actions** 탭에서 다음 workflow를 직접 실행할 수 있습�
 - Fast: `keyboard-alert-fast.yml` → 1분 간격
 - Slow: `keyboard-alert-slow.yml` → 10분 간격
 
-두 cron job 모두 `POST`로 GitHub `workflow_dispatch` endpoint를 호출하고 request body는 `{"ref":"main"}`을 사용합니다.
+두 cron job 모두 `POST`로 GitHub `workflow_dispatch` endpoint를 호출하고 request body는 `{"ref":"main"}`을 사용합니다. Watchdog은 cron-job.org와 독립성을 유지하기 위해 GitHub Actions의 15분 `schedule:`로 실행합니다.
