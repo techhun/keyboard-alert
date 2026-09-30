@@ -1324,9 +1324,24 @@ public class MainActivity extends Activity {
         }
 
         if (!pendingUrl.isBlank() && optionLoadInProgress) {
-            autoInspect = true;
-            webView.loadUrl(pendingUrl);
+            resumeOptionLookupAfterLogin();
         }
+    }
+
+    private void resumeOptionLookupAfterLogin() {
+        if (webView == null || pendingUrl.isBlank() || !optionLoadInProgress) return;
+        CookieManager.getInstance().flush();
+        webView.stopLoading();
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.loadUrl("about:blank");
+        handler.postDelayed(() -> {
+            if (webView == null || pendingUrl.isBlank() || !optionLoadInProgress) return;
+            autoInspect = true;
+            webView.onResume();
+            webView.resumeTimers();
+            webView.loadUrl(pendingUrl);
+        }, 700L);
     }
 
     private void clearAppLogin() {
@@ -1340,8 +1355,14 @@ public class MainActivity extends Activity {
                 webView.loadUrl("about:blank");
             }
             runOnUiThread(() -> {
-                refreshSessionButton();
-                renderProducts();
+                Intent intent = new Intent(this, GateActivity.class);
+                intent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                );
+                startActivity(intent);
+                finish();
             });
         });
     }
