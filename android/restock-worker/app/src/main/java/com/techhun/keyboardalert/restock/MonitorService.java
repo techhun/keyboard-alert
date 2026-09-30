@@ -380,14 +380,9 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
-                    "PRODUCT_API_FAILED".equals(error)
-                        || "API_URL_MISSING".equals(error)
-                        || "API_PRODUCT_MISMATCH".equals(error)
-                        || "JS_ERROR".equals(error)
-                        || status == 204
-                        || status == 404
-                )) {
+                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                    && mode == Mode.DIRECT
+                    && InventoryRetry.shouldRediscoverDirect(error, status)) {
                     currentProduct.put("apiUrl", "");
                     ProductStore.updateRuntime(this, currentProduct);
                     transientRetryCount = 0;
