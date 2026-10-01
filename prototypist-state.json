@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-30T16:01:41.191Z",
+  "updatedAt": "2026-10-01T10:21:33.074Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -390,7 +390,7 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
       "product": "Ramune60",
-      "status": "In Quality Control",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -400,7 +400,7 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/MM-Class100-3170423341548049bf7eee6556316a70",
       "product": "MM Class100",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q3 2026"
     },
     {
@@ -644,16 +644,6 @@
       "expectedShipping": "Q4 2025"
     },
     {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Pangea-Mini-17a0423341548071b07fc54b139cf2a8",
-      "product": "Pangea Mini",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
       "sourceId": "gmk",
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
@@ -890,7 +880,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Prussian-Alert-36404233415480c88628d1f6c4ded985",
       "product": "GMK CYL Prussian Alert",
-      "status": "In Quality Control",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -900,7 +890,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
       "product": "GMK Centinela Extension Kit",
-      "status": "In Quality Control",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
     {
