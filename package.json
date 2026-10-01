@@ -23,7 +23,8 @@
     "restock:profile:setup": "node scripts/restock-profile-setup.mjs",
     "restock:probe:profile": "node scripts/restock-profile-probe.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check:deskhero": "node scripts/check-deskhero.mjs"
+    "check:deskhero": "node scripts/check-deskhero.mjs",
+    "check:omnitype": "node scripts/check-omnitype.mjs"
   },
   "dependencies": {
     "discord.js": "14.27.0",
