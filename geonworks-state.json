@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-29T00:40:30.737Z",
+  "updatedAt": "2026-10-01T00:21:08.724Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -219,8 +219,8 @@
       "eta": "2026. 12. 31",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 7. 31",
+      "status": "inspecting",
+      "update": "2026. 10. 1",
       "note": "—"
     },
     {
@@ -272,16 +272,6 @@
       "status": "In progress",
       "update": "2026. 5. 18",
       "note": "—"
-    },
-    {
-      "product": "GMK CYL Ishtar R2",
-      "gbStart": "2026. 4. 17",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "inspecting",
-      "update": "2026. 9. 28",
-      "note": "키캡, 데스크매트 입고 완료. / Keycaps and desk mats have arrived."
     },
     {
       "product": "Atelier Magnus Slate Zero",
@@ -371,16 +361,6 @@
       "manufacturer": "Novelkeys",
       "status": "In progress",
       "update": "2026. 6. 30",
-      "note": "—"
-    },
-    {
-      "product": "GMK British Racing Green R2 Simple Base",
-      "gbStart": "2026. 6. 2",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 6. 16",
       "note": "—"
     },
     {
@@ -686,6 +666,9 @@
     "d4b6f55f1127c1ee1e40c77a": "2026-09-28T05:00:51.212Z",
     "17743edb02921f6d25b8d856": "2026-09-28T05:40:32.136Z",
     "038f919aaaf26d2c12d4344a": "2026-09-28T05:40:32.282Z",
-    "ab9ed8b22d19312957dfb038": "2026-09-28T05:40:32.464Z"
+    "ab9ed8b22d19312957dfb038": "2026-09-28T05:40:32.464Z",
+    "8deca3c3433afdbda8219bc5": "2026-10-01T00:21:08.357Z",
+    "fe0f61ae57cab03af663aa59": "2026-10-01T00:21:08.534Z",
+    "2e37a185707ed778bf258a22": "2026-10-01T00:21:08.724Z"
   }
 }
