@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-30T23:41:10.382Z",
+  "updatedAt": "2026-10-01T00:11:20.681Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -38,6 +38,10 @@
     "deskhero": {
       "status": "ok",
       "changedAt": "2026-09-30T23:41:10.382Z"
+    },
+    "omnitype": {
+      "status": "ok",
+      "changedAt": "2026-10-01T00:11:20.681Z"
     }
   }
 }
