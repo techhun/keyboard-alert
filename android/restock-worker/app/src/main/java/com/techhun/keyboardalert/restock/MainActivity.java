@@ -112,10 +112,7 @@ public class MainActivity extends Activity {
     private boolean optionLoadInProgress;
     private JSONObject pendingLookupProduct;
     private boolean directLookupAttempt;
-    private int optionRateLimitRetryCount;
     private boolean monitorPausedForOptionLookup;
-
-    private static final int MAX_OPTION_RATE_LIMIT_RETRIES = 2;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -463,7 +460,6 @@ public class MainActivity extends Activity {
         editingProductId = id;
         pendingLookupProduct = existing;
         directLookupAttempt = false;
-        optionRateLimitRetryCount = 0;
         latestOptions = new JSONArray();
         latestTitle = existing == null ? "" : existing.optString("title", "");
         latestApiUrl = existing == null ? "" : existing.optString("apiUrl", "");
@@ -580,7 +576,6 @@ public class MainActivity extends Activity {
                 toast("선택 가능한 옵션이 없어요.");
                 return;
             }
-            optionRateLimitRetryCount = 0;
             resumeMonitorAfterOptionLookup();
             showOptionPicker();
         } catch (Exception e) {
@@ -592,29 +587,14 @@ public class MainActivity extends Activity {
     }
 
     private void handleOptionRateLimit(int status) {
-        optionRateLimitRetryCount++;
+        long until = MonitorService.extendSmartStoreRateLimit(this, status);
+        long seconds = Math.max(1L, (until - System.currentTimeMillis() + 999L) / 1000L);
         String statusText = status > 0 ? "HTTP " + status : "RATE_LIMITED";
-        DiagnosticLog.add(
-            this,
-            "OPTION_RATE_LIMIT",
-            pendingLookupProduct,
-            statusText + " · 재시도 " + optionRateLimitRetryCount + "/" + MAX_OPTION_RATE_LIMIT_RETRIES
-        );
-
-        if (optionRateLimitRetryCount > MAX_OPTION_RATE_LIMIT_RETRIES) {
-            optionLoadInProgress = false;
-            resumeMonitorAfterOptionLookup();
-            clearPendingEdit();
-            toast("네이버 요청 제한 중이에요. 잠시 후 다시 시도해주세요.");
-            return;
-        }
-
-        long delay = optionRateLimitRetryCount == 1 ? 5_000L : 15_000L;
-        toast("네이버 요청 제한 · " + (delay / 1000L) + "초 후 다시 시도해요.");
-        handler.postDelayed(() -> {
-            if (!optionLoadInProgress || pendingUrl.isBlank()) return;
-            inspectInventory();
-        }, delay);
+        DiagnosticLog.add(this, "OPTION_RATE_LIMIT", pendingLookupProduct, statusText + " · " + seconds + "초 대기");
+        optionLoadInProgress = false;
+        resumeMonitorAfterOptionLookup();
+        clearPendingEdit();
+        toast("네이버 요청 제한 · " + seconds + "초 후 다시 시도해주세요.");
     }
 
     private boolean pauseMonitorForOptionLookup() {
@@ -987,7 +967,6 @@ public class MainActivity extends Activity {
         pendingUrl = "";
         pendingLookupProduct = null;
         directLookupAttempt = false;
-        optionRateLimitRetryCount = 0;
         latestOptions = new JSONArray();
         latestTitle = "";
         latestApiUrl = "";
