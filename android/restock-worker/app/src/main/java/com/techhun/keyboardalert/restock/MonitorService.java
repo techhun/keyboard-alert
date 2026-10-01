@@ -548,6 +548,7 @@ public class MonitorService extends Service {
             .remove(KEY_BACKOFF_UNTIL)
             .remove(KEY_BACKOFF_MS)
             .apply();
+    }
 
     private void invalidateSessionAndStop() {
         if (stopping) return;
