@@ -157,6 +157,14 @@ final class InventoryScript {
                   });
                   const currentText = await current.text();
 
+                  // An empty 204 from SmartStore is a throttle signal. Trying
+                  // other hosts immediately only increases the request burst.
+                  if (current.status === 204 || current.status === 429) {
+                    attempts.push({ url: apiUrl, status: current.status, rateLimited: true });
+                    send({ ok: false, error: 'RATE_LIMITED', status: current.status, pageUrl: location.href, apiUrl, attempts });
+                    return;
+                  }
+
                   if (isAuthResponse(current, currentText)) {
                     send({
                       ok: false,
