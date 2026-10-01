@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "initialized": true,
+  "updatedAt": "2026-10-01T00:03:18.768Z",
+  "rows": [
+    {
+      "product": "Enso-E",
+      "overview": "Updated delivery time - November 2026",
+      "components": [
+        "Magnets - ready",
+        "Feet - ready",
+        "Hardware - ready",
+        "CNCed parts - in surface treatment",
+        "PCBs - ready",
+        "Silicone parts - ready",
+        "Carrying case - ready",
+        "Injection molded tops - in production",
+        "Torx sticks - ready"
+      ],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
+      "product": "Float 65",
+      "overview": "Now estimated to deliver in November 2026.",
+      "components": [
+        "PCBs - ready",
+        "Plates - ready",
+        "Magnets - ready",
+        "Feet - ready",
+        "Housings - delayed, manufacturing issue. Resolution in progress.",
+        "Carrying case - ready"
+      ],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
+      "product": "Bauer 65",
+      "overview": "These are estimated to arrive to us Q4 2026 which spans October - December.",
+      "components": [
+        "Housings - production queue",
+        "Plates - production queue",
+        "Bumpers - in production",
+        "Poron strips - in production",
+        "DynaPaks - ready",
+        "HE PCBs - on order with Geon",
+        "Hybrid PCBs - preproduction sample in testing",
+        "Carrying case - awaiting final sample to give final production green light"
+      ],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
+      "product": "RF-8X",
+      "overview": "These are estimated to arrive to us Q4 2026 which spans October - December. | Ktechs is lead vendor on this project - status as of mid-August is in production.",
+      "components": [],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
+      "product": "Wing",
+      "overview": "These are estimated to arrive to us Q1 2027 which spans January - March.",
+      "components": [],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    }
+  ],
+  "sentChanges": {}
+}
