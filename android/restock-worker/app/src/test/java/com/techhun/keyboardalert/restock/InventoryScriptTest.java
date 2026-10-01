@@ -25,6 +25,8 @@ public class InventoryScriptTest {
         assertTrue(script.contains("document.documentElement"));
         assertTrue(script.contains("CHANNEL_UID_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));
+        assertTrue(script.contains("RATE_LIMITED"));
+        assertTrue(script.contains("current.status === 204 || current.status === 429"));
     }
 
     @Test
@@ -37,6 +39,8 @@ public class InventoryScriptTest {
 
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("PRODUCT_DATA_NOT_FOUND"));
+        assertTrue(script.contains("RATE_LIMITED"));
+        assertTrue(script.contains("response.status === 204 || response.status === 429"));
         assertTrue(script.contains("nid.naver.com"));
     }
 }
