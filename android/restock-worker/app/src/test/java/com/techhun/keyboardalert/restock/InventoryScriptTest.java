@@ -29,7 +29,7 @@ public class InventoryScriptTest {
         assertTrue(script.contains("PAGE_DATA_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("RATE_LIMITED"));
-        assertTrue(script.contains("current.status === 204 || current.status === 429"));
+        assertTrue(script.contains("response.status === 204 || response.status === 429"));
     }
 
     @Test
