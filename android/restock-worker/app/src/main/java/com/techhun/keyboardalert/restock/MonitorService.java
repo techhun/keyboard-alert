@@ -224,6 +224,7 @@ public class MonitorService extends Service {
     }
 
     private void bootstrapSession() {
+        if (stopping || pausedForOptionLookup) return;
         products = ProductStore.enabledList(this);
         JSONObject first = products.optJSONObject(0);
         if (first == null) {
@@ -357,7 +358,7 @@ public class MonitorService extends Service {
     }
 
     private void handleInventoryResult(String json) {
-        if (stopping) return;
+        if (stopping || pausedForOptionLookup) return;
         awaitingResult = false;
         handler.removeCallbacks(resultTimeout);
         if (currentProduct == null) {
@@ -576,13 +577,18 @@ public class MonitorService extends Service {
         }
         currentIndex = (currentIndex + 1) % products.length();
         mode = Mode.DIRECT;
-        long spacing = Math.max(
-            MIN_PRODUCT_SPACING_MS,
-            MonitorPrefs.intervalSeconds(this) * 1000L / Math.max(1, products.length())
+        long spacing = productSpacingMillis(
+            MonitorPrefs.intervalSeconds(this),
+            products.length()
         );
         long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
         cancelModeCallbacks();
         scheduleNextCheck(Math.max(spacing, backoff));
+    }
+
+    static long productSpacingMillis(int intervalSeconds, int productCount) {
+        long configured = Math.max(1, intervalSeconds) * 1000L / Math.max(1, productCount);
+        return Math.max(MIN_PRODUCT_SPACING_MS, configured);
     }
 
     private void scheduleNextCheck(long delayMs) {
