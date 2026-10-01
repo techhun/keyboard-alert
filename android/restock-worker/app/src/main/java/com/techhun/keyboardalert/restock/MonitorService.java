@@ -74,6 +74,11 @@ public class MonitorService extends Service {
         return until;
     }
 
+    static long remainingSmartStoreRateLimitMillis(Context context) {
+        long until = MonitorPrefs.prefs(context).getLong(KEY_BACKOFF_UNTIL, 0L);
+        return Math.max(0L, until - System.currentTimeMillis());
+    }
+
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
     private final Handler handler = new Handler(Looper.getMainLooper());
