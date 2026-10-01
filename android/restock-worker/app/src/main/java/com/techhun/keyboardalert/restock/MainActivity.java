@@ -508,15 +508,9 @@ public class MainActivity extends Activity {
             return;
         }
 
-        String savedApiUrl = pendingLookupProduct == null
-            ? ""
-            : pendingLookupProduct.optString("apiUrl", "");
-        if (!savedApiUrl.isBlank()) {
-            directLookupAttempt = true;
-            webView.evaluateJavascript(InventoryApiScript.build(pendingLookupProduct), ignored -> {});
-            return;
-        }
-
+        // SmartStore's internal product API can return an empty 204 even when
+        // the product page itself loaded correctly. Read the page state first
+        // for both new and existing products instead of using a saved API URL.
         runSmartStoreDiscovery();
     }
 
@@ -572,6 +566,11 @@ public class MainActivity extends Activity {
             }
 
             String siteType = SiteSupport.detect(pendingUrl);
+            if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                && "PAGE_STATE".equals(result.optString("source", ""))) {
+                DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
+                    "상품 페이지 데이터로 옵션 조회 성공");
+            }
             latestTitle = result.optString("title", SiteSupport.label(siteType) + " 상품");
             latestOptions = result.optJSONArray("options");
             String apiUrl = result.optString("apiUrl", "");

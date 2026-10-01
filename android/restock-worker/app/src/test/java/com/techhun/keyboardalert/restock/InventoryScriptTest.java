@@ -23,7 +23,10 @@ public class InventoryScriptTest {
         assertTrue(script.contains("savedUid123"));
         assertTrue(script.contains("123456"));
         assertTrue(script.contains("document.documentElement"));
-        assertTrue(script.contains("CHANNEL_UID_NOT_FOUND"));
+        assertTrue(script.contains("collectPageRoots"));
+        assertTrue(script.contains("findProductModel"));
+        assertTrue(script.contains("PAGE_STATE"));
+        assertTrue(script.contains("PAGE_DATA_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("RATE_LIMITED"));
         assertTrue(script.contains("current.status === 204 || current.status === 429"));

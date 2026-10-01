@@ -99,6 +99,7 @@ public class MonitorService extends Service {
     private long backoffUntil;
     private boolean networkWaiting;
     private boolean pausedForOptionLookup;
+    private boolean pageStateLogged;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping || pausedForOptionLookup) return;
@@ -325,24 +326,15 @@ public class MonitorService extends Service {
             return;
         }
 
-        if (!SiteSupport.isAllowedPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
-            mode = Mode.DISCOVERY;
-            webView.loadUrl(currentProduct.optString("url"));
+        // Inspect the loaded product page state. Reusing the saved internal API
+        // URL now produces empty HTTP 204 responses on otherwise valid pages.
+        mode = Mode.DISCOVERY;
+        String loadedProductId = SiteSupport.productId(webView.getUrl());
+        if (currentProduct.optString("id", "").equals(loadedProductId)) {
+            runDiscoveryCheck();
             return;
         }
-
-        String apiUrl = currentProduct.optString("apiUrl", "");
-        if (apiUrl.isBlank()) {
-            mode = Mode.DISCOVERY;
-            webView.loadUrl(currentProduct.optString("url"));
-            return;
-        }
-
-        mode = Mode.DIRECT;
-        awaitingResult = true;
-        handler.removeCallbacks(resultTimeout);
-        handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        webView.evaluateJavascript(InventoryApiScript.build(currentProduct), ignored -> {});
+        webView.loadUrl(currentProduct.optString("url"));
     }
 
     private void runDiscoveryCheck() {
@@ -454,7 +446,14 @@ public class MonitorService extends Service {
                 return;
             }
 
-            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
+                clearRateLimitBackoff();
+                if (!pageStateLogged && "PAGE_STATE".equals(result.optString("source", ""))) {
+                    pageStateLogged = true;
+                    DiagnosticLog.add(this, "PAGE_STATE_OK", currentProduct,
+                        "상품 페이지 데이터로 재고 조회 성공");
+                }
+            }
             if (mode == Mode.DISCOVERY) {
                 currentProduct.put("apiUrl", result.optString("apiUrl", ""));
                 currentProduct.put("channelUid", result.optString("channelUid", ""));

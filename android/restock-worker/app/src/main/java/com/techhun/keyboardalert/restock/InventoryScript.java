@@ -47,181 +47,144 @@ final class InventoryScript {
               return preview.includes('nidlogin') || preview.includes('naver 로그인');
             }
 
-            try {
-              const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
-              const productNo = productMatch ? productMatch[1] : (configuredProductNo || null);
-              if (!productNo) {
-                send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
-                return;
-              }
-
-              function findChannelUid(root) {
-                if (!root || typeof root !== 'object') return null;
-                const stack = [root];
-                const seen = new Set();
-                let count = 0;
-                while (stack.length && count < 30000) {
-                  const value = stack.pop();
-                  if (!value || typeof value !== 'object' || seen.has(value)) continue;
-                  seen.add(value);
-                  count += 1;
-                  if (typeof value.channelUid === 'string' && value.channelUid.length >= 8) return value.channelUid;
-                  for (const child of Object.values(value)) {
-                    if (child && typeof child === 'object') stack.push(child);
-                  }
-                }
-                return null;
-              }
-
-              function findChannelUidInHtml() {
-                const html = document.documentElement?.innerHTML || '';
-                const matches = html.matchAll(/channelUid[^A-Za-z0-9_-]{0,40}([A-Za-z0-9_-]{8,80})/g);
-                for (const match of matches) {
-                  const value = match[1];
-                  if (!value || value === 'broadcastAuthority' || value === 'undefined') continue;
-                  return value;
-                }
-                return null;
-              }
-
-              function looksLikeProductPayload(data) {
-                if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
-                const product = data.originProduct && typeof data.originProduct === 'object' ? data.originProduct : data;
-                const id = String(product?.id ?? data?.id ?? '');
-                if (id && id === productNo) return true;
-                return !!(
-                  product?.detailAttribute?.optionInfo
-                  || data?.detailAttribute?.optionInfo
-                  || data?.optionInfo
-                  || Array.isArray(data?.optionCombinations)
-                  || product?.stockQuantity !== undefined
-                  || data?.stockQuantity !== undefined
-                );
-              }
-
-              let channelUid = configuredChannelUid || null;
-              let observedApiUrl = safeNaverApiUrl(configuredApiUrl);
-              const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
-              if (!channelUid) {
-                for (const root of roots) {
-                  channelUid = findChannelUid(root);
-                  if (channelUid) break;
+            function walkObjects(root, visitor, maxNodes = 40000) {
+              const stack = [root];
+              const seen = new Set();
+              let count = 0;
+              while (stack.length && count < maxNodes) {
+                const value = stack.pop();
+                if (!value || typeof value !== 'object' || seen.has(value)) continue;
+                seen.add(value);
+                count += 1;
+                visitor(value);
+                for (const child of Object.values(value)) {
+                  if (child && typeof child === 'object') stack.push(child);
                 }
               }
-              if (!channelUid) channelUid = findChannelUidInHtml();
+            }
 
-              const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
-              for (const resourceUrl of resources) {
-                try {
-                  const parsed = new URL(resourceUrl, location.href);
-                  const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
-                  if (!anyProductMatch) continue;
-                  if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
-
-                  const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
-                  if (exactProductMatch && exactProductMatch[2] === productNo) {
-                    observedApiUrl = parsed.toString();
-                  }
-                } catch (ignored) {}
-              }
-
-              const candidates = [];
-              if (observedApiUrl) candidates.push(observedApiUrl);
-              if (channelUid) {
-                const encodedUid = encodeURIComponent(channelUid);
-                candidates.push(`${location.origin}/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
-                candidates.push(`https://smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
-                candidates.push(`https://m.smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
-              }
-
-              if (!candidates.length) {
-                send({ ok: false, error: 'CHANNEL_UID_NOT_FOUND', pageUrl: location.href, title: document.title });
-                return;
-              }
-
-              let response = null;
-              let text = '';
-              let data = null;
-              let usedApiUrl = null;
-              const attempts = [];
-
-              for (const apiUrl of [...new Set(candidates)]) {
-                try {
-                  const parsed = new URL(apiUrl, location.href);
-                  const requestUrl = parsed.origin === location.origin
-                    ? parsed.pathname + parsed.search
-                    : apiUrl;
-                  const current = await fetch(requestUrl, {
-                    credentials: 'include',
-                    headers: { accept: 'application/json, text/plain, */*' }
-                  });
-                  const currentText = await current.text();
-
-                  if (isAuthResponse(current, currentText)) {
-                    send({
-                      ok: false,
-                      error: 'AUTH_REQUIRED',
-                      status: current.status,
-                      pageUrl: location.href,
-                      apiUrl,
-                      attempts
-                    });
-                    return;
-                  }
-
-                  if (current.status === 204 || current.status === 429) {
-                    attempts.push({ url: apiUrl, status: current.status, rateLimited: true });
-                    send({
-                      ok: false,
-                      error: 'RATE_LIMITED',
-                      status: current.status,
-                      pageUrl: location.href,
-                      apiUrl,
-                      attempts
-                    });
-                    return;
-                  }
-
-                  let currentData = null;
-                  let validPayload = false;
-                  if (current.ok) {
-                    try {
-                      currentData = JSON.parse(currentText);
-                      validPayload = looksLikeProductPayload(currentData);
-                    } catch (ignored) {}
-                  }
-                  attempts.push({ url: apiUrl, status: current.status, validPayload });
-
-                  if (current.ok && validPayload) {
-                    response = current;
-                    text = currentText;
-                    data = currentData;
-                    usedApiUrl = apiUrl;
-                    break;
-                  }
-
-                  if (!response) {
-                    response = current;
-                    text = currentText;
-                    usedApiUrl = apiUrl;
-                  }
-                } catch (error) {
-                  attempts.push({ url: apiUrl, error: String(error) });
+            function extractBalancedObject(text, marker) {
+              const markerIndex = text.indexOf(marker);
+              if (markerIndex < 0) return null;
+              const start = text.indexOf('{', markerIndex + marker.length);
+              if (start < 0) return null;
+              let depth = 0;
+              let quote = '';
+              let escaped = false;
+              for (let index = start; index < text.length; index++) {
+                const char = text[index];
+                if (quote) {
+                  if (escaped) escaped = false;
+                  else if (char === '\\\\') escaped = true;
+                  else if (char === quote) quote = '';
+                  continue;
+                }
+                if (char === '"' || char === "'") {
+                  quote = char;
+                  continue;
+                }
+                if (char === '{') depth += 1;
+                else if (char === '}') {
+                  depth -= 1;
+                  if (depth === 0) return text.slice(start, index + 1);
                 }
               }
+              return null;
+            }
 
-              if (!data) {
-                send({
-                  ok: false,
-                  error: response?.ok ? 'PRODUCT_DATA_NOT_FOUND' : 'PRODUCT_API_FAILED',
-                  status: response ? response.status : null,
-                  pageUrl: location.href,
-                  apiUrl: usedApiUrl,
-                  attempts
+            function collectPageRoots() {
+              const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__]
+                .filter(Boolean);
+              const markers = [
+                'window.__PRELOADED_STATE__', '__PRELOADED_STATE__',
+                'window.__INITIAL_STATE__', '__INITIAL_STATE__',
+                'window.__NEXT_DATA__', '__NEXT_DATA__'
+              ];
+              for (const script of [...document.scripts]) {
+                const text = String(script.textContent || '').trim();
+                if (!text) continue;
+                if (script.type === 'application/json' || script.id === '__NEXT_DATA__') {
+                  try { roots.push(JSON.parse(text)); } catch (ignored) {}
+                }
+                for (const marker of markers) {
+                  const chunk = extractBalancedObject(text, marker);
+                  if (!chunk) continue;
+                  try { roots.push(JSON.parse(chunk)); } catch (ignored) {}
+                }
+              }
+              return roots;
+            }
+
+            function productIdentity(value) {
+              if (!value || typeof value !== 'object') return '';
+              const product = value.originProduct && typeof value.originProduct === 'object'
+                ? value.originProduct
+                : value;
+              return String(product.id ?? value.productNo ?? product.productNo ?? '');
+            }
+
+            function findProductModel(roots, productNo) {
+              let best = null;
+              let bestScore = -1;
+              for (const root of roots) {
+                walkObjects(root, (value) => {
+                  const identity = productIdentity(value);
+                  if (identity && /^\\d+$/.test(identity) && identity !== productNo) return;
+                  let score = identity === productNo ? 20 : 0;
+                  if (value.originProduct && typeof value.originProduct === 'object') score += 10;
+                  if (value.smartstoreChannelProduct && typeof value.smartstoreChannelProduct === 'object') score += 6;
+                  if (value.originProduct?.detailAttribute?.optionInfo) score += 8;
+                  if (value.detailAttribute?.optionInfo) score += 8;
+                  if (value.optionInfo?.optionCombinations) score += 6;
+                  if (Array.isArray(value.optionCombinations)) score += 4;
+                  if (value.stockQuantity !== undefined || value.originProduct?.stockQuantity !== undefined) score += 3;
+                  if (score > bestScore) {
+                    best = value;
+                    bestScore = score;
+                  }
                 });
-                return;
               }
+              return bestScore >= 4 ? best : null;
+            }
 
+            function findChannelUid(roots) {
+              let found = configuredChannelUid || null;
+              if (found) return found;
+              for (const root of roots) {
+                walkObjects(root, (value) => {
+                  if (!found && typeof value.channelUid === 'string' && value.channelUid.length >= 8) {
+                    found = value.channelUid;
+                  }
+                });
+                if (found) break;
+              }
+              if (found) return found;
+              const html = document.documentElement?.innerHTML || '';
+              const matches = html.matchAll(/channelUid[^A-Za-z0-9_-]{0,40}([A-Za-z0-9_-]{8,80})/g);
+              for (const match of matches) {
+                const value = match[1];
+                if (!value || value === 'broadcastAuthority' || value === 'undefined') continue;
+                return value;
+              }
+              return null;
+            }
+
+            function looksLikeProductPayload(data, productNo) {
+              if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
+              const identity = productIdentity(data);
+              if (identity && /^\\d+$/.test(identity) && identity !== productNo) return false;
+              const product = data.originProduct && typeof data.originProduct === 'object' ? data.originProduct : data;
+              return !!(
+                product?.detailAttribute?.optionInfo
+                || data?.detailAttribute?.optionInfo
+                || data?.optionInfo
+                || Array.isArray(data?.optionCombinations)
+                || product?.stockQuantity !== undefined
+                || data?.stockQuantity !== undefined
+              );
+            }
+
+            function snapshot(data, productNo, channelUid, apiUrl, source) {
               const product = data.originProduct && typeof data.originProduct === 'object'
                 ? data.originProduct
                 : data;
@@ -232,8 +195,7 @@ final class InventoryScript {
               const combinations = Array.isArray(optionInfo?.optionCombinations)
                 ? optionInfo.optionCombinations
                 : [];
-
-              const options = combinations.map((option) => {
+              let options = combinations.map((option) => {
                 const stock = Number(option.stockQuantity);
                 return {
                   id: String(option.id ?? ''),
@@ -244,23 +206,36 @@ final class InventoryScript {
                   available: option.usable !== false && Number.isFinite(stock) && stock > 0
                 };
               });
-
+              if (!options.length && Array.isArray(optionInfo?.optionSimple)) {
+                options = optionInfo.optionSimple.map((option) => {
+                  const stock = Number(option.stockQuantity ?? product?.stockQuantity ?? data?.stockQuantity);
+                  return {
+                    id: String(option.id ?? ''),
+                    optionName1: option.name ?? option.optionName ?? '옵션',
+                    optionName2: null,
+                    optionName3: null,
+                    stockQuantity: Number.isFinite(stock) ? stock : null,
+                    available: option.usable !== false && Number.isFinite(stock) && stock > 0
+                  };
+                });
+              }
               if (!options.length) {
                 const stock = Number(product?.stockQuantity ?? data?.stockQuantity);
+                const status = String(product?.statusType || data?.statusType || data?.productStatusType || '').toUpperCase();
                 options.push({
                   id: 'default',
                   optionName1: '기본 상품',
                   optionName2: null,
                   optionName3: null,
                   stockQuantity: Number.isFinite(stock) ? stock : null,
-                  available: Number.isFinite(stock) && stock > 0
+                  available: Number.isFinite(stock) ? stock > 0 : status === 'SALE'
                 });
               }
-
-              send({
+              return {
                 ok: true,
+                source,
                 pageUrl: location.href,
-                apiUrl: usedApiUrl,
+                apiUrl: apiUrl || '',
                 title: product?.name || data?.smartstoreChannelProduct?.channelProductName || document.title,
                 channelUid: channelUid || '',
                 id: product?.id ?? data?.id ?? null,
@@ -268,9 +243,82 @@ final class InventoryScript {
                 statusType: product?.statusType || data?.statusType || data?.productStatusType || null,
                 stockQuantity: product?.stockQuantity ?? data?.stockQuantity ?? null,
                 optionCombinationCount: options.length,
-                options,
-                attempts
-              });
+                options
+              };
+            }
+
+            try {
+              const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
+              const productNo = productMatch ? productMatch[1] : (configuredProductNo || null);
+              if (!productNo) {
+                send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
+                return;
+              }
+
+              const roots = collectPageRoots();
+              let channelUid = findChannelUid(roots);
+              let observedApiUrl = safeNaverApiUrl(configuredApiUrl);
+              const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
+              for (const resourceUrl of resources) {
+                try {
+                  const parsed = new URL(resourceUrl, location.href);
+                  const anyProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)(?:\\/.*)?$/);
+                  if (!anyProductMatch) continue;
+                  if (!channelUid) channelUid = decodeURIComponent(anyProductMatch[1]);
+                  const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
+                  if (exactProductMatch && exactProductMatch[2] === productNo) observedApiUrl = parsed.toString();
+                } catch (ignored) {}
+              }
+
+              const pageModel = findProductModel(roots, productNo);
+              if (pageModel && looksLikeProductPayload(pageModel, productNo)) {
+                send(snapshot(pageModel, productNo, channelUid, observedApiUrl, 'PAGE_STATE'));
+                return;
+              }
+
+              const candidates = [];
+              if (observedApiUrl) candidates.push(observedApiUrl);
+              if (channelUid) {
+                const encodedUid = encodeURIComponent(channelUid);
+                candidates.push(`${location.origin}/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
+              }
+              if (!candidates.length) {
+                send({ ok: false, error: 'PAGE_DATA_NOT_FOUND', pageUrl: location.href, title: document.title });
+                return;
+              }
+
+              const attempts = [];
+              for (const apiUrl of [...new Set(candidates)]) {
+                try {
+                  const parsed = new URL(apiUrl, location.href);
+                  const requestUrl = parsed.origin === location.origin ? parsed.pathname + parsed.search : apiUrl;
+                  const response = await fetch(requestUrl, {
+                    credentials: 'include',
+                    headers: { accept: 'application/json, text/plain, */*' }
+                  });
+                  const text = await response.text();
+                  if (isAuthResponse(response, text)) {
+                    send({ ok: false, error: 'AUTH_REQUIRED', status: response.status, pageUrl: location.href, apiUrl, attempts });
+                    return;
+                  }
+                  if (response.status === 204 || response.status === 429) {
+                    attempts.push({ url: apiUrl, status: response.status, rateLimited: true });
+                    send({ ok: false, error: 'RATE_LIMITED', status: response.status, pageUrl: location.href, apiUrl, attempts });
+                    return;
+                  }
+                  let data = null;
+                  try { data = JSON.parse(text); } catch (ignored) {}
+                  const validPayload = response.ok && looksLikeProductPayload(data, productNo);
+                  attempts.push({ url: apiUrl, status: response.status, validPayload });
+                  if (validPayload) {
+                    send({ ...snapshot(data, productNo, channelUid, apiUrl, 'API'), attempts });
+                    return;
+                  }
+                } catch (error) {
+                  attempts.push({ url: apiUrl, error: String(error) });
+                }
+              }
+              send({ ok: false, error: 'PRODUCT_API_FAILED', pageUrl: location.href, attempts });
             } catch (error) {
               send({ ok: false, error: 'JS_ERROR', message: String(error && (error.stack || error.message) || error) });
             }
