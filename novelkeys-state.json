@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T11:41:10.861Z",
+  "updatedAt": "2026-10-01T14:01:51.017Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -35,7 +35,7 @@
       "category": "Keyboard",
       "product": "Matrix Carnival",
       "status": "In transit to NovelKeys.",
-      "eta": "Q3 2026",
+      "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/matrix-carnival-keyboard"
     },
     {
@@ -343,6 +343,7 @@
   "sentChanges": {
     "84a270ef39007002c37f3024": "2026-09-29T15:12:39.265Z",
     "9bdb684e8a1cd75c033c48f1": "2026-09-29T15:21:05.158Z",
-    "8e28945a95850f752c12684b": "2026-10-01T11:41:10.861Z"
+    "8e28945a95850f752c12684b": "2026-10-01T11:41:10.861Z",
+    "d05bb60f3f320a25405f3b26": "2026-10-01T14:01:51.017Z"
   }
 }
