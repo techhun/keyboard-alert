@@ -1,0 +1,87 @@
+name: Restock SmartStore API probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tmp-restock-smartstore-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - name: Probe SmartStore network
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          const urls = [
+            'https://naver.me/xiLfDSsP',
+            'https://naver.me/5HyL0uvo'
+          ];
+          const browser = await chromium.launch({ headless: true, channel: 'chrome' });
+          const context = await browser.newContext({
+            viewport: { width: 390, height: 844 },
+            locale: 'ko-KR',
+            userAgent: 'Mozilla/5.0 (Linux; Android 16; Mobile) AppleWebKit/537.36 Chrome/140 Mobile Safari/537.36'
+          });
+          for (const shortUrl of urls) {
+            const page = await context.newPage();
+            const seen = [];
+            page.on('response', async (res) => {
+              const u = res.url();
+              if (!/naver\.com/i.test(u)) return;
+              if (!/(product|option|stock|channel|shopping|smartstore|\/i\/)/i.test(u)) return;
+              if (seen.length < 120) seen.push(`${res.status()} ${u}`);
+            });
+            try {
+              console.log('\n===== SHORT:', shortUrl, '=====');
+              const response = await page.goto(shortUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+              await page.waitForTimeout(7000);
+              console.log('HTTP:', response?.status());
+              console.log('FINAL:', page.url());
+              console.log('TITLE:', await page.title());
+              const info = await page.evaluate(() => {
+                const html = document.documentElement?.innerHTML || '';
+                const matches = [...html.matchAll(/channelUid[^A-Za-z0-9_-]{0,20}([A-Za-z0-9_-]{8,80})/g)]
+                  .slice(0, 10).map(m => m[1]);
+                const resources = performance.getEntriesByType('resource')
+                  .map(e => e.name || '')
+                  .filter(u => /naver\.com/i.test(u) && /(product|option|stock|channel|\/i\/)/i.test(u))
+                  .slice(-100);
+                return { matches, resources };
+              });
+              console.log('HTML_CHANNEL_UID_CANDIDATES:', JSON.stringify(info.matches));
+              console.log('PERFORMANCE_RESOURCES:', JSON.stringify(info.resources, null, 2));
+              console.log('NETWORK:', seen.join('\n'));
+            } catch (e) {
+              console.log('ERROR:', e?.stack || e);
+            } finally {
+              await page.close();
+            }
+          }
+          await context.close();
+          await browser.close();
+          JS
+      - name: Remove temporary workflow
+        if: always()
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/tmp-restock-smartstore-probe.yml
+          git commit -m 'chore: remove temporary Restock SmartStore probe'
+          git push origin main
