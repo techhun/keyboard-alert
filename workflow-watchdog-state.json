@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "initialized": true,
+  "updatedAt": "2026-10-01T02:23:21.247Z",
+  "targets": {
+    "fast": {
+      "status": "ok",
+      "changedAt": "2026-10-01T02:23:20.548Z"
+    },
+    "slow": {
+      "status": "ok",
+      "changedAt": "2026-10-01T02:23:21.247Z"
+    }
+  }
+}
