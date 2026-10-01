@@ -112,6 +112,10 @@ public class MainActivity extends Activity {
     private boolean optionLoadInProgress;
     private JSONObject pendingLookupProduct;
     private boolean directLookupAttempt;
+    private int optionRateLimitRetryCount;
+    private boolean monitorPausedForOptionLookup;
+
+    private static final int MAX_OPTION_RATE_LIMIT_RETRIES = 2;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -459,14 +463,24 @@ public class MainActivity extends Activity {
         editingProductId = id;
         pendingLookupProduct = existing;
         directLookupAttempt = false;
+        optionRateLimitRetryCount = 0;
         latestOptions = new JSONArray();
         latestTitle = existing == null ? "" : existing.optString("title", "");
         latestApiUrl = existing == null ? "" : existing.optString("apiUrl", "");
         latestChannelUid = existing == null ? "" : existing.optString("channelUid", "");
         latestProductNo = existing == null ? "" : existing.optString("productNo", "");
         autoInspect = true;
+        boolean pausedMonitor = SiteSupport.NAVER_SMARTSTORE.equals(SiteSupport.detect(url))
+            && pauseMonitorForOptionLookup();
         webView.stopLoading();
-        webView.loadUrl(url);
+        if (pausedMonitor) {
+            handler.postDelayed(() -> {
+                if (!optionLoadInProgress || !url.equals(pendingUrl)) return;
+                webView.loadUrl(url);
+            }, 350L);
+        } else {
+            webView.loadUrl(url);
+        }
     }
 
     private void inspectInventory() {
@@ -475,6 +489,7 @@ public class MainActivity extends Activity {
         String currentUrl = webView.getUrl();
         if (!SiteSupport.isProductPage(siteType, currentUrl)) {
             optionLoadInProgress = false;
+            resumeMonitorAfterOptionLookup();
             clearPendingEdit();
             toast("상품 페이지를 확인하지 못했어요.");
             return;
@@ -529,17 +544,20 @@ public class MainActivity extends Activity {
                     directLookupAttempt = false;
                     launchLogin(pendingUrl);
                 } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                    && ("RATE_LIMITED".equals(error) || status == 204 || status == 429)) {
+                    handleOptionRateLimit(status);
+                } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
                     && directLookupAttempt
                     && ("PRODUCT_API_FAILED".equals(error)
                         || "PRODUCT_DATA_NOT_FOUND".equals(error)
                         || "API_URL_MISSING".equals(error)
-                        || status == 204
                         || status == 404)) {
                     DiagnosticLog.add(this, "OPTION_CHECK_RETRY", pendingLookupProduct, error);
                     runSmartStoreDiscovery();
                 } else {
                     DiagnosticLog.add(this, "OPTION_CHECK_FAIL", pendingLookupProduct, error + (status > 0 ? " · HTTP " + status : ""));
                     optionLoadInProgress = false;
+                    resumeMonitorAfterOptionLookup();
                     clearPendingEdit();
                     toast("옵션 조회에 실패했어요.");
                 }
@@ -557,15 +575,61 @@ public class MainActivity extends Activity {
             if (!productNo.isBlank()) latestProductNo = productNo;
             if (latestOptions == null || latestOptions.length() == 0) {
                 optionLoadInProgress = false;
+                resumeMonitorAfterOptionLookup();
                 clearPendingEdit();
                 toast("선택 가능한 옵션이 없어요.");
                 return;
             }
+            optionRateLimitRetryCount = 0;
+            resumeMonitorAfterOptionLookup();
             showOptionPicker();
         } catch (Exception e) {
             optionLoadInProgress = false;
+            resumeMonitorAfterOptionLookup();
             clearPendingEdit();
             toast("상품 정보를 처리하지 못했어요.");
+        }
+    }
+
+    private void handleOptionRateLimit(int status) {
+        optionRateLimitRetryCount++;
+        String statusText = status > 0 ? "HTTP " + status : "RATE_LIMITED";
+        DiagnosticLog.add(
+            this,
+            "OPTION_RATE_LIMIT",
+            pendingLookupProduct,
+            statusText + " · 재시도 " + optionRateLimitRetryCount + "/" + MAX_OPTION_RATE_LIMIT_RETRIES
+        );
+
+        if (optionRateLimitRetryCount > MAX_OPTION_RATE_LIMIT_RETRIES) {
+            optionLoadInProgress = false;
+            resumeMonitorAfterOptionLookup();
+            clearPendingEdit();
+            toast("네이버 요청 제한 중이에요. 잠시 후 다시 시도해주세요.");
+            return;
+        }
+
+        long delay = optionRateLimitRetryCount == 1 ? 5_000L : 15_000L;
+        toast("네이버 요청 제한 · " + (delay / 1000L) + "초 후 다시 시도해요.");
+        handler.postDelayed(() -> {
+            if (!optionLoadInProgress || pendingUrl.isBlank()) return;
+            inspectInventory();
+        }, delay);
+    }
+
+    private boolean pauseMonitorForOptionLookup() {
+        if (monitorPausedForOptionLookup) return true;
+        if (ProductStore.enabledCount(this) <= 0 || !isRunning()) return false;
+        monitorPausedForOptionLookup = true;
+        startService(new Intent(this, MonitorService.class).setAction(MonitorService.ACTION_STOP));
+        return true;
+    }
+
+    private void resumeMonitorAfterOptionLookup() {
+        if (!monitorPausedForOptionLookup) return;
+        monitorPausedForOptionLookup = false;
+        if (ProductStore.enabledCount(this) > 0) {
+            startForegroundService(new Intent(this, MonitorService.class));
         }
     }
 
@@ -921,6 +985,7 @@ public class MainActivity extends Activity {
         pendingUrl = "";
         pendingLookupProduct = null;
         directLookupAttempt = false;
+        optionRateLimitRetryCount = 0;
         latestOptions = new JSONArray();
         latestTitle = "";
         latestApiUrl = "";
@@ -1335,6 +1400,7 @@ public class MainActivity extends Activity {
             pendingEnableProductId = null;
             if (optionLoadInProgress) {
                 optionLoadInProgress = false;
+                resumeMonitorAfterOptionLookup();
                 clearPendingEdit();
             }
             return;
@@ -1568,6 +1634,7 @@ public class MainActivity extends Activity {
     }
 
     @Override protected void onDestroy() {
+        resumeMonitorAfterOptionLookup();
         handler.removeCallbacksAndMessages(null);
         if (optionDialog != null && optionDialog.isShowing()) optionDialog.dismiss();
         if (addDialog != null && addDialog.isShowing()) addDialog.dismiss();
