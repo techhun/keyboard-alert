@@ -279,7 +279,7 @@ public class MonitorService extends Service {
         }
         awaitingResult = true;
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        webView.evaluateJavascript(InventoryScript.SCRIPT, ignored -> {});
+        webView.evaluateJavascript(InventoryScript.build(currentProduct), ignored -> {});
     }
 
     private void runSwagkeyCheck() {
@@ -341,7 +341,7 @@ public class MonitorService extends Service {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
-                    && (status == 401 || status == 403)) {
+                    && ("AUTH_REQUIRED".equals(error) || status == 401 || status == 403)) {
                     invalidateSessionAndStop();
                     return;
                 }
@@ -354,6 +354,7 @@ public class MonitorService extends Service {
 
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
                     "PRODUCT_API_FAILED".equals(error)
+                        || "PRODUCT_DATA_NOT_FOUND".equals(error)
                         || "API_URL_MISSING".equals(error)
                         || status == 204
                         || status == 404
