@@ -55,6 +55,24 @@ public class MonitorService extends Service {
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
 
+    static long extendSmartStoreRateLimit(Context context, int status) {
+        long now = System.currentTimeMillis();
+        var prefs = MonitorPrefs.prefs(context);
+        long until = prefs.getLong(KEY_BACKOFF_UNTIL, 0L);
+        if (until > now) return until;
+
+        long previous = prefs.getLong(KEY_BACKOFF_MS, 0L);
+        long next = previous <= 0L
+            ? (status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS)
+            : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, previous * 2L);
+        until = now + next;
+        prefs.edit()
+            .putLong(KEY_BACKOFF_UNTIL, until)
+            .putLong(KEY_BACKOFF_MS, next)
+            .apply();
+        return until;
+    }
+
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -116,6 +134,7 @@ public class MonitorService extends Service {
                 if (!bootstrapReady) {
                     bootstrapSession();
                 } else {
+                    backoffUntil = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_UNTIL, backoffUntil);
                     long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
                     scheduleNextCheck(Math.max(MIN_PRODUCT_SPACING_MS, backoff));
                 }
@@ -521,22 +540,9 @@ public class MonitorService extends Service {
     }
 
     private void applyRateLimitBackoff(int status) {
-        long now = System.currentTimeMillis();
-        if (backoffUntil > now) {
-            long seconds = Math.max(1L, (backoffUntil - now + 999L) / 1000L);
-            setStatus("요청 제한 · " + seconds + "초 후 재시도");
-            updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
-            return;
-        }
-        rateLimitBackoffMs = rateLimitBackoffMs <= 0
-            ? (status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS)
-            : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, rateLimitBackoffMs * 2L);
-        backoffUntil = now + rateLimitBackoffMs;
-        MonitorPrefs.prefs(this).edit()
-            .putLong(KEY_BACKOFF_UNTIL, backoffUntil)
-            .putLong(KEY_BACKOFF_MS, rateLimitBackoffMs)
-            .apply();
-        long seconds = Math.max(1L, rateLimitBackoffMs / 1000L);
+        backoffUntil = extendSmartStoreRateLimit(this, status);
+        rateLimitBackoffMs = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_MS, INITIAL_RATE_LIMIT_BACKOFF_MS);
+        long seconds = Math.max(1L, (backoffUntil - System.currentTimeMillis() + 999L) / 1000L);
         markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
         updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
     }
