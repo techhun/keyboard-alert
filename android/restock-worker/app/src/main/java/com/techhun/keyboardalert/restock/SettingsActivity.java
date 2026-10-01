@@ -117,7 +117,7 @@ public class SettingsActivity extends Activity {
         }
         refreshChips();
 
-        TextView intervalNote = text("알림이 켜진 상품들은 이 주기 안에서 나눠서 확인해요.", 12, SUB, Typeface.NORMAL);
+        TextView intervalNote = text("알림 상품을 나눠서 확인하며, 요청 보호를 위해 실제 간격은 더 길어질 수 있어요.", 12, SUB, Typeface.NORMAL);
         intervalNote.setPadding(0, dp(10), 0, 0);
         intervalCard.addView(intervalNote);
 
