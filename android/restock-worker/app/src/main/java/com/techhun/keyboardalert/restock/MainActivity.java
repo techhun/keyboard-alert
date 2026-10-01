@@ -455,6 +455,17 @@ public class MainActivity extends Activity {
             ? ProductStore.find(this, ProductStore.idFromUrl(url))
             : ProductStore.find(this, id);
 
+        if (SiteSupport.NAVER_SMARTSTORE.equals(SiteSupport.detect(url))) {
+            long remaining = MonitorService.remainingSmartStoreRateLimitMillis(this);
+            if (remaining > 0L) {
+                long seconds = Math.max(1L, (remaining + 999L) / 1000L);
+                DiagnosticLog.add(this, "OPTION_LOOKUP_DEFERRED", existing,
+                    "SmartStore 요청 제한 · " + seconds + "초 대기");
+                toast("네이버 요청 제한 · " + seconds + "초 후 옵션 조회를 다시 시도해주세요.");
+                return;
+            }
+        }
+
         optionLoadInProgress = true;
         pendingUrl = url;
         editingProductId = id;
