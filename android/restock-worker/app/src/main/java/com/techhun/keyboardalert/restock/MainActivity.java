@@ -538,8 +538,10 @@ public class MainActivity extends Activity {
                     directLookupAttempt = false;
                     launchLogin(pendingUrl);
                 } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                    && "API_DEFERRED".equals(error)) {
+                    handleOptionRateLimitWait();
+                } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
                     && ("RATE_LIMITED".equals(error)
-                        || "API_DEFERRED".equals(error)
                         || status == 204
                         || status == 429)) {
                     handleOptionRateLimit(status);
@@ -595,6 +597,20 @@ public class MainActivity extends Activity {
             clearPendingEdit();
             toast("상품 정보를 처리하지 못했어요.");
         }
+    }
+
+    private void handleOptionRateLimitWait() {
+        long remaining = MonitorService.remainingSmartStoreRateLimitMillis(this);
+        if (remaining <= 0L) {
+            runSmartStoreDiscovery();
+            return;
+        }
+        long seconds = Math.max(1L, (remaining + 999L) / 1000L);
+        DiagnosticLog.add(this, "OPTION_RATE_LIMIT_WAIT", pendingLookupProduct, seconds + "초 남음");
+        optionLoadInProgress = false;
+        resumeMonitorAfterOptionLookup();
+        clearPendingEdit();
+        toast("네이버 요청 제한 대기 중 · " + seconds + "초 후 다시 시도해주세요.");
     }
 
     private void handleOptionRateLimit(int status) {

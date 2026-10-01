@@ -52,8 +52,20 @@ public class MonitorService extends Service {
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 30 * 60_000L;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
+    private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
+
+    private static void migrateSmartStoreRateLimitState(Context context) {
+        var prefs = MonitorPrefs.prefs(context);
+        if (prefs.getBoolean(KEY_BACKOFF_DEFER_FIX_MIGRATED, false)) return;
+        prefs.edit()
+            .remove(KEY_BACKOFF_UNTIL)
+            .remove(KEY_BACKOFF_MS)
+            .putBoolean(KEY_BACKOFF_DEFER_FIX_MIGRATED, true)
+            .apply();
+    }
 
     static long extendSmartStoreRateLimit(Context context, int status) {
+        migrateSmartStoreRateLimitState(context);
         long now = System.currentTimeMillis();
         var prefs = MonitorPrefs.prefs(context);
         long until = prefs.getLong(KEY_BACKOFF_UNTIL, 0L);
@@ -72,6 +84,7 @@ public class MonitorService extends Service {
     }
 
     static long remainingSmartStoreRateLimitMillis(Context context) {
+        migrateSmartStoreRateLimitState(context);
         long until = MonitorPrefs.prefs(context).getLong(KEY_BACKOFF_UNTIL, 0L);
         return Math.max(0L, until - System.currentTimeMillis());
     }
@@ -109,6 +122,7 @@ public class MonitorService extends Service {
     public void onCreate() {
         super.onCreate();
         createNotificationChannels();
+        migrateSmartStoreRateLimitState(this);
         backoffUntil = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_UNTIL, 0L);
         rateLimitBackoffMs = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_MS, 0L);
     }
@@ -417,8 +431,15 @@ public class MonitorService extends Service {
                     return;
                 }
 
+                if ("API_DEFERRED".equals(error)) {
+                    // No request was sent. Respect the existing cooldown without
+                    // extending it again, otherwise the app can keep its own
+                    // SmartStore cooldown alive indefinitely.
+                    scheduleNextProduct();
+                    return;
+                }
+
                 if ("RATE_LIMITED".equals(error)
-                    || "API_DEFERRED".equals(error)
                     || status == 204
                     || status == 429) {
                     applyRateLimitBackoff(status);
