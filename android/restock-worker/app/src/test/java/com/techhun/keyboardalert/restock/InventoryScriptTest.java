@@ -25,6 +25,9 @@ public class InventoryScriptTest {
         assertTrue(script.contains("document.documentElement"));
         assertTrue(script.contains("collectPageRoots"));
         assertTrue(script.contains("findProductModel"));
+        assertTrue(script.contains("productIdentities"));
+        assertTrue(script.contains("exactProductMatch"));
+        assertTrue(script.contains("document.title.includes(candidateName)"));
         assertTrue(script.contains("PAGE_STATE"));
         assertTrue(script.contains("PAGE_DATA_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));

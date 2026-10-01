@@ -174,6 +174,8 @@ final class ProductStore {
             copyIfPresent(runtime, target, "channelUid");
             copyIfPresent(runtime, target, "productNo");
             copyIfPresent(runtime, target, "title");
+            copyIfPresent(runtime, target, "selectedIds");
+            copyIfPresent(runtime, target, "selectedLabels");
             copyIfPresent(runtime, target, "lastAvailability");
             copyIfPresent(runtime, target, "lastStatus");
             copyIfPresent(runtime, target, "lastCheck");

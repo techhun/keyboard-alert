@@ -562,11 +562,6 @@ public class MainActivity extends Activity {
             }
 
             String siteType = SiteSupport.detect(pendingUrl);
-            if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                && "PAGE_STATE".equals(result.optString("source", ""))) {
-                DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
-                    "상품 페이지 데이터로 옵션 조회 성공");
-            }
             latestTitle = result.optString("title", SiteSupport.label(siteType) + " 상품");
             latestOptions = result.optJSONArray("options");
             String apiUrl = result.optString("apiUrl", "");
@@ -576,11 +571,21 @@ public class MainActivity extends Activity {
             if (!channelUid.isBlank()) latestChannelUid = channelUid;
             if (!productNo.isBlank()) latestProductNo = productNo;
             if (latestOptions == null || latestOptions.length() == 0) {
+                DiagnosticLog.add(this, "OPTION_CHECK_FAIL", pendingLookupProduct,
+                    "OPTION_LIST_EMPTY");
                 optionLoadInProgress = false;
                 resumeMonitorAfterOptionLookup();
                 clearPendingEdit();
                 toast("선택 가능한 옵션이 없어요.");
                 return;
+            }
+            if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                && "PAGE_STATE".equals(result.optString("source", ""))) {
+                String match = result.optBoolean("exactProductMatch", false)
+                    ? "상품번호 일치"
+                    : "상품명 일치 후보";
+                DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
+                    match + " · 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
             }
             resumeMonitorAfterOptionLookup();
             showOptionPicker();
@@ -601,6 +606,17 @@ public class MainActivity extends Activity {
         resumeMonitorAfterOptionLookup();
         clearPendingEdit();
         toast("네이버 요청 제한 · " + seconds + "초 후 다시 시도해주세요.");
+    }
+
+    private String optionSummary(JSONArray options) {
+        StringBuilder summary = new StringBuilder();
+        int count = Math.min(options == null ? 0 : options.length(), 3);
+        for (int i = 0; i < count; i++) {
+            if (summary.length() > 0) summary.append(" | ");
+            summary.append(optionLabel(options.optJSONObject(i)));
+        }
+        if (options != null && options.length() > count) summary.append(" 외 ").append(options.length() - count).append("개");
+        return summary.toString();
     }
 
     private boolean pauseMonitorForOptionLookup() {

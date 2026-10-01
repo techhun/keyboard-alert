@@ -120,22 +120,28 @@ final class InventoryScript {
               return roots;
             }
 
-            function productIdentity(value) {
-              if (!value || typeof value !== 'object') return '';
-              const product = value.originProduct && typeof value.originProduct === 'object'
-                ? value.originProduct
-                : value;
-              return String(product.id ?? value.productNo ?? product.productNo ?? '');
+            function productIdentities(value) {
+              if (!value || typeof value !== 'object') return [];
+              const nested = [value, value.originProduct, value.smartstoreChannelProduct]
+                .filter((item) => item && typeof item === 'object');
+              const identities = [];
+              for (const item of nested) {
+                for (const key of ['productNo', 'channelProductNo', 'id']) {
+                  const identity = String(item[key] ?? '').trim();
+                  if (/^\\d+$/.test(identity) && !identities.includes(identity)) identities.push(identity);
+                }
+              }
+              return identities;
             }
 
             function findProductModel(roots, productNo) {
-              let best = null;
-              let bestScore = -1;
+              let exactBest = null;
+              let exactScore = -1;
+              let fallbackBest = null;
+              let fallbackScore = -1;
               for (const root of roots) {
                 walkObjects(root, (value) => {
-                  const identity = productIdentity(value);
-                  if (identity && /^\\d+$/.test(identity) && identity !== productNo) return;
-                  let score = identity === productNo ? 20 : 0;
+                  let score = 0;
                   if (value.originProduct && typeof value.originProduct === 'object') score += 10;
                   if (value.smartstoreChannelProduct && typeof value.smartstoreChannelProduct === 'object') score += 6;
                   if (value.originProduct?.detailAttribute?.optionInfo) score += 8;
@@ -143,13 +149,28 @@ final class InventoryScript {
                   if (value.optionInfo?.optionCombinations) score += 6;
                   if (Array.isArray(value.optionCombinations)) score += 4;
                   if (value.stockQuantity !== undefined || value.originProduct?.stockQuantity !== undefined) score += 3;
-                  if (score > bestScore) {
-                    best = value;
-                    bestScore = score;
+                  const candidateProduct = value.originProduct && typeof value.originProduct === 'object'
+                    ? value.originProduct
+                    : value;
+                  const candidateName = String(
+                    candidateProduct?.name || value.smartstoreChannelProduct?.channelProductName || ''
+                  ).trim();
+                  const titleMatched = candidateName && document.title.includes(candidateName);
+                  if (titleMatched) score += 12;
+                  if (score < 4) return;
+                  const exact = productIdentities(value).includes(productNo);
+                  if (exact && score > exactScore) {
+                    exactBest = value;
+                    exactScore = score;
+                  } else if (!exact && titleMatched && score > fallbackScore) {
+                    fallbackBest = value;
+                    fallbackScore = score;
                   }
                 });
               }
-              return bestScore >= 4 ? best : null;
+              if (exactBest) return { value: exactBest, exact: true };
+              if (fallbackBest) return { value: fallbackBest, exact: false };
+              return null;
             }
 
             function findChannelUid(roots) {
@@ -176,8 +197,6 @@ final class InventoryScript {
 
             function looksLikeProductPayload(data, productNo) {
               if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
-              const identity = productIdentity(data);
-              if (identity && /^\\d+$/.test(identity) && identity !== productNo) return false;
               const product = data.originProduct && typeof data.originProduct === 'object' ? data.originProduct : data;
               return !!(
                 product?.detailAttribute?.optionInfo
@@ -189,7 +208,7 @@ final class InventoryScript {
               );
             }
 
-            function snapshot(data, productNo, channelUid, apiUrl, source) {
+            function snapshot(data, productNo, channelUid, apiUrl, source, exactProductMatch) {
               const product = data.originProduct && typeof data.originProduct === 'object'
                 ? data.originProduct
                 : data;
@@ -200,10 +219,10 @@ final class InventoryScript {
               const combinations = Array.isArray(optionInfo?.optionCombinations)
                 ? optionInfo.optionCombinations
                 : [];
-              let options = combinations.map((option) => {
+              let options = combinations.map((option, index) => {
                 const stock = Number(option.stockQuantity);
                 return {
-                  id: String(option.id ?? ''),
+                  id: String(option.id ?? option.optionCombinationId ?? option.combinationId ?? `combination-${index}`),
                   optionName1: option.optionName1 ?? null,
                   optionName2: option.optionName2 ?? null,
                   optionName3: option.optionName3 ?? null,
@@ -211,11 +230,14 @@ final class InventoryScript {
                   available: option.usable !== false && Number.isFinite(stock) && stock > 0
                 };
               });
+              options = options.filter((option, index, all) =>
+                option.id && all.findIndex((candidate) => candidate.id === option.id) === index
+              );
               if (!options.length && Array.isArray(optionInfo?.optionSimple)) {
-                options = optionInfo.optionSimple.map((option) => {
+                options = optionInfo.optionSimple.map((option, index) => {
                   const stock = Number(option.stockQuantity ?? product?.stockQuantity ?? data?.stockQuantity);
                   return {
-                    id: String(option.id ?? ''),
+                    id: String(option.id ?? option.optionNo ?? `simple-${index}`),
                     optionName1: option.name ?? option.optionName ?? '옵션',
                     optionName2: null,
                     optionName3: null,
@@ -239,12 +261,13 @@ final class InventoryScript {
               return {
                 ok: true,
                 source,
+                exactProductMatch: exactProductMatch !== false,
                 pageUrl: location.href,
                 apiUrl: apiUrl || '',
                 title: product?.name || data?.smartstoreChannelProduct?.channelProductName || document.title,
                 channelUid: channelUid || '',
                 id: product?.id ?? data?.id ?? null,
-                productNo: data?.productNo ?? productNo,
+                productNo,
                 statusType: product?.statusType || data?.statusType || data?.productStatusType || null,
                 stockQuantity: product?.stockQuantity ?? data?.stockQuantity ?? null,
                 optionCombinationCount: options.length,
@@ -276,8 +299,8 @@ final class InventoryScript {
               }
 
               const pageModel = findProductModel(roots, productNo);
-              if (pageModel && looksLikeProductPayload(pageModel, productNo)) {
-                send(snapshot(pageModel, productNo, channelUid, observedApiUrl, 'PAGE_STATE'));
+              if (pageModel && looksLikeProductPayload(pageModel.value, productNo)) {
+                send(snapshot(pageModel.value, productNo, channelUid, observedApiUrl, 'PAGE_STATE', pageModel.exact));
                 return;
               }
 
@@ -321,7 +344,7 @@ final class InventoryScript {
                   const validPayload = response.ok && looksLikeProductPayload(data, productNo);
                   attempts.push({ url: apiUrl, status: response.status, validPayload });
                   if (validPayload) {
-                    send({ ...snapshot(data, productNo, channelUid, apiUrl, 'API'), attempts });
+                    send({ ...snapshot(data, productNo, channelUid, apiUrl, 'API', true), attempts });
                     return;
                   }
                 } catch (error) {

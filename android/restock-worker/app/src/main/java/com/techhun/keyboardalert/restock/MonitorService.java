@@ -32,11 +32,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 public class MonitorService extends Service {
     static final String ACTION_STOP = "com.techhun.keyboardalert.restock.STOP";
@@ -448,14 +445,7 @@ public class MonitorService extends Service {
                 return;
             }
 
-            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
-                clearRateLimitBackoff();
-                if (!pageStateLogged && "PAGE_STATE".equals(result.optString("source", ""))) {
-                    pageStateLogged = true;
-                    DiagnosticLog.add(this, "PAGE_STATE_OK", currentProduct,
-                        "상품 페이지 데이터로 재고 조회 성공");
-                }
-            }
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
             if (mode == Mode.DISCOVERY) {
                 currentProduct.put("apiUrl", result.optString("apiUrl", ""));
                 currentProduct.put("channelUid", result.optString("channelUid", ""));
@@ -469,6 +459,13 @@ public class MonitorService extends Service {
                 scheduleNextProduct();
                 return;
             }
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                && !pageStateLogged
+                && "PAGE_STATE".equals(result.optString("source", ""))) {
+                pageStateLogged = true;
+                DiagnosticLog.add(this, "PAGE_STATE_OK", currentProduct,
+                    "선택 옵션까지 검증한 페이지 조회 성공");
+            }
             ProductStore.updateRuntime(this, currentProduct);
             scheduleNextProduct();
         } catch (Exception error) {
@@ -479,11 +476,7 @@ public class MonitorService extends Service {
 
     private boolean processSuccessfulSnapshot(JSONObject product, JSONObject result) throws Exception {
         JSONArray selectedArray = product.optJSONArray("selectedIds");
-        Set<String> selected = new HashSet<>();
-        if (selectedArray != null) {
-            for (int i = 0; i < selectedArray.length(); i++) selected.add(selectedArray.optString(i));
-        }
-        if (selected.isEmpty()) {
+        if (selectedArray == null || selectedArray.length() == 0) {
             markCurrentFailure("선택 옵션 없음");
             return false;
         }
@@ -493,42 +486,55 @@ public class MonitorService extends Service {
 
         JSONArray options = result.optJSONArray("options");
         if (options == null) options = new JSONArray();
-        Map<String, Boolean> current = new HashMap<>();
-        Map<String, String> currentLabels = new HashMap<>();
-        int availableCount = 0;
-        for (int i = 0; i < options.length(); i++) {
-            JSONObject option = options.optJSONObject(i);
-            if (option == null) continue;
-            String id = option.optString("id", "");
-            if (!selected.contains(id)) continue;
-            boolean available = option.optBoolean("available", false);
-            current.put(id, available);
-            currentLabels.put(id, optionLabel(option));
-            if (available) availableCount++;
-        }
+        OptionSelectionResolver.Resolution resolved = OptionSelectionResolver.resolve(
+            selectedArray,
+            configuredLabels,
+            options
+        );
 
         // A successful HTTP response is not a verified inventory snapshot when
         // one or more configured options are missing. Preserve the last known
         // state instead of treating missing options as sold out.
-        if (current.size() != selected.size()) {
-            markCurrentFailure("선택 옵션 확인 실패");
+        if (!resolved.complete()) {
+            markCurrentFailure(
+                "선택 옵션 확인 실패 (" + resolved.availability.size() + "/" + resolved.requestedCount + ")"
+            );
             return false;
         }
 
         JSONObject previous = product.optJSONObject("lastAvailability");
         if (previous == null) previous = new JSONObject();
+        for (Map.Entry<String, String> entry : resolved.oldToNew.entrySet()) {
+            String oldId = entry.getKey();
+            String newId = entry.getValue();
+            if (!oldId.equals(newId) && previous.has(oldId) && !previous.has(newId)) {
+                previous.put(newId, previous.optBoolean(oldId, false));
+                previous.remove(oldId);
+            }
+        }
+
         JSONArray restocked = new JSONArray();
-        for (String id : selected) {
-            boolean now = current.getOrDefault(id, false);
+        int availableCount = 0;
+        for (Map.Entry<String, Boolean> entry : resolved.availability.entrySet()) {
+            String id = entry.getKey();
+            boolean now = entry.getValue();
+            if (now) availableCount++;
             if (previous.has(id) && !previous.optBoolean(id, false) && now) {
-                restocked.put(currentLabels.getOrDefault(id, configuredLabels.optString(id, id)));
+                restocked.put(resolved.labels.getOrDefault(id, id));
             }
             previous.put(id, now);
         }
 
+        if (resolved.migratedCount > 0) {
+            product.put("selectedIds", resolved.selectedIds);
+            product.put("selectedLabels", resolved.selectedLabels);
+            DiagnosticLog.add(this, "OPTION_ID_MIGRATED", product,
+                resolved.migratedCount + "개 옵션을 이름으로 다시 연결");
+        }
+
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
-        product.put("lastStatus", "재고 있음 " + availableCount + "/" + selected.size() + " · " + time);
+        product.put("lastStatus", "재고 있음 " + availableCount + "/" + resolved.requestedCount + " · " + time);
         product.put("lastCheck", System.currentTimeMillis());
 
         int enabledCount = ProductStore.enabledCount(this);
@@ -657,17 +663,6 @@ public class MonitorService extends Service {
     private void cancelPendingChecks() {
         handler.removeCallbacks(nextCheck);
         cancelModeCallbacks();
-    }
-
-    private String optionLabel(JSONObject option) {
-        StringBuilder label = new StringBuilder();
-        for (String key : new String[]{"optionName1", "optionName2", "optionName3"}) {
-            String value = option.optString(key, "");
-            if (value.isBlank() || "null".equals(value)) continue;
-            if (label.length() > 0) label.append(" / ");
-            label.append(value);
-        }
-        return label.length() > 0 ? label.toString() : option.optString("id", "옵션");
     }
 
     private String currentSiteType() {
