@@ -23,6 +23,9 @@ on:
       - 'scripts/check-deskhero.mjs'
       - 'scripts/deskhero-safety.mjs'
       - 'tests/deskhero-safety.test.mjs'
+      - 'scripts/check-omnitype.mjs'
+      - 'scripts/omnitype-safety.mjs'
+      - 'tests/omnitype-safety.test.mjs'
       - 'scripts/system-health.mjs'
       - 'tests/system-health-safety.test.mjs'
       - 'scripts/check-workflow-watchdog.mjs'
@@ -52,6 +55,9 @@ on:
       - 'scripts/check-deskhero.mjs'
       - 'scripts/deskhero-safety.mjs'
       - 'tests/deskhero-safety.test.mjs'
+      - 'scripts/check-omnitype.mjs'
+      - 'scripts/omnitype-safety.mjs'
+      - 'tests/omnitype-safety.test.mjs'
       - 'scripts/system-health.mjs'
       - 'tests/system-health-safety.test.mjs'
       - 'scripts/check-workflow-watchdog.mjs'
@@ -98,3 +104,5 @@ jobs:
         run: npm run check:cannonkeys
       - name: Smoke check Deskhero Group Buy/Preorder Updates
         run: npm run check:deskhero
+      - name: Smoke check Omnitype Product Updates
+        run: npm run check:omnitype
