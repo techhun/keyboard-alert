@@ -134,7 +134,36 @@ final class InventoryScript {
               return identities;
             }
 
+            function optionInfoOf(value) {
+              if (!value || typeof value !== 'object') return null;
+              const product = value.originProduct && typeof value.originProduct === 'object'
+                ? value.originProduct
+                : value;
+              if (product?.detailAttribute?.optionInfo) return product.detailAttribute.optionInfo;
+              if (value?.detailAttribute?.optionInfo) return value.detailAttribute.optionInfo;
+              if (value?.optionInfo) return value.optionInfo;
+              if (Array.isArray(product?.optionCombinations) || Array.isArray(product?.optionSimple)) return product;
+              if (Array.isArray(value?.optionCombinations) || Array.isArray(value?.optionSimple)) return value;
+              return null;
+            }
+
+            function explicitOptionCount(value) {
+              const optionInfo = optionInfoOf(value);
+              if (!optionInfo) return 0;
+              const combinations = Array.isArray(optionInfo.optionCombinations)
+                ? optionInfo.optionCombinations.length
+                : 0;
+              const simple = Array.isArray(optionInfo.optionSimple)
+                ? optionInfo.optionSimple.length
+                : 0;
+              return combinations + simple;
+            }
+
             function findProductModel(roots, productNo) {
+              let exactOptionBest = null;
+              let exactOptionScore = -1;
+              let titleOptionBest = null;
+              let titleOptionScore = -1;
               let exactBest = null;
               let exactScore = -1;
               let fallbackBest = null;
@@ -149,6 +178,8 @@ final class InventoryScript {
                   if (value.optionInfo?.optionCombinations) score += 6;
                   if (Array.isArray(value.optionCombinations)) score += 4;
                   if (value.stockQuantity !== undefined || value.originProduct?.stockQuantity !== undefined) score += 3;
+                  const optionCount = explicitOptionCount(value);
+                  if (optionCount > 0) score += 20 + Math.min(optionCount, 20);
                   const candidateProduct = value.originProduct && typeof value.originProduct === 'object'
                     ? value.originProduct
                     : value;
@@ -159,7 +190,13 @@ final class InventoryScript {
                   if (titleMatched) score += 12;
                   if (score < 4) return;
                   const exact = productIdentities(value).includes(productNo);
-                  if (exact && score > exactScore) {
+                  if (exact && optionCount > 0 && score > exactOptionScore) {
+                    exactOptionBest = value;
+                    exactOptionScore = score;
+                  } else if (!exact && titleMatched && optionCount > 0 && score > titleOptionScore) {
+                    titleOptionBest = value;
+                    titleOptionScore = score;
+                  } else if (exact && score > exactScore) {
                     exactBest = value;
                     exactScore = score;
                   } else if (!exact && titleMatched && score > fallbackScore) {
@@ -168,6 +205,8 @@ final class InventoryScript {
                   }
                 });
               }
+              if (exactOptionBest) return { value: exactOptionBest, exact: true };
+              if (titleOptionBest) return { value: titleOptionBest, exact: false };
               if (exactBest) return { value: exactBest, exact: true };
               if (fallbackBest) return { value: fallbackBest, exact: false };
               return null;
@@ -208,14 +247,11 @@ final class InventoryScript {
               );
             }
 
-            function snapshot(data, productNo, channelUid, apiUrl, source, exactProductMatch) {
+            function snapshot(data, productNo, channelUid, apiUrl, source, exactProductMatch, allowSyntheticDefault) {
               const product = data.originProduct && typeof data.originProduct === 'object'
                 ? data.originProduct
                 : data;
-              const optionInfo = product?.detailAttribute?.optionInfo
-                || data?.detailAttribute?.optionInfo
-                || data?.optionInfo
-                || data;
+              const optionInfo = optionInfoOf(data) || data;
               const combinations = Array.isArray(optionInfo?.optionCombinations)
                 ? optionInfo.optionCombinations
                 : [];
@@ -246,7 +282,8 @@ final class InventoryScript {
                   };
                 });
               }
-              if (!options.length) {
+              const explicitOptionData = options.length > 0;
+              if (!options.length && allowSyntheticDefault) {
                 const stock = Number(product?.stockQuantity ?? data?.stockQuantity);
                 const status = String(product?.statusType || data?.statusType || data?.productStatusType || '').toUpperCase();
                 options.push({
@@ -262,6 +299,7 @@ final class InventoryScript {
                 ok: true,
                 source,
                 exactProductMatch: exactProductMatch !== false,
+                explicitOptionData,
                 pageUrl: location.href,
                 apiUrl: apiUrl || '',
                 title: product?.name || data?.smartstoreChannelProduct?.channelProductName || document.title,
@@ -300,8 +338,19 @@ final class InventoryScript {
 
               const pageModel = findProductModel(roots, productNo);
               if (pageModel && looksLikeProductPayload(pageModel.value, productNo)) {
-                send(snapshot(pageModel.value, productNo, channelUid, observedApiUrl, 'PAGE_STATE', pageModel.exact));
-                return;
+                const pageSnapshot = snapshot(
+                  pageModel.value,
+                  productNo,
+                  channelUid,
+                  observedApiUrl,
+                  'PAGE_STATE',
+                  pageModel.exact,
+                  false
+                );
+                if (pageSnapshot.explicitOptionData && pageSnapshot.options.length > 0) {
+                  send(pageSnapshot);
+                  return;
+                }
               }
 
               if (!allowApiFallback) {
@@ -344,7 +393,7 @@ final class InventoryScript {
                   const validPayload = response.ok && looksLikeProductPayload(data, productNo);
                   attempts.push({ url: apiUrl, status: response.status, validPayload });
                   if (validPayload) {
-                    send({ ...snapshot(data, productNo, channelUid, apiUrl, 'API', true), attempts });
+                    send({ ...snapshot(data, productNo, channelUid, apiUrl, 'API', true, true), attempts });
                     return;
                   }
                 } catch (error) {

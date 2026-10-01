@@ -445,7 +445,6 @@ public class MonitorService extends Service {
                 return;
             }
 
-            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
             if (mode == Mode.DISCOVERY) {
                 currentProduct.put("apiUrl", result.optString("apiUrl", ""));
                 currentProduct.put("channelUid", result.optString("channelUid", ""));
@@ -459,6 +458,7 @@ public class MonitorService extends Service {
                 scheduleNextProduct();
                 return;
             }
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
                 && !pageStateLogged
                 && "PAGE_STATE".equals(result.optString("source", ""))) {

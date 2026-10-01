@@ -25,10 +25,17 @@ public class InventoryScriptTest {
         assertTrue(script.contains("document.documentElement"));
         assertTrue(script.contains("collectPageRoots"));
         assertTrue(script.contains("findProductModel"));
+        assertTrue(script.contains("optionInfoOf"));
+        assertTrue(script.contains("explicitOptionCount"));
         assertTrue(script.contains("productIdentities"));
         assertTrue(script.contains("exactProductMatch"));
         assertTrue(script.contains("document.title.includes(candidateName)"));
         assertTrue(script.contains("PAGE_STATE"));
+        assertTrue(script.contains("pageSnapshot.explicitOptionData && pageSnapshot.options.length > 0"));
+        assertTrue(script.contains("if (!options.length && allowSyntheticDefault)"));
+        assertTrue(script.contains("'PAGE_STATE',"));
+        assertTrue(script.contains("pageModel.exact,\n                  false"));
+        assertTrue(script.contains("snapshot(data, productNo, channelUid, apiUrl, 'API', true, true)"));
         assertTrue(script.contains("PAGE_DATA_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("RATE_LIMITED"));
