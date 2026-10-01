@@ -63,6 +63,11 @@ final class InventoryApiScript {
                     return;
                   }
 
+                  if (response.status === 204 || response.status === 429) {
+                    send({ ok: false, error: 'RATE_LIMITED', productId, status: response.status, apiUrl });
+                    return;
+                  }
+
                   let data = null;
                   try { data = JSON.parse(text); } catch (ignored) {}
                   if (!response.ok || !data) {
