@@ -1,0 +1,67 @@
+name: Omnitype production baseline smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/omnitype-baseline-smoke.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Restore Omnitype state
+        shell: bash
+        run: |
+          git fetch origin watcher-state
+          if git cat-file -e "origin/watcher-state:omnitype-state.json" 2>/dev/null; then
+            git show "origin/watcher-state:omnitype-state.json" > omnitype-state.json
+          fi
+
+      - name: Run Omnitype production checker
+        env:
+          OMNITYPE_DISCORD_WEBHOOK_URL: ${{ secrets.OMNITYPE_DISCORD_WEBHOOK_URL }}
+        run: npm run check:omnitype
+
+      - name: Persist Omnitype state
+        shell: bash
+        run: |
+          git fetch origin watcher-state
+          state_dir="/tmp/keyboard-alert-omnitype-baseline"
+          rm -rf "$state_dir"
+          git worktree add -B watcher-state "$state_dir" origin/watcher-state
+          cp omnitype-state.json "$state_dir/omnitype-state.json"
+          git -C "$state_dir" config user.name 'github-actions[bot]'
+          git -C "$state_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C "$state_dir" add omnitype-state.json
+          if git -C "$state_dir" diff --cached --quiet; then
+            echo 'Omnitype state unchanged.'
+            exit 0
+          fi
+          git -C "$state_dir" commit -m 'Initialize Omnitype watcher state'
+          for attempt in 1 2 3; do
+            if git -C "$state_dir" pull --rebase origin watcher-state && git -C "$state_dir" push origin HEAD:watcher-state; then
+              exit 0
+            fi
+            git -C "$state_dir" rebase --abort >/dev/null 2>&1 || true
+            sleep $((attempt * 2))
+          done
+          exit 1
