@@ -2,6 +2,10 @@ name: Android Restock Worker APK
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'android/restock-worker/**'
+      - '.github/workflows/android-restock-worker.yml'
   push:
     paths:
       - 'android/restock-worker/**'
