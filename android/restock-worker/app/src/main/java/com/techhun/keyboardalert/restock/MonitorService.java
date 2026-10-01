@@ -51,7 +51,9 @@ public class MonitorService extends Service {
     private static final long NETWORK_RETRY_MS = 30_000L;
     private static final long MIN_PRODUCT_SPACING_MS = 5_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
-    private static final long MAX_RATE_LIMIT_BACKOFF_MS = 5 * 60_000L;
+    private static final long MAX_RATE_LIMIT_BACKOFF_MS = 30 * 60_000L;
+    private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
+    private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
 
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
@@ -85,6 +87,8 @@ public class MonitorService extends Service {
     public void onCreate() {
         super.onCreate();
         createNotificationChannels();
+        backoffUntil = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_UNTIL, 0L);
+        rateLimitBackoffMs = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_MS, 0L);
     }
 
     @Override
@@ -279,6 +283,11 @@ public class MonitorService extends Service {
         }
 
         String siteType = currentSiteType();
+        long remainingBackoff = backoffUntil - System.currentTimeMillis();
+        if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && remainingBackoff > 0L) {
+            scheduleNextProduct();
+            return;
+        }
         if (!SiteSupport.isSupportedProductUrl(currentProduct.optString("url", ""))) {
             markCurrentFailure("지원하지 않는 상품 주소");
             scheduleNextProduct();
@@ -396,7 +405,7 @@ public class MonitorService extends Service {
                 }
 
                 if ("RATE_LIMITED".equals(error) || status == 204 || status == 429) {
-                    applyRateLimitBackoff();
+                    applyRateLimitBackoff(status);
                     scheduleNextProduct();
                     return;
                 }
@@ -420,7 +429,7 @@ public class MonitorService extends Service {
                 return;
             }
 
-            clearRateLimitBackoff();
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
             if (mode == Mode.DISCOVERY) {
                 currentProduct.put("apiUrl", result.optString("apiUrl", ""));
                 currentProduct.put("channelUid", result.optString("channelUid", ""));
@@ -511,7 +520,7 @@ public class MonitorService extends Service {
         return true;
     }
 
-    private void applyRateLimitBackoff() {
+    private void applyRateLimitBackoff(int status) {
         long now = System.currentTimeMillis();
         if (backoffUntil > now) {
             long seconds = Math.max(1L, (backoffUntil - now + 999L) / 1000L);
@@ -520,9 +529,13 @@ public class MonitorService extends Service {
             return;
         }
         rateLimitBackoffMs = rateLimitBackoffMs <= 0
-            ? INITIAL_RATE_LIMIT_BACKOFF_MS
+            ? (status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS)
             : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, rateLimitBackoffMs * 2L);
         backoffUntil = now + rateLimitBackoffMs;
+        MonitorPrefs.prefs(this).edit()
+            .putLong(KEY_BACKOFF_UNTIL, backoffUntil)
+            .putLong(KEY_BACKOFF_MS, rateLimitBackoffMs)
+            .apply();
         long seconds = Math.max(1L, rateLimitBackoffMs / 1000L);
         markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
         updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
@@ -531,7 +544,10 @@ public class MonitorService extends Service {
     private void clearRateLimitBackoff() {
         rateLimitBackoffMs = 0L;
         backoffUntil = 0L;
-    }
+        MonitorPrefs.prefs(this).edit()
+            .remove(KEY_BACKOFF_UNTIL)
+            .remove(KEY_BACKOFF_MS)
+            .apply();
 
     private void invalidateSessionAndStop() {
         if (stopping) return;
@@ -587,14 +603,25 @@ public class MonitorService extends Service {
             return;
         }
         currentIndex = (currentIndex + 1) % products.length();
+        long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+        if (backoff > 0L) {
+            for (int i = 0; i < products.length(); i++) {
+                JSONObject candidate = products.optJSONObject(currentIndex);
+                if (candidate != null && SiteSupport.SWAGKEY_IMWEB.equals(
+                    SiteSupport.detect(candidate.optString("url", "")))) break;
+                currentIndex = (currentIndex + 1) % products.length();
+            }
+        }
         mode = Mode.DIRECT;
         long spacing = productSpacingMillis(
             MonitorPrefs.intervalSeconds(this),
             products.length()
         );
-        long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+        JSONObject next = products.optJSONObject(currentIndex);
+        boolean smartStoreNext = next != null && SiteSupport.NAVER_SMARTSTORE.equals(
+            SiteSupport.detect(next.optString("url", "")));
         cancelModeCallbacks();
-        scheduleNextCheck(Math.max(spacing, backoff));
+        scheduleNextCheck(smartStoreNext ? Math.max(spacing, backoff) : spacing);
     }
 
     static long productSpacingMillis(int intervalSeconds, int productCount) {
