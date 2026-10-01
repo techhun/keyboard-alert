@@ -58,6 +58,11 @@ final class InventoryApiScript {
                   });
                   const text = await response.text();
 
+                  if (response.status === 204 || response.status === 429) {
+                    send({ ok: false, error: 'RATE_LIMITED', productId, status: response.status, apiUrl });
+                    return;
+                  }
+
                   if (isAuthResponse(response, text)) {
                     send({ ok: false, error: 'AUTH_REQUIRED', productId, status: response.status, apiUrl });
                     return;
