@@ -39,6 +39,8 @@ import java.util.Set;
 
 public class MonitorService extends Service {
     static final String ACTION_STOP = "com.techhun.keyboardalert.restock.STOP";
+    static final String ACTION_PAUSE_OPTION_LOOKUP = "com.techhun.keyboardalert.restock.PAUSE_OPTION_LOOKUP";
+    static final String ACTION_RESUME_OPTION_LOOKUP = "com.techhun.keyboardalert.restock.RESUME_OPTION_LOOKUP";
 
     private static final String CHANNEL_MONITOR = "restock_monitor";
     private static final String CHANNEL_ALERT = "restock_alert";
@@ -47,13 +49,17 @@ public class MonitorService extends Service {
     private static final int NOTIFICATION_STATUS = 41002;
     private static final long RESULT_TIMEOUT_MS = 20_000L;
     private static final long NETWORK_RETRY_MS = 30_000L;
-    private static final long MIN_PRODUCT_SPACING_MS = 1_000L;
+    private static final long MIN_PRODUCT_SPACING_MS = 5_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 5 * 60_000L;
 
     private enum Mode { BOOTSTRAP, DIRECT, DISCOVERY, SWAGKEY }
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable nextCheck = this::checkCurrentProduct;
+    private final Runnable discoveryCheck = this::runDiscoveryCheck;
+    private final Runnable swagkeyCheck = this::runSwagkeyCheck;
+    private final Runnable bootstrapTask = this::bootstrapSession;
     private WebView webView;
     private PowerManager.WakeLock wakeLock;
     private JSONArray products = new JSONArray();
@@ -66,9 +72,10 @@ public class MonitorService extends Service {
     private long rateLimitBackoffMs;
     private long backoffUntil;
     private boolean networkWaiting;
+    private boolean pausedForOptionLookup;
 
     private final Runnable resultTimeout = () -> {
-        if (!awaitingResult || stopping) return;
+        if (!awaitingResult || stopping || pausedForOptionLookup) return;
         awaitingResult = false;
         markCurrentFailure("조회 시간 초과", "TIMEOUT");
         scheduleNextProduct();
@@ -82,9 +89,33 @@ public class MonitorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && ACTION_STOP.equals(intent.getAction())) {
+        String action = intent == null ? null : intent.getAction();
+        if (ACTION_STOP.equals(action)) {
             stopSelf();
             return START_NOT_STICKY;
+        }
+        if (ACTION_PAUSE_OPTION_LOOKUP.equals(action)) {
+            pausedForOptionLookup = true;
+            awaitingResult = false;
+            cancelPendingChecks();
+            handler.removeCallbacks(resultTimeout);
+            if (webView != null) webView.stopLoading();
+            return START_STICKY;
+        }
+        if (ACTION_RESUME_OPTION_LOOKUP.equals(action)) {
+            pausedForOptionLookup = false;
+            if (ProductStore.enabledCount(this) <= 0) {
+                stopSelf();
+                return START_NOT_STICKY;
+            }
+            if (!bootstrapReady || webView == null) {
+                ensureWebView();
+                bootstrapSession();
+            } else {
+                long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+                scheduleNextCheck(Math.max(MIN_PRODUCT_SPACING_MS, backoff));
+            }
+            return START_STICKY;
         }
 
         stopping = false;
@@ -176,14 +207,17 @@ public class MonitorService extends Service {
                 }
                 if (!SiteSupport.isProductPage(siteType, url)) return;
 
+                if (pausedForOptionLookup) return;
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
                     currentIndex = 0;
-                    handler.postDelayed(MonitorService.this::checkCurrentProduct, 500L);
+                    scheduleNextCheck(500L);
                 } else if (mode == Mode.DISCOVERY) {
-                    handler.postDelayed(MonitorService.this::runDiscoveryCheck, 700L);
+                    handler.removeCallbacks(discoveryCheck);
+                    handler.postDelayed(discoveryCheck, 700L);
                 } else if (mode == Mode.SWAGKEY) {
-                    handler.postDelayed(MonitorService.this::runSwagkeyCheck, 1200L);
+                    handler.removeCallbacks(swagkeyCheck);
+                    handler.postDelayed(swagkeyCheck, 1200L);
                 }
             }
         });
@@ -203,7 +237,7 @@ public class MonitorService extends Service {
     }
 
     private void checkCurrentProduct() {
-        if (stopping || !bootstrapReady || awaitingResult) return;
+        if (stopping || pausedForOptionLookup || !bootstrapReady || awaitingResult) return;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
@@ -221,7 +255,7 @@ public class MonitorService extends Service {
                 networkWaiting = true;
                 DiagnosticLog.add(this, "NETWORK_WAIT", currentProduct, "네트워크 연결 없음");
             }
-            handler.postDelayed(this::checkCurrentProduct, NETWORK_RETRY_MS);
+            scheduleNextCheck(NETWORK_RETRY_MS);
             return;
         }
         networkWaiting = false;
@@ -260,12 +294,13 @@ public class MonitorService extends Service {
 
         mode = Mode.DIRECT;
         awaitingResult = true;
+        handler.removeCallbacks(resultTimeout);
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
         webView.evaluateJavascript(InventoryApiScript.build(currentProduct), ignored -> {});
     }
 
     private void runDiscoveryCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || pausedForOptionLookup || mode != Mode.DISCOVERY || awaitingResult || currentProduct == null) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
@@ -278,12 +313,13 @@ public class MonitorService extends Service {
             return;
         }
         awaitingResult = true;
+        handler.removeCallbacks(resultTimeout);
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
         webView.evaluateJavascript(InventoryScript.build(currentProduct), ignored -> {});
     }
 
     private void runSwagkeyCheck() {
-        if (stopping || awaitingResult || currentProduct == null) return;
+        if (stopping || pausedForOptionLookup || mode != Mode.SWAGKEY || awaitingResult || currentProduct == null) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
@@ -296,6 +332,7 @@ public class MonitorService extends Service {
             return;
         }
         awaitingResult = true;
+        handler.removeCallbacks(resultTimeout);
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
         webView.evaluateJavascript(SwagkeyScript.SCRIPT, ignored -> {});
     }
@@ -463,10 +500,17 @@ public class MonitorService extends Service {
     }
 
     private void applyRateLimitBackoff() {
+        long now = System.currentTimeMillis();
+        if (backoffUntil > now) {
+            long seconds = Math.max(1L, (backoffUntil - now + 999L) / 1000L);
+            setStatus("요청 제한 · " + seconds + "초 후 재시도");
+            updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
+            return;
+        }
         rateLimitBackoffMs = rateLimitBackoffMs <= 0
             ? INITIAL_RATE_LIMIT_BACKOFF_MS
             : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, rateLimitBackoffMs * 2L);
-        backoffUntil = System.currentTimeMillis() + rateLimitBackoffMs;
+        backoffUntil = now + rateLimitBackoffMs;
         long seconds = Math.max(1L, rateLimitBackoffMs / 1000L);
         markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
         updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
@@ -497,7 +541,8 @@ public class MonitorService extends Service {
         bootstrapReady = false;
         currentIndex = 0;
         currentProduct = null;
-        handler.postDelayed(this::bootstrapSession, 500L);
+        handler.removeCallbacks(bootstrapTask);
+        handler.postDelayed(bootstrapTask, 500L);
     }
 
     private void markCurrentFailure(String message) {
@@ -523,7 +568,7 @@ public class MonitorService extends Service {
     }
 
     private void scheduleNextProduct() {
-        if (stopping) return;
+        if (stopping || pausedForOptionLookup) return;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
@@ -536,7 +581,24 @@ public class MonitorService extends Service {
             MonitorPrefs.intervalSeconds(this) * 1000L / Math.max(1, products.length())
         );
         long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
-        handler.postDelayed(this::checkCurrentProduct, Math.max(spacing, backoff));
+        cancelModeCallbacks();
+        scheduleNextCheck(Math.max(spacing, backoff));
+    }
+
+    private void scheduleNextCheck(long delayMs) {
+        handler.removeCallbacks(nextCheck);
+        handler.postDelayed(nextCheck, Math.max(0L, delayMs));
+    }
+
+    private void cancelModeCallbacks() {
+        handler.removeCallbacks(discoveryCheck);
+        handler.removeCallbacks(swagkeyCheck);
+        handler.removeCallbacks(bootstrapTask);
+    }
+
+    private void cancelPendingChecks() {
+        handler.removeCallbacks(nextCheck);
+        cancelModeCallbacks();
     }
 
     private String optionLabel(JSONObject option) {
