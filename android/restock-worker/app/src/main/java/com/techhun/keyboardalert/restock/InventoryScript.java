@@ -169,6 +169,19 @@ final class InventoryScript {
                     return;
                   }
 
+                  if (current.status === 204 || current.status === 429) {
+                    attempts.push({ url: apiUrl, status: current.status, rateLimited: true });
+                    send({
+                      ok: false,
+                      error: 'RATE_LIMITED',
+                      status: current.status,
+                      pageUrl: location.href,
+                      apiUrl,
+                      attempts
+                    });
+                    return;
+                  }
+
                   let currentData = null;
                   let validPayload = false;
                   if (current.ok) {
