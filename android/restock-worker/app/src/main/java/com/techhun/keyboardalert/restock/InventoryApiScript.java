@@ -8,9 +8,9 @@ final class InventoryApiScript {
     private InventoryApiScript() {}
 
     static String build(JSONObject product) {
-        String productId = JSONObject.quote(product.optString("id", ""));
-        String apiUrl = JSONObject.quote(product.optString("apiUrl", ""));
-        String fallbackTitle = JSONObject.quote(product.optString("title", "SmartStore 상품"));
+        String productId = JSONObject.quote(product == null ? "" : product.optString("id", ""));
+        String apiUrl = JSONObject.quote(product == null ? "" : product.optString("apiUrl", ""));
+        String fallbackTitle = JSONObject.quote(product == null ? "SmartStore 상품" : product.optString("title", "SmartStore 상품"));
         return String.format(Locale.ROOT, """
             (() => {
               const send = (value) => window.RestockBridge.onResult(JSON.stringify(value));
@@ -18,28 +18,60 @@ final class InventoryApiScript {
                 const productId = %s;
                 const configuredApiUrl = %s;
                 const fallbackTitle = %s;
+
+                function normalizeApiUrl(value) {
+                  if (!value) return null;
+                  try {
+                    const parsed = new URL(value, location.href);
+                    const host = parsed.hostname.toLowerCase();
+                    if (host !== 'smartstore.naver.com' && !host.endsWith('.smartstore.naver.com')) return null;
+                    return location.origin + parsed.pathname + parsed.search;
+                  } catch (ignored) {
+                    return null;
+                  }
+                }
+
+                function isAuthResponse(response, text) {
+                  if (!response) return false;
+                  if (response.status === 401 || response.status === 403) return true;
+                  try {
+                    const finalUrl = new URL(response.url || location.href, location.href);
+                    const host = finalUrl.hostname.toLowerCase();
+                    if (host === 'nid.naver.com' || finalUrl.pathname.includes('nidlogin.login')) return true;
+                  } catch (ignored) {}
+                  const contentType = (response.headers.get('content-type') || '').toLowerCase();
+                  if (!contentType.includes('text/html')) return false;
+                  const preview = String(text || '').slice(0, 1500).toLowerCase();
+                  return preview.includes('nidlogin') || preview.includes('naver 로그인');
+                }
+
                 try {
-                  if (!configuredApiUrl) {
+                  const apiUrl = normalizeApiUrl(configuredApiUrl);
+                  if (!apiUrl) {
                     send({ ok: false, error: 'API_URL_MISSING', productId });
                     return;
                   }
-                  const parsed = new URL(configuredApiUrl, location.href);
-                  const apiUrl = location.origin + parsed.pathname + parsed.search;
+
                   const response = await fetch(apiUrl, {
                     credentials: 'include',
                     headers: { accept: 'application/json, text/plain, */*' }
                   });
                   const text = await response.text();
+
+                  if (isAuthResponse(response, text)) {
+                    send({ ok: false, error: 'AUTH_REQUIRED', productId, status: response.status, apiUrl });
+                    return;
+                  }
+
                   let data = null;
                   try { data = JSON.parse(text); } catch (ignored) {}
                   if (!response.ok || !data) {
                     send({
                       ok: false,
-                      error: 'PRODUCT_API_FAILED',
+                      error: response.ok ? 'PRODUCT_DATA_NOT_FOUND' : 'PRODUCT_API_FAILED',
                       productId,
                       status: response.status,
-                      apiUrl,
-                      preview: text.replace(/\s+/g, ' ').slice(0, 180)
+                      apiUrl
                     });
                     return;
                   }
