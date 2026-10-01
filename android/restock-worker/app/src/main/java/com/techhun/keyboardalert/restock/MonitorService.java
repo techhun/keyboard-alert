@@ -309,11 +309,6 @@ public class MonitorService extends Service {
         }
 
         String siteType = currentSiteType();
-        long remainingBackoff = backoffUntil - System.currentTimeMillis();
-        if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && remainingBackoff > 0L) {
-            scheduleNextProduct();
-            return;
-        }
         if (!SiteSupport.isSupportedProductUrl(currentProduct.optString("url", ""))) {
             markCurrentFailure("지원하지 않는 상품 주소");
             scheduleNextProduct();
@@ -353,7 +348,11 @@ public class MonitorService extends Service {
         awaitingResult = true;
         handler.removeCallbacks(resultTimeout);
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        webView.evaluateJavascript(InventoryScript.build(currentProduct), ignored -> {});
+        boolean allowApiFallback = backoffUntil <= System.currentTimeMillis();
+        webView.evaluateJavascript(
+            InventoryScript.build(currentProduct, allowApiFallback),
+            ignored -> {}
+        );
     }
 
     private void runSwagkeyCheck() {
@@ -421,7 +420,10 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if ("RATE_LIMITED".equals(error) || status == 204 || status == 429) {
+                if ("RATE_LIMITED".equals(error)
+                    || "API_DEFERRED".equals(error)
+                    || status == 204
+                    || status == 429) {
                     applyRateLimitBackoff(status);
                     scheduleNextProduct();
                     return;

@@ -10,6 +10,10 @@ final class InventoryScript {
     static final String SCRIPT = build(null);
 
     static String build(JSONObject seedProduct) {
+        return build(seedProduct, true);
+    }
+
+    static String build(JSONObject seedProduct, boolean allowApiFallback) {
         String configuredApiUrl = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("apiUrl", ""));
         String configuredChannelUid = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("channelUid", ""));
         String configuredProductNo = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("productNo", ""));
@@ -20,6 +24,7 @@ final class InventoryScript {
             const configuredApiUrl = %s;
             const configuredChannelUid = %s;
             const configuredProductNo = %s;
+            const allowApiFallback = %s;
 
             function safeNaverApiUrl(value) {
               if (!value) return null;
@@ -276,6 +281,11 @@ final class InventoryScript {
                 return;
               }
 
+              if (!allowApiFallback) {
+                send({ ok: false, error: 'API_DEFERRED', pageUrl: location.href, title: document.title });
+                return;
+              }
+
               const candidates = [];
               if (observedApiUrl) candidates.push(observedApiUrl);
               if (channelUid) {
@@ -325,6 +335,6 @@ final class InventoryScript {
           })();
           return 'STARTED';
         })()
-        """, configuredApiUrl, configuredChannelUid, configuredProductNo);
+        """, configuredApiUrl, configuredChannelUid, configuredProductNo, allowApiFallback);
     }
 }

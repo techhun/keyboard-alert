@@ -30,6 +30,8 @@ public class InventoryScriptTest {
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("RATE_LIMITED"));
         assertTrue(script.contains("response.status === 204 || response.status === 429"));
+        assertTrue(InventoryScript.build(product, false).contains("const allowApiFallback = false;"));
+        assertTrue(script.contains("API_DEFERRED"));
     }
 
     @Test
