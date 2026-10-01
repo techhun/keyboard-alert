@@ -108,19 +108,21 @@ public class MonitorService extends Service {
                 stopSelf();
                 return START_NOT_STICKY;
             }
-            if (!bootstrapReady || webView == null) {
-                ensureWebView();
-                bootstrapSession();
-            } else {
-                long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
-                scheduleNextCheck(Math.max(MIN_PRODUCT_SPACING_MS, backoff));
+            if (webView != null) {
+                if (!bootstrapReady) {
+                    bootstrapSession();
+                } else {
+                    long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+                    scheduleNextCheck(Math.max(MIN_PRODUCT_SPACING_MS, backoff));
+                }
+                return START_STICKY;
             }
-            return START_STICKY;
+            // The service process may have been recreated while a manual lookup
+            // was open. Fall through to the normal foreground startup path.
         }
 
         stopping = false;
         products = ProductStore.enabledList(this);
-        DiagnosticLog.add(this, "SERVICE_START", null, products.length() + "개 알림");
         if (products.length() == 0) {
             MonitorPrefs.setRunning(this, false);
             stopSelf();
@@ -133,6 +135,15 @@ public class MonitorService extends Service {
             return START_NOT_STICKY;
         }
 
+        // A start request can arrive repeatedly when the UI resumes or a product
+        // is toggled. If this process already owns the monitor WebView, refresh
+        // lightweight state only and keep the single existing scheduler chain.
+        if (webView != null) {
+            updateOngoingNotification(products.length() + "개 알림 켜짐");
+            return START_STICKY;
+        }
+
+        DiagnosticLog.add(this, "SERVICE_START", null, products.length() + "개 알림");
         MonitorPrefs.setRunning(this, true);
         getSystemService(NotificationManager.class).cancel(NOTIFICATION_STATUS);
         acquireWakeLock();
