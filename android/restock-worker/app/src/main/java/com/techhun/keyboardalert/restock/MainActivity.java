@@ -621,7 +621,8 @@ public class MainActivity extends Activity {
         if (monitorPausedForOptionLookup) return true;
         if (ProductStore.enabledCount(this) <= 0 || !isRunning()) return false;
         monitorPausedForOptionLookup = true;
-        startService(new Intent(this, MonitorService.class).setAction(MonitorService.ACTION_STOP));
+        startService(new Intent(this, MonitorService.class)
+            .setAction(MonitorService.ACTION_PAUSE_OPTION_LOOKUP));
         return true;
     }
 
@@ -629,7 +630,8 @@ public class MainActivity extends Activity {
         if (!monitorPausedForOptionLookup) return;
         monitorPausedForOptionLookup = false;
         if (ProductStore.enabledCount(this) > 0) {
-            startForegroundService(new Intent(this, MonitorService.class));
+            startService(new Intent(this, MonitorService.class)
+                .setAction(MonitorService.ACTION_RESUME_OPTION_LOOKUP));
         }
     }
 
@@ -1347,7 +1349,9 @@ public class MainActivity extends Activity {
             MonitorPrefs.setRunning(this, false);
             return;
         }
-        startForegroundService(new Intent(this, MonitorService.class));
+        if (!isRunning()) {
+            startForegroundService(new Intent(this, MonitorService.class));
+        }
     }
 
     private void confirmDelete(JSONObject product) {
@@ -1608,10 +1612,11 @@ public class MainActivity extends Activity {
 
     private void resumeMonitorIfNeeded() {
         if (ProductStore.enabledCount(this) > 0
-            && NotificationAccess.isAllowed(this)) {
+            && NotificationAccess.isAllowed(this)
+            && !isRunning()) {
             // SWAGKEY monitoring does not require a Naver session. SmartStore
             // session failures are handled per site inside MonitorService.
-            // Defer startup until the screen transition has settled.
+            // Avoid restarting an already-running monitor on every activity resume.
             startForegroundService(new Intent(this, MonitorService.class));
         }
     }
