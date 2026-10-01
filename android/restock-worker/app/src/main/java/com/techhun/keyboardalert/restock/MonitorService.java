@@ -141,7 +141,7 @@ public class MonitorService extends Service {
             .replace("; wv)", ")")
             .replace("Version/4.0 ", ""));
         CookieManager.getInstance().setAcceptCookie(true);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
 
         webView.addJavascriptInterface(new RestockBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {
@@ -346,7 +346,7 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (status == 429) {
+                if ("RATE_LIMITED".equals(error) || status == 204 || status == 429) {
                     applyRateLimitBackoff();
                     scheduleNextProduct();
                     return;
@@ -356,7 +356,6 @@ public class MonitorService extends Service {
                     "PRODUCT_API_FAILED".equals(error)
                         || "PRODUCT_DATA_NOT_FOUND".equals(error)
                         || "API_URL_MISSING".equals(error)
-                        || status == 204
                         || status == 404
                 )) {
                     currentProduct.put("apiUrl", "");
