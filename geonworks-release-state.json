@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T06:30:47.361Z",
+  "updatedAt": "2026-10-01T08:30:48.118Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -57,10 +57,22 @@
       "fixed": "확정 / Fixed",
       "start": "2026-09-21",
       "end": "2026-10-18"
+    },
+    {
+      "product": "DCS NORD",
+      "manufacturer": "Signature Plastics",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-01",
+      "end": "2026-11-01"
     }
   ],
   "sentChanges": {
     "dd99b9f77c081a5c72228acc": "2026-09-27T23:50:37.557Z",
-    "08fd0ca0e6dbc18eb22260f5": "2026-09-27T23:50:37.755Z"
+    "08fd0ca0e6dbc18eb22260f5": "2026-09-27T23:50:37.755Z",
+    "e35a7ceea8c505bac73c8abd": "2026-10-01T08:30:48.118Z"
   }
 }
