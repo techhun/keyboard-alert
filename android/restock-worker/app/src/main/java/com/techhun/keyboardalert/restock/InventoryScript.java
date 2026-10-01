@@ -1,15 +1,55 @@
 package com.techhun.keyboardalert.restock;
 
+import org.json.JSONObject;
+
+import java.util.Locale;
+
 final class InventoryScript {
     private InventoryScript() {}
 
-    static final String SCRIPT = """
+    static final String SCRIPT = build(null);
+
+    static String build(JSONObject seedProduct) {
+        String configuredApiUrl = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("apiUrl", ""));
+        String configuredChannelUid = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("channelUid", ""));
+        String configuredProductNo = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("productNo", ""));
+        return String.format(Locale.ROOT, """
         (() => {
           const send = (value) => window.RestockBridge.onResult(JSON.stringify(value));
           (async () => {
+            const configuredApiUrl = %s;
+            const configuredChannelUid = %s;
+            const configuredProductNo = %s;
+
+            function safeNaverApiUrl(value) {
+              if (!value) return null;
+              try {
+                const parsed = new URL(value, location.href);
+                const host = parsed.hostname.toLowerCase();
+                if (host !== 'smartstore.naver.com' && !host.endsWith('.smartstore.naver.com')) return null;
+                return parsed.toString();
+              } catch (ignored) {
+                return null;
+              }
+            }
+
+            function isAuthResponse(response, text) {
+              if (!response) return false;
+              if (response.status === 401 || response.status === 403) return true;
+              try {
+                const finalUrl = new URL(response.url || location.href, location.href);
+                const host = finalUrl.hostname.toLowerCase();
+                if (host === 'nid.naver.com' || finalUrl.pathname.includes('nidlogin.login')) return true;
+              } catch (ignored) {}
+              const contentType = (response.headers.get('content-type') || '').toLowerCase();
+              if (!contentType.includes('text/html')) return false;
+              const preview = String(text || '').slice(0, 1500).toLowerCase();
+              return preview.includes('nidlogin') || preview.includes('naver 로그인');
+            }
+
             try {
               const productMatch = location.pathname.match(/\\/products\\/(\\d+)/);
-              const productNo = productMatch ? productMatch[1] : null;
+              const productNo = productMatch ? productMatch[1] : (configuredProductNo || null);
               if (!productNo) {
                 send({ ok: false, error: 'PRODUCT_NO_NOT_FOUND', pageUrl: location.href, title: document.title });
                 return;
@@ -33,6 +73,17 @@ final class InventoryScript {
                 return null;
               }
 
+              function findChannelUidInHtml() {
+                const html = document.documentElement?.innerHTML || '';
+                const matches = html.matchAll(/channelUid[^A-Za-z0-9_-]{0,40}([A-Za-z0-9_-]{8,80})/g);
+                for (const match of matches) {
+                  const value = match[1];
+                  if (!value || value === 'broadcastAuthority' || value === 'undefined') continue;
+                  return value;
+                }
+                return null;
+              }
+
               function looksLikeProductPayload(data) {
                 if (!data || typeof data !== 'object' || Array.isArray(data)) return false;
                 const product = data.originProduct && typeof data.originProduct === 'object' ? data.originProduct : data;
@@ -48,13 +99,16 @@ final class InventoryScript {
                 );
               }
 
-              let channelUid = null;
-              let observedApiUrl = null;
+              let channelUid = configuredChannelUid || null;
+              let observedApiUrl = safeNaverApiUrl(configuredApiUrl);
               const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__].filter(Boolean);
-              for (const root of roots) {
-                channelUid = findChannelUid(root);
-                if (channelUid) break;
+              if (!channelUid) {
+                for (const root of roots) {
+                  channelUid = findChannelUid(root);
+                  if (channelUid) break;
+                }
               }
+              if (!channelUid) channelUid = findChannelUidInHtml();
 
               const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
               for (const resourceUrl of resources) {
@@ -71,17 +125,19 @@ final class InventoryScript {
                 } catch (ignored) {}
               }
 
-              if (!channelUid) {
+              const candidates = [];
+              if (observedApiUrl) candidates.push(observedApiUrl);
+              if (channelUid) {
+                const encodedUid = encodeURIComponent(channelUid);
+                candidates.push(`${location.origin}/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
+                candidates.push(`https://smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
+                candidates.push(`https://m.smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
+              }
+
+              if (!candidates.length) {
                 send({ ok: false, error: 'CHANNEL_UID_NOT_FOUND', pageUrl: location.href, title: document.title });
                 return;
               }
-
-              const encodedUid = encodeURIComponent(channelUid);
-              const candidates = [];
-              if (observedApiUrl) candidates.push(observedApiUrl);
-              candidates.push(`${location.origin}/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
-              candidates.push(`https://smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
-              candidates.push(`https://m.smartstore.naver.com/i/v2/channels/${encodedUid}/products/${productNo}?withWindow=false`);
 
               let response = null;
               let text = '';
@@ -91,11 +147,28 @@ final class InventoryScript {
 
               for (const apiUrl of [...new Set(candidates)]) {
                 try {
-                  const current = await fetch(apiUrl, {
+                  const parsed = new URL(apiUrl, location.href);
+                  const requestUrl = parsed.origin === location.origin
+                    ? parsed.pathname + parsed.search
+                    : apiUrl;
+                  const current = await fetch(requestUrl, {
                     credentials: 'include',
                     headers: { accept: 'application/json, text/plain, */*' }
                   });
                   const currentText = await current.text();
+
+                  if (isAuthResponse(current, currentText)) {
+                    send({
+                      ok: false,
+                      error: 'AUTH_REQUIRED',
+                      status: current.status,
+                      pageUrl: location.href,
+                      apiUrl,
+                      attempts
+                    });
+                    return;
+                  }
+
                   let currentData = null;
                   let validPayload = false;
                   if (current.ok) {
@@ -131,8 +204,7 @@ final class InventoryScript {
                   status: response ? response.status : null,
                   pageUrl: location.href,
                   apiUrl: usedApiUrl,
-                  attempts,
-                  preview: text.replace(/\\s+/g, ' ').slice(0, 300)
+                  attempts
                 });
                 return;
               }
@@ -177,7 +249,7 @@ final class InventoryScript {
                 pageUrl: location.href,
                 apiUrl: usedApiUrl,
                 title: product?.name || data?.smartstoreChannelProduct?.channelProductName || document.title,
-                channelUid,
+                channelUid: channelUid || '',
                 id: product?.id ?? data?.id ?? null,
                 productNo: data?.productNo ?? productNo,
                 statusType: product?.statusType || data?.statusType || data?.productStatusType || null,
@@ -192,5 +264,6 @@ final class InventoryScript {
           })();
           return 'STARTED';
         })()
-        """;
+        """, configuredApiUrl, configuredChannelUid, configuredProductNo);
+    }
 }

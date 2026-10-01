@@ -110,6 +110,8 @@ public class MainActivity extends Activity {
     private boolean autoInspect;
     private boolean loginLaunching;
     private boolean optionLoadInProgress;
+    private JSONObject pendingLookupProduct;
+    private boolean directLookupAttempt;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -239,7 +241,6 @@ public class MainActivity extends Activity {
 
         webView = new WebView(this);
         configureWebView(webView);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false);
         webView.setVisibility(View.INVISIBLE);
         webView.addJavascriptInterface(new InventoryBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {
@@ -449,14 +450,20 @@ public class MainActivity extends Activity {
         }
         if (optionFlowBusy()) return;
 
+        JSONObject existing = id == null
+            ? ProductStore.find(this, ProductStore.idFromUrl(url))
+            : ProductStore.find(this, id);
+
         optionLoadInProgress = true;
         pendingUrl = url;
         editingProductId = id;
+        pendingLookupProduct = existing;
+        directLookupAttempt = false;
         latestOptions = new JSONArray();
-        latestTitle = "";
-        latestApiUrl = "";
-        latestChannelUid = "";
-        latestProductNo = "";
+        latestTitle = existing == null ? "" : existing.optString("title", "");
+        latestApiUrl = existing == null ? "" : existing.optString("apiUrl", "");
+        latestChannelUid = existing == null ? "" : existing.optString("channelUid", "");
+        latestProductNo = existing == null ? "" : existing.optString("productNo", "");
         autoInspect = true;
         webView.stopLoading();
         webView.loadUrl(url);
@@ -472,10 +479,29 @@ public class MainActivity extends Activity {
             toast("상품 페이지를 확인하지 못했어요.");
             return;
         }
-        String script = SiteSupport.SWAGKEY_IMWEB.equals(siteType)
-            ? SwagkeyScript.SCRIPT
-            : InventoryScript.SCRIPT;
-        webView.evaluateJavascript(script, ignored -> {});
+
+        if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)) {
+            directLookupAttempt = false;
+            webView.evaluateJavascript(SwagkeyScript.SCRIPT, ignored -> {});
+            return;
+        }
+
+        String savedApiUrl = pendingLookupProduct == null
+            ? ""
+            : pendingLookupProduct.optString("apiUrl", "");
+        if (!savedApiUrl.isBlank()) {
+            directLookupAttempt = true;
+            webView.evaluateJavascript(InventoryApiScript.build(pendingLookupProduct), ignored -> {});
+            return;
+        }
+
+        runSmartStoreDiscovery();
+    }
+
+    private void runSmartStoreDiscovery() {
+        if (!optionLoadInProgress) return;
+        directLookupAttempt = false;
+        webView.evaluateJavascript(InventoryScript.build(pendingLookupProduct), ignored -> {});
     }
 
     private class InventoryBridge {
@@ -490,12 +516,29 @@ public class MainActivity extends Activity {
             JSONObject result = new JSONObject(json);
             if (!result.optBoolean("ok")) {
                 int status = result.optInt("status", 0);
+                String error = result.optString("error", "UNKNOWN");
                 String siteType = SiteSupport.detect(pendingUrl);
                 boolean authFailure = SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                    && (status == 401 || status == 403 || !hasNaverSession());
+                    && ("AUTH_REQUIRED".equals(error)
+                        || status == 401
+                        || status == 403
+                        || SiteSupport.isNaverLoginUrl(webView.getUrl())
+                        || !hasNaverSession());
                 if (authFailure && !pendingUrl.isBlank()) {
+                    DiagnosticLog.add(this, "OPTION_LOGIN_REQUIRED", pendingLookupProduct, error);
+                    directLookupAttempt = false;
                     launchLogin(pendingUrl);
+                } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+                    && directLookupAttempt
+                    && ("PRODUCT_API_FAILED".equals(error)
+                        || "PRODUCT_DATA_NOT_FOUND".equals(error)
+                        || "API_URL_MISSING".equals(error)
+                        || status == 204
+                        || status == 404)) {
+                    DiagnosticLog.add(this, "OPTION_CHECK_RETRY", pendingLookupProduct, error);
+                    runSmartStoreDiscovery();
                 } else {
+                    DiagnosticLog.add(this, "OPTION_CHECK_FAIL", pendingLookupProduct, error + (status > 0 ? " · HTTP " + status : ""));
                     optionLoadInProgress = false;
                     clearPendingEdit();
                     toast("옵션 조회에 실패했어요.");
@@ -506,9 +549,12 @@ public class MainActivity extends Activity {
             String siteType = SiteSupport.detect(pendingUrl);
             latestTitle = result.optString("title", SiteSupport.label(siteType) + " 상품");
             latestOptions = result.optJSONArray("options");
-            latestApiUrl = result.optString("apiUrl", "");
-            latestChannelUid = result.optString("channelUid", "");
-            latestProductNo = result.optString("productNo", "");
+            String apiUrl = result.optString("apiUrl", "");
+            String channelUid = result.optString("channelUid", "");
+            String productNo = result.optString("productNo", "");
+            if (!apiUrl.isBlank()) latestApiUrl = apiUrl;
+            if (!channelUid.isBlank()) latestChannelUid = channelUid;
+            if (!productNo.isBlank()) latestProductNo = productNo;
             if (latestOptions == null || latestOptions.length() == 0) {
                 optionLoadInProgress = false;
                 clearPendingEdit();
@@ -873,6 +919,8 @@ public class MainActivity extends Activity {
     private void clearPendingEdit() {
         editingProductId = null;
         pendingUrl = "";
+        pendingLookupProduct = null;
+        directLookupAttempt = false;
         latestOptions = new JSONArray();
         latestTitle = "";
         latestApiUrl = "";
@@ -1300,8 +1348,17 @@ public class MainActivity extends Activity {
         }
 
         if (!pendingUrl.isBlank() && optionLoadInProgress) {
-            autoInspect = true;
-            webView.loadUrl(pendingUrl);
+            CookieManager.getInstance().flush();
+            directLookupAttempt = false;
+            webView.stopLoading();
+            webView.clearCache(true);
+            webView.clearHistory();
+            webView.loadUrl("about:blank");
+            handler.postDelayed(() -> {
+                if (pendingUrl.isBlank() || !optionLoadInProgress) return;
+                autoInspect = true;
+                webView.loadUrl(pendingUrl);
+            }, 120L);
         }
     }
 
