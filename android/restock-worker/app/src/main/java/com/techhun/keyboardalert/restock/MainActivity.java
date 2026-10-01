@@ -524,7 +524,12 @@ public class MainActivity extends Activity {
                         || status == 403
                         || SiteSupport.isNaverLoginUrl(webView.getUrl())
                         || !hasNaverSession());
-                if (authFailure && !pendingUrl.isBlank()) {
+                if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && (status == 204 || status == 429)) {
+                    DiagnosticLog.add(this, "OPTION_RATE_LIMIT", pendingLookupProduct, "HTTP " + status);
+                    optionLoadInProgress = false;
+                    clearPendingEdit();
+                    toast("SmartStore 요청이 제한됐어요. 잠시 후 다시 시도해주세요.");
+                } else if (authFailure && !pendingUrl.isBlank()) {
                     DiagnosticLog.add(this, "OPTION_LOGIN_REQUIRED", pendingLookupProduct, error);
                     directLookupAttempt = false;
                     launchLogin(pendingUrl);
@@ -533,7 +538,6 @@ public class MainActivity extends Activity {
                     && ("PRODUCT_API_FAILED".equals(error)
                         || "PRODUCT_DATA_NOT_FOUND".equals(error)
                         || "API_URL_MISSING".equals(error)
-                        || status == 204
                         || status == 404)) {
                     DiagnosticLog.add(this, "OPTION_CHECK_RETRY", pendingLookupProduct, error);
                     runSmartStoreDiscovery();
