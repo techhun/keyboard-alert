@@ -1349,9 +1349,7 @@ public class MainActivity extends Activity {
             MonitorPrefs.setRunning(this, false);
             return;
         }
-        if (!isRunning()) {
-            startForegroundService(new Intent(this, MonitorService.class));
-        }
+        startForegroundService(new Intent(this, MonitorService.class));
     }
 
     private void confirmDelete(JSONObject product) {
@@ -1612,11 +1610,10 @@ public class MainActivity extends Activity {
 
     private void resumeMonitorIfNeeded() {
         if (ProductStore.enabledCount(this) > 0
-            && NotificationAccess.isAllowed(this)
-            && !isRunning()) {
-            // SWAGKEY monitoring does not require a Naver session. SmartStore
-            // session failures are handled per site inside MonitorService.
-            // Avoid restarting an already-running monitor on every activity resume.
+            && NotificationAccess.isAllowed(this)) {
+            // Always ask the service to ensure monitoring is alive. MonitorService
+            // de-duplicates repeated starts within the same process, while a stale
+            // persisted running flag cannot block recovery after process death/update.
             startForegroundService(new Intent(this, MonitorService.class));
         }
     }
