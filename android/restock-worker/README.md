@@ -16,7 +16,9 @@
 - 여러 상품 감시 시 요청 간 최소 5초 간격 보장
 - 여러 상품 순회 중 현재 상품과 WebView 페이지/응답의 상품번호를 검증해 지연 응답이 다른 상품 상태를 덮어쓰지 않도록 보호
 - 일시적인 페이지 상태/파싱/5xx 오류는 제한적으로 재시도
-- SmartStore HTTP 204는 해당 상품 페이지를 1회만 재로드해 PAGE_CAPTURE/페이지 상태를 다시 확인하고, 다시 204면 해당 상품만 실패 처리
+- 백그라운드 SmartStore 조회는 PAGE_CAPTURE/PAGE_STATE를 두 번 먼저 확인한 뒤에만 내부 상품 API fallback을 1회 사용
+- HTTP 204가 발생하면 상품 페이지를 1회 재로드하고 PAGE_CAPTURE/PAGE_STATE만 다시 확인하며, 복구 회차에서는 내부 API를 재호출하지 않음
+- 백그라운드 WebView는 수동 옵션 조회와 같은 기본 HTTP cache 정책을 사용해 불필요한 cold load를 줄임
 - HTTP 429는 기존 전역 요청제한 backoff 정책 유지
 - 네트워크 끊김 자동 대기 및 복구
 - HTTP 429 요청 제한 응답 시 지수 백오프
@@ -161,4 +163,4 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 
 ## 버전
 
-현재 앱 버전: **0.14.29**
+현재 앱 버전: **0.14.30**
