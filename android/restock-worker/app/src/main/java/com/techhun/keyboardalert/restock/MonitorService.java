@@ -52,6 +52,9 @@ public class MonitorService extends Service {
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 30 * 60_000L;
     private static final int MAX_TRANSIENT_RETRIES = 2;
     private static final long TRANSIENT_RETRY_DELAY_MS = 5_000L;
+    private static final long SMARTSTORE_INITIAL_SETTLE_MS = 1_200L;
+    private static final long SMARTSTORE_PAGE_RECHECK_MS = 1_500L;
+    private static final int SMARTSTORE_PAGE_PROBES_BEFORE_API = 2;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
     private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
@@ -114,6 +117,8 @@ public class MonitorService extends Service {
     private boolean pageStateLogged;
     private int transientRetryCount;
     private int noContentReloadCount;
+    private int smartStorePageProbeCount;
+    private boolean noContentRecovery;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping || pausedForOptionLookup) return;
@@ -222,7 +227,12 @@ public class MonitorService extends Service {
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(false);
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        // The manual option lookup uses WebView's normal HTTP cache policy and
+        // consistently receives the page's product state. Forcing LOAD_NO_CACHE
+        // here caused every background navigation to cold-load SmartStore and
+        // increased the chance that the page had not populated product data
+        // before inventory inspection.
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) settings.setSafeBrowsingEnabled(true);
         settings.setUserAgentString(settings.getUserAgentString()
             .replace("; wv)", ")")
@@ -280,7 +290,7 @@ public class MonitorService extends Service {
                     scheduleNextCheck(500L);
                 } else if (mode == Mode.DISCOVERY) {
                     handler.removeCallbacks(discoveryCheck);
-                    handler.postDelayed(discoveryCheck, 700L);
+                    handler.postDelayed(discoveryCheck, SMARTSTORE_INITIAL_SETTLE_MS);
                 } else if (mode == Mode.SWAGKEY) {
                     handler.removeCallbacks(swagkeyCheck);
                     handler.postDelayed(swagkeyCheck, 1200L);
@@ -378,7 +388,16 @@ public class MonitorService extends Service {
         awaitingResult = true;
         handler.removeCallbacks(resultTimeout);
         handler.postDelayed(resultTimeout, RESULT_TIMEOUT_MS);
-        boolean allowApiFallback = backoffUntil <= System.currentTimeMillis();
+
+        long remainingBackoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+        boolean allowApiFallback = allowSmartStoreApiFallback(
+            smartStorePageProbeCount,
+            noContentRecovery,
+            remainingBackoff
+        );
+        if (smartStorePageProbeCount < SMARTSTORE_PAGE_PROBES_BEFORE_API) {
+            smartStorePageProbeCount++;
+        }
         webView.evaluateJavascript(
             InventoryScript.build(currentProduct, allowApiFallback),
             ignored -> {}
@@ -465,9 +484,41 @@ public class MonitorService extends Service {
                 }
 
                 if ("API_DEFERRED".equals(error)) {
-                    // No request was sent. Respect the existing cooldown without
-                    // extending it again, otherwise the app can keep its own
-                    // SmartStore cooldown alive indefinitely.
+                    // PAGE_CAPTURE/PAGE_STATE is intentionally checked before
+                    // the internal product API. Hidden background WebViews can
+                    // finish navigation before SmartStore has populated product
+                    // data, so give the same page one more settle window first.
+                    if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                        && mode == Mode.DISCOVERY
+                        && smartStorePageProbeCount < SMARTSTORE_PAGE_PROBES_BEFORE_API) {
+                        handler.removeCallbacks(discoveryCheck);
+                        handler.postDelayed(discoveryCheck, SMARTSTORE_PAGE_RECHECK_MS);
+                        return;
+                    }
+
+                    if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                        && mode == Mode.DISCOVERY
+                        && noContentRecovery) {
+                        markCurrentFailure(
+                            "HTTP 204 후 페이지 데이터 확인 실패",
+                            "NO_CONTENT"
+                        );
+                        scheduleNextProduct();
+                        return;
+                    }
+
+                    long remainingBackoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+                    if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                        && mode == Mode.DISCOVERY
+                        && remainingBackoff <= 0L) {
+                        // Two page-only probes completed. Run one final discovery
+                        // pass with API fallback enabled.
+                        handler.removeCallbacks(discoveryCheck);
+                        handler.postDelayed(discoveryCheck, 250L);
+                        return;
+                    }
+
+                    // No request was sent because a real 429 cooldown is active.
                     scheduleNextProduct();
                     return;
                 }
@@ -476,6 +527,8 @@ public class MonitorService extends Service {
                     if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
                         && InventoryRetry.shouldReloadNoContent(error, status, noContentReloadCount)) {
                         noContentReloadCount++;
+                        noContentRecovery = true;
+                        smartStorePageProbeCount = 0;
                         DiagnosticLog.add(
                             this,
                             "NO_CONTENT_RETRY",
@@ -543,7 +596,17 @@ public class MonitorService extends Service {
                 scheduleNextProduct();
                 return;
             }
-            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
+                clearRateLimitBackoff();
+                if (noContentRecovery) {
+                    DiagnosticLog.add(
+                        this,
+                        "NO_CONTENT_RECOVERED",
+                        currentProduct,
+                        "페이지 재로드 후 " + result.optString("source", "PAGE_STATE") + "로 복구"
+                    );
+                }
+            }
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && !pageStateLogged) {
                 String source = result.optString("source", "");
                 if ("PAGE_CAPTURE".equals(source)) {
@@ -796,6 +859,8 @@ public class MonitorService extends Service {
         if (stopping || pausedForOptionLookup) return;
         transientRetryCount = 0;
         noContentReloadCount = 0;
+        smartStorePageProbeCount = 0;
+        noContentRecovery = false;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
@@ -821,6 +886,16 @@ public class MonitorService extends Service {
             SiteSupport.detect(next.optString("url", "")));
         cancelModeCallbacks();
         scheduleNextCheck(smartStoreNext ? Math.max(spacing, backoff) : spacing);
+    }
+
+    static boolean allowSmartStoreApiFallback(
+        int pageProbeCount,
+        boolean noContentRecovery,
+        long remainingBackoffMillis
+    ) {
+        return pageProbeCount >= SMARTSTORE_PAGE_PROBES_BEFORE_API
+            && !noContentRecovery
+            && remainingBackoffMillis <= 0L;
     }
 
     static long productSpacingMillis(int intervalSeconds, int productCount) {
