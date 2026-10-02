@@ -618,23 +618,58 @@ public class MonitorService extends Service {
 
         JSONObject previous = product.optJSONObject("lastAvailability");
         if (previous == null) previous = new JSONObject();
+        JSONObject previousQuantities = product.optJSONObject("lastStockQuantity");
+        if (previousQuantities == null) previousQuantities = new JSONObject();
+        JSONObject afterRestock = product.optJSONObject("lowStockAfterRestock");
+        if (afterRestock == null) afterRestock = new JSONObject();
+
         for (Map.Entry<String, String> entry : resolved.oldToNew.entrySet()) {
             String oldId = entry.getKey();
             String newId = entry.getValue();
-            if (!oldId.equals(newId) && previous.has(oldId) && !previous.has(newId)) {
+            if (oldId.equals(newId)) continue;
+            if (previous.has(oldId) && !previous.has(newId)) {
                 previous.put(newId, previous.optBoolean(oldId, false));
                 previous.remove(oldId);
+            }
+            if (previousQuantities.has(oldId) && !previousQuantities.has(newId)) {
+                previousQuantities.put(newId, previousQuantities.opt(oldId));
+                previousQuantities.remove(oldId);
+            }
+            if (afterRestock.has(oldId) && !afterRestock.has(newId)) {
+                afterRestock.put(newId, afterRestock.opt(oldId));
+                afterRestock.remove(oldId);
             }
         }
 
         JSONArray restocked = new JSONArray();
+        JSONArray lowStock = new JSONArray();
+        int threshold = MonitorPrefs.lowStockThreshold(this);
         int availableCount = 0;
+        boolean smartStore = SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType());
         for (Map.Entry<String, Boolean> entry : resolved.availability.entrySet()) {
             String id = entry.getKey();
             boolean now = entry.getValue();
             if (now) availableCount++;
-            if (previous.has(id) && !previous.optBoolean(id, false) && now) {
+            boolean isRestocked = previous.has(id) && !previous.optBoolean(id, false) && now;
+            if (isRestocked) {
                 restocked.put(resolved.labels.getOrDefault(id, id));
+            }
+
+            Integer quantity = smartStore ? resolved.quantities.get(id) : null;
+            if (quantity != null) {
+                Integer lastQuantity = previousQuantities.has(id) && !previousQuantities.isNull(id)
+                    ? previousQuantities.optInt(id) : null;
+                Integer restockQuantity = afterRestock.has(id) ? afterRestock.optInt(id) : null;
+                if (now && LowStockAlert.shouldNotify(lastQuantity, quantity, threshold,
+                    isRestocked, restockQuantity)) {
+                    lowStock.put(resolved.labels.getOrDefault(id, id) + " · " + quantity + "개 남음");
+                    afterRestock.remove(id);
+                } else if (isRestocked && quantity > 0 && quantity <= threshold) {
+                    afterRestock.put(id, quantity);
+                } else if (quantity == 0 || quantity > threshold) {
+                    afterRestock.remove(id);
+                }
+                previousQuantities.put(id, quantity);
             }
             previous.put(id, now);
         }
@@ -648,6 +683,8 @@ public class MonitorService extends Service {
 
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
+        product.put("lastStockQuantity", previousQuantities);
+        product.put("lowStockAfterRestock", afterRestock);
         product.put("lastStatus", inventoryStatusText(availableCount, resolved.requestedCount, time));
         product.put("lastCheck", System.currentTimeMillis());
 
@@ -662,6 +699,9 @@ public class MonitorService extends Service {
         if (restocked.length() > 0) {
             DiagnosticLog.recordRestock(this, product, restocked.toString());
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
+        }
+        if (lowStock.length() > 0) {
+            notifyLowStock(product.optString("title", "상품"), product.optString("url", ""), lowStock);
         }
         return true;
     }
@@ -847,7 +887,7 @@ public class MonitorService extends Service {
 
         NotificationChannel alert = new NotificationChannel(
             CHANNEL_ALERT,
-            "재입고 알림",
+            "재고 알림",
             NotificationManager.IMPORTANCE_HIGH
         );
         alert.enableVibration(true);
@@ -932,6 +972,40 @@ public class MonitorService extends Service {
             .build();
         getSystemService(NotificationManager.class).notify(
             42000 + Math.abs((title + text).hashCode() % 1000),
+            notification
+        );
+    }
+
+    private void notifyLowStock(String title, String productUrl, JSONArray labels) {
+        StringBuilder text = new StringBuilder();
+        for (int i = 0; i < labels.length(); i++) {
+            if (i > 0) text.append(" · ");
+            text.append(labels.optString(i));
+        }
+
+        Intent open = productUrl == null || productUrl.isBlank()
+            ? new Intent(this, GateActivity.class)
+            : new Intent(Intent.ACTION_VIEW, Uri.parse(productUrl));
+        open.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+            this,
+            Math.abs(("low-stock:" + productUrl).hashCode()),
+            open,
+            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        Notification notification = new Notification.Builder(this, CHANNEL_ALERT)
+            .setSmallIcon(android.R.drawable.stat_notify_more)
+            .setContentTitle("⚠️ 재고 부족 · " + title)
+            .setContentText(text.toString())
+            .setStyle(new Notification.BigTextStyle().bigText(text.toString()))
+            .setContentIntent(contentIntent)
+            .setAutoCancel(true)
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setCategory(Notification.CATEGORY_EVENT)
+            .build();
+        getSystemService(NotificationManager.class).notify(
+            43000 + Math.abs(productUrl.hashCode() % 1000),
             notification
         );
     }
