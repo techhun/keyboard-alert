@@ -21,6 +21,15 @@ public class MonitorServiceTest {
     }
 
     @Test
+    public void smartStoreApiFallbackWaitsForPageStateAndNeverRunsDuring204Recovery() {
+        assertFalse(MonitorService.allowSmartStoreApiFallback(0, false, 0L));
+        assertFalse(MonitorService.allowSmartStoreApiFallback(1, false, 0L));
+        assertTrue(MonitorService.allowSmartStoreApiFallback(2, false, 0L));
+        assertFalse(MonitorService.allowSmartStoreApiFallback(2, true, 0L));
+        assertFalse(MonitorService.allowSmartStoreApiFallback(2, false, 30_000L));
+    }
+
+    @Test
     public void acceptsOnlyResultsForTheCurrentProduct() throws Exception {
         JSONObject product = new JSONObject()
             .put("id", "123456789")
