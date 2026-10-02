@@ -227,12 +227,9 @@ public class MonitorService extends Service {
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(false);
-        // The manual option lookup uses WebView's normal HTTP cache policy and
-        // consistently receives the page's product state. Forcing LOAD_NO_CACHE
-        // here caused every background navigation to cold-load SmartStore and
-        // increased the chance that the page had not populated product data
-        // before inventory inspection.
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // Background monitoring intentionally bypasses cached product pages so
+        // stock checks are based on fresh SmartStore page data.
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) settings.setSafeBrowsingEnabled(true);
         settings.setUserAgentString(settings.getUserAgentString()
             .replace("; wv)", ")")
