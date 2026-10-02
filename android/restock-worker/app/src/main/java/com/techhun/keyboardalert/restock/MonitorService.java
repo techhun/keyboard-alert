@@ -485,12 +485,17 @@ public class MonitorService extends Service {
                 return;
             }
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) clearRateLimitBackoff();
-            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
-                && !pageStateLogged
-                && "PAGE_STATE".equals(result.optString("source", ""))) {
-                pageStateLogged = true;
-                DiagnosticLog.add(this, "PAGE_STATE_OK", currentProduct,
-                    "선택 옵션까지 검증한 페이지 조회 성공");
+            if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && !pageStateLogged) {
+                String source = result.optString("source", "");
+                if ("PAGE_CAPTURE".equals(source)) {
+                    pageStateLogged = true;
+                    DiagnosticLog.add(this, "PAGE_CAPTURE_OK", currentProduct,
+                        "페이지 상품 API 응답 재사용 · 선택 옵션 검증 성공");
+                } else if ("PAGE_STATE".equals(source)) {
+                    pageStateLogged = true;
+                    DiagnosticLog.add(this, "PAGE_STATE_OK", currentProduct,
+                        "선택 옵션까지 검증한 페이지 조회 성공");
+                }
             }
             ProductStore.updateRuntime(this, currentProduct);
             scheduleNextProduct();

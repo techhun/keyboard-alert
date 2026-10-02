@@ -97,6 +97,29 @@ final class InventoryScript {
               return null;
             }
 
+            function capturedExactProduct(productNo) {
+              const captured = Array.isArray(window.__RESTOCK_CAPTURED_RESPONSES__)
+                ? window.__RESTOCK_CAPTURED_RESPONSES__
+                : [];
+              for (let index = captured.length - 1; index >= 0; index--) {
+                const item = captured[index];
+                if (!item || !item.data || typeof item.data !== 'object') continue;
+                try {
+                  const parsed = new URL(String(item.url || ''), location.href);
+                  const match = parsed.pathname.match(/^\/i\/v2\/channels\/([^/]+)\/products\/(\d+)\/?$/);
+                  if (!match || match[2] !== productNo) continue;
+                  const status = Number(item.status || 0);
+                  if (status < 200 || status >= 300 || status === 204) continue;
+                  return {
+                    item,
+                    channelUid: decodeURIComponent(match[1]),
+                    apiUrl: parsed.toString()
+                  };
+                } catch (ignored) {}
+              }
+              return null;
+            }
+
             function collectPageRoots() {
               const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__]
                 .filter(Boolean);
@@ -364,6 +387,25 @@ final class InventoryScript {
                   const exactProductMatch = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
                   if (exactProductMatch && exactProductMatch[2] === productNo) observedApiUrl = parsed.toString();
                 } catch (ignored) {}
+              }
+
+              const capturedProduct = capturedExactProduct(productNo);
+              if (capturedProduct && looksLikeProductPayload(capturedProduct.item.data, productNo)) {
+                channelUid = channelUid || capturedProduct.channelUid;
+                observedApiUrl = capturedProduct.apiUrl || observedApiUrl;
+                const capturedSnapshot = snapshot(
+                  capturedProduct.item.data,
+                  productNo,
+                  channelUid,
+                  observedApiUrl,
+                  'PAGE_CAPTURE',
+                  true,
+                  true
+                );
+                if (capturedSnapshot.options.length > 0) {
+                  send(capturedSnapshot);
+                  return;
+                }
               }
 
               const pageModel = findProductModel(roots, productNo);

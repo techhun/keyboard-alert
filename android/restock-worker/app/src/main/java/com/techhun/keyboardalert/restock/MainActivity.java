@@ -587,13 +587,18 @@ public class MainActivity extends Activity {
                 toast("선택 가능한 옵션이 없어요.");
                 return;
             }
-            if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                && "PAGE_STATE".equals(result.optString("source", ""))) {
-                String match = result.optBoolean("exactProductMatch", false)
-                    ? "상품번호 일치"
-                    : "상품명 일치 후보";
-                DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
-                    match + " · 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
+            if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)) {
+                String source = result.optString("source", "");
+                if ("PAGE_CAPTURE".equals(source)) {
+                    DiagnosticLog.add(this, "OPTION_PAGE_CAPTURE_OK", pendingLookupProduct,
+                        "상품 API 응답 재사용 · 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
+                } else if ("PAGE_STATE".equals(source)) {
+                    String match = result.optBoolean("exactProductMatch", false)
+                        ? "상품번호 일치"
+                        : "상품명 일치 후보";
+                    DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
+                        match + " · 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
+                }
             }
             resumeMonitorAfterOptionLookup();
             showOptionPicker();

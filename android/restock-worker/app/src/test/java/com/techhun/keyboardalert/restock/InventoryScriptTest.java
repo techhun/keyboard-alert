@@ -25,6 +25,9 @@ public class InventoryScriptTest {
         assertTrue(script.contains("document.documentElement"));
         assertTrue(script.contains("collectPageRoots"));
         assertTrue(script.contains("__RESTOCK_CAPTURED_RESPONSES__"));
+        assertTrue(script.contains("capturedExactProduct"));
+        assertTrue(script.contains("PAGE_CAPTURE"));
+        assertTrue(script.contains("capturedProduct.item.data"));
         assertTrue(script.contains("findProductModel"));
         assertTrue(script.contains("optionInfoOf"));
         assertTrue(script.contains("explicitOptionCount"));

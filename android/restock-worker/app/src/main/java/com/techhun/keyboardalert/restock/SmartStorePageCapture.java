@@ -26,10 +26,20 @@ final class SmartStorePageCapture {
             }
           };
 
+          const isExactProductApi = (url) => {
+            try {
+              const parsed = new URL(String(url || ''), location.href);
+              return /^\/i\/v2\/channels\/[^/]+\/products\/\d+\/?$/.test(parsed.pathname);
+            } catch (ignored) {
+              return false;
+            }
+          };
+
           const looksRelevant = (url, data) => {
             if (!smartStoreUrl(url) || !data || typeof data !== 'object') return false;
             const text = JSON.stringify(data);
             if (text.length > 2000000) return false;
+            if (isExactProductApi(url)) return true;
             return text.includes('optionCombinations')
               || text.includes('optionSimple')
               || text.includes('optionInfo')
