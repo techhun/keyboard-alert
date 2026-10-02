@@ -50,6 +50,8 @@ public class MonitorService extends Service {
     private static final long MIN_PRODUCT_SPACING_MS = 5_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 30 * 60_000L;
+    private static final int MAX_TRANSIENT_RETRIES = 2;
+    private static final long TRANSIENT_RETRY_DELAY_MS = 5_000L;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
     private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
@@ -110,6 +112,7 @@ public class MonitorService extends Service {
     private boolean networkWaiting;
     private boolean pausedForOptionLookup;
     private boolean pageStateLogged;
+    private int transientRetryCount;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping || pausedForOptionLookup) return;
@@ -259,6 +262,15 @@ public class MonitorService extends Service {
                     return;
                 }
                 if (!SiteSupport.isProductPage(siteType, url)) return;
+                if (mode != Mode.DIRECT && currentProduct != null
+                    && !SiteSupport.isSameProductPage(
+                        siteType,
+                        currentProduct.optString("url", ""),
+                        url
+                    )) {
+                    DiagnosticLog.add(MonitorService.this, "STALE_PAGE", currentProduct, safeHost(url));
+                    return;
+                }
 
                 if (pausedForOptionLookup) return;
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
@@ -352,9 +364,14 @@ public class MonitorService extends Service {
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.NAVER_SMARTSTORE, webView.getUrl())) {
-            markCurrentFailure("상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.NAVER_SMARTSTORE,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
@@ -375,9 +392,14 @@ public class MonitorService extends Service {
             return;
         }
         currentProduct = latest;
-        if (!SiteSupport.isProductPage(SiteSupport.SWAGKEY_IMWEB, webView.getUrl())) {
-            markCurrentFailure("SWAGKEY 상품 페이지 확인 실패");
-            scheduleNextProduct();
+        if (!SiteSupport.isSameProductPage(
+            SiteSupport.SWAGKEY_IMWEB,
+            currentProduct.optString("url", ""),
+            webView.getUrl()
+        )) {
+            DiagnosticLog.add(this, "STALE_PAGE", currentProduct, safeHost(webView.getUrl()));
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
             return;
         }
         awaitingResult = true;
@@ -406,23 +428,32 @@ public class MonitorService extends Service {
     }
 
     private void handleInventoryResult(String json) {
-        if (stopping || pausedForOptionLookup) return;
-        awaitingResult = false;
-        handler.removeCallbacks(resultTimeout);
-        if (currentProduct == null) {
-            scheduleNextProduct();
-            return;
-        }
-
-        JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
-        if (latest == null || !latest.optBoolean("enabled", false)) {
-            scheduleNextProduct();
-            return;
-        }
-        currentProduct = latest;
+        if (stopping || pausedForOptionLookup || currentProduct == null) return;
 
         try {
             JSONObject result = new JSONObject(json);
+            if (!isResultForCurrentProduct(result)) {
+                DiagnosticLog.add(
+                    this,
+                    "STALE_RESULT",
+                    currentProduct,
+                    result.optString(
+                        "productId",
+                        result.optString("productNo", result.optString("pageUrl", "unknown"))
+                    )
+                );
+                return;
+            }
+
+            awaitingResult = false;
+            handler.removeCallbacks(resultTimeout);
+
+            JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
+            if (latest == null || !latest.optBoolean("enabled", false)) {
+                scheduleNextProduct();
+                return;
+            }
+            currentProduct = latest;
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
                 int status = result.optInt("status", 0);
@@ -452,16 +483,27 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()) && mode == Mode.DIRECT && (
-                    "PRODUCT_API_FAILED".equals(error)
-                        || "PRODUCT_DATA_NOT_FOUND".equals(error)
-                        || "API_URL_MISSING".equals(error)
-                        || status == 404
-                )) {
+                if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                    && mode == Mode.DIRECT
+                    && InventoryRetry.shouldRediscoverDirect(error, status)) {
                     currentProduct.put("apiUrl", "");
                     ProductStore.updateRuntime(this, currentProduct);
+                    transientRetryCount = 0;
                     mode = Mode.DISCOVERY;
                     webView.loadUrl(currentProduct.optString("url"));
+                    return;
+                }
+
+                if ((mode == Mode.DISCOVERY || mode == Mode.SWAGKEY)
+                    && InventoryRetry.shouldRetryMonitor(error, status)
+                    && transientRetryCount < MAX_TRANSIENT_RETRIES) {
+                    transientRetryCount++;
+                    String retryDetail = error
+                        + (status > 0 ? " · HTTP " + status : "")
+                        + " · " + transientRetryCount + "/" + MAX_TRANSIENT_RETRIES;
+                    DiagnosticLog.add(this, "CHECK_RETRY", currentProduct, retryDetail);
+                    handler.postDelayed(this::retryCurrentCheck,
+                        TRANSIENT_RETRY_DELAY_MS * transientRetryCount);
                     return;
                 }
 
@@ -502,6 +544,47 @@ public class MonitorService extends Service {
         } catch (Exception error) {
             markCurrentFailure("결과 처리 실패");
             scheduleNextProduct();
+        }
+    }
+
+    private boolean isResultForCurrentProduct(JSONObject result) {
+        return isResultForProduct(currentProduct, currentSiteType(), result);
+    }
+
+    static boolean isResultForProduct(JSONObject product, String siteType, JSONObject result) {
+        if (product == null || result == null) return false;
+        String currentId = product.optString("id", "");
+        String resultProductId = result.optString("productId", "");
+        if (resultProductId.isBlank()) resultProductId = result.optString("productNo", "");
+        if (!resultProductId.isBlank()) return currentId.equals(resultProductId);
+
+        String pageUrl = result.optString("pageUrl", "");
+        if (!pageUrl.isBlank()) {
+            return SiteSupport.isSameProductPage(siteType, product.optString("url", ""), pageUrl);
+        }
+        return false;
+    }
+
+    private void retryCurrentCheck() {
+        if (stopping || pausedForOptionLookup || currentProduct == null) return;
+        awaitingResult = false;
+        handler.removeCallbacks(resultTimeout);
+        if (mode == Mode.SWAGKEY) {
+            if (!SiteSupport.isSameProductPage(
+                SiteSupport.SWAGKEY_IMWEB,
+                currentProduct.optString("url", ""),
+                webView.getUrl()
+            )) {
+                webView.stopLoading();
+                webView.loadUrl(currentProduct.optString("url"));
+                return;
+            }
+            runSwagkeyCheck();
+            return;
+        }
+        if (mode == Mode.DISCOVERY) {
+            webView.stopLoading();
+            webView.loadUrl(currentProduct.optString("url"));
         }
     }
 
@@ -654,6 +737,7 @@ public class MonitorService extends Service {
 
     private void scheduleNextProduct() {
         if (stopping || pausedForOptionLookup) return;
+        transientRetryCount = 0;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
             stopSelf();
