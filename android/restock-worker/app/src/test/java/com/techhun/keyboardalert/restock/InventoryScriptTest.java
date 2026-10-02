@@ -28,11 +28,13 @@ public class InventoryScriptTest {
         assertTrue(script.contains("findProductModel"));
         assertTrue(script.contains("optionInfoOf"));
         assertTrue(script.contains("explicitOptionCount"));
+        assertTrue(script.contains("hasExplicitNoOptions"));
+        assertTrue(script.contains("explicitNoOptions"));
         assertTrue(script.contains("productIdentities"));
         assertTrue(script.contains("exactProductMatch"));
         assertTrue(script.contains("document.title.includes(candidateName)"));
         assertTrue(script.contains("PAGE_STATE"));
-        assertTrue(script.contains("pageSnapshot.explicitOptionData && pageSnapshot.options.length > 0"));
+        assertTrue(script.contains("pageSnapshot.explicitOptionData || pageSnapshot.explicitNoOptions"));
         assertTrue(script.contains("if (!options.length && allowSyntheticDefault)"));
         assertTrue(script.contains("'PAGE_STATE',"));
         assertTrue(script.contains("pageModel.exact,"));
@@ -40,7 +42,9 @@ public class InventoryScriptTest {
         assertTrue(script.contains("PAGE_DATA_NOT_FOUND"));
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("RATE_LIMITED"));
-        assertTrue(script.contains("response.status === 204 || response.status === 429"));
+        assertTrue(script.contains("NO_CONTENT"));
+        assertTrue(script.contains("response.status === 204"));
+        assertTrue(script.contains("response.status === 429"));
         assertTrue(InventoryScript.build(product, false).contains("const allowApiFallback = false;"));
         assertTrue(script.contains("API_DEFERRED"));
     }
@@ -56,7 +60,9 @@ public class InventoryScriptTest {
         assertTrue(script.contains("AUTH_REQUIRED"));
         assertTrue(script.contains("PRODUCT_DATA_NOT_FOUND"));
         assertTrue(script.contains("RATE_LIMITED"));
-        assertTrue(script.contains("response.status === 204 || response.status === 429"));
+        assertTrue(script.contains("NO_CONTENT"));
+        assertTrue(script.contains("response.status === 204"));
+        assertTrue(script.contains("response.status === 429"));
         assertTrue(script.contains("nid.naver.com"));
     }
 }

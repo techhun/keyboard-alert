@@ -63,7 +63,11 @@ final class InventoryApiScript {
                     return;
                   }
 
-                  if (response.status === 204 || response.status === 429) {
+                  if (response.status === 204) {
+                    send({ ok: false, error: 'NO_CONTENT', productId, status: response.status, apiUrl });
+                    return;
+                  }
+                  if (response.status === 429) {
                     send({ ok: false, error: 'RATE_LIMITED', productId, status: response.status, apiUrl });
                     return;
                   }

@@ -165,6 +165,17 @@ final class InventoryScript {
               return combinations + simple;
             }
 
+            function hasExplicitNoOptions(value) {
+              const optionInfo = optionInfoOf(value);
+              if (!optionInfo) return false;
+              const hasCombinations = Array.isArray(optionInfo.optionCombinations);
+              const hasSimple = Array.isArray(optionInfo.optionSimple);
+              if (!hasCombinations && !hasSimple) return false;
+              const combinationsEmpty = !hasCombinations || optionInfo.optionCombinations.length === 0;
+              const simpleEmpty = !hasSimple || optionInfo.optionSimple.length === 0;
+              return combinationsEmpty && simpleEmpty;
+            }
+
             function findProductModel(roots, productNo) {
               let exactOptionBest = null;
               let exactOptionScore = -1;
@@ -289,7 +300,8 @@ final class InventoryScript {
                 });
               }
               const explicitOptionData = options.length > 0;
-              if (!options.length && allowSyntheticDefault) {
+              const explicitNoOptions = hasExplicitNoOptions(data);
+              if (!options.length && (allowSyntheticDefault || explicitNoOptions)) {
                 const stock = Number(product?.stockQuantity ?? data?.stockQuantity);
                 const status = String(product?.statusType || data?.statusType || data?.productStatusType || '').toUpperCase();
                 options.push({
@@ -306,6 +318,7 @@ final class InventoryScript {
                 source,
                 exactProductMatch: exactProductMatch !== false,
                 explicitOptionData,
+                explicitNoOptions,
                 pageUrl: location.href,
                 apiUrl: apiUrl || '',
                 title: product?.name || data?.smartstoreChannelProduct?.channelProductName || document.title,
@@ -364,7 +377,8 @@ final class InventoryScript {
                   pageModel.exact,
                   false
                 );
-                if (pageSnapshot.explicitOptionData && pageSnapshot.options.length > 0) {
+                if ((pageSnapshot.explicitOptionData || pageSnapshot.explicitNoOptions)
+                    && pageSnapshot.options.length > 0) {
                   send(pageSnapshot);
                   return;
                 }
@@ -400,7 +414,12 @@ final class InventoryScript {
                     send({ ok: false, error: 'AUTH_REQUIRED', status: response.status, pageUrl: location.href, apiUrl, attempts });
                     return;
                   }
-                  if (response.status === 204 || response.status === 429) {
+                  if (response.status === 204) {
+                    attempts.push({ url: apiUrl, status: response.status, noContent: true });
+                    send({ ok: false, error: 'NO_CONTENT', status: response.status, pageUrl: location.href, apiUrl, attempts });
+                    return;
+                  }
+                  if (response.status === 429) {
                     attempts.push({ url: apiUrl, status: response.status, rateLimited: true });
                     send({ ok: false, error: 'RATE_LIMITED', status: response.status, pageUrl: location.href, apiUrl, attempts });
                     return;

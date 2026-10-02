@@ -440,9 +440,13 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if ("RATE_LIMITED".equals(error)
-                    || status == 204
-                    || status == 429) {
+                if ("NO_CONTENT".equals(error) || status == 204) {
+                    markCurrentFailure("HTTP 204 · 상품 데이터 없음", "NO_CONTENT");
+                    scheduleNextProduct();
+                    return;
+                }
+
+                if ("RATE_LIMITED".equals(error) || status == 429) {
                     applyRateLimitBackoff(status);
                     scheduleNextProduct();
                     return;
