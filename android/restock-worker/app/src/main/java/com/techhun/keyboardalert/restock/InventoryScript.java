@@ -100,6 +100,12 @@ final class InventoryScript {
             function collectPageRoots() {
               const roots = [window.__PRELOADED_STATE__, window.__INITIAL_STATE__, window.__NEXT_DATA__]
                 .filter(Boolean);
+              const captured = Array.isArray(window.__RESTOCK_CAPTURED_RESPONSES__)
+                ? window.__RESTOCK_CAPTURED_RESPONSES__
+                : [];
+              for (const item of captured) {
+                if (item && item.data && typeof item.data === 'object') roots.push(item.data);
+              }
               const markers = [
                 'window.__PRELOADED_STATE__', '__PRELOADED_STATE__',
                 'window.__INITIAL_STATE__', '__INITIAL_STATE__',
@@ -324,6 +330,17 @@ final class InventoryScript {
               const roots = collectPageRoots();
               let channelUid = findChannelUid(roots);
               let observedApiUrl = safeNaverApiUrl(configuredApiUrl);
+              const capturedResponses = Array.isArray(window.__RESTOCK_CAPTURED_RESPONSES__)
+                ? window.__RESTOCK_CAPTURED_RESPONSES__
+                : [];
+              for (const item of capturedResponses) {
+                const candidate = safeNaverApiUrl(item?.url || '');
+                if (!candidate) continue;
+                try {
+                  const parsed = new URL(candidate, location.href);
+                  if (parsed.pathname.includes('/products/' + productNo)) observedApiUrl = parsed.toString();
+                } catch (ignored) {}
+              }
               const resources = performance.getEntriesByType('resource').map((entry) => entry.name || '');
               for (const resourceUrl of resources) {
                 try {

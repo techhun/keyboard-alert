@@ -242,6 +242,7 @@ public class MainActivity extends Activity {
 
         webView = new WebView(this);
         configureWebView(webView);
+        SmartStorePageCapture.install(webView);
         webView.setVisibility(View.INVISIBLE);
         webView.addJavascriptInterface(new InventoryBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {

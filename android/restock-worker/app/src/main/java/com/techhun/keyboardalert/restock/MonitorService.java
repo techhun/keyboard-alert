@@ -225,6 +225,7 @@ public class MonitorService extends Service {
             .replace("Version/4.0 ", ""));
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        SmartStorePageCapture.install(webView);
 
         webView.addJavascriptInterface(new RestockBridge(), "RestockBridge");
         webView.setWebViewClient(new WebViewClient() {
@@ -577,7 +578,8 @@ public class MonitorService extends Service {
         backoffUntil = extendSmartStoreRateLimit(this, status);
         rateLimitBackoffMs = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_MS, INITIAL_RATE_LIMIT_BACKOFF_MS);
         long seconds = Math.max(1L, (backoffUntil - System.currentTimeMillis() + 999L) / 1000L);
-        markCurrentFailure("요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
+        String statusText = status > 0 ? "HTTP " + status + " · " : "";
+        markCurrentFailure(statusText + "요청 제한 · " + seconds + "초 후 재시도", "RATE_LIMIT");
         updateOngoingNotification("요청 제한 · 잠시 후 다시 확인해요");
     }
 

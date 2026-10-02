@@ -127,7 +127,7 @@ final class DiagnosticLog {
         StringBuilder out = new StringBuilder();
         out.append("정상 ").append(success)
             .append(" · 실패 ").append(failure)
-            .append(" · 429 ").append(p.getLong(KEY_RATE_LIMIT, 0L))
+            .append(" · 요청제한 ").append(p.getLong(KEY_RATE_LIMIT, 0L))
             .append(" · 타임아웃 ").append(p.getLong(KEY_TIMEOUT, 0L))
             .append("\n차단 ").append(p.getLong(KEY_BLOCKED_NAV, 0L))
             .append(" · 재입고 ").append(p.getLong(KEY_RESTOCK, 0L));
