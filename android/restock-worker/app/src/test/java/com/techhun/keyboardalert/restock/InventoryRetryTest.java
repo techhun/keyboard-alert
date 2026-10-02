@@ -13,6 +13,14 @@ public class InventoryRetryTest {
         assertFalse(InventoryRetry.isAuthFailure("PAGE_DATA_NOT_FOUND", 0));
     }
 
+    @Test public void reloadsNoContentOnlyOnce() {
+        assertTrue(InventoryRetry.shouldReloadNoContent("NO_CONTENT", 204, 0));
+        assertTrue(InventoryRetry.shouldReloadNoContent("NO_CONTENT", 0, 0));
+        assertTrue(InventoryRetry.shouldReloadNoContent("UNKNOWN", 204, 0));
+        assertFalse(InventoryRetry.shouldReloadNoContent("NO_CONTENT", 204, 1));
+        assertFalse(InventoryRetry.shouldReloadNoContent("RATE_LIMITED", 429, 0));
+    }
+
     @Test public void retriesOnlyTransientInteractiveFailures() {
         assertTrue(InventoryRetry.shouldRetryInteractive("PAGE_DATA_NOT_FOUND", 0));
         assertTrue(InventoryRetry.shouldRetryInteractive("STATE_UNKNOWN", 0));
