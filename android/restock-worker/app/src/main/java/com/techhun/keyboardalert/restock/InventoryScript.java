@@ -480,7 +480,12 @@ final class InventoryScript {
               }
               send({ ok: false, error: 'PRODUCT_API_FAILED', pageUrl: location.href, attempts });
             } catch (error) {
-              send({ ok: false, error: 'JS_ERROR', message: String(error && (error.stack || error.message) || error) });
+              send({
+                ok: false,
+                error: 'JS_ERROR',
+                message: String(error && (error.stack || error.message) || error),
+                pageUrl: location.href
+              });
             }
           })();
           return 'STARTED';
