@@ -1495,8 +1495,10 @@ public class MainActivity extends Activity {
             handler.postDelayed(() -> {
                 if (pendingUrl.isBlank() || !optionLoadInProgress) return;
                 autoInspect = true;
+                webView.onResume();
+                webView.resumeTimers();
                 webView.loadUrl(pendingUrl);
-            }, 120L);
+            }, 700L);
         }
     }
 
@@ -1511,8 +1513,14 @@ public class MainActivity extends Activity {
                 webView.loadUrl("about:blank");
             }
             runOnUiThread(() -> {
-                refreshSessionButton();
-                renderProducts();
+                Intent intent = new Intent(this, GateActivity.class);
+                intent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
+                );
+                startActivity(intent);
+                finish();
             });
         });
     }
