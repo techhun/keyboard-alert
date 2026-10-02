@@ -7,6 +7,10 @@ final class InventoryRetry {
         return status == 401 || status == 403 || "AUTH_REQUIRED".equals(error);
     }
 
+    static boolean shouldReloadNoContent(String error, int status, int retryCount) {
+        return retryCount < 1 && (status == 204 || "NO_CONTENT".equals(error));
+    }
+
     static boolean shouldRetryInteractive(String error, int status) {
         if (isAuthFailure(error, status) || status == 204 || status == 404 || status == 429) return false;
         if (status == 408 || status >= 500) return true;
