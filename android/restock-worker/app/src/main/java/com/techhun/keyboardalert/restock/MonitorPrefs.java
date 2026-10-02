@@ -19,7 +19,6 @@ final class MonitorPrefs {
     static final String KEY_SELECTED_LABELS = "selected_labels";
     static final String KEY_INTERVAL = "interval_seconds";
     static final String KEY_LOW_STOCK_THRESHOLD = "low_stock_threshold";
-    static final String KEY_LOW_STOCK_THRESHOLD = "low_stock_threshold";
     static final String KEY_RUNNING = "running";
     static final String KEY_LAST_STATUS = "last_status";
     static final String KEY_LAST_CHECK = "last_check";
@@ -81,11 +80,6 @@ final class MonitorPrefs {
 
     static int intervalSeconds(Context context) {
         return Math.max(15, prefs(context).getInt(KEY_INTERVAL, 30));
-    }
-
-    static int lowStockThreshold(Context context) {
-        int value = prefs(context).getInt(KEY_LOW_STOCK_THRESHOLD, 5);
-        return value >= 1 && value <= 999 ? value : 5;
     }
 
     static int lowStockThreshold(Context context) {
