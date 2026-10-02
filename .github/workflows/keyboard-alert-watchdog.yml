@@ -57,12 +57,6 @@ jobs:
           fi
 
           git fetch origin watcher-state
-          if git cat-file -e "origin/watcher-state:workflow-watchdog-state.json" 2>/dev/null; then
-            if git diff --quiet origin/watcher-state -- workflow-watchdog-state.json; then
-              echo 'Watchdog state unchanged.'
-              exit 0
-            fi
-          fi
 
           state_dir="/tmp/keyboard-alert-watcher-state-watchdog"
           rm -rf "$state_dir"
@@ -72,6 +66,11 @@ jobs:
           git -C "$state_dir" config user.name 'github-actions[bot]'
           git -C "$state_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C "$state_dir" add workflow-watchdog-state.json
+          if git -C "$state_dir" diff --cached --quiet -- workflow-watchdog-state.json; then
+            echo 'Watchdog state unchanged.'
+            exit 0
+          fi
+
           git -C "$state_dir" commit -m 'Update workflow watchdog state'
 
           for attempt in 1 2 3; do
