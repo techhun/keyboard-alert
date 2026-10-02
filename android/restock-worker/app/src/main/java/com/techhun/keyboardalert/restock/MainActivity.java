@@ -113,6 +113,7 @@ public class MainActivity extends Activity {
     private JSONObject pendingLookupProduct;
     private boolean directLookupAttempt;
     private boolean monitorPausedForOptionLookup;
+    private int optionRetryCount;
 
     private static final class ProductCardHolder {
         LinearLayout card;
@@ -461,6 +462,7 @@ public class MainActivity extends Activity {
         editingProductId = id;
         pendingLookupProduct = existing;
         directLookupAttempt = false;
+        optionRetryCount = 0;
         latestOptions = new JSONArray();
         latestTitle = existing == null ? "" : existing.optString("title", "");
         latestApiUrl = existing == null ? "" : existing.optString("apiUrl", "");
@@ -484,7 +486,8 @@ public class MainActivity extends Activity {
         if (!optionLoadInProgress) return;
         String siteType = SiteSupport.detect(pendingUrl);
         String currentUrl = webView.getUrl();
-        if (!SiteSupport.isProductPage(siteType, currentUrl)) {
+        if (!SiteSupport.isSameProductPage(siteType, pendingUrl, currentUrl)) {
+            DiagnosticLog.add(this, "OPTION_PAGE_MISMATCH", pendingLookupProduct, safeHost(currentUrl));
             optionLoadInProgress = false;
             resumeMonitorAfterOptionLookup();
             clearPendingEdit();
@@ -524,6 +527,18 @@ public class MainActivity extends Activity {
         if (!optionLoadInProgress) return;
         try {
             JSONObject result = new JSONObject(json);
+            if (!isOptionResultForPendingProduct(result)) {
+                DiagnosticLog.add(
+                    this,
+                    "OPTION_STALE_RESULT",
+                    pendingLookupProduct,
+                    result.optString(
+                        "productId",
+                        result.optString("productNo", result.optString("pageUrl", "unknown"))
+                    )
+                );
+                return;
+            }
             if (!result.optBoolean("ok")) {
                 int status = result.optInt("status", 0);
                 String error = result.optString("error", "UNKNOWN");
@@ -553,12 +568,25 @@ public class MainActivity extends Activity {
                     handleOptionRateLimit(status);
                 } else if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)
                     && directLookupAttempt
-                    && ("PRODUCT_API_FAILED".equals(error)
-                        || "PRODUCT_DATA_NOT_FOUND".equals(error)
-                        || "API_URL_MISSING".equals(error)
-                        || status == 404)) {
+                    && InventoryRetry.shouldRediscoverDirect(error, status)) {
                     DiagnosticLog.add(this, "OPTION_CHECK_RETRY", pendingLookupProduct, error);
                     runSmartStoreDiscovery();
+                } else if (InventoryRetry.shouldRetryInteractive(error, status)
+                    && optionRetryCount < 1) {
+                    optionRetryCount++;
+                    DiagnosticLog.add(
+                        this,
+                        "OPTION_CHECK_RETRY",
+                        pendingLookupProduct,
+                        error + (status > 0 ? " · HTTP " + status : "") + " · 1/1"
+                    );
+                    autoInspect = true;
+                    String retryUrl = pendingUrl;
+                    handler.postDelayed(() -> {
+                        if (!optionLoadInProgress || retryUrl.isBlank() || !retryUrl.equals(pendingUrl)) return;
+                        webView.stopLoading();
+                        webView.loadUrl(retryUrl);
+                    }, 1_500L);
                 } else {
                     DiagnosticLog.add(this, "OPTION_CHECK_FAIL", pendingLookupProduct, error + (status > 0 ? " · HTTP " + status : ""));
                     optionLoadInProgress = false;
@@ -608,6 +636,20 @@ public class MainActivity extends Activity {
             clearPendingEdit();
             toast("상품 정보를 처리하지 못했어요.");
         }
+    }
+
+    private boolean isOptionResultForPendingProduct(JSONObject result) {
+        if (result == null || pendingUrl == null || pendingUrl.isBlank()) return false;
+        String expectedId = ProductStore.idFromUrl(pendingUrl);
+        String resultProductId = result.optString("productId", "");
+        if (resultProductId.isBlank()) resultProductId = result.optString("productNo", "");
+        if (!resultProductId.isBlank()) return expectedId.equals(resultProductId);
+
+        String pageUrl = result.optString("pageUrl", "");
+        if (!pageUrl.isBlank()) {
+            return SiteSupport.isSameProductPage(SiteSupport.detect(pendingUrl), pendingUrl, pageUrl);
+        }
+        return false;
     }
 
     private void handleOptionRateLimitWait() {
