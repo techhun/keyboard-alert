@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T07:21:18.718Z",
+  "updatedAt": "2026-10-02T07:11:02.697Z",
   "rows": [
     {
       "category": "KEYCAPS",
@@ -321,17 +321,6 @@
       "latestUpdateDate": "2026-09-10",
       "latestUpdateTitle": "Graphite Project Progress",
       "latestUpdateBody": "25 September - 2 October"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Rainy Day R3",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-09-07",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
     },
     {
       "category": "KEYCAPS",
@@ -1054,6 +1043,7 @@
     "7d58ee866a3093abfbd14647": "2026-09-29T01:11:48.416Z",
     "a7856473d5dc3b7ad20709d2": "2026-09-29T01:11:48.714Z",
     "7d8a979583574e16d20f14e5": "2026-09-29T01:11:48.886Z",
-    "1b64c0a8c8bca7ddb66701a9": "2026-10-01T07:21:18.717Z"
+    "1b64c0a8c8bca7ddb66701a9": "2026-10-01T07:21:18.717Z",
+    "e0953aa5c3cd809690b44336": "2026-10-02T07:11:02.697Z"
   }
 }
