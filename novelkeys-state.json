@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T14:01:51.017Z",
+  "updatedAt": "2026-10-02T01:01:14.952Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -306,6 +306,13 @@
     },
     {
       "category": "Misc.",
+      "product": "Zombie Deskpad",
+      "status": "Open for orders",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/zombie-deskpad"
+    },
+    {
+      "category": "Misc.",
       "product": "Typeplus Hi! Viz Switches",
       "status": "Sampling.",
       "eta": "Q3 2026",
@@ -344,6 +351,7 @@
     "84a270ef39007002c37f3024": "2026-09-29T15:12:39.265Z",
     "9bdb684e8a1cd75c033c48f1": "2026-09-29T15:21:05.158Z",
     "8e28945a95850f752c12684b": "2026-10-01T11:41:10.861Z",
-    "d05bb60f3f320a25405f3b26": "2026-10-01T14:01:51.017Z"
+    "d05bb60f3f320a25405f3b26": "2026-10-01T14:01:51.017Z",
+    "1e2a6b5e3f3084f3bf1988d2": "2026-10-02T01:01:14.952Z"
   }
 }
