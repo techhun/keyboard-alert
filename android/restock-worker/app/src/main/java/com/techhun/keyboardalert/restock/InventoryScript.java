@@ -106,7 +106,7 @@ final class InventoryScript {
                 if (!item || !item.data || typeof item.data !== 'object') continue;
                 try {
                   const parsed = new URL(String(item.url || ''), location.href);
-                  const match = parsed.pathname.match(/^\/i\/v2\/channels\/([^/]+)\/products\/(\d+)\/?$/);
+                  const match = parsed.pathname.match(/^\\/i\\/v2\\/channels\\/([^/]+)\\/products\\/(\\d+)\\/?$/);
                   if (!match || match[2] !== productNo) continue;
                   const status = Number(item.status || 0);
                   if (status < 200 || status >= 300 || status === 204) continue;
