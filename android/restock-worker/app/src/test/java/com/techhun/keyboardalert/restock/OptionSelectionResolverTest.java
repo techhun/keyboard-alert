@@ -25,6 +25,7 @@ public class OptionSelectionResolverTest {
         assertTrue(result.complete());
         assertEquals(0, result.migratedCount);
         assertTrue(result.availability.get("old-1"));
+        assertEquals(Integer.valueOf(4), result.quantities.get("old-1"));
     }
 
     @Test
@@ -60,6 +61,7 @@ public class OptionSelectionResolverTest {
             .put("id", id)
             .put("optionName1", first)
             .put("optionName2", second)
-            .put("available", available);
+            .put("available", available)
+            .put("stockQuantity", available ? 4 : 0);
     }
 }
