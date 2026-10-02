@@ -29,7 +29,7 @@ final class SmartStorePageCapture {
           const isExactProductApi = (url) => {
             try {
               const parsed = new URL(String(url || ''), location.href);
-              return /^\/i\/v2\/channels\/[^/]+\/products\/\d+\/?$/.test(parsed.pathname);
+              return /^\\/i\\/v2\\/channels\\/[^/]+\\/products\\/\\d+\\/?$/.test(parsed.pathname);
             } catch (ignored) {
               return false;
             }
