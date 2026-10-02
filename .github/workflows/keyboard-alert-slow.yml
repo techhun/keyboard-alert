@@ -30,6 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Signal slow heartbeat start
+        env:
+          HEALTHCHECKS_URL: ${{ secrets.HEALTHCHECKS_SLOW_URL }}
+        run: node scripts/healthchecks-ping.mjs start
+
       - name: Restore watcher state
         shell: bash
         run: |
@@ -286,6 +291,18 @@ jobs:
 
           echo 'Failed to persist slow watcher state after retries.'
           exit 1
+
+      - name: Signal slow heartbeat success
+        if: success()
+        env:
+          HEALTHCHECKS_URL: ${{ secrets.HEALTHCHECKS_SLOW_URL }}
+        run: node scripts/healthchecks-ping.mjs success
+
+      - name: Signal slow heartbeat failure
+        if: failure()
+        env:
+          HEALTHCHECKS_URL: ${{ secrets.HEALTHCHECKS_SLOW_URL }}
+        run: node scripts/healthchecks-ping.mjs fail
 
       - name: Alert on slow workflow failure
         if: failure()

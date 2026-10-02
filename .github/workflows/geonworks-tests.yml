@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
     paths:
+      - 'scripts/healthchecks-ping.mjs'
+      - 'tests/healthchecks-heartbeat.test.mjs'
+      - '.github/workflows/keyboard-alert-fast.yml'
+      - '.github/workflows/keyboard-alert-slow.yml'
       - 'scripts/check-geonworks.mjs'
       - 'scripts/check-geonworks-release.mjs'
       - 'scripts/geonworks-safety.mjs'
@@ -36,6 +40,10 @@ on:
       - '.github/workflows/geonworks-tests.yml'
   pull_request:
     paths:
+      - 'scripts/healthchecks-ping.mjs'
+      - 'tests/healthchecks-heartbeat.test.mjs'
+      - '.github/workflows/keyboard-alert-fast.yml'
+      - '.github/workflows/keyboard-alert-slow.yml'
       - 'scripts/check-geonworks.mjs'
       - 'scripts/check-geonworks-release.mjs'
       - 'scripts/geonworks-safety.mjs'

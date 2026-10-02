@@ -65,6 +65,26 @@ Fast/Slow 수집은 외부 스케줄러 **cron-job.org**를 사용하며 GitHub 
 
 이 watchdog은 cron-job.org가 dispatch를 멈추거나 GitHub Actions 실행이 장시간 성공하지 못하는 상황을 감지합니다. 다만 GitHub Actions 플랫폼 자체가 전체적으로 중단되어 watchdog workflow도 실행되지 않는 경우까지는 자체적으로 감지할 수 없습니다.
 
+### 외부 Heartbeat
+
+Fast/Slow workflow는 선택적으로 Healthchecks.io Ping URL에 실행 신호를 보낼 수 있습니다.
+
+- 시작 시 `/start`
+- 정상 완료 시 기본 Ping URL
+- workflow 실패 시 `/fail`
+- Healthchecks.io 통신 실패는 기존 수집 workflow를 실패시키지 않고 로그 경고만 남김
+- Secret이 비어 있으면 heartbeat 단계는 자동으로 skip
+- GitHub Actions 또는 cron-job.org가 Fast/Slow 실행 자체를 멈추면 외부 서비스에서 마지막 성공 ping 기준으로 감지 가능
+
+권장 체크 설정:
+
+| Check | Period | Grace Time | 목적 |
+| --- | ---: | ---: | --- |
+| Fast | 5분 | 5분 | 최근 성공이 약 10분 이상 없을 때 감지 |
+| Slow | 20분 | 15분 | 최근 성공이 약 35분 이상 없을 때 감지 |
+
+Healthchecks.io Ping URL 자체가 인증 정보 역할을 하므로 저장소 코드나 로그에 직접 남기지 않고 GitHub Actions Secret으로만 관리합니다.
+
 ## 시스템 상태 알림
 
 별도 Discord 채널(권장 이름: `알림-시스템`)로 감시 서비스 자체의 장애와 복구를 알릴 수 있습니다.
@@ -122,8 +142,10 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 | `DESKHERO_DISCORD_WEBHOOK_URL` | Deskhero Group Buy/Preorder Updates 알림 |
 | `OMNITYPE_DISCORD_WEBHOOK_URL` | Omnitype Product Updates 알림 |
 | `SYSTEM_DISCORD_WEBHOOK_URL` | `알림-시스템` 채널의 장애/복구/워크플로 오류/실행 감시 알림 |
+| `HEALTHCHECKS_FAST_URL` | Fast workflow용 Healthchecks.io 기본 Ping URL |
+| `HEALTHCHECKS_SLOW_URL` | Slow workflow용 Healthchecks.io 기본 Ping URL |
 
-각 서비스의 webhook은 서로 분리해 운용하는 것을 기본으로 합니다.
+각 서비스의 webhook과 heartbeat Ping URL은 서로 분리해 운용하는 것을 기본으로 합니다.
 
 ## 상태 저장 원칙
 
@@ -155,6 +177,7 @@ scripts/
 ├─ check-deskhero.mjs
 ├─ check-omnitype.mjs
 ├─ check-workflow-watchdog.mjs
+├─ healthchecks-ping.mjs
 └─ system-health.mjs
 ```
 
