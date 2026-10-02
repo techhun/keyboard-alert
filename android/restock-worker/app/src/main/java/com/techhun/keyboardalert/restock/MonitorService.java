@@ -565,7 +565,7 @@ public class MonitorService extends Service {
 
         String time = new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date());
         product.put("lastAvailability", previous);
-        product.put("lastStatus", "재고 있음 " + availableCount + "/" + resolved.requestedCount + " · " + time);
+        product.put("lastStatus", inventoryStatusText(availableCount, resolved.requestedCount, time));
         product.put("lastCheck", System.currentTimeMillis());
 
         int enabledCount = ProductStore.enabledCount(this);
@@ -581,6 +581,11 @@ public class MonitorService extends Service {
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
         }
         return true;
+    }
+
+    static String inventoryStatusText(int availableCount, int requestedCount, String time) {
+        String availability = availableCount > 0 ? "재고 있음" : "재고 없음";
+        return availability + " " + availableCount + "/" + requestedCount + " · " + time;
     }
 
     private void applyRateLimitBackoff(int status) {

@@ -16,4 +16,11 @@ public class MonitorServiceTest {
         assertEquals(15_000L, MonitorService.productSpacingMillis(15, 1));
         assertEquals(30_000L, MonitorService.productSpacingMillis(60, 2));
     }
+
+    @Test
+    public void inventoryStatusDoesNotSayInStockWhenNothingIsAvailable() {
+        assertEquals("재고 없음 0/1 · 10:00:00", MonitorService.inventoryStatusText(0, 1, "10:00:00"));
+        assertEquals("재고 있음 1/2 · 10:00:00", MonitorService.inventoryStatusText(1, 2, "10:00:00"));
+        assertEquals("재고 있음 2/2 · 10:00:00", MonitorService.inventoryStatusText(2, 2, "10:00:00"));
+    }
 }
