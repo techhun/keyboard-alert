@@ -53,6 +53,19 @@ public class InventoryScriptTest {
     }
 
     @Test
+    public void discoveryRecoversChannelUidFromSavedApiUrl() throws Exception {
+        JSONObject product = new JSONObject();
+        product.put("apiUrl", "https://m.smartstore.naver.com/i/v2/channels/recoveredUid456/products/123456?withWindow=false");
+        product.put("channelUid", "");
+        product.put("productNo", "123456");
+
+        String script = InventoryScript.build(product);
+
+        assertTrue(script.contains("recoveredUid456"));
+        assertTrue(script.contains("const configuredChannelUid = \"recoveredUid456\";"));
+    }
+
+    @Test
     public void directLookupClassifiesAuthenticationFailure() throws Exception {
         JSONObject product = new JSONObject();
         product.put("id", "sample");
