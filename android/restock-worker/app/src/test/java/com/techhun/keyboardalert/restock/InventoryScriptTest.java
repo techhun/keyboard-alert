@@ -35,7 +35,7 @@ public class InventoryScriptTest {
         assertTrue(script.contains("document.title.includes(candidateName)"));
         assertTrue(script.contains("PAGE_STATE"));
         assertTrue(script.contains("pageSnapshot.explicitOptionData || pageSnapshot.explicitNoOptions"));
-        assertTrue(script.contains("if (!options.length && allowSyntheticDefault)"));
+        assertTrue(script.contains("if (!options.length && (allowSyntheticDefault || explicitNoOptions))"));
         assertTrue(script.contains("'PAGE_STATE',"));
         assertTrue(script.contains("pageModel.exact,"));
         assertTrue(script.contains("snapshot(data, productNo, channelUid, apiUrl, 'API', true, true)"));
