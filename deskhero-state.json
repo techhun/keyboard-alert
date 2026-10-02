@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-30T23:35:40.042Z",
+  "updatedAt": "2026-10-02T15:41:05.684Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -641,32 +641,32 @@
     },
     {
       "category": "Keyset",
-      "product": "GMK Chocolatier R2",
+      "product": "GMK Power 2048",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
       "category": "Keyset",
-      "product": "GMK Hi Viz 2",
-      "notes": "Keyset shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK Power 2048",
-      "notes": "Estimated shipping late August | Estimated shipping late August 2026",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
       "product": "GMK British Racing Green R2",
-      "notes": "In transit to us. Estimated shipping September | In transit to us. Estimated shipping September 2026",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
       "category": "Keyset",
       "product": "GMK Centinela Extensions",
-      "notes": "New Estimated shipping late September",
+      "notes": "Almost here. Estimated shipping October",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Prussian Alert",
+      "notes": "Almost here. Estimated shipping October | Almost here. Estimated shipping October.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Spark",
+      "notes": "Almost here. Estimated shipping October | Almost here. Estimated shipping October.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -678,7 +678,7 @@
     {
       "category": "Keyset",
       "product": "Awekeys Wild Ice",
-      "notes": "New estimated shipping late August 2026.",
+      "notes": "New estimated shipping October. | New estimated shipping October 2026",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -1116,12 +1116,18 @@
     {
       "category": "Keyset",
       "product": "GMK Centinela Extension Kit",
-      "notes": "New estimated shipping late September 2026",
+      "notes": "Almost here. Estimated shipping October.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
       "category": "Keyset",
       "product": "GMK Cherry Love",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Chocolatier R2",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
@@ -1925,12 +1931,6 @@
     },
     {
       "category": "Keyset",
-      "product": "GMK Prussian Alert",
-      "notes": "Estimated shipping October 2026",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
       "product": "GMK Purple Night",
       "notes": "Shipping complete. Salvun received.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
@@ -2071,12 +2071,6 @@
       "category": "Keyset",
       "product": "GMK Space Cadet II Keycaps",
       "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK Spark",
-      "notes": "Estimated shipping October 2026",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -3820,5 +3814,14 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "6a5cde364f7d9014585645d1": "2026-10-02T15:41:04.044Z",
+    "95bc4a9fac9d478ea124b99f": "2026-10-02T15:41:04.316Z",
+    "b026977a689406cc96c8c856": "2026-10-02T15:41:04.475Z",
+    "2d0cb07b5b02b59aa4e3968b": "2026-10-02T15:41:04.665Z",
+    "dd9dd6c856f5b99c11bbe2a7": "2026-10-02T15:41:05.101Z",
+    "59834ea02cb4ef0a4584c6b5": "2026-10-02T15:41:05.339Z",
+    "58643139e129687756890a66": "2026-10-02T15:41:05.517Z",
+    "0c17aa6b6948e27c4cd4dff1": "2026-10-02T15:41:05.684Z"
+  }
 }
