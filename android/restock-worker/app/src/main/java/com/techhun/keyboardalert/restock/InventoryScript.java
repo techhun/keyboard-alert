@@ -14,8 +14,19 @@ final class InventoryScript {
     }
 
     static String build(JSONObject seedProduct, boolean allowApiFallback) {
-        String configuredApiUrl = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("apiUrl", ""));
-        String configuredChannelUid = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("channelUid", ""));
+        String apiUrl = seedProduct == null ? "" : seedProduct.optString("apiUrl", "");
+        String channelUid = seedProduct == null ? "" : seedProduct.optString("channelUid", "");
+        if (channelUid.isBlank() && !apiUrl.isBlank()) {
+            String marker = "/channels/";
+            int start = apiUrl.indexOf(marker);
+            if (start >= 0) {
+                start += marker.length();
+                int end = apiUrl.indexOf('/', start);
+                if (end > start) channelUid = apiUrl.substring(start, end);
+            }
+        }
+        String configuredApiUrl = JSONObject.quote(apiUrl);
+        String configuredChannelUid = JSONObject.quote(channelUid);
         String configuredProductNo = JSONObject.quote(seedProduct == null ? "" : seedProduct.optString("productNo", ""));
         return String.format(Locale.ROOT, """
         (() => {
