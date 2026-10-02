@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { buildPingUrl, sendHeartbeat } from '../scripts/healthchecks-ping.mjs';
+
+const fastWorkflowPath = fileURLToPath(new URL('../.github/workflows/keyboard-alert-fast.yml', import.meta.url));
+const slowWorkflowPath = fileURLToPath(new URL('../.github/workflows/keyboard-alert-slow.yml', import.meta.url));
 
 test('healthchecks heartbeat builds start, success, and fail URLs', () => {
   const base = 'https://hc-ping.com/11111111-2222-3333-4444-555555555555/';
@@ -53,4 +58,26 @@ test('healthchecks heartbeat retries without throwing into the monitored workflo
 
 test('healthchecks heartbeat rejects unsupported signal names', () => {
   assert.throws(() => buildPingUrl('https://hc-ping.com/example', 'unknown'), /Unknown heartbeat signal/);
+});
+
+test('Fast workflow emits start, success, and failure heartbeat signals', () => {
+  const workflow = fs.readFileSync(fastWorkflowPath, 'utf8');
+
+  assert.match(workflow, /HEALTHCHECKS_FAST_URL/);
+  assert.match(workflow, /healthchecks-ping\.mjs start/);
+  assert.match(workflow, /healthchecks-ping\.mjs success/);
+  assert.match(workflow, /healthchecks-ping\.mjs fail/);
+  assert.match(workflow, /Signal fast heartbeat success\n        if: success\(\)/);
+  assert.match(workflow, /Signal fast heartbeat failure\n        if: failure\(\)/);
+});
+
+test('Slow workflow emits start, success, and failure heartbeat signals', () => {
+  const workflow = fs.readFileSync(slowWorkflowPath, 'utf8');
+
+  assert.match(workflow, /HEALTHCHECKS_SLOW_URL/);
+  assert.match(workflow, /healthchecks-ping\.mjs start/);
+  assert.match(workflow, /healthchecks-ping\.mjs success/);
+  assert.match(workflow, /healthchecks-ping\.mjs fail/);
+  assert.match(workflow, /Signal slow heartbeat success\n        if: success\(\)/);
+  assert.match(workflow, /Signal slow heartbeat failure\n        if: failure\(\)/);
 });
