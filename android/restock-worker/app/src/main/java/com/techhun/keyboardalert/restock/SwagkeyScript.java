@@ -9,7 +9,7 @@ final class SwagkeyScript {
           try {
             const host = (location.hostname || '').toLowerCase();
             if (host !== 'swagkey.kr' && host !== 'www.swagkey.kr') {
-              send({ ok: false, error: 'UNTRUSTED_HOST' });
+              send({ ok: false, error: 'UNTRUSTED_HOST', pageUrl: location.href });
               return 'BLOCKED';
             }
 
@@ -45,12 +45,13 @@ final class SwagkeyScript {
             else if (!genericSoldOutText && document.querySelector('[data-product-code], [data-product-no], .shop_view')) available = true;
 
             if (available === null) {
-              send({ ok: false, error: 'STATE_UNKNOWN', title });
+              send({ ok: false, error: 'STATE_UNKNOWN', title, pageUrl: location.href });
               return 'UNKNOWN';
             }
 
             send({
               ok: true,
+              pageUrl: location.href,
               title,
               stockQuantity: available ? null : 0,
               options: [{
@@ -63,7 +64,7 @@ final class SwagkeyScript {
               }]
             });
           } catch (error) {
-            send({ ok: false, error: 'JS_ERROR', message: String(error) });
+            send({ ok: false, error: 'JS_ERROR', message: String(error), pageUrl: location.href });
           }
           return 'STARTED';
         })()
