@@ -15,6 +15,7 @@ final class OptionSelectionResolver {
 
     static final class Resolution {
         final Map<String, Boolean> availability = new LinkedHashMap<>();
+        final Map<String, Integer> quantities = new LinkedHashMap<>();
         final Map<String, String> labels = new LinkedHashMap<>();
         final Map<String, String> oldToNew = new LinkedHashMap<>();
         final JSONArray selectedIds = new JSONArray();
@@ -64,6 +65,13 @@ final class OptionSelectionResolver {
             if (newId.isEmpty() || result.availability.containsKey(newId)) continue;
             String label = optionLabel(matched);
             result.availability.put(newId, matched.optBoolean("available", false));
+            if (!matched.isNull("stockQuantity")) {
+                double quantity = matched.optDouble("stockQuantity", Double.NaN);
+                if (Double.isFinite(quantity) && quantity >= 0 && quantity <= Integer.MAX_VALUE
+                    && quantity == Math.floor(quantity)) {
+                    result.quantities.put(newId, (int) quantity);
+                }
+            }
             result.labels.put(newId, label);
             result.oldToNew.put(oldId, newId);
             result.selectedIds.put(newId);
