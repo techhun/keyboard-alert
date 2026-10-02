@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T10:21:33.074Z",
+  "updatedAt": "2026-10-02T06:51:08.398Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -708,16 +708,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
-      "product": "GMK CYL Thunder God",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Selene-36404233415480a0b1e6f15b1b16f3c7",
       "product": "GMK CYL Selene",
       "status": "In Manufacturing",
@@ -870,6 +860,16 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
       "product": "GMK Spark",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
+      "product": "GMK CYL Thunder God",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q4 2026"
     },
