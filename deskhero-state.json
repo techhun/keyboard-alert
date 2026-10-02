@@ -1,18 +1,48 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-02T15:41:05.684Z",
+  "updatedAt": "2026-10-02T15:51:16.756Z",
   "rows": [
     {
       "category": "Keyboard",
-      "product": "QK 80 Keyboards",
+      "product": "QK 65 Keyboards",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
       "category": "Keyboard",
-      "product": "QK 65 Keyboards",
-      "notes": "Estimated shipping late August.",
+      "product": "Alice Duo Keyboard",
+      "notes": "Shipping complete | Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo Ergo Keyboard",
+      "notes": "99% Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Evo75 Keyboard",
+      "notes": "80% Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Evo80 Keyboard",
+      "notes": "Shipping complete",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo 98 Keyboard",
+      "notes": "Shipping complete | Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
+    },
+    {
+      "category": "Keyboard",
+      "product": "Neo75 Keyboard",
+      "notes": "Shipping complete | Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -186,7 +216,7 @@
     {
       "category": "Keyboard",
       "product": "Evo75 Preorder",
-      "notes": "Delayed due to large-scale quality improvement program for LED. New estimated shipping end of September 2026",
+      "notes": "80% Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -198,7 +228,7 @@
     {
       "category": "Keyboard",
       "product": "Evo80 Preorder",
-      "notes": "Delayed. New estimated shipping late August/Early Sept 2026",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -408,7 +438,7 @@
     {
       "category": "Keyboard",
       "product": "Neo Ergo",
-      "notes": "Re-stock late August",
+      "notes": "Shipping 99% complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -425,14 +455,8 @@
     },
     {
       "category": "Keyboard",
-      "product": "Neo75 Keyboard",
-      "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
-    },
-    {
-      "category": "Keyboard",
       "product": "Neo 75 Keyboard",
-      "notes": "Re-stock August",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -445,12 +469,6 @@
       "category": "Keyboard",
       "product": "Neo98 Keyboard",
       "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
-    },
-    {
-      "category": "Keyboard",
-      "product": "Neo 98 Keyboard",
-      "notes": "Re-stock August",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -504,7 +522,7 @@
     {
       "category": "Keyboard",
       "product": "QK 65 MK3 Keyboards",
-      "notes": "Estimated shipping late August",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -588,7 +606,7 @@
     {
       "category": "Keyboard",
       "product": "Vida Keyboard",
-      "notes": "Still in production. New estimated TBD 2026.",
+      "notes": "Arrived. In processing.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -3822,6 +3840,7 @@
     "dd9dd6c856f5b99c11bbe2a7": "2026-10-02T15:41:05.101Z",
     "59834ea02cb4ef0a4584c6b5": "2026-10-02T15:41:05.339Z",
     "58643139e129687756890a66": "2026-10-02T15:41:05.517Z",
-    "0c17aa6b6948e27c4cd4dff1": "2026-10-02T15:41:05.684Z"
+    "0c17aa6b6948e27c4cd4dff1": "2026-10-02T15:41:05.684Z",
+    "4c80bd4376c9b66b8b627e8b": "2026-10-02T15:51:16.756Z"
   }
 }
