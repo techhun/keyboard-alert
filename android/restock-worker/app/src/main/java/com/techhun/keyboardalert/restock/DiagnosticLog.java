@@ -166,6 +166,22 @@ final class DiagnosticLog {
         return out.toString();
     }
 
+    static String exportText(Context context, String versionName) {
+        StringBuilder out = new StringBuilder();
+        out.append("Restock 진단 로그");
+        if (versionName != null && !versionName.isBlank()) {
+            out.append(" · v").append(versionName);
+        }
+        out.append("\n복사 시각 ")
+            .append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA).format(new Date()));
+        out.append("\n\n").append(summary(context));
+        out.append("\n\n이벤트 로그 (최근 7일 · 최대 ")
+            .append(MAX_ENTRIES)
+            .append("건)\n")
+            .append(formatRecent(context, MAX_ENTRIES));
+        return out.toString();
+    }
+
     static int count(Context context) {
         return read(context).length();
     }
