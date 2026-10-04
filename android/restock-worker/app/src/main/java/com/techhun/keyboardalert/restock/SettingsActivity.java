@@ -2,6 +2,8 @@ package com.techhun.keyboardalert.restock;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.graphics.Color;
@@ -238,7 +240,7 @@ public class SettingsActivity extends Activity {
         diagnosticHeader.addView(diagnosticStatus);
 
         TextView diagnosticNote = text(
-            "최근 7일 이벤트와 누적 조회 성공/실패를 기기에만 저장해요. 로그인 쿠키·응답 본문·개인정보는 기록하지 않아요.",
+            "최근 7일 이벤트와 누적 조회 성공/실패를 기기에만 저장해요. 로그 보기에서 전체 기록을 복사할 수 있어요. 로그인 쿠키·응답 본문·개인정보는 기록하지 않아요.",
             12,
             SUB,
             Typeface.NORMAL
@@ -451,8 +453,20 @@ public class SettingsActivity extends Activity {
         new AlertDialog.Builder(this)
             .setTitle("Restock 진단 로그")
             .setMessage(message)
+            .setNeutralButton("로그 복사", (dialog, which) -> copyDiagnostics())
             .setPositiveButton("닫기", null)
             .show();
+    }
+
+    private void copyDiagnostics() {
+        String content = DiagnosticLog.exportText(this, versionName());
+        ClipboardManager clipboard = getSystemService(ClipboardManager.class);
+        if (clipboard == null) {
+            toast("클립보드를 사용할 수 없어요.");
+            return;
+        }
+        clipboard.setPrimaryClip(ClipData.newPlainText("Restock 진단 로그", content));
+        toast("진단 로그 전체를 복사했어요.");
     }
 
     private void confirmClearDiagnostics() {
