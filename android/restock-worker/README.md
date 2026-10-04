@@ -162,4 +162,4 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 
 ## 버전
 
-현재 앱 버전: **0.14.30**
+현재 앱 버전: **0.14.31**
