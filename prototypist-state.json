@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-02T06:51:08.398Z",
+  "updatedAt": "2026-10-05T14:01:47.724Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -858,16 +858,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
-      "product": "GMK Spark",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
       "product": "GMK CYL Thunder God",
       "status": "Shipping to Prototypist",
@@ -890,6 +880,16 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
       "product": "GMK Centinela Extension Kit",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
+      "product": "GMK Spark",
       "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
