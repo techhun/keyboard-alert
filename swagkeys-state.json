@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-05T14:03:18.996Z",
+  "updatedAt": "2026-10-05T14:12:33.814Z",
   "announcement": {
     "heading": "업데이트(26.09.30)",
     "content": "SWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated.\n프로젝트 진행 상황 페이지가 업데이트 되었습니다. 전반적인 로고들이 재작업 후 업데이트 되었습니다. / Keycap Status Page has been updated. New Logos have been updated."
@@ -270,8 +270,5 @@
       "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-10-05T14:02:39.770Z",
-    "status": "2026-10-05T14:03:18.907Z"
-  }
+  "fallbackSince": {}
 }
