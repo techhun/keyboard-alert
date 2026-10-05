@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T23:20:40.593Z",
+  "updatedAt": "2026-10-05T00:00:54.256Z",
   "rows": [
     {
       "product": "Keykobo Cobalt",
@@ -71,8 +71,6 @@
     }
   ],
   "sentChanges": {
-    "dd99b9f77c081a5c72228acc": "2026-09-27T23:50:37.557Z",
-    "08fd0ca0e6dbc18eb22260f5": "2026-09-27T23:50:37.755Z",
     "e35a7ceea8c505bac73c8abd": "2026-10-01T08:30:48.118Z",
     "54a6f18e936030446aa2da41": "2026-10-01T23:20:40.221Z",
     "ac4e562c28ffc644d84f02da": "2026-10-01T23:20:40.592Z"
