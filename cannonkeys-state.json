@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-28T09:51:30.181Z",
+  "updatedAt": "2026-10-05T19:12:22.682Z",
   "rows": [
     {
       "id": 349,
@@ -199,13 +199,13 @@
       "id": 268,
       "displayName": "CK x Touhou NicePBT Youmu Keycaps",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-04-10",
       "endDate": "2026-05-10",
       "eta": "September 2026",
-      "latestUpdateId": 1841,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Production of NicePBT Youmu Keycaps has completed and sets are currently shipping to us via sea shipping! We expect to receive the shipment in the next 6-8 weeks!"
+      "latestUpdateId": 1873,
+      "latestUpdateDate": "2026-10-05",
+      "latestUpdateDescription": "CK x Touhou NicePBT Youmu Keycaps have arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
     },
     {
       "id": 337,
@@ -227,8 +227,8 @@
       "startDate": "2026-04-10",
       "endDate": "2026-05-10",
       "eta": "September 2026",
-      "latestUpdateId": 1828,
-      "latestUpdateDate": "2026-08-27",
+      "latestUpdateId": 1872,
+      "latestUpdateDate": "2026-10-05",
       "latestUpdateDescription": "CK x Touhou NicePBT Deskmats have arrived at our facilities! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. We will have an update on keycaps soon, however deskmat only orders will be shipping first."
     },
     {
@@ -3400,5 +3400,8 @@
       "latestUpdateDescription": ""
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "47afe9d5d5821f6c0aa31b13": "2026-10-05T19:12:22.481Z",
+    "5b7077a5a2cf95529cd0c814": "2026-10-05T19:12:22.681Z"
+  }
 }

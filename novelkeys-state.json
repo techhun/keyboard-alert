@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-02T01:01:14.952Z",
+  "updatedAt": "2026-10-05T19:12:19.537Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -91,7 +91,7 @@
       "category": "Keyboard",
       "product": "CLASSIC-TKL Hatsune Miku Edition",
       "status": "In production.",
-      "eta": "Q3 2026",
+      "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/classic-tkl-hatsune-miku-edition"
     },
     {
@@ -352,6 +352,7 @@
     "9bdb684e8a1cd75c033c48f1": "2026-09-29T15:21:05.158Z",
     "8e28945a95850f752c12684b": "2026-10-01T11:41:10.861Z",
     "d05bb60f3f320a25405f3b26": "2026-10-01T14:01:51.017Z",
-    "1e2a6b5e3f3084f3bf1988d2": "2026-10-02T01:01:14.952Z"
+    "1e2a6b5e3f3084f3bf1988d2": "2026-10-02T01:01:14.952Z",
+    "8dd6f75483cb0c419fa740b1": "2026-10-05T19:12:19.536Z"
   }
 }
