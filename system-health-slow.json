@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-05T12:41:10.396Z",
+  "updatedAt": "2026-10-05T12:51:13.135Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -29,10 +29,7 @@
     },
     "kbdfans": {
       "status": "ok",
-      "changedAt": "2026-09-28T00:01:56.363Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "37311156056",
-      "lastFailureAt": "2026-10-05T12:41:10.396Z"
+      "changedAt": "2026-09-28T00:01:56.363Z"
     },
     "cannonkeys": {
       "status": "ok",
