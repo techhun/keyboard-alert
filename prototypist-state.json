@@ -1,38 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-06T12:21:56.282Z",
+  "updatedAt": "2026-10-06T13:41:41.266Z",
   "rows": [
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Tofull-3d1042334154800d9ce3f61fa4942b63",
-      "product": "Tofull",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Supernova-60-3d10423341548037bc96d6dde6f28fae",
-      "product": "Supernova 60%",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Dia-3df04233415480aa90c6c1c5e13758cf",
-      "product": "Dia",
-      "status": "In Group Buy",
-      "expectedShipping": "Q3 2027"
-    },
     {
       "sourceId": "keyboard",
       "sourceLabel": "Keyboard",
@@ -648,16 +618,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Arcade-3b2042334154805f80fdeeec5ef62839",
-      "product": "GMK CYL Arcade",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Varenye-3d60423341548055850fffaa1eccb52b",
       "product": "GMK CYL Varenye",
       "status": "In Group Buy",
@@ -680,6 +640,56 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-MTNU-Oblivion-3df0423341548036b80feb4aa6c7da11",
       "product": "GMK MTNU Oblivion",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Red-Devils-3f1042334154809f86e1cc197c007b73",
+      "product": "GMK CYL Red Devils",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Dinokidz-3f10423341548020a2eff419c07bc8a3",
+      "product": "GMK CYL Dinokidz",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Boho-Small-Batch-3f104233415480c4992fea54644aa7d6",
+      "product": "GMK CYL Boho (Small Batch)",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Zombie-3f1042334154808eb066dac05e0b1829",
+      "product": "GMK CYL Zombie",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Rainy-Day-R3-3f104233415480ae8a06dbfbe62774ec",
+      "product": "GMK CYL Rainy Day R3",
       "status": "In Group Buy",
       "expectedShipping": "Q2 2027"
     },
@@ -850,6 +860,16 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Orange-Alert-3d604233415480f2b39deb156baf2038",
       "product": "GMK CYL Orange Alert",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Arcade-3b2042334154805f80fdeeec5ef62839",
+      "product": "GMK CYL Arcade",
       "status": "In Manufacturing",
       "expectedShipping": "Q1 2027"
     },
@@ -1148,30 +1168,30 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/MW-Jirai-3d604233415480268f8be6cccbc67abe",
-      "product": "MW Jirai",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/SWG-Feralis-3d60423341548073abc0ec711ae9a7df",
-      "product": "SWG Feralis",
-      "status": "In Group Buy",
-      "expectedShipping": "Q2 2027"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Holy-Caster-3d604233415480fcb9aef610230815bb",
       "product": "DCS Holy Caster",
       "status": "In Group Buy",
       "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Cobalt-3f10423341548073ab9ee6a2a3706101",
+      "product": "KKB Cobalt",
+      "status": "In Group Buy",
+      "expectedShipping": "Q1 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-SMRT-R2-3f104233415480e5bf4fe216d09655c6",
+      "product": "DCS SMRT R2",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
     },
     {
       "sourceId": "keyset",
@@ -1448,6 +1468,16 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/MW-Jirai-3d604233415480268f8be6cccbc67abe",
+      "product": "MW Jirai",
+      "status": "Completed",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Olivetti-36404233415480f9b87bde3ad5e9e1ac",
       "product": "DCS Olivetti",
       "status": "Completed",
@@ -1682,21 +1712,7 @@
       "product": "KAP Buff Bride",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Pink-Alert-2c0042334154800d9c49de1ff5a04819",
-      "product": "DCS Pink Alert",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
     }
   ],
-  "fallbackSince": {
-    "keyboard": "2026-10-06T12:21:30.025Z",
-    "gmk": "2026-10-06T12:21:42.377Z",
-    "keyset": "2026-10-06T12:21:54.721Z"
-  }
+  "fallbackSince": {}
 }
