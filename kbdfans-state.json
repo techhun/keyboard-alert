@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-06T01:21:07.305Z",
+  "updatedAt": "2026-10-06T08:31:45.022Z",
   "rows": [
     {
       "category": "KEYCAPS",
@@ -479,9 +479,9 @@
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Evil Lime",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
+      "status": "Group buy",
+      "eta": "Q2 2027",
+      "progress": 50,
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-06-26",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -1030,6 +1030,7 @@
   "sentChanges": {
     "1b64c0a8c8bca7ddb66701a9": "2026-10-01T07:21:18.717Z",
     "e0953aa5c3cd809690b44336": "2026-10-02T07:11:02.697Z",
-    "be3d924685313e4dbdc552dc": "2026-10-02T07:31:15.539Z"
+    "be3d924685313e4dbdc552dc": "2026-10-02T07:31:15.539Z",
+    "c91524678a4b743b2e5d0106": "2026-10-06T08:31:45.022Z"
   }
 }
