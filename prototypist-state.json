@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-07T12:31:39.267Z",
+  "updatedAt": "2026-10-07T12:51:10.939Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -291,7 +291,7 @@
       "itemUrl": "https://prototypist.notion.site/QK-Neo-Batch-10-All-Boards-3640423341548085a0eec2618333b209",
       "product": "QK & Neo Batch 10 (All Boards)",
       "status": "Shipping to Prototypist",
-      "expectedShipping": "Late Q3 2026"
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
