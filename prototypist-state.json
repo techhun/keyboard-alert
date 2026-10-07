@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-06T13:41:41.266Z",
+  "updatedAt": "2026-10-07T12:31:39.267Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -618,16 +618,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Varenye-3d60423341548055850fffaa1eccb52b",
-      "product": "GMK CYL Varenye",
-      "status": "In Group Buy",
-      "expectedShipping": "Q2 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Evil-Lime-3df042334154802393d4f56e015e7526",
       "product": "GMK CYL Evil Lime",
       "status": "In Group Buy",
@@ -660,16 +650,6 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Dinokidz-3f10423341548020a2eff419c07bc8a3",
       "product": "GMK CYL Dinokidz",
-      "status": "In Group Buy",
-      "expectedShipping": "Q2 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Boho-Small-Batch-3f104233415480c4992fea54644aa7d6",
-      "product": "GMK CYL Boho (Small Batch)",
       "status": "In Group Buy",
       "expectedShipping": "Q2 2027"
     },
@@ -872,6 +852,26 @@
       "product": "GMK CYL Arcade",
       "status": "In Manufacturing",
       "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Varenye-3d60423341548055850fffaa1eccb52b",
+      "product": "GMK CYL Varenye",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Boho-Small-Batch-3f104233415480c4992fea54644aa7d6",
+      "product": "GMK CYL Boho (Small Batch)",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q2 2027"
     },
     {
       "sourceId": "gmk",
@@ -1162,26 +1162,6 @@
       "product": "GMK BLOT R2",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Holy-Caster-3d604233415480fcb9aef610230815bb",
-      "product": "DCS Holy Caster",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Cobalt-3f10423341548073ab9ee6a2a3706101",
-      "product": "KKB Cobalt",
-      "status": "In Group Buy",
-      "expectedShipping": "Q1 2026"
     },
     {
       "sourceId": "keyset",
