@@ -1,27 +1,27 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T00:21:15.282Z",
+  "updatedAt": "2026-10-08T03:00:52.740Z",
   "rows": [
     {
-      "product": "Keykobo Cobalt",
-      "gbStart": "2026. 8. 31",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "KEYKOBO",
-      "status": "GB on sale",
-      "update": "2026. 9. 21",
-      "note": "—"
+      "product": "+84 TKL",
+      "gbStart": "2025. 12. 5",
+      "eta": "2026. 7. 31",
+      "type": "Keyboard",
+      "manufacturer": "Nuxroskb",
+      "status": "inspecting",
+      "update": "2026. 10. 2",
+      "note": "검수 중 / Inspection"
     },
     {
-      "product": "GMK CYL Varenye",
-      "gbStart": "2026. 9. 4",
+      "product": "Seal80",
+      "gbStart": "2026. 3. 24",
       "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "GB on sale",
-      "update": "2026. 9. 28",
-      "note": "—"
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "inspecting",
+      "update": "2026. 10. 2",
+      "note": "검수 중 / Inspection"
     },
     {
       "product": "GMK CYL Red Devils",
@@ -30,7 +30,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "GB on sale",
-      "update": "2026. 9. 15",
+      "update": "2026. 10. 8",
       "note": "—"
     },
     {
@@ -44,16 +44,6 @@
       "note": "—"
     },
     {
-      "product": "Nexus60",
-      "gbStart": "2026. 9. 21",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "KEZEWA",
-      "status": "GB on sale",
-      "update": "2026. 9. 21",
-      "note": "—"
-    },
-    {
       "product": "DCS SMRT R2",
       "gbStart": "2026. 9. 21",
       "eta": "2027. 3. 31",
@@ -61,6 +51,36 @@
       "manufacturer": "Signature Plastics",
       "status": "GB on sale",
       "update": "2026. 9. 22",
+      "note": "—"
+    },
+    {
+      "product": "Keykobo Cobalt",
+      "gbStart": "2026. 8. 31",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
+      "status": "In progress",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Varenye",
+      "gbStart": "2026. 9. 4",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "In progress",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "Nexus60",
+      "gbStart": "2026. 9. 21",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "KEZEWA",
+      "status": "In progress",
+      "update": "2026. 10. 8",
       "note": "—"
     },
     {
@@ -622,40 +642,15 @@
       "status": "In progress",
       "update": "2026. 9. 28",
       "note": "—"
-    },
-    {
-      "product": "+84 TKL",
-      "gbStart": "2025. 12. 5",
-      "eta": "2026. 7. 31",
-      "type": "Keyboard",
-      "manufacturer": "Nuxroskb",
-      "status": "inspecting",
-      "update": "2026. 10. 2",
-      "note": "검수 중 / Inspection"
-    },
-    {
-      "product": "Seal80",
-      "gbStart": "2026. 3. 24",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "inspecting",
-      "update": "2026. 10. 2",
-      "note": "검수 중 / Inspection"
-    },
-    {
-      "product": "DCS Olivetti",
-      "gbStart": "2026. 3. 27",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "inspecting",
-      "update": "2026. 10. 1",
-      "note": "—"
     }
   ],
   "sentChanges": {
     "a5758cc735f9c14e8f0ad962": "2026-10-02T12:10:34.256Z",
-    "93a950bf0f4cace126a23b59": "2026-10-02T12:10:34.432Z"
+    "93a950bf0f4cace126a23b59": "2026-10-02T12:10:34.432Z",
+    "47800c170282964a329057cb": "2026-10-08T03:00:51.033Z",
+    "5f0d32d48cdc88f97d4ef8f8": "2026-10-08T03:00:51.258Z",
+    "82631696cd52a9e5c3ab4fe2": "2026-10-08T03:00:51.464Z",
+    "059a1b9ac9a394ac5db35152": "2026-10-08T03:00:51.980Z",
+    "5c2b2081a680ece17e9a89dd": "2026-10-08T03:00:52.740Z"
   }
 }
