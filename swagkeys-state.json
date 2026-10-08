@@ -1,10 +1,10 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-07T13:01:16.668Z",
+  "updatedAt": "2026-10-08T02:41:16.986Z",
   "announcement": {
-    "heading": "업데이트(26.09.30)",
-    "content": "SWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated.\n프로젝트 진행 상황 페이지가 업데이트 되었습니다. 전반적인 로고들이 재작업 후 업데이트 되었습니다. / Keycap Status Page has been updated. New Logos have been updated."
+    "heading": "업데이트(26.10.08)",
+    "content": "SWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added.\nSWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated."
   },
   "quarters": {
     "Q1": [
