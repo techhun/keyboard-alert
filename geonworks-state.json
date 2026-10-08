@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T03:20:49.071Z",
+  "updatedAt": "2026-10-08T04:30:46.638Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -662,6 +662,26 @@
       "status": "GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
+    },
+    {
+      "product": "DCS CHLADNI",
+      "gbStart": "2026. 10. 6",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "GB on sale",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL ZOMBIE",
+      "gbStart": "2026. 10. 7",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "GB on sale",
+      "update": "2026. 10. 8",
+      "note": "—"
     }
   ],
   "sentChanges": {
@@ -674,6 +694,8 @@
     "5c2b2081a680ece17e9a89dd": "2026-10-08T03:00:52.740Z",
     "769dbdf30fd9d5a231b648ff": "2026-10-08T03:10:34.811Z",
     "4a749f7b33b8e30095b0ccef": "2026-10-08T03:20:48.797Z",
-    "4f9af70074e064e6a7277851": "2026-10-08T03:20:49.071Z"
+    "4f9af70074e064e6a7277851": "2026-10-08T03:20:49.071Z",
+    "631c288fa77bca6f97692e5b": "2026-10-08T04:30:46.362Z",
+    "f511af90fe166ff219df82d5": "2026-10-08T04:30:46.638Z"
   }
 }
