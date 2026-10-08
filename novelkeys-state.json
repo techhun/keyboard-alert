@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T14:10:59.867Z",
+  "updatedAt": "2026-10-08T16:50:59.856Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -128,6 +128,13 @@
       "status": "PCBs and Wrist Rests are complete. Currently in production on all the other parts. Estimated to complete during Q4.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/keycult-no-1-tkl-series-22-keyboard"
+    },
+    {
+      "category": "Keycap",
+      "product": "CYL Evil Dolch The Split R2",
+      "status": "Open for orders",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/cyl-evil-dolch-the-split-keycaps"
     },
     {
       "category": "Keycap",
@@ -349,6 +356,7 @@
   ],
   "sentChanges": {
     "1e2a6b5e3f3084f3bf1988d2": "2026-10-02T01:01:14.952Z",
-    "8dd6f75483cb0c419fa740b1": "2026-10-05T19:12:19.536Z"
+    "8dd6f75483cb0c419fa740b1": "2026-10-05T19:12:19.536Z",
+    "68affbcc815c4f6a8ba3eeea": "2026-10-08T16:50:59.855Z"
   }
 }
