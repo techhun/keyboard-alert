@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T04:30:46.638Z",
+  "updatedAt": "2026-10-08T04:50:37.402Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -9,7 +9,7 @@
       "eta": "2026. 7. 31",
       "type": "Keyboard",
       "manufacturer": "Nuxroskb",
-      "status": "inspecting",
+      "status": "검수 중 / inspecting",
       "update": "2026. 10. 8",
       "note": "검수 중. 일부 미입고 되어 순차 발송 / Currently being inspected. Some items have not yet arrived and will be shipped in order."
     },
@@ -19,8 +19,8 @@
       "eta": "2026. 12. 31",
       "type": "Keyboard",
       "manufacturer": "SENSY",
-      "status": "inspecting",
-      "update": "2026. 10. 2",
+      "status": "검수 중 / inspecting",
+      "update": "2026. 10. 8",
       "note": "검수 중 / Inspection"
     },
     {
@@ -29,7 +29,7 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
     },
@@ -39,7 +39,7 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 9. 15",
       "note": "—"
     },
@@ -49,598 +49,8 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 9. 22",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL MOTIF",
-      "gbStart": "2025. 2. 13",
-      "eta": "2026. 10. 22",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 24",
-      "note": "컬러 매칭중 / Matching colors"
-    },
-    {
-      "product": "GMK CYL GUROKAWA",
-      "gbStart": "2025. 7. 18",
-      "eta": "2026. 10. 26",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 21",
-      "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
-    },
-    {
-      "product": "LILY R2 HHKB Barebone Kit",
-      "gbStart": "2025. 9. 3",
-      "eta": "2026. 5. 31",
-      "type": "Keyboard",
-      "manufacturer": "TypePlus",
-      "status": "In progress",
-      "update": "2026. 7. 14",
-      "note": "EC 킷 미입고 / EC kits have not yet arrived."
-    },
-    {
-      "product": "Keycult No. 3 TKL",
-      "gbStart": "2025. 9. 19",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "In progress",
-      "update": "2026. 9. 10",
-      "note": "9월 3주 최종 검수 예정 / Final review scheduled for the third week of September"
-    },
-    {
-      "product": "HAVEN 60",
-      "gbStart": "2025. 9. 28",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "Atelier",
-      "status": "In progress",
-      "update": "2026. 8. 31",
-      "note": "PVD 제품 제외 생산 완료."
-    },
-    {
-      "product": "Cloudnine R2",
-      "gbStart": "2025. 9. 28",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "MACHINA",
-      "status": "In progress",
-      "update": "2026. 9. 21",
-      "note": "PVD 코팅 제외 유닛 : 9월 21일 발송 PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) /Units without PVD coating: Shipping on September 21. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
-    },
-    {
-      "product": "Keycult Wristrest",
-      "gbStart": "2025. 10. 14",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "In progress",
-      "update": "2026. 9. 28",
-      "note": "통관 중 / Currently undergoing customs clearance"
-    },
-    {
-      "product": "Keycult No. 2 TKL",
-      "gbStart": "2025. 12. 19",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "In progress",
-      "update": "2026. 9. 8",
-      "note": "PCB 완성, 알루 파츠 제작 중 / PCB completed; aluminum parts currently being manufactured"
-    },
-    {
-      "product": "GEHIRN60 Barebone Kit",
-      "gbStart": "2026. 1. 19",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "BAIONLENJA",
-      "status": "In progress",
-      "update": "2026. 8. 26",
-      "note": "완료 항목: 아노다이징, MX PCB, 보강판 전량, 패키징 상자, RAW 무게추, 포장재 전량 / 진행 중 항목: 코팅, 무게추 / 대기/지연 항목: HE 및 EC 키트용 구성품/일부 부품 입고 대기 중 / Completed Items: Anodizing, MX PCB, all reinforcement plates, packaging boxes, RAW weights, all packaging materials / In Progress: Coating, weights / Pending/Delayed: Components for HE and EC kits / Awaiting arrival of some parts"
-    },
-    {
-      "product": "TYPFACE KAFKA Barebones Kit",
-      "gbStart": "2026. 1. 29",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "TYPFACE",
-      "status": "In progress",
-      "update": "2026. 9. 28",
-      "note": "제조사에서 배대지로 발송 중 / Currently being shipped from the manufacturer to the distribution center"
-    },
-    {
-      "product": "DCS Cream Cheese and Green R3",
-      "gbStart": "2026. 2. 20",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 7. 31",
-      "note": "—"
-    },
-    {
-      "product": "Katina TKL",
-      "gbStart": "2026. 3. 18",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "INN Studio",
-      "status": "In progress",
-      "update": "2026. 9. 28",
-      "note": "—"
-    },
-    {
-      "product": "Stratum 80",
-      "gbStart": "2026. 3. 25",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Artifact Inderstry",
-      "status": "In progress",
-      "update": "2026. 9. 28",
-      "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
-    },
-    {
-      "product": "BAUER 65",
-      "gbStart": "2026. 4. 1",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Omnitype",
-      "status": "In progress",
-      "update": "2026. 5. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CENTINELA EXTENSION KIT",
-      "gbStart": "2026. 4. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 24",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Combobreaker",
-      "gbStart": "2026. 4. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 1",
-      "note": "통관 중, 이중사출 WIN 키캡 4EA 추가 동봉 예정 / Currently undergoing customs clearance, 4 additional dual-shot WIN keycaps will be included"
-    },
-    {
-      "product": "Overture 2",
-      "gbStart": "2026. 4. 9",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "MACHINA",
-      "status": "In progress",
-      "update": "2026. 9. 9",
-      "note": "케이스: 9월 중순 CNC 완료, PCB: 9월 2주 중 완료. 키캡, 가방: 9월 말 경 완료. 스위치: 9월 말 발주 예정. 9월말에서 10월 중순 사이 발송 예정 / Case: CNC machining to be completed in mid-September; PCB: to be completed during the second week of September; Keycaps and bag: to be completed around the end of September; Switches: scheduled to be ordered at the end of September; Scheduled to ship between the end of September and mid-October."
-    },
-    {
-      "product": "PBS-Retro S.M AG",
-      "gbStart": "2026. 4. 17",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "Keyreative",
-      "status": "In progress",
-      "update": "2026. 5. 18",
-      "note": "—"
-    },
-    {
-      "product": "Atelier Magnus Slate Zero",
-      "gbStart": "2026. 4. 27",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Atelier Magnus",
-      "status": "In progress",
-      "update": "2026. 9. 21",
-      "note": "10월 2주에 제작자가 중국 공장에 가서 QC 예정 / The manufacturer is scheduled to visit the factory in China for quality control during the second week of October."
-    },
-    {
-      "product": "Grit Jahre 65",
-      "gbStart": "2026. 5. 1",
-      "eta": "2026. 12. 30",
-      "type": "Keyboard",
-      "manufacturer": "Grit",
-      "status": "In progress",
-      "update": "2026. 9. 9",
-      "note": "PCB 생산 마무리 단계. 자재 준비 완료. 9월 중 품질 검사, 조립 및 포장 작업 예정. / PCB production is in its final stages. Materials have been prepared. Quality inspection, assembly, and packaging are scheduled for September."
-    },
-    {
-      "product": "DCS Grass Valley",
-      "gbStart": "2026. 5. 4",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 5. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL GREG R2",
-      "gbStart": "2026. 5. 4",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 4",
-      "note": "키캡 입고, 데스트패드 미입고 / Keycaps included, mouse pad not included"
-    },
-    {
-      "product": "KBDfans Tofu Pad",
-      "gbStart": "2026. 5. 6",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "KBDfans",
-      "status": "In progress",
-      "update": "2026. 6. 1",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL PRUSSIAN ALERT",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 6. 24",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL SELENE",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 4",
-      "note": "—"
-    },
-    {
-      "product": "RF-8X",
-      "gbStart": "2026. 5. 26",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "",
-      "status": "In progress",
-      "update": "2026. 9. 9",
-      "note": "Cnc 85% 완료. 플레이트 완성. pcb 생산 중 / CNC 85% complete. Plate completed. PCB in production."
-    },
-    {
-      "product": "Keycult No.2/60",
-      "gbStart": "2026. 5. 28",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "In progress",
-      "update": "2026. 6. 30",
-      "note": "—"
-    },
-    {
-      "product": "DCS DOLCH",
-      "gbStart": "2026. 6. 2",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 7. 2",
-      "note": "—"
-    },
-    {
-      "product": "KB-40",
-      "gbStart": "2026. 6. 4",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "",
-      "status": "In progress",
-      "update": "2026. 6. 16",
-      "note": "—"
-    },
-    {
-      "product": "GMK MASTERPIECE R2",
-      "gbStart": "2026. 6. 5",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 6. 16",
-      "note": "—"
-    },
-    {
-      "product": "KRAZE",
-      "gbStart": "2026. 6. 8",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Nuxroskb",
-      "status": "In progress",
-      "update": "2026. 8. 31",
-      "note": "알루미늄 웨이트 60% 가공, SS 배터리 무게추 50% 가공 / 60% of aluminum weights machined; 50% of SS battery weights machined"
-    },
-    {
-      "product": "GMK TA NEO",
-      "gbStart": "2026. 6. 19",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 7. 30",
-      "note": "—"
-    },
-    {
-      "product": "DCS Handarbeit",
-      "gbStart": "2026. 6. 19",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 7. 22",
-      "note": "—"
-    },
-    {
-      "product": "DCS Mudbeam",
-      "gbStart": "2026. 6. 22",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 6. 24",
-      "note": "—"
-    },
-    {
-      "product": "KBDfans Tofu TKL x Lucy",
-      "gbStart": "2026. 6. 23",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "KBDfans",
-      "status": "In progress",
-      "update": "2026. 7. 22",
-      "note": "—"
-    },
-    {
-      "product": "GMK 2 PACK",
-      "gbStart": "2026. 6. 26",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 3",
-      "note": "—"
-    },
-    {
-      "product": "GMK Analog Dreams R3",
-      "gbStart": "2026. 7. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 7. 3",
-      "note": "—"
-    },
-    {
-      "product": "Keyboy Advance 50%",
-      "gbStart": "2026. 7. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "",
-      "status": "In progress",
-      "update": "2026. 7. 29",
-      "note": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks."
-    },
-    {
-      "product": "GMK Finer Things R2",
-      "gbStart": "2026. 7. 7",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 10",
-      "note": "—"
-    },
-    {
-      "product": "Wing",
-      "gbStart": "2026. 7. 9",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "",
-      "status": "In progress",
-      "update": "2026. 7. 22",
-      "note": "—"
-    },
-    {
-      "product": "Tofu TKL R2",
-      "gbStart": "2026. 7. 16",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "KBDfans",
-      "status": "In progress",
-      "update": "2026. 8. 19",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Noire R2",
-      "gbStart": "2026. 7. 20",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 3",
-      "note": "—"
-    },
-    {
-      "product": "Seal 80 DCS DOLCH SPECIAL EDITION",
-      "gbStart": "2026. 7. 22",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "In progress",
-      "update": "2026. 8. 3",
-      "note": "—"
-    },
-    {
-      "product": "DCS Soju",
-      "gbStart": "2026. 7. 22",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "In progress",
-      "update": "2026. 8. 19",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL HYPERFUSE ORIGINS R3",
-      "gbStart": "2026. 7. 23",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 19",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Mini Orange Accent Pack",
-      "gbStart": "2026. 7. 28",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 24",
-      "note": "—"
-    },
-    {
-      "product": "MW Virtual",
-      "gbStart": "2026. 7. 30",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "MW",
-      "status": "In progress",
-      "update": "2026. 9. 1",
-      "note": "—"
-    },
-    {
-      "product": "GMK ARCADE",
-      "gbStart": "2026. 8. 6",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 1",
-      "note": "—"
-    },
-    {
-      "product": "GMK MTNU JUST",
-      "gbStart": "2026. 8. 7",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 8. 31",
-      "note": "—"
-    },
-    {
-      "product": "Keykobo Cross Impact",
-      "gbStart": "2026. 8. 13",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "KEYKOBO",
-      "status": "In progress",
-      "update": "2026. 9. 15",
-      "note": "—"
-    },
-    {
-      "product": "KBDfans Tofull",
-      "gbStart": "2026. 8. 14",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "KBDfans",
-      "status": "In progress",
-      "update": "2026. 9. 15",
-      "note": "—"
-    },
-    {
-      "product": "Supernova",
-      "gbStart": "2026. 8. 20",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "In progress",
-      "update": "2026. 9. 21",
-      "note": "—"
-    },
-    {
-      "product": "Black Snail Deskmat",
-      "gbStart": "2026. 8. 21",
-      "eta": "2026. 12. 31",
-      "type": "Desk mat",
-      "manufacturer": "GEONWORKS",
-      "status": "In progress",
-      "update": "2026. 8. 31",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Orange Alert",
-      "gbStart": "2026. 8. 24",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 14",
-      "note": "—"
-    },
-    {
-      "product": "Keykobo Gelateria",
-      "gbStart": "2026. 8. 28",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "KEYKOBO",
-      "status": "In progress",
-      "update": "2026. 9. 7",
-      "note": "—"
-    },
-    {
-      "product": "Keykobo Cobalt",
-      "gbStart": "2026. 8. 31",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "KEYKOBO",
-      "status": "In progress",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Varenye",
-      "gbStart": "2026. 9. 4",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Mothman",
-      "gbStart": "2026. 9. 4",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "In progress",
-      "update": "2026. 9. 28",
-      "note": "—"
-    },
-    {
-      "product": "Nexus60",
-      "gbStart": "2026. 9. 21",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "KEZEWA",
-      "status": "In progress",
-      "update": "2026. 10. 8",
       "note": "—"
     },
     {
@@ -649,7 +59,7 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
     },
@@ -659,7 +69,7 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
     },
@@ -669,7 +79,7 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
     },
@@ -679,7 +89,597 @@
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
-      "status": "GB on sale",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL MOTIF",
+      "gbStart": "2025. 2. 13",
+      "eta": "2026. 10. 22",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 8",
+      "note": "컬러 매칭중 / Matching colors"
+    },
+    {
+      "product": "GMK CYL GUROKAWA",
+      "gbStart": "2025. 7. 18",
+      "eta": "2026. 10. 26",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 21",
+      "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
+    },
+    {
+      "product": "LILY R2 HHKB Barebone Kit",
+      "gbStart": "2025. 9. 3",
+      "eta": "2026. 5. 31",
+      "type": "Keyboard",
+      "manufacturer": "TypePlus",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 14",
+      "note": "EC 킷 미입고 / EC kits have not yet arrived."
+    },
+    {
+      "product": "Keycult No. 3 TKL",
+      "gbStart": "2025. 9. 19",
+      "eta": "2026. 6. 30",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 10",
+      "note": "9월 3주 최종 검수 예정 / Final review scheduled for the third week of September"
+    },
+    {
+      "product": "HAVEN 60",
+      "gbStart": "2025. 9. 28",
+      "eta": "2026. 6. 30",
+      "type": "Keyboard",
+      "manufacturer": "Atelier",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 31",
+      "note": "PVD 제품 제외 생산 완료."
+    },
+    {
+      "product": "Cloudnine R2",
+      "gbStart": "2025. 9. 28",
+      "eta": "2026. 6. 30",
+      "type": "Keyboard",
+      "manufacturer": "MACHINA",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 21",
+      "note": "PVD 코팅 제외 유닛 : 9월 21일 발송 PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) /Units without PVD coating: Shipping on September 21. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
+    },
+    {
+      "product": "Keycult Wristrest",
+      "gbStart": "2025. 10. 14",
+      "eta": "2026. 6. 30",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 28",
+      "note": "통관 중 / Currently undergoing customs clearance"
+    },
+    {
+      "product": "Keycult No. 2 TKL",
+      "gbStart": "2025. 12. 19",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 8",
+      "note": "PCB 완성, 알루 파츠 제작 중 / PCB completed; aluminum parts currently being manufactured"
+    },
+    {
+      "product": "GEHIRN60 Barebone Kit",
+      "gbStart": "2026. 1. 19",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "BAIONLENJA",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 26",
+      "note": "완료 항목: 아노다이징, MX PCB, 보강판 전량, 패키징 상자, RAW 무게추, 포장재 전량 / 진행 중 항목: 코팅, 무게추 / 대기/지연 항목: HE 및 EC 키트용 구성품/일부 부품 입고 대기 중 / Completed Items: Anodizing, MX PCB, all reinforcement plates, packaging boxes, RAW weights, all packaging materials / 제작 중 / In progress: Coating, weights / Pending/Delayed: Components for HE and EC kits / Awaiting arrival of some parts"
+    },
+    {
+      "product": "TYPFACE KAFKA Barebones Kit",
+      "gbStart": "2026. 1. 29",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "TYPFACE",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 28",
+      "note": "제조사에서 배대지로 발송 중 / Currently being shipped from the manufacturer to the distribution center"
+    },
+    {
+      "product": "DCS Cream Cheese and Green R3",
+      "gbStart": "2026. 2. 20",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 31",
+      "note": "—"
+    },
+    {
+      "product": "Katina TKL",
+      "gbStart": "2026. 3. 18",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "INN Studio",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 28",
+      "note": "—"
+    },
+    {
+      "product": "Stratum 80",
+      "gbStart": "2026. 3. 25",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Artifact Inderstry",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 28",
+      "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
+    },
+    {
+      "product": "BAUER 65",
+      "gbStart": "2026. 4. 1",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Omnitype",
+      "status": "제작 중 / In progress",
+      "update": "2026. 5. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CENTINELA EXTENSION KIT",
+      "gbStart": "2026. 4. 3",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 24",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Combobreaker",
+      "gbStart": "2026. 4. 3",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 1",
+      "note": "통관 중, 이중사출 WIN 키캡 4EA 추가 동봉 예정 / Currently undergoing customs clearance, 4 additional dual-shot WIN keycaps will be included"
+    },
+    {
+      "product": "Overture 2",
+      "gbStart": "2026. 4. 9",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "MACHINA",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 9",
+      "note": "케이스: 9월 중순 CNC 완료, PCB: 9월 2주 중 완료. 키캡, 가방: 9월 말 경 완료. 스위치: 9월 말 발주 예정. 9월말에서 10월 중순 사이 발송 예정 / Case: CNC machining to be completed in mid-September; PCB: to be completed during the second week of September; Keycaps and bag: to be completed around the end of September; Switches: scheduled to be ordered at the end of September; Scheduled to ship between the end of September and mid-October."
+    },
+    {
+      "product": "PBS-Retro S.M AG",
+      "gbStart": "2026. 4. 17",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "Keyreative",
+      "status": "제작 중 / In progress",
+      "update": "2026. 5. 18",
+      "note": "—"
+    },
+    {
+      "product": "Atelier Magnus Slate Zero",
+      "gbStart": "2026. 4. 27",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Atelier Magnus",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 21",
+      "note": "10월 2주에 제작자가 중국 공장에 가서 QC 예정 / The manufacturer is scheduled to visit the factory in China for quality control during the second week of October."
+    },
+    {
+      "product": "Grit Jahre 65",
+      "gbStart": "2026. 5. 1",
+      "eta": "2026. 12. 30",
+      "type": "Keyboard",
+      "manufacturer": "Grit",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 9",
+      "note": "PCB 생산 마무리 단계. 자재 준비 완료. 9월 중 품질 검사, 조립 및 포장 작업 예정. / PCB production is in its final stages. Materials have been prepared. Quality inspection, assembly, and packaging are scheduled for September."
+    },
+    {
+      "product": "DCS Grass Valley",
+      "gbStart": "2026. 5. 4",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 5. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL GREG R2",
+      "gbStart": "2026. 5. 4",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 4",
+      "note": "키캡 입고, 데스트패드 미입고 / Keycaps included, mouse pad not included"
+    },
+    {
+      "product": "KBDfans Tofu Pad",
+      "gbStart": "2026. 5. 6",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 1",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL PRUSSIAN ALERT",
+      "gbStart": "2026. 5. 15",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 24",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL SELENE",
+      "gbStart": "2026. 5. 15",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 4",
+      "note": "—"
+    },
+    {
+      "product": "RF-8X",
+      "gbStart": "2026. 5. 26",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 9",
+      "note": "Cnc 85% 완료. 플레이트 완성. pcb 생산 중 / CNC 85% complete. Plate completed. PCB in production."
+    },
+    {
+      "product": "Keycult No.2/60",
+      "gbStart": "2026. 5. 28",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 30",
+      "note": "—"
+    },
+    {
+      "product": "DCS DOLCH",
+      "gbStart": "2026. 6. 2",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 2",
+      "note": "—"
+    },
+    {
+      "product": "KB-40",
+      "gbStart": "2026. 6. 4",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 16",
+      "note": "—"
+    },
+    {
+      "product": "GMK MASTERPIECE R2",
+      "gbStart": "2026. 6. 5",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 16",
+      "note": "—"
+    },
+    {
+      "product": "KRAZE",
+      "gbStart": "2026. 6. 8",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Nuxroskb",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 31",
+      "note": "알루미늄 웨이트 60% 가공, SS 배터리 무게추 50% 가공 / 60% of aluminum weights machined; 50% of SS battery weights machined"
+    },
+    {
+      "product": "GMK TA NEO",
+      "gbStart": "2026. 6. 19",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 30",
+      "note": "—"
+    },
+    {
+      "product": "DCS Handarbeit",
+      "gbStart": "2026. 6. 19",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 22",
+      "note": "—"
+    },
+    {
+      "product": "DCS Mudbeam",
+      "gbStart": "2026. 6. 22",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 6. 24",
+      "note": "—"
+    },
+    {
+      "product": "KBDfans Tofu TKL x Lucy",
+      "gbStart": "2026. 6. 23",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 22",
+      "note": "—"
+    },
+    {
+      "product": "GMK 2 PACK",
+      "gbStart": "2026. 6. 26",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 3",
+      "note": "—"
+    },
+    {
+      "product": "GMK Analog Dreams R3",
+      "gbStart": "2026. 7. 3",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 3",
+      "note": "—"
+    },
+    {
+      "product": "Keyboy Advance 50%",
+      "gbStart": "2026. 7. 3",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 29",
+      "note": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks."
+    },
+    {
+      "product": "GMK Finer Things R2",
+      "gbStart": "2026. 7. 7",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 10",
+      "note": "—"
+    },
+    {
+      "product": "Wing",
+      "gbStart": "2026. 7. 9",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "",
+      "status": "제작 중 / In progress",
+      "update": "2026. 7. 22",
+      "note": "—"
+    },
+    {
+      "product": "Tofu TKL R2",
+      "gbStart": "2026. 7. 16",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 19",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Noire R2",
+      "gbStart": "2026. 7. 20",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 3",
+      "note": "—"
+    },
+    {
+      "product": "Seal 80 DCS DOLCH SPECIAL EDITION",
+      "gbStart": "2026. 7. 22",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 3",
+      "note": "—"
+    },
+    {
+      "product": "DCS Soju",
+      "gbStart": "2026. 7. 22",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 19",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL HYPERFUSE ORIGINS R3",
+      "gbStart": "2026. 7. 23",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 19",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Mini Orange Accent Pack",
+      "gbStart": "2026. 7. 28",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 24",
+      "note": "—"
+    },
+    {
+      "product": "MW Virtual",
+      "gbStart": "2026. 7. 30",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "MW",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 1",
+      "note": "—"
+    },
+    {
+      "product": "GMK ARCADE",
+      "gbStart": "2026. 8. 6",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 1",
+      "note": "—"
+    },
+    {
+      "product": "GMK MTNU JUST",
+      "gbStart": "2026. 8. 7",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 31",
+      "note": "—"
+    },
+    {
+      "product": "Keykobo Cross Impact",
+      "gbStart": "2026. 8. 13",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 15",
+      "note": "—"
+    },
+    {
+      "product": "KBDfans Tofull",
+      "gbStart": "2026. 8. 14",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 15",
+      "note": "—"
+    },
+    {
+      "product": "Supernova",
+      "gbStart": "2026. 8. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 21",
+      "note": "—"
+    },
+    {
+      "product": "Black Snail Deskmat",
+      "gbStart": "2026. 8. 21",
+      "eta": "2026. 12. 31",
+      "type": "Desk mat",
+      "manufacturer": "GEONWORKS",
+      "status": "제작 중 / In progress",
+      "update": "2026. 8. 31",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Orange Alert",
+      "gbStart": "2026. 8. 24",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 14",
+      "note": "—"
+    },
+    {
+      "product": "Keykobo Gelateria",
+      "gbStart": "2026. 8. 28",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 7",
+      "note": "—"
+    },
+    {
+      "product": "Keykobo Cobalt",
+      "gbStart": "2026. 8. 31",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "KEYKOBO",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Varenye",
+      "gbStart": "2026. 9. 4",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Mothman",
+      "gbStart": "2026. 9. 4",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 9. 28",
+      "note": "—"
+    },
+    {
+      "product": "Nexus60",
+      "gbStart": "2026. 9. 21",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "KEZEWA",
+      "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
       "note": "—"
     }
@@ -696,6 +696,7 @@
     "4a749f7b33b8e30095b0ccef": "2026-10-08T03:20:48.797Z",
     "4f9af70074e064e6a7277851": "2026-10-08T03:20:49.071Z",
     "631c288fa77bca6f97692e5b": "2026-10-08T04:30:46.362Z",
-    "f511af90fe166ff219df82d5": "2026-10-08T04:30:46.638Z"
+    "f511af90fe166ff219df82d5": "2026-10-08T04:30:46.638Z",
+    "aa50b1af7e9b198f36ec6428": "2026-10-08T04:50:37.401Z"
   }
 }
