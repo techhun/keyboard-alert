@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-05T19:12:22.682Z",
+  "updatedAt": "2026-10-08T16:31:26.941Z",
   "rows": [
     {
       "id": 349,
@@ -451,13 +451,13 @@
       "id": 244,
       "displayName": "Grunge Deskmats",
       "category": "deskmat",
-      "status": "en_route",
+      "status": "complete",
       "startDate": "2025-12-12",
       "endDate": "2026-01-12",
       "eta": "Q2 2026",
-      "latestUpdateId": 1834,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Production of the Grunge Deskmats has completed and units are currently shipping to us via sea shipping! We expect to receive the shipment in September!"
+      "latestUpdateId": 1874,
+      "latestUpdateDate": "2026-10-08",
+      "latestUpdateDescription": "All pre-orders for the Grunge Deskmats have been fulfilled and are currently shipping out to participants! Please allow 3-5 business days for tracking information to update."
     },
     {
       "id": 303,
@@ -3402,6 +3402,7 @@
   ],
   "sentChanges": {
     "47afe9d5d5821f6c0aa31b13": "2026-10-05T19:12:22.481Z",
-    "5b7077a5a2cf95529cd0c814": "2026-10-05T19:12:22.681Z"
+    "5b7077a5a2cf95529cd0c814": "2026-10-05T19:12:22.681Z",
+    "32d2f3cb1e7e5601e9e9141a": "2026-10-08T16:31:26.939Z"
   }
 }
