@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T16:11:28.327Z",
+  "updatedAt": "2026-10-08T16:21:43.123Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -708,16 +708,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gonzales-36404233415480f29ac5e40b7f05f59b",
-      "product": "GMK CYL Gonzales",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-MTNU-Welles-36404233415480db8b4ee25239c0c4ec",
       "product": "GMK MTNU Welles",
       "status": "In Manufacturing",
@@ -878,9 +868,19 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gonzales-36404233415480f29ac5e40b7f05f59b",
+      "product": "GMK CYL Gonzales",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
       "product": "GMK CYL Thunder God",
-      "status": "Shipping to Prototypist",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -890,7 +890,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Prussian-Alert-36404233415480c88628d1f6c4ded985",
       "product": "GMK CYL Prussian Alert",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -900,7 +900,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Centinela-Extension-Kit-36404233415480fca486c57472ab61ea",
       "product": "GMK Centinela Extension Kit",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -910,7 +910,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-Spark-36d0423341548094b047ed8f7ae66e9f",
       "product": "GMK Spark",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1130,36 +1130,6 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Vintage-Keys-2ca04233415480f2980ed623b51e5184",
       "product": "GMK CYL Vintage Keys",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Mictlan-Rebirth-2ca04233415480128e40f9647fa8448c",
-      "product": "GMK CYL Mictlan Rebirth",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-MTNU-Mictlan-Rebirth-2ca04233415480fd930ae885311c45f5",
-      "product": "GMK MTNU Mictlan Rebirth",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-BLOT-R2-2cb04233415480aaacd6c6ff76f216a1",
-      "product": "GMK BLOT R2",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
     },
@@ -1694,8 +1664,5 @@
       "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-10-08T16:11:14.398Z",
-    "keyset": "2026-10-08T16:11:26.764Z"
-  }
+  "fallbackSince": {}
 }
