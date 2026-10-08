@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T04:50:37.402Z",
+  "updatedAt": "2026-10-08T05:30:44.279Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -22,6 +22,16 @@
       "status": "검수 중 / inspecting",
       "update": "2026. 10. 8",
       "note": "검수 중 / Inspection"
+    },
+    {
+      "product": "GMK CENTINELA EXTENSION KIT",
+      "gbStart": "2026. 4. 3",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "검수 중 / inspecting",
+      "update": "2026. 10. 8",
+      "note": "—"
     },
     {
       "product": "GMK CYL Red Devils",
@@ -101,7 +111,7 @@
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
-      "note": "컬러 매칭중 / Matching colors"
+      "note": "컬러매칭 완료. 생산 일정 확인 중 / Color matching complete. Checking the production schedule."
     },
     {
       "product": "GMK CYL GUROKAWA",
@@ -231,16 +241,6 @@
       "manufacturer": "Omnitype",
       "status": "제작 중 / In progress",
       "update": "2026. 5. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CENTINELA EXTENSION KIT",
-      "gbStart": "2026. 4. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 8. 24",
       "note": "—"
     },
     {
@@ -697,6 +697,8 @@
     "4f9af70074e064e6a7277851": "2026-10-08T03:20:49.071Z",
     "631c288fa77bca6f97692e5b": "2026-10-08T04:30:46.362Z",
     "f511af90fe166ff219df82d5": "2026-10-08T04:30:46.638Z",
-    "aa50b1af7e9b198f36ec6428": "2026-10-08T04:50:37.401Z"
+    "aa50b1af7e9b198f36ec6428": "2026-10-08T04:50:37.401Z",
+    "9166c55b2de259179e395ad2": "2026-10-08T05:30:44.059Z",
+    "c33e67e7bb957cbab902acb0": "2026-10-08T05:30:44.279Z"
   }
 }
