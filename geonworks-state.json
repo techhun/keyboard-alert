@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T06:00:53.462Z",
+  "updatedAt": "2026-10-08T06:10:37.589Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -11,7 +11,7 @@
       "manufacturer": "Nuxroskb",
       "status": "검수 중 / inspecting",
       "update": "2026. 10. 8",
-      "note": "검수 중. 일부 미입고 되어 순차 발송 / Currently being inspected. Some items have not yet arrived and will be shipped in order."
+      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
     },
     {
       "product": "Seal80",
@@ -21,12 +21,22 @@
       "manufacturer": "SENSY",
       "status": "검수 중 / inspecting",
       "update": "2026. 10. 8",
-      "note": "검수 중 / Inspection"
+      "note": "—"
     },
     {
       "product": "GMK CENTINELA EXTENSION KIT",
       "gbStart": "2026. 4. 3",
       "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "검수 중 / inspecting",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL PRUSSIAN ALERT",
+      "gbStart": "2026. 5. 15",
+      "eta": "2026. 9. 30",
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "검수 중 / inspecting",
@@ -96,6 +106,16 @@
     {
       "product": "GMK CYL ZOMBIE",
       "gbStart": "2026. 10. 7",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "GMK Evil Dolch - The Split",
+      "gbStart": "2026. 10. 8",
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
@@ -321,16 +341,6 @@
       "manufacturer": "KBDfans",
       "status": "제작 중 / In progress",
       "update": "2026. 6. 1",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL PRUSSIAN ALERT",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 6. 24",
       "note": "—"
     },
     {
@@ -682,16 +692,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
       "note": "—"
-    },
-    {
-      "product": "GMK Evil Dolch - The Split",
-      "gbStart": "2026. 10. 8",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
-      "note": "—"
     }
   ],
   "sentChanges": {
@@ -711,6 +711,9 @@
     "9166c55b2de259179e395ad2": "2026-10-08T05:30:44.059Z",
     "c33e67e7bb957cbab902acb0": "2026-10-08T05:30:44.279Z",
     "69bb0c7f61fd66348aedb52c": "2026-10-08T05:40:34.721Z",
-    "23b3eca652d4b56937ee3c4e": "2026-10-08T06:00:53.461Z"
+    "23b3eca652d4b56937ee3c4e": "2026-10-08T06:00:53.461Z",
+    "9a9bf2615a6be5062b3bc993": "2026-10-08T06:10:37.092Z",
+    "6e6f2132894e2b0cf024b7f5": "2026-10-08T06:10:37.360Z",
+    "0812a77ef10be173e9dbd75f": "2026-10-08T06:10:37.589Z"
   }
 }
