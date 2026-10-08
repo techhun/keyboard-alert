@@ -1,18 +1,18 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-05T23:40:41.673Z",
+  "updatedAt": "2026-10-08T00:40:42.984Z",
   "rows": [
     {
-      "product": "Keykobo Cobalt",
-      "manufacturer": "KEYKOBO",
+      "product": "GMK CYL Evil Lime",
+      "manufacturer": "GMK",
       "region": "KR/GLOBAL",
       "saleType": "Group Buy",
       "type": "Keycaps",
       "status": "For Sale",
       "fixed": "확정 / Fixed",
-      "start": "2026-08-31",
-      "end": "2026-10-06"
+      "start": "2026-09-09",
+      "end": "2026-10-08"
     },
     {
       "product": "GMK MTNU Oblivion",
@@ -57,12 +57,57 @@
       "fixed": "확정 / Fixed",
       "start": "2026-10-01",
       "end": "2026-11-01"
+    },
+    {
+      "product": "GMK CYL Rainy Day R3",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-06",
+      "end": "2026-11-02"
+    },
+    {
+      "product": "DCS CHLADNI",
+      "manufacturer": "Signature Plastics",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-06",
+      "end": "2026-11-03"
+    },
+    {
+      "product": "GMK CYL ZOMBIE",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-07",
+      "end": "2026-11-02"
+    },
+    {
+      "product": "GMK Evil Dolch - The Split",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-08",
+      "end": "2026-11-02"
     }
   ],
   "sentChanges": {
     "e35a7ceea8c505bac73c8abd": "2026-10-01T08:30:48.118Z",
     "54a6f18e936030446aa2da41": "2026-10-01T23:20:40.221Z",
     "ac4e562c28ffc644d84f02da": "2026-10-01T23:20:40.592Z",
-    "79096ac80d7164ac9a9d193a": "2026-10-05T23:40:41.673Z"
+    "79096ac80d7164ac9a9d193a": "2026-10-05T23:40:41.673Z",
+    "06bf61ce1e0f71daa69d56df": "2026-10-08T00:40:42.984Z"
   }
 }
