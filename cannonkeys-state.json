@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T16:31:26.941Z",
+  "updatedAt": "2026-10-09T20:31:10.396Z",
   "rows": [
     {
       "id": 349,
@@ -47,9 +47,9 @@
       "startDate": "2026-07-10",
       "endDate": "2026-08-09",
       "eta": "",
-      "latestUpdateId": 1818,
-      "latestUpdateDate": "2026-08-17",
-      "latestUpdateDescription": "GB has concluded."
+      "latestUpdateId": 1882,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "Blaine V2: SE order details have been finalized with the CNC factory! The keyboard is now in the production queue."
     },
     {
       "id": 343,
@@ -59,9 +59,9 @@
       "startDate": "2026-06-19",
       "endDate": "2026-07-19",
       "eta": "",
-      "latestUpdateId": 1837,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "We've submitted the order to the manufacturer and are currently awaiting further updates in terms of production. We also wanted to mention that all refunds have been submitted due to breaking the 200 MOQ!"
+      "latestUpdateId": 1885,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "The current status for DCS Handarbeit has not changed since our last update. For reference, the order has been placed."
     },
     {
       "id": 339,
@@ -71,9 +71,9 @@
       "startDate": "2026-06-08",
       "endDate": "2026-07-08",
       "eta": "October 2026",
-      "latestUpdateId": 1835,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1886,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "The current status for the Railway Map Deskmats has not changed since our last update. For reference, the order has been placed."
     },
     {
       "id": 346,
@@ -95,45 +95,45 @@
       "startDate": "2026-06-01",
       "endDate": "2026-07-01",
       "eta": "October 2026",
-      "latestUpdateId": 1836,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1887,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "The current status for the CannonKeys x Tamagotchi Paradise Deskmats has not changed since our last update. For reference, the order has been placed."
     },
     {
       "id": 344,
       "displayName": "Metanoia",
       "category": "keyboard",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-05-29",
       "endDate": "2026-06-30",
       "eta": "Q1 2027",
-      "latestUpdateId": 1843,
-      "latestUpdateDate": "2026-09-04",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1880,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "Metanoia is almost finished with the CNC stage of production!"
     },
     {
       "id": 338,
       "displayName": "GMK Spark",
       "category": "keyset",
-      "status": "ordered",
+      "status": "en_route",
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1846,
-      "latestUpdateDate": "2026-09-04",
-      "latestUpdateDescription": "GMK Spark is currently in queue."
+      "latestUpdateId": 1878,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "Production of GMK Spark Keycaps has completed and sets will be shipping to us next week! We expect to receive the shipment in the next 3-4 weeks! Spark Deskmats are currently in production and should take another 3 weeks to complete, we will have more information as soon as we hear back from the manufacturer."
     },
     {
       "id": 336,
       "displayName": "GMK MTNU Welles",
       "category": "keyset",
-      "status": "ordered",
+      "status": "en_route",
       "startDate": "2026-05-15",
       "endDate": "2026-06-16",
       "eta": "Q4 2026",
-      "latestUpdateId": 1860,
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateDescription": "GMK Finer Things R2 has been ordered and is currently waiting in the factory's production queue."
+      "latestUpdateId": 1879,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "Production of GMK MTNU Welles has completed and sets will be shipping to us next week! We expect to receive the shipment in the next 3-4 weeks!"
     },
     {
       "id": 342,
@@ -151,13 +151,13 @@
       "id": 341,
       "displayName": "Transit Deskmat R3",
       "category": "deskmat",
-      "status": "en_route",
+      "status": "complete",
       "startDate": "2026-05-01",
       "endDate": "2026-06-01",
       "eta": "September/October 2026",
-      "latestUpdateId": 1833,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Production of the Transit R3 Deskmats has completed and units are currently shipping to us via sea shipping! We expect to receive the shipment in September!"
+      "latestUpdateId": 1877,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "All pre-orders for Transit Deskmat R3 have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 302,
@@ -191,21 +191,21 @@
       "startDate": "2026-04-17",
       "endDate": "2026-05-17",
       "eta": "",
-      "latestUpdateId": 1848,
-      "latestUpdateDate": "2026-09-04",
-      "latestUpdateDescription": "GMK British Racing PBS Retro S.M AG is currently in queue."
+      "latestUpdateId": 1884,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "PBS Retro S.M AG has not changed since our last update. For reference, it is currently waiting in the factory's production queue."
     },
     {
       "id": 268,
       "displayName": "CK x Touhou NicePBT Youmu Keycaps",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-04-10",
       "endDate": "2026-05-10",
       "eta": "September 2026",
-      "latestUpdateId": 1873,
-      "latestUpdateDate": "2026-10-05",
-      "latestUpdateDescription": "CK x Touhou NicePBT Youmu Keycaps have arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1875,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "All pre-order for CK x Touhou NicePBT Youmu Keycaps & Deskmats have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 337,
@@ -227,9 +227,9 @@
       "startDate": "2026-04-10",
       "endDate": "2026-05-10",
       "eta": "September 2026",
-      "latestUpdateId": 1872,
-      "latestUpdateDate": "2026-10-05",
-      "latestUpdateDescription": "CK x Touhou NicePBT Deskmats have arrived at our facilities! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. We will have an update on keycaps soon, however deskmat only orders will be shipping first."
+      "latestUpdateId": 1876,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "all pre-order for CK x Touhou NicePBT Youmu Keycaps & Deskmats have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 267,
@@ -283,13 +283,13 @@
       "id": 264,
       "displayName": "Touchstone",
       "category": "keyboard",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-03-13",
       "endDate": "2026-04-13",
       "eta": "Q1 2027",
-      "latestUpdateId": 1823,
-      "latestUpdateDate": "2026-08-27",
-      "latestUpdateDescription": "With orders fully placed and deposits paid, we have a revised ETA for the project of Q1 2027. This delay is due to all the post-GB work that needed to be completed in order to hit MOQ and save the project, which we seriously appreciate your understanding while we worked through it all. Additionally, we wanted to give all original GB participants a heads up regarding a Touchstone pre-order. The pre-order will be launching very soon, and for the first month of being live the keyboard will be available at GB price. This is not something we do often, and is not a decision we made lightly, but we ordered more extras than we normally would for this project and this will help us recoup some of those costs."
+      "latestUpdateId": 1881,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "Touchstone is almost finished with the machining stage of production!"
     },
     {
       "id": 261,
@@ -307,13 +307,13 @@
       "id": 259,
       "displayName": "PBS WoB",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-02-20",
       "endDate": "2026-03-22",
       "eta": "July 2026",
-      "latestUpdateId": 1868,
-      "latestUpdateDate": "2026-09-23",
-      "latestUpdateDescription": "Production of PBS WoB has completed and sets are currently shipping to us via sea shipping! We expect to receive the shipment in the next 6-8 weeks!"
+      "latestUpdateId": 1883,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "PBS WoB has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. During our quality check of the 40s kits, we noticed an error in the production files: the 1u ALT keycap was mistakenly printed as ALTGR. Given the isolated nature of the issue, we have decided not to produce replacement keys. We apologize for the inconvenience, and if this impacts your satisfaction with the kit, please contact our support team so we can assist you with your options"
     },
     {
       "id": 253,
@@ -563,9 +563,9 @@
       "startDate": "2025-10-31",
       "endDate": "2025-12-03",
       "eta": "Q2 2026",
-      "latestUpdateId": 1844,
-      "latestUpdateDate": "2026-09-04",
-      "latestUpdateDescription": "**September 4th Update** Since our last update, we've been pushing to get all parts completed and in our warehouse. We are happy to let you know all of these parts are now done being produced, and we are arranging shipment of them to Keyreative so they can begin manufacturing cases. The actual process of making the cases is extremely quick, and as soon as we have an ETA we will share it. The final thing we are working on while this arrangement of shipping is happening is confirming the hardware specifications to be absolutely sure everything is as easy to assemble as possible. We are pushing to get this wrapped up as quickly as we can and will keep providing updates along the way!"
+      "latestUpdateId": 1888,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "October 9th Update: Everything is now done except for the cases, and we are arranging shipment of everything to go to the manufacturer for quick kitting and case production."
     },
     {
       "id": 238,
@@ -3403,6 +3403,7 @@
   "sentChanges": {
     "47afe9d5d5821f6c0aa31b13": "2026-10-05T19:12:22.481Z",
     "5b7077a5a2cf95529cd0c814": "2026-10-05T19:12:22.681Z",
-    "32d2f3cb1e7e5601e9e9141a": "2026-10-08T16:31:26.939Z"
+    "32d2f3cb1e7e5601e9e9141a": "2026-10-08T16:31:26.939Z",
+    "36edc12a4b8b0db371314497": "2026-10-09T20:31:10.396Z"
   }
 }
