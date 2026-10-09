@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T06:10:37.589Z",
+  "updatedAt": "2026-10-09T04:50:30.709Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -300,8 +300,8 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 21",
-      "note": "10월 2주에 제작자가 중국 공장에 가서 QC 예정 / The manufacturer is scheduled to visit the factory in China for quality control during the second week of October."
+      "update": "2026. 10. 9",
+      "note": "10월 12일 월요일에 제작자가 중국 공장에 가서 QC 예정 /The manufacturer is scheduled to visit the factory in China on Monday, October 12, for quality control."
     },
     {
       "product": "Grit Jahre 65",
@@ -714,6 +714,7 @@
     "23b3eca652d4b56937ee3c4e": "2026-10-08T06:00:53.461Z",
     "9a9bf2615a6be5062b3bc993": "2026-10-08T06:10:37.092Z",
     "6e6f2132894e2b0cf024b7f5": "2026-10-08T06:10:37.360Z",
-    "0812a77ef10be173e9dbd75f": "2026-10-08T06:10:37.589Z"
+    "0812a77ef10be173e9dbd75f": "2026-10-08T06:10:37.589Z",
+    "15a09e52d77daf5f2705a83c": "2026-10-09T04:50:30.709Z"
   }
 }
