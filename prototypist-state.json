@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T09:10:59.639Z",
+  "updatedAt": "2026-10-09T09:21:16.449Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1228,26 +1228,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Angel-3170423341548002b892d3d1bb09c823",
-      "product": "KKB Angel",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Beige-31704233415480e89f37f396e2164653",
-      "product": "KKB Beige",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/PBS-WoB-317042334154803aa932d0e916927d87",
       "product": "PBS WoB",
       "status": "In Manufacturing",
@@ -1288,16 +1268,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/SWG-Bolch-36404233415480cfa432c40a51158339",
-      "product": "SWG Bolch",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Classic-Red-36404233415480bc9a96cdd3ca69953a",
       "product": "SWG Classic Red",
       "status": "In Manufacturing",
@@ -1310,16 +1280,6 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Bowl-Pit-364042334154804dae9cd782331dc85a",
       "product": "DCS Bowl Pit",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KKB-Emoji-3640423341548021b237d6a584f9c48e",
-      "product": "KKB Emoji",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -1458,10 +1418,90 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Handerbeit-39d042334154801eb146c2c390de18e7",
+      "product": "DCS Handerbeit",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Heartbreaker-3b504233415480fbaccdd391a75a0499",
+      "product": "SWG Heartbreaker",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Mudbeam-39d04233415480a0a81dec94e813ac41",
+      "product": "DCS Mudbeam",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Nerve-39d0423341548077bf20e1a4a56c5122",
+      "product": "SWG Nerve",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/Abandoned-Pets-Artisans-Beige-31704233415480428c6adffc7408fae3",
       "product": "Abandoned Pets Artisans - Beige",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Beige-31704233415480e89f37f396e2164653",
+      "product": "KKB Beige",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Angel-3170423341548002b892d3d1bb09c823",
+      "product": "KKB Angel",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Emoji-3640423341548021b237d6a584f9c48e",
+      "product": "KKB Emoji",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Bolch-36404233415480cfa432c40a51158339",
+      "product": "SWG Bolch",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyset",
