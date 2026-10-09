@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T03:21:04.412Z",
+  "updatedAt": "2026-10-09T03:31:13.638Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -30,9 +30,9 @@
     "kbdfans": {
       "status": "ok",
       "changedAt": "2026-09-28T00:01:56.363Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "37878806334",
-      "lastFailureAt": "2026-10-09T03:21:04.412Z"
+      "consecutiveFailures": 2,
+      "lastFailureRunId": "37879587256",
+      "lastFailureAt": "2026-10-09T03:31:13.638Z"
     },
     "cannonkeys": {
       "status": "ok",
