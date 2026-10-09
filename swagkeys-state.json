@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T16:21:45.541Z",
+  "updatedAt": "2026-10-09T09:02:47.901Z",
   "announcement": {
     "heading": "업데이트(26.10.08)",
     "content": "SWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added.\nSWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated."
@@ -270,5 +270,8 @@
       "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
-  "fallbackSince": {}
+  "fallbackSince": {
+    "roadmap": "2026-10-09T09:02:08.496Z",
+    "status": "2026-10-09T09:02:47.817Z"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T16:21:43.123Z",
+  "updatedAt": "2026-10-09T09:01:16.377Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -32,16 +32,6 @@
       "product": "Monokei Systems",
       "status": "In Manufacturing",
       "expectedShipping": "All batches TBC"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/21XX-22904233415480e29398fdf5d2db9b3a",
-      "product": "21XX",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -138,16 +128,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Neson-NoryTek70-3640423341548097ab05e9e0f5eca710",
-      "product": "Neson NoryTek70",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Paper-65-3640423341548024b200e7776b4aeeaf",
       "product": "Paper 65",
       "status": "In Manufacturing",
@@ -218,16 +198,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/S46-R3-40-364042334154803d9345d0b3c6db60c0",
-      "product": "S46 R3 40%",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Slate-Zero-36404233415480a58dd1fc3706404ab1",
       "product": "Slate Zero",
       "status": "In Manufacturing",
@@ -252,6 +222,36 @@
       "product": "Juna60",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Grit-Jahre-65-3640423341548041b6c8cb6a9b721ad7",
+      "product": "Grit Jahre 65%",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/VS06-3990423341548040b26cfd348830d38a",
+      "product": "VS06",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/RF-8X-39904233415480f4acd0ebd937da58f8",
+      "product": "RF-8X",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "keyboard",
@@ -312,6 +312,36 @@
       "product": "Etar87",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/S46-R3-40-364042334154803d9345d0b3c6db60c0",
+      "product": "S46 R3 40%",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/21XX-22904233415480e29398fdf5d2db9b3a",
+      "product": "21XX",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Neson-NoryTek70-3640423341548097ab05e9e0f5eca710",
+      "product": "Neson NoryTek70",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
