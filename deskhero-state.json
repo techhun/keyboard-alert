@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T15:42:24.897Z",
+  "updatedAt": "2026-10-09T16:01:15.817Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -3832,7 +3832,5 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {
-    "4c80bd4376c9b66b8b627e8b": "2026-10-02T15:51:16.756Z"
-  }
+  "sentChanges": {}
 }
