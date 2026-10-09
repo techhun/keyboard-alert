@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T20:31:10.396Z",
+  "updatedAt": "2026-10-09T20:41:50.094Z",
   "rows": [
     {
       "id": 349,
@@ -647,9 +647,9 @@
       "startDate": "2025-09-19",
       "endDate": "2025-10-20",
       "eta": "Q3 2026",
-      "latestUpdateId": 1839,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "Assembly is finished for Altair + Altair-X R2! Keyboards are being sent to our partner to be kitted and organized by vendor."
+      "latestUpdateId": 1889,
+      "latestUpdateDate": "2026-10-09",
+      "latestUpdateDescription": "The current status for Altair + Altair-X R2 has not changed since our last update. For reference, assembly is finished for and keyboards have been sent to our partner and they are being kitted and organized by vendor."
     },
     {
       "id": 231,
@@ -3404,6 +3404,7 @@
     "47afe9d5d5821f6c0aa31b13": "2026-10-05T19:12:22.481Z",
     "5b7077a5a2cf95529cd0c814": "2026-10-05T19:12:22.681Z",
     "32d2f3cb1e7e5601e9e9141a": "2026-10-08T16:31:26.939Z",
-    "36edc12a4b8b0db371314497": "2026-10-09T20:31:10.396Z"
+    "36edc12a4b8b0db371314497": "2026-10-09T20:31:10.396Z",
+    "1f9b8766dec7a349fab55098": "2026-10-09T20:41:50.092Z"
   }
 }
