@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T09:21:16.449Z",
+  "updatedAt": "2026-10-12T14:20:57.378Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -930,7 +930,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gonzales-36404233415480f29ac5e40b7f05f59b",
       "product": "GMK CYL Gonzales",
-      "status": "Shipping to Prototypist",
+      "status": "In Quality Control",
       "expectedShipping": "Q4 2026"
     },
     {
