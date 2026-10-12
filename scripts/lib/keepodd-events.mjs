@@ -5,6 +5,7 @@ export const KEEPODD_EVENTS_PATH = 'keepodd-events.json';
 export const KEEPODD_MAX_EVENTS = 500;
 export const GEONWORKS_UPDATE_URL = 'https://geonworks.kr/customhtml/GB_schedule.html';
 export const SWAGKEYS_UPDATE_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
+export const SWAGKEYS_STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 const GEONWORKS_PRODUCTS_URLS = [
   'https://geonworks.kr/category/products/47/?page=1',
   'https://geonworks.kr/category/products/47/?page=2'
@@ -173,7 +174,14 @@ function swagEventRow(row = {}) {
   };
 }
 
-export function buildSwagkeysKeepoddEvents({ changes = [], quarterChanges = {}, snapshot = {}, occurredAt = new Date().toISOString(), fallbackUrl = SWAGKEYS_UPDATE_URL } = {}) {
+export function buildSwagkeysKeepoddEvents({
+  changes = [],
+  quarterChanges = {},
+  snapshot = {},
+  occurredAt = new Date().toISOString(),
+  roadmapFallbackUrl = SWAGKEYS_UPDATE_URL,
+  statusFallbackUrl = SWAGKEYS_STATUS_URL
+} = {}) {
   const events = new Map();
   const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
   const quarters = snapshot.quarters || {};
@@ -187,7 +195,7 @@ export function buildSwagkeysKeepoddEvents({ changes = [], quarterChanges = {}, 
       const row = rowByKey.get(canonicalKey) || {};
       const event = eventFrom({
         source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt,
-        row: swagEventRow(row), quarter: item.quarter, fallbackUrl, canonicalKey,
+        row: swagEventRow(row), quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey,
         idAfter: item.quarter || 'present'
       });
       events.set(event.id, event);
@@ -206,7 +214,7 @@ export function buildSwagkeysKeepoddEvents({ changes = [], quarterChanges = {}, 
       if (change.kind === 'added') {
         const event = eventFrom({
           source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt, row: current,
-          quarter, fallbackUrl, canonicalKey, idAfter: quarter || 'present'
+          quarter, fallbackUrl: statusFallbackUrl, canonicalKey, idAfter: quarter || 'present'
         });
         events.set(event.id, event);
         continue;
@@ -223,7 +231,7 @@ export function buildSwagkeysKeepoddEvents({ changes = [], quarterChanges = {}, 
         const after = field.key === 'colorMatching' && meaningful(field.after) ? `컬러매칭 ${meaningful(field.after)}` : field.after;
         const event = eventFrom({
           source: 'SWAGKEYS', name, eventType, before, after, occurredAt,
-          row: current, quarter, fallbackUrl, canonicalKey
+          row: current, quarter, fallbackUrl: statusFallbackUrl, canonicalKey
         });
         if (eventType === 'note_changed') event.note = meaningful(after);
         events.set(event.id, event);
