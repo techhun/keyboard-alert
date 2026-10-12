@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T01:01:19.376Z",
+  "updatedAt": "2026-10-12T16:33:07.336Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -223,14 +223,14 @@
     {
       "category": "Keycap",
       "product": "GMK Centinela Extension Kit",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-centinela-extension-kit"
     },
     {
       "category": "Keycap",
       "product": "GMK CYL Prussian Alert",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-prussian-alert-keycaps"
     },
@@ -356,6 +356,8 @@
   ],
   "sentChanges": {
     "8dd6f75483cb0c419fa740b1": "2026-10-05T19:12:19.536Z",
-    "68affbcc815c4f6a8ba3eeea": "2026-10-08T16:50:59.855Z"
+    "68affbcc815c4f6a8ba3eeea": "2026-10-08T16:50:59.855Z",
+    "dc47de97fcee8727be367352": "2026-10-12T16:33:07.155Z",
+    "541f10544cad5a5a7083b91c": "2026-10-12T16:33:07.336Z"
   }
 }
