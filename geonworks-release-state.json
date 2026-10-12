@@ -1,41 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-08T23:30:40.274Z",
+  "updatedAt": "2026-10-12T01:30:44.544Z",
   "rows": [
-    {
-      "product": "GMK CYL Evil Lime",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-09",
-      "end": "2026-10-08"
-    },
-    {
-      "product": "GMK MTNU Oblivion",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-15",
-      "end": "2026-10-09"
-    },
-    {
-      "product": "GMK CYL Red Devils",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-15",
-      "end": "2026-10-09"
-    },
     {
       "product": "DCS SMRT R2",
       "manufacturer": "Signature Plastics",
@@ -105,6 +72,9 @@
   ],
   "sentChanges": {
     "79096ac80d7164ac9a9d193a": "2026-10-05T23:40:41.673Z",
-    "06bf61ce1e0f71daa69d56df": "2026-10-08T00:40:42.984Z"
+    "06bf61ce1e0f71daa69d56df": "2026-10-08T00:40:42.984Z",
+    "67ba0cc1b37b848784e3de28": "2026-10-12T01:30:44.174Z",
+    "195697e06e4332c1b7abae00": "2026-10-12T01:30:44.359Z",
+    "8f582c56de884cb70b4058cf": "2026-10-12T01:30:44.544Z"
   }
 }
