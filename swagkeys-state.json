@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T09:31:11.216Z",
+  "updatedAt": "2026-10-12T01:41:05.972Z",
   "announcement": {
     "heading": "업데이트(26.10.08)",
     "content": "SWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added.\nSWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated."
@@ -69,19 +69,19 @@
       "product": "Classic Red",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 50,
-      "shipping": 0,
+      "inProduction": 100,
+      "shipping": 50,
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
       "eta": "2026-10-19",
-      "currentStatus": "생산중 (In Production)"
+      "currentStatus": "배송중 (Shipping)"
     },
     {
       "product": "Classic Blue",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 16.7,
+      "inProduction": 50,
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
