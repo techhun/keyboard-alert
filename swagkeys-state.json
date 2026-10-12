@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T18:41:37.196Z",
+  "updatedAt": "2026-10-12T18:53:12.492Z",
   "announcement": {
     "heading": "업데이트(26.10.08)",
     "content": "SWG Forest Cadet이 추가되었습니다. SWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWG Forest Cadet has been added. SWS Fan U.C kitting and renders have been added.\nSWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added."
@@ -282,5 +282,8 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {}
+  "fallbackSince": {
+    "roadmap": "2026-10-12T18:52:33.177Z",
+    "status": "2026-10-12T18:53:12.412Z"
+  }
 }
