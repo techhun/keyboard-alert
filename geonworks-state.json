@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T03:00:43.108Z",
+  "updatedAt": "2026-10-12T03:10:32.784Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -24,46 +24,6 @@
       "note": "—"
     },
     {
-      "product": "GMK CENTINELA EXTENSION KIT",
-      "gbStart": "2026. 4. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / inspecting",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL PRUSSIAN ALERT",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / inspecting",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Red Devils",
-      "gbStart": "2026. 9. 15",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK MTNU Oblivion",
-      "gbStart": "2026. 9. 15",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 9. 15",
-      "note": "—"
-    },
-    {
       "product": "DCS SMRT R2",
       "gbStart": "2026. 9. 21",
       "eta": "2027. 3. 31",
@@ -80,7 +40,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
+      "update": "2026. 10. 12",
       "note": "—"
     },
     {
@@ -694,6 +654,26 @@
       "note": "—"
     },
     {
+      "product": "GMK CYL Red Devils",
+      "gbStart": "2026. 9. 15",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 12",
+      "note": "—"
+    },
+    {
+      "product": "GMK MTNU Oblivion",
+      "gbStart": "2026. 9. 15",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 12",
+      "note": "—"
+    },
+    {
       "product": "Nexus60",
       "gbStart": "2026. 9. 21",
       "eta": "2026. 12. 31",
@@ -725,6 +705,11 @@
     "0812a77ef10be173e9dbd75f": "2026-10-08T06:10:37.589Z",
     "15a09e52d77daf5f2705a83c": "2026-10-09T04:50:30.709Z",
     "65c9d7b674a31a03332ceba9": "2026-10-12T02:50:32.515Z",
-    "d067c1c4cb50d4a8bbfbc827": "2026-10-12T03:00:43.107Z"
+    "d067c1c4cb50d4a8bbfbc827": "2026-10-12T03:00:43.107Z",
+    "c88b765f5235b76f2c88c9f6": "2026-10-12T03:10:31.527Z",
+    "6c5271dcecdce3ae4d76969f": "2026-10-12T03:10:31.734Z",
+    "beda7de2879dc0ad3a42b4f3": "2026-10-12T03:10:31.931Z",
+    "b807255fae288c54ae03b536": "2026-10-12T03:10:32.600Z",
+    "230e3f4ceddbbcbe6774b185": "2026-10-12T03:10:32.783Z"
   }
 }
