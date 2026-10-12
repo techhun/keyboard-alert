@@ -35,5 +35,5 @@ test('fallback and verification paths retain their existing state-preservation g
   assert.match(swag, /using bounded stored fallback/i);
   assert.match(swag, /removal verification was inconclusive/i);
   assert.match(geon, /change set changed during verification\. State was not updated/);
-  assert.match(geon, /Keeping the previous verified state/);
+  assert.match(geon, /State was not updated/);
 });
