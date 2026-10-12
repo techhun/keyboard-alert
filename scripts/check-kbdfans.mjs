@@ -237,40 +237,6 @@ if (!DISCORD_WEBHOOK_URL) {
   process.exit(0);
 }
 
-if (bulkInfo.bulk) {
-  const bulkId = kbdFansChangeId({
-    kind: 'changed',
-    row: { category: 'BULK', product: 'KBDfans bulk' },
-    fields: [{ field: 'signature', before: '', after: kbdFansChangeSignature(changes) }]
-  });
-
-  if (sentChanges[bulkId]) {
-    saveState(rows, sentChanges);
-    console.log('Duplicate KBDfans bulk summary suppressed; state advanced.');
-    process.exit(0);
-  }
-
-  await postDiscord({
-    ...baseEmbed('⚠️ KBDfans 대량 변경 확인'),
-    description: '동일한 변경을 두 번 연속 확인했습니다. 개별 알림 대신 요약합니다.\n변경 항목: **' + changes.length + '개** / 기존 목록: **' + previousRows.length + '개**',
-    fields: [{
-      name: '변경 예시',
-      value: truncate(changes.slice(0, 10).map((change) => {
-        const labels = change.kind === 'changed'
-          ? change.fields.map((field) => field.label).join(', ')
-          : change.kind;
-        return '• [' + change.row.category + '] ' + change.row.product + ': ' + labels;
-      }).join('\n')),
-      inline: false
-    }]
-  });
-
-  sentChanges[bulkId] = new Date().toISOString();
-  saveState(rows, sentChanges);
-  console.log('Bulk KBDfans change summarized in one notification and state updated: ' + changes.length + ' change(s).');
-  process.exit(0);
-}
-
 for (const change of pendingChanges) {
   await notify(change);
   sentChanges[kbdFansChangeId(change)] = new Date().toISOString();

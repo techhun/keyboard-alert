@@ -230,40 +230,6 @@ if (!DISCORD_WEBHOOK_URL) {
   process.exit(0);
 }
 
-if (bulkInfo.bulk) {
-  const bulkId = omnitypeChangeId({
-    kind: 'changed',
-    row: { product: 'Omnitype bulk', sourceUrl: OMNITYPE_PAGE_URL },
-    fields: [{ field: 'signature', before: '', after: omnitypeChangeSignature(changes) }]
-  });
-
-  if (sentChanges[bulkId]) {
-    saveState(rows, sentChanges);
-    console.log('Duplicate Omnitype bulk summary suppressed; state advanced.');
-    process.exit(0);
-  }
-
-  await postDiscord({
-    ...baseEmbed('⚠️ Omnitype 대량 변경 확인'),
-    description: '동일한 변경을 두 번 연속 확인했습니다. 개별 알림 대신 요약합니다.\n변경 항목: **' + changes.length + '개** / 기존 목록: **' + previousRows.length + '개**',
-    fields: [{
-      name: '변경 예시',
-      value: truncate(changes.slice(0, 10).map((change) => {
-        const labels = change.kind === 'changed'
-          ? change.fields.map((field) => field.label).join(', ')
-          : change.kind;
-        return '• ' + change.row.product + ': ' + labels;
-      }).join('\n')),
-      inline: false
-    }]
-  });
-
-  sentChanges[bulkId] = new Date().toISOString();
-  saveState(rows, sentChanges);
-  console.log('Bulk Omnitype change summarized in one notification and state updated: ' + changes.length + ' change(s).');
-  process.exit(0);
-}
-
 for (const change of pendingChanges) {
   await notify(change);
   sentChanges[omnitypeChangeId(change)] = new Date().toISOString();
