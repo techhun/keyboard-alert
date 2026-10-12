@@ -31,6 +31,13 @@ test('SWAGKEYS only advances Keepodd feed after the pending-webhook guard', () =
   assert.match(swag, /Baseline initialization: storing .* without notifying/);
 });
 
+test('slow persist compares watcher-state-only files by content before committing', () => {
+  const persist = slow.slice(slow.indexOf('- name: Persist slow watcher state'), slow.indexOf('- name: Signal slow heartbeat success'));
+  assert.match(persist, /git cat-file -e "origin\/watcher-state:\$file"/);
+  assert.match(persist, /cmp -s "\$file" <\(git show "origin\/watcher-state:\$file"\)/);
+  assert.match(persist, /Slow watcher state unchanged\./);
+});
+
 test('fallback and verification paths retain their existing state-preservation guards', () => {
   assert.match(swag, /using bounded stored fallback/i);
   assert.match(swag, /removal verification was inconclusive/i);
