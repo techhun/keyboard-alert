@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T16:33:07.336Z",
+  "updatedAt": "2026-10-12T17:13:30.278Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -265,7 +265,7 @@
     {
       "category": "Keycap",
       "product": "CYL Motif",
-      "status": "Final color sample currently being discussed with GMK and designer.",
+      "status": "In production.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-motif-keycaps"
     },
@@ -358,6 +358,7 @@
     "8dd6f75483cb0c419fa740b1": "2026-10-05T19:12:19.536Z",
     "68affbcc815c4f6a8ba3eeea": "2026-10-08T16:50:59.855Z",
     "dc47de97fcee8727be367352": "2026-10-12T16:33:07.155Z",
-    "541f10544cad5a5a7083b91c": "2026-10-12T16:33:07.336Z"
+    "541f10544cad5a5a7083b91c": "2026-10-12T16:33:07.336Z",
+    "f41653d55a9943ff0bf2933b": "2026-10-12T17:13:30.278Z"
   }
 }
