@@ -258,7 +258,14 @@ jobs:
           git fetch origin watcher-state
           changed_files=()
           for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json kbdfans-state.json cannonkeys-state.json deskhero-state.json omnitype-state.json keepodd-events.json system-health-slow.json; do
-            if [ -f "$file" ] && ! git diff --quiet origin/watcher-state -- "$file"; then
+            if [ ! -f "$file" ]; then
+              continue
+            fi
+            if git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
+              if ! cmp -s "$file" <(git show "origin/watcher-state:$file"); then
+                changed_files+=("$file")
+              fi
+            else
               changed_files+=("$file")
             fi
           done
