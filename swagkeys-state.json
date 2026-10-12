@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T01:41:05.972Z",
+  "updatedAt": "2026-10-12T03:50:55.640Z",
   "announcement": {
     "heading": "업데이트(26.10.08)",
     "content": "SWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added.\nSWS와 In-Stock 탭이 별도로 생성되었습니다. / SWS and In-Stock items have been separated."
@@ -255,11 +255,11 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
-      "product": "Art",
-      "groupBuy": 50,
+      "product": "Space Cadet",
+      "groupBuy": 0,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -267,7 +267,19 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "Not started"
+    },
+    {
+      "product": "Crimson Cadet",
+      "groupBuy": 0,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Not started",
+      "eta": "",
+      "currentStatus": "Not started"
     }
   ],
   "fallbackSince": {}
