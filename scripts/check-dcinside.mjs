@@ -10,6 +10,9 @@ const SOURCES = [
   { id: 'desktop', url: DESKTOP_URL, expectedQuery: 'search_head=110' },
   { id: 'mobile', url: MOBILE_URL, expectedQuery: 'headid=110' }
 ];
+const HTTP_TIMEOUT_MS = 6000;
+const BROWSER_NAV_TIMEOUT_MS = 8000;
+const BROWSER_ATTEMPTS_PER_SOURCE = 1;
 
 const clean = (value) => String(value ?? '')
   .replace(/\r/g, '')
@@ -92,7 +95,7 @@ async function fetchRowsHttp() {
       'accept-language': 'ko-KR,ko;q=0.9,en;q=0.8',
       'user-agent': 'Mozilla/5.0'
     },
-    signal: AbortSignal.timeout(10000)
+    signal: AbortSignal.timeout(HTTP_TIMEOUT_MS)
   });
   if (!response.ok) throw new Error('DCInside direct HTTP ' + response.status);
 
@@ -234,16 +237,16 @@ async function fetchRowsBrowser() {
   let lastError;
   try {
     for (const source of SOURCES) {
-      for (let attempt = 1; attempt <= 2; attempt += 1) {
+      for (let attempt = 1; attempt <= BROWSER_ATTEMPTS_PER_SOURCE; attempt += 1) {
         const page = await context.newPage();
         try {
-          const response = await page.goto(source.url, { waitUntil: 'domcontentloaded', timeout: 30000 });
+          const response = await page.goto(source.url, { waitUntil: 'domcontentloaded', timeout: BROWSER_NAV_TIMEOUT_MS });
           if (response && response.status() >= 400) throw new Error(`HTTP ${response.status()}`);
           return await extractRows(page, source);
         } catch (error) {
           lastError = error;
           console.warn(`DCInside ${source.id} attempt ${attempt} failed: ${error?.message || error}`);
-          if (attempt < 2) await sleep(2500);
+          if (attempt < BROWSER_ATTEMPTS_PER_SOURCE) await sleep(1500);
         } finally {
           await page.close();
         }
