@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright';
 import { bulkChangeInfo, changeId, changeSignature, clean, comparableValue, normalizeKey, pruneSentChanges, parseGbGvizResponse, validateGbRows } from './geonworks-safety.mjs';
+import { buildGeonworksKeepoddEvents, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
 
 const PAGE_URL = 'https://geonworks.kr/customhtml/GB_schedule.html';
 const DATA_URL = 'https://docs.google.com/spreadsheets/d/1i9SK14aWxpElXrjMinidKjVCXDi1XXBQSZJVB7ocbJk/gviz/tq?tqx=out:json&sheet=GB%20Schedule';
@@ -111,17 +112,31 @@ function loadState() {
   }
 }
 
+function statePayload(rows, sentChanges = {}, updatedAt = new Date().toISOString()) {
+  return {
+    version: 1,
+    initialized: true,
+    updatedAt,
+    rows,
+    sentChanges: pruneSentChanges(sentChanges)
+  };
+}
+
 function saveState(rows, sentChanges = {}) {
-  fs.writeFileSync(
-    STATE_PATH,
-    JSON.stringify({
-      version: 1,
-      initialized: true,
-      updatedAt: new Date().toISOString(),
-      rows,
-      sentChanges: pruneSentChanges(sentChanges)
-    }, null, 2) + '\n'
-  );
+  fs.writeFileSync(STATE_PATH, JSON.stringify(statePayload(rows, sentChanges), null, 2) + '\n');
+}
+
+async function advanceStateWithKeepoddEvents(rows, sentChanges, changes) {
+  const occurredAt = new Date().toISOString();
+  const candidates = buildGeonworksKeepoddEvents(changes, { occurredAt, fallbackUrl: PAGE_URL });
+  const events = await enrichKeepoddEventSourceUrls(candidates);
+  const merged = commitStateAndKeepoddEvents({
+    statePath: STATE_PATH,
+    stateValue: statePayload(rows, sentChanges, occurredAt),
+    events,
+    now: occurredAt
+  });
+  console.log(`Keepodd GEONWORKS events committed: ${merged.added} new / ${events.length} candidate(s).`);
 }
 
 function buildMap(rows) {
@@ -335,7 +350,7 @@ if (!DISCORD_WEBHOOK_URL) {
 if (bulkInfo.bulk) {
   const bulkId = changeId({ kind: 'bulk', row: { product: 'GEONWORKS GB bulk' }, fields: [{ field: 'signature', before: '', after: changeSignature(changes) }] });
   if (sentChanges[bulkId]) {
-    saveState(rows, sentChanges);
+    await advanceStateWithKeepoddEvents(rows, sentChanges, changes);
     console.log('Duplicate GEONWORKS bulk summary suppressed; state advanced.');
     process.exit(0);
   }
@@ -356,7 +371,7 @@ if (bulkInfo.bulk) {
     ]
   });
   sentChanges[bulkId] = new Date().toISOString();
-  saveState(rows, sentChanges);
+  await advanceStateWithKeepoddEvents(rows, sentChanges, changes);
   console.log(`Bulk GEONWORKS change summarized in one notification and state updated: ${changes.length} change(s).`);
   process.exit(0);
 }
@@ -367,5 +382,5 @@ for (const change of pendingChanges) {
   saveState(previousRows, sentChanges);
 }
 
-saveState(rows, sentChanges);
+await advanceStateWithKeepoddEvents(rows, sentChanges, changes);
 console.log(`Sent ${pendingChanges.length} GEONWORKS notification(s), suppressed ${changes.length - pendingChanges.length} duplicate(s), and updated state.`);
