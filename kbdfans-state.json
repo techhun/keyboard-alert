@@ -1,8 +1,30 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T01:20:55.180Z",
+  "updatedAt": "2026-10-12T13:41:09.009Z",
   "rows": [
+    {
+      "category": "GMK",
+      "product": "GMK CYL Zombie",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Rainy Day R3",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
     {
       "category": "KEYCAPS",
       "product": "PBTfans G3",
@@ -457,9 +479,9 @@
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Purple",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
+      "status": "Group buy",
+      "eta": "Q2 2027",
+      "progress": 50,
       "summary": "Start time: October 10th - November 10th",
       "latestUpdateDate": "2026-07-09",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -832,7 +854,7 @@
       "category": "KEYBOARDS",
       "product": "TOFU TKL R2",
       "status": "In production",
-      "eta": "Q4 2026",
+      "eta": "Nov 2026",
       "progress": 50,
       "summary": "Project update",
       "latestUpdateDate": "2026-09-21",
@@ -1014,23 +1036,15 @@
       "latestUpdateDate": "2025-06-03",
       "latestUpdateTitle": "Graphite Project Progress",
       "latestUpdateBody": "5-30 Preparing design draft"
-    },
-    {
-      "category": "DESKPADS",
-      "product": "Black Snail Deskmat",
-      "status": "In production",
-      "eta": "September 30",
-      "progress": 20,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
     }
   ],
   "sentChanges": {
-    "e0953aa5c3cd809690b44336": "2026-10-02T07:11:02.697Z",
-    "be3d924685313e4dbdc552dc": "2026-10-02T07:31:15.539Z",
     "c91524678a4b743b2e5d0106": "2026-10-06T08:31:45.022Z",
-    "0afb6b5b054ae4579ce581a5": "2026-10-09T01:20:55.180Z"
+    "0afb6b5b054ae4579ce581a5": "2026-10-09T01:20:55.180Z",
+    "f7f92e1153bdf6647dd0fd1e": "2026-10-12T13:41:08.119Z",
+    "3bd475caff6526908e58b50a": "2026-10-12T13:41:08.405Z",
+    "031b9249a6430800445c6bce": "2026-10-12T13:41:08.657Z",
+    "adc1d22993fb3f9b5edb169a": "2026-10-12T13:41:08.824Z",
+    "b37e2c5203f5ef056f8fdd21": "2026-10-12T13:41:09.008Z"
   }
 }
