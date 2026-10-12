@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
+import { buildSwagkeysKeepoddEvents, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
 
 const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
@@ -681,16 +682,33 @@ function loadState() {
   }
 }
 
-function saveState(snapshot) {
-  fs.writeFileSync(STATE_PATH, JSON.stringify({
+function statePayload(snapshot, updatedAt = new Date().toISOString()) {
+  return {
     version: 1,
     initialized: true,
-    updatedAt: new Date().toISOString(),
+    updatedAt,
     announcement: snapshot.announcement,
     quarters: snapshot.quarters,
     rows: snapshot.rows.map((row) => ({ ...row, eta: normalizeEta(row.eta) })),
     fallbackSince: snapshot.fallbackSince || {}
-  }, null, 2) + '\n');
+  };
+}
+
+function saveState(snapshot) {
+  fs.writeFileSync(STATE_PATH, JSON.stringify(statePayload(snapshot), null, 2) + '\n');
+}
+
+async function advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes) {
+  const occurredAt = new Date().toISOString();
+  const candidates = buildSwagkeysKeepoddEvents({ changes, quarterChanges, snapshot, occurredAt });
+  const events = await enrichKeepoddEventSourceUrls(candidates);
+  const merged = commitStateAndKeepoddEvents({
+    statePath: STATE_PATH,
+    stateValue: statePayload(snapshot, occurredAt),
+    events,
+    now: occurredAt
+  });
+  console.log(`Keepodd SWAGKEYS events committed: ${merged.added} new / ${events.length} candidate(s).`);
 }
 
 function rowMap(rows) {
@@ -989,7 +1007,7 @@ async function main() {
     else if (change.kind === 'changed') await postDiscord(changedEmbed(change));
     else await postDiscord(removedEmbed(change.row));
   }
-  saveState(snapshot);
+  await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes);
   console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged)} SWAGKEYS notification(s) and updated state.`);
   if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
 }
