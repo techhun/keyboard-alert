@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T12:20:28.933Z",
+  "updatedAt": "2026-10-12T02:50:32.516Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -121,6 +121,16 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
+      "note": "—"
+    },
+    {
+      "product": "Keyreative PBS Kids Typewriter",
+      "gbStart": "2026. 10. 9",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Keyreative",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 12",
       "note": "—"
     },
     {
@@ -713,6 +723,7 @@
     "9a9bf2615a6be5062b3bc993": "2026-10-08T06:10:37.092Z",
     "6e6f2132894e2b0cf024b7f5": "2026-10-08T06:10:37.360Z",
     "0812a77ef10be173e9dbd75f": "2026-10-08T06:10:37.589Z",
-    "15a09e52d77daf5f2705a83c": "2026-10-09T04:50:30.709Z"
+    "15a09e52d77daf5f2705a83c": "2026-10-09T04:50:30.709Z",
+    "65c9d7b674a31a03332ceba9": "2026-10-12T02:50:32.515Z"
   }
 }
