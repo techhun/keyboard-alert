@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { clean, comparableValue } from './geonworks-safety.mjs';
 
-const KNOWN_CATEGORIES = new Set(['KEYCAPS', 'KEYBOARDS', 'DESKPADS']);
+const KNOWN_CATEGORIES = new Set(['GMK', 'KEYCAPS', 'KEYBOARDS', 'DESKPADS']);
+const REQUIRED_CATEGORIES = new Set(['KEYCAPS', 'KEYBOARDS']);
 
 function decodeHtml(value) {
   return String(value ?? '')
@@ -116,8 +117,8 @@ export function validateKbdFansRows(rows) {
     categories.set(category, (categories.get(category) || 0) + 1);
   }
 
-  for (const category of KNOWN_CATEGORIES) {
-    if (!categories.get(category)) throw new Error('KBDfans category returned no rows: ' + category);
+  for (const category of REQUIRED_CATEGORIES) {
+    if (!categories.get(category)) throw new Error('KBDfans required category returned no rows: ' + category);
   }
 
   return rows;

@@ -9,9 +9,9 @@ import {
 } from '../scripts/kbdfans-safety.mjs';
 
 const categories = [
-  ['KEYCAPS', 12],
-  ['KEYBOARDS', 12],
-  ['DESKPADS', 6]
+  ['GMK', 2],
+  ['KEYCAPS', 14],
+  ['KEYBOARDS', 14]
 ];
 
 function card(category, index, overrides = {}) {
@@ -73,6 +73,28 @@ test('parses category, status, ETA, progress, summary, and latest update', () =>
   });
 });
 
+test('accepts current GMK category and keeps legacy DESKPADS optional', () => {
+  const current = parseKbdFansUpdatesHtml(fixture());
+  assert.equal(current.filter((row) => row.category === 'GMK').length, 2);
+  assert.equal(current.some((row) => row.category === 'DESKPADS'), false);
+
+  const withLegacyDeskpad = validateKbdFansRows([
+    ...current,
+    {
+      category: 'DESKPADS',
+      product: 'Legacy Deskpad',
+      status: 'In production',
+      eta: 'TBD',
+      progress: 25,
+      summary: '',
+      latestUpdateDate: '',
+      latestUpdateTitle: '',
+      latestUpdateBody: ''
+    }
+  ]);
+  assert.equal(withLegacyDeskpad.length, 31);
+});
+
 test('chooses the newest timeline update by date', () => {
   const newer = timeline('2026-09-28', 'Latest', 'Newest body');
   const older = timeline('2026-08-10', 'Older', 'Older body');
@@ -93,8 +115,8 @@ test('validation rejects malformed progress and missing categories', () => {
   bad[0].progress = 150;
   assert.throws(() => validateKbdFansRows(bad), /invalid progress/);
 
-  const noDeskpads = rows.filter((row) => row.category !== 'DESKPADS');
-  assert.throws(() => validateKbdFansRows(noDeskpads), /suspiciously few rows|category returned no rows/);
+  const noKeyboards = rows.filter((row) => row.category !== 'KEYBOARDS');
+  assert.throws(() => validateKbdFansRows(noKeyboards), /suspiciously few rows|required category returned no rows/);
 });
 
 test('diff is stable when card order changes and catches rich update fields', () => {
