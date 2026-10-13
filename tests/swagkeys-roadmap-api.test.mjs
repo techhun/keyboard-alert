@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
   notionRetryDelayMs,
   parseSwagkeysRoadmapCollectionApi,
+  parseSwagkeysRoadmapCollectionRowsApi,
   parseSwagkeysRoadmapPageApi
 } from '../scripts/check-swagkeys.mjs';
 
@@ -52,7 +53,7 @@ test('parses SWAGKEYS roadmap announcement and quarter collection sources from N
   assert.equal(parsed.sources.Q1.query.sort[0].property, 'title');
 });
 
-test('parses and de-duplicates roadmap products from Notion collection data', () => {
+test('parses and de-duplicates roadmap products with GB date ranges from Notion collection data', () => {
   const collectionData = {
     result: {
       reducerResults: {
@@ -62,18 +63,39 @@ test('parses and de-duplicates roadmap products from Notion collection data', ()
       }
     },
     recordMap: {
+      collection: {
+        roadmap: wrapped({
+          schema: {
+            title: { name: 'Name', type: 'title' },
+            gb: { name: 'GB Date', type: 'date' }
+          }
+        })
+      },
       block: {
-        a: wrapped({ properties: { title: text('SWG Classic Red') } }),
-        b: wrapped({ properties: { title: text('SWG Classic Blue') } }),
-        dup: wrapped({ properties: { title: text('SWG Classic Red') } }),
+        a: wrapped({ properties: {
+          title: text('SWG Space Cadet'),
+          gb: [['‣', [['d', { type: 'date', start_date: '2026-10-05', end_date: '2026-11-02' }]]]]
+        } }),
+        b: wrapped({ properties: {
+          title: text('SWG Crimson Cadet'),
+          gb: [['‣', [['d', { type: 'date', start_date: '2026-10-15', end_date: '2026-11-12' }]]]]
+        } }),
+        dup: wrapped({ properties: {
+          title: text('SWG Space Cadet'),
+          gb: [['‣', [['d', { type: 'date', start_date: '2026-10-05', end_date: '2026-11-02' }]]]]
+        } }),
         empty: wrapped({ properties: { title: text('') } })
       }
     }
   };
 
   assert.deepEqual(parseSwagkeysRoadmapCollectionApi(collectionData), [
-    'SWG Classic Red',
-    'SWG Classic Blue'
+    'SWG Space Cadet',
+    'SWG Crimson Cadet'
+  ]);
+  assert.deepEqual(parseSwagkeysRoadmapCollectionRowsApi(collectionData), [
+    { product: 'SWG Space Cadet', saleStart: '2026-10-05', saleEnd: '2026-11-02' },
+    { product: 'SWG Crimson Cadet', saleStart: '2026-10-15', saleEnd: '2026-11-12' }
   ]);
 });
 
