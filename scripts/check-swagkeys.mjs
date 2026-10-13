@@ -409,7 +409,8 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
     sources[quarter] = {
       collectionId,
       viewId,
-      query: view?.query2 || {}
+      query: view?.query2 || {},
+      schema: collection?.schema || {}
     };
   }
 
@@ -425,13 +426,13 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
   return { announcement, sources };
 }
 
-export function parseSwagkeysRoadmapCollectionRowsApi(collectionData) {
+export function parseSwagkeysRoadmapCollectionRowsApi(collectionData, schemaOverride = {}) {
   const blocks = collectionData?.recordMap?.block || {};
   const collections = collectionData?.recordMap?.collection || {};
   const collectionRecord = Object.values(collections)
     .map(unwrapNotionRecord)
     .find((record) => record?.schema);
-  const schema = collectionRecord?.schema || {};
+  const schema = Object.keys(schemaOverride || {}).length ? schemaOverride : (collectionRecord?.schema || {});
   const gbDateId = findSchemaPropertyId(schema, /(?:GB|Group[- ]?Buy)\s*Date|공제.*일|판매.*일/i, '');
   const blockIds = collectionData?.result?.reducerResults?.collection_group_results?.blockIds
     || Object.keys(blocks);
@@ -545,7 +546,7 @@ async function fetchRoadmapFromNotionApi() {
       source.query,
       spaceId
     );
-    const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData);
+    const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData, source.schema);
     const products = roadmapRows.map((row) => row.product);
     if (!products.length) {
       throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
@@ -553,7 +554,7 @@ async function fetchRoadmapFromNotionApi() {
     quarters[quarter] = products;
     for (const row of roadmapRows) {
       const key = canonicalProductKey('SWAGKEYS', row.product);
-      if (!key || (!row.saleStart && !row.saleEnd)) continue;
+      if (!key) continue;
       roadmapDates[key] = {
         product: row.product,
         saleStart: row.saleStart || '',
@@ -630,6 +631,7 @@ async function fetchSnapshot(fallback = {}) {
       }
       if (!candidate.announcement.heading || !candidate.announcement.content) throw new Error('roadmap announcement was empty');
       if (!quarterSnapshotIsValid(candidate.quarters)) throw new Error('quarter roadmap snapshot failed validation');
+      if (!candidate.roadmapDates && fallback.roadmapDates) candidate = { ...candidate, roadmapDates: fallback.roadmapDates };
       if (Object.values(candidate.quarters).flat().length < 5) throw new Error('quarter roadmap returned too few products');
       roadmap = candidate;
       if (fallbackSince.roadmap) {
@@ -980,6 +982,7 @@ async function main() {
     fallbackSince: state?.fallbackSince && typeof state.fallbackSince === 'object' ? state.fallbackSince : {}
   };
   let snapshot = await fetchSnapshot(fallback);
+  const roadmapDatesInitialized = !state?.roadmapDates && Boolean(snapshot.roadmapDates);
   console.log(`SWAGKEYS announcement: ${snapshot.announcement.heading}${snapshot.roadmapFresh ? '' : ' (stored fallback)'}`);
   console.log(`SWAGKEYS status rows: ${snapshot.rows.length}${snapshot.statusFresh ? '' : ' (stored fallback)'}`);
 
@@ -1069,9 +1072,9 @@ async function main() {
   console.log(`SWAGKEYS product changes: ${changes.length}`);
 
   if (!announcementChanged && !quartersChanged && changes.length === 0) {
-    if (snapshot.fallbackMetadataChanged) {
+    if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized) {
       saveState(snapshot);
-      console.log('SWAGKEYS fallback metadata updated.');
+      console.log(roadmapDatesInitialized ? 'SWAGKEYS roadmap sale-date metadata initialized.' : 'SWAGKEYS fallback metadata updated.');
     } else {
       console.log('No SWAGKEYS state update needed.');
     }
