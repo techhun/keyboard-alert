@@ -7,11 +7,10 @@ export const GEONWORKS_UPDATE_URL = 'https://geonworks.kr/customhtml/GB_schedule
 export const GEONWORKS_RELEASE_UPDATE_URL = 'https://geonworks.kr/customhtml/release/release.html';
 export const SWAGKEYS_UPDATE_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 export const SWAGKEYS_STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
-const GEONWORKS_PRODUCTS_URLS = [
-  'https://geonworks.kr/category/products/47/?page=1',
-  'https://geonworks.kr/category/products/47/?page=2'
-];
-const SWAGKEYS_PRODUCTS_JSON_URL = 'https://swagkeys.com/products.json?limit=250';
+const GEONWORKS_PRODUCTS_URL = 'https://geonworks.kr/category/products/47/';
+const SWAGKEYS_PRODUCTS_JSON_URL = 'https://swagkeys.com/products.json';
+const PRODUCT_CATALOG_MAX_PAGES = 10;
+const SWAGKEYS_PRODUCTS_PAGE_LIMIT = 250;
 
 export function cleanKeepoddValue(value) {
   return String(value ?? '')
@@ -461,21 +460,61 @@ async function fetchWithTimeout(fetchImpl, url, timeoutMs) {
   });
 }
 
-export async function fetchProductCatalog(source, { fetchImpl = fetch, timeoutMs = 7000 } = {}) {
+export async function fetchProductCatalog(source, {
+  fetchImpl = fetch,
+  timeoutMs = 7000,
+  maxPages = PRODUCT_CATALOG_MAX_PAGES
+} = {}) {
+  const pageLimit = Math.max(1, Number(maxPages) || PRODUCT_CATALOG_MAX_PAGES);
+
   if (source === 'SWAGKEYS') {
-    const response = await fetchWithTimeout(fetchImpl, SWAGKEYS_PRODUCTS_JSON_URL, timeoutMs);
-    if (!response.ok) throw new Error(`SWAGKEYS products catalog HTTP ${response.status}`);
-    return parseSwagkeysProductsJson(await response.json());
-  }
-  if (source === 'GEONWORKS') {
     const catalog = [];
-    for (const url of GEONWORKS_PRODUCTS_URLS) {
+    const seenUrls = new Set();
+
+    for (let page = 1; page <= pageLimit; page += 1) {
+      const url = `${SWAGKEYS_PRODUCTS_JSON_URL}?limit=${SWAGKEYS_PRODUCTS_PAGE_LIMIT}&page=${page}`;
       const response = await fetchWithTimeout(fetchImpl, url, timeoutMs);
-      if (!response.ok) throw new Error(`GEONWORKS products catalog HTTP ${response.status}`);
-      catalog.push(...parseGeonworksCatalogHtml(await response.text(), url));
+      if (!response.ok) throw new Error(`SWAGKEYS products catalog HTTP ${response.status}`);
+      const products = parseSwagkeysProductsJson(await response.json());
+      let added = 0;
+
+      for (const product of products) {
+        if (seenUrls.has(product.url)) continue;
+        seenUrls.add(product.url);
+        catalog.push(product);
+        added += 1;
+      }
+
+      if (products.length < SWAGKEYS_PRODUCTS_PAGE_LIMIT || added === 0) break;
     }
+
     return catalog;
   }
+
+  if (source === 'GEONWORKS') {
+    const catalog = [];
+    const seenUrls = new Set();
+
+    for (let page = 1; page <= pageLimit; page += 1) {
+      const url = `${GEONWORKS_PRODUCTS_URL}?page=${page}`;
+      const response = await fetchWithTimeout(fetchImpl, url, timeoutMs);
+      if (!response.ok) throw new Error(`GEONWORKS products catalog HTTP ${response.status}`);
+      const products = parseGeonworksCatalogHtml(await response.text(), url);
+      let added = 0;
+
+      for (const product of products) {
+        if (seenUrls.has(product.url)) continue;
+        seenUrls.add(product.url);
+        catalog.push(product);
+        added += 1;
+      }
+
+      if (products.length === 0 || added === 0) break;
+    }
+
+    return catalog;
+  }
+
   return [];
 }
 
@@ -486,14 +525,22 @@ export async function enrichKeepoddEventSourceUrls(events = [], options = {}) {
   for (const source of sources) {
     try {
       const catalog = options.catalogs?.[source] || await fetchProductCatalog(source, options);
+      let exactMatches = 0;
+      let fallbacks = 0;
+
       for (const event of result) {
         if (event.source !== source) continue;
         const url = findExactProductUrl(source, event.name, catalog);
         if (url) {
           event.sourceUrl = url;
           event.sourceUrlType = 'product';
+          exactMatches += 1;
+        } else {
+          fallbacks += 1;
         }
       }
+
+      console.log(`Keepodd ${source} source URL resolution: exact=${exactMatches}, fallback=${fallbacks}, catalog=${catalog.length}`);
     } catch (error) {
       console.warn(`Keepodd ${source} product URL lookup failed; using update-page fallback: ${error?.message || error}`);
     }
