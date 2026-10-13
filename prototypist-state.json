@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T20:01:43.234Z",
+  "updatedAt": "2026-10-13T20:11:55.201Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -930,7 +930,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gonzales-36404233415480f29ac5e40b7f05f59b",
       "product": "GMK CYL Gonzales",
-      "status": "In Quality Control",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -940,7 +940,7 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Thunder-God-36d042334154809aa59ff30d52150a65",
       "product": "GMK CYL Thunder God",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1180,16 +1180,6 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Hangulbeit-2ca04233415480fba8acdd942c279ebe",
       "product": "GMK CYL Hangulbeit",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Vintage-Keys-2ca04233415480f2980ed623b51e5184",
-      "product": "GMK CYL Vintage Keys",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
     },
@@ -1508,6 +1498,16 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Ferrofluid-3f7042334154809784ccd3ade77930bd",
+      "product": "SWG Ferrofluid",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
       "product": "CRP r7",
       "status": "Shipping to Customers",
@@ -1764,8 +1764,5 @@
       "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-10-13T20:01:29.097Z",
-    "keyset": "2026-10-13T20:01:41.663Z"
-  }
+  "fallbackSince": {}
 }
