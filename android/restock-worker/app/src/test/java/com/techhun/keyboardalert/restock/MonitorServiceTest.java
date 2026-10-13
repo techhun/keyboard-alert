@@ -89,6 +89,14 @@ public class MonitorServiceTest {
     }
 
     @Test
+    public void sameSmartStorePageIsReusedOnlyForTheFirstFreshSnapshot() {
+        assertFalse(MonitorService.shouldReloadSmartStorePage("123", "123", 0L));
+        assertTrue(MonitorService.shouldReloadSmartStorePage("123", "123", 1L));
+        assertTrue(MonitorService.shouldReloadSmartStorePage("123", "456", 0L));
+        assertTrue(MonitorService.shouldReloadSmartStorePage("", "123", 0L));
+    }
+
+    @Test
     public void inventoryStatusDoesNotSayInStockWhenNothingIsAvailable() {
         assertEquals("재고 없음 0/1 · 10:00:00", MonitorService.inventoryStatusText(0, 1, "10:00:00"));
         assertEquals("재고 있음 1/2 · 10:00:00", MonitorService.inventoryStatusText(1, 2, "10:00:00"));
