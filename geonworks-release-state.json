@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T04:50:41.763Z",
+  "updatedAt": "2026-10-13T08:20:41.272Z",
   "rows": [
     {
       "product": "DCS SMRT R2",
@@ -70,13 +70,24 @@
       "end": "2026-11-02"
     },
     {
+      "product": "Keyreative PBS Kids Typewriter",
+      "manufacturer": "",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "",
+      "start": "",
+      "end": ""
+    },
+    {
       "product": "GMK CYL Tokyo & Miami Nights R2",
       "manufacturer": "GMK",
       "region": "KR/GLOBAL",
       "saleType": "Group Buy",
       "type": "Keycaps",
       "status": "Interest Check (IC)",
-      "fixed": "",
+      "fixed": "확정 / Fixed",
       "start": "2026-10-13",
       "end": "2026-10-23"
     }
@@ -90,6 +101,8 @@
     "9f77b3e4c8b8b0681471c266": "2026-10-13T00:50:44.835Z",
     "acb9ee0567387f9f229236aa": "2026-10-13T04:50:41.156Z",
     "1fddecfb607a4639ca4f3d11": "2026-10-13T04:50:41.433Z",
-    "1e1cda21e0e3eda27846a216": "2026-10-13T04:50:41.763Z"
+    "1e1cda21e0e3eda27846a216": "2026-10-13T04:50:41.763Z",
+    "dc884cc832cc49c37db740c6": "2026-10-13T08:20:40.890Z",
+    "d131ff247784a7498c5d04da": "2026-10-13T08:20:41.272Z"
   }
 }
