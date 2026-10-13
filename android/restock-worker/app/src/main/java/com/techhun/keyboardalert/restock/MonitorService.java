@@ -60,6 +60,7 @@ public class MonitorService extends Service {
     private static final long NO_CONTENT_STORM_WINDOW_MS = 2 * 60_000L;
     private static final long NO_CONTENT_STORM_BACKOFF_MS = 5 * 60_000L;
     private static final int NO_CONTENT_STORM_DISTINCT_PRODUCTS = 3;
+    private static final int NO_CONTENT_STORM_FAILURES = 3;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
     private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
@@ -125,6 +126,7 @@ public class MonitorService extends Service {
     private int smartStorePageProbeCount;
     private boolean noContentRecovery;
     private final Set<String> noContentStormProducts = new HashSet<>();
+    private int noContentStormFailures;
     private long noContentStormWindowStartedAt;
     private long noContentBackoffUntil;
 
@@ -641,6 +643,7 @@ public class MonitorService extends Service {
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
                 clearRateLimitBackoff();
                 clearNoContentStorm();
+                getSystemService(NotificationManager.class).cancel(NOTIFICATION_STATUS);
                 if (noContentRecovery) {
                     DiagnosticLog.add(
                         this,
@@ -765,7 +768,9 @@ public class MonitorService extends Service {
         }
 
         JSONArray restocked = new JSONArray();
+        JSONArray restockDiagnostic = new JSONArray();
         JSONArray soldOut = new JSONArray();
+        JSONArray soldOutDiagnostic = new JSONArray();
         JSONArray lowStock = new JSONArray();
         int threshold = MonitorPrefs.lowStockThreshold(this);
         int availableCount = 0;
@@ -778,14 +783,18 @@ public class MonitorService extends Service {
             boolean wasAvailable = hadPrevious && previous.optBoolean(id, false);
             boolean isRestocked = hadPrevious && !wasAvailable && now;
             boolean isSoldOut = hadPrevious && wasAvailable && !now;
+            String optionLabel = resolved.labels.getOrDefault(id, id);
+            Integer quantity = smartStore ? resolved.quantities.get(id) : null;
             if (isRestocked) {
-                restocked.put(resolved.labels.getOrDefault(id, id));
+                restocked.put(optionLabel);
+                restockDiagnostic.put(optionLabel + " · "
+                    + (quantity == null ? "수량 미확인" : quantity + "개"));
             }
             if (isSoldOut) {
-                soldOut.put(resolved.labels.getOrDefault(id, id));
+                soldOut.put(optionLabel);
+                soldOutDiagnostic.put(optionLabel + " · 0개");
             }
 
-            Integer quantity = smartStore ? resolved.quantities.get(id) : null;
             if (quantity != null) {
                 Integer lastQuantity = previousQuantities.has(id) && !previousQuantities.isNull(id)
                     ? previousQuantities.optInt(id) : null;
@@ -826,12 +835,17 @@ public class MonitorService extends Service {
         updateOngoingNotification(enabledCount + "개 알림 켜짐");
         DiagnosticLog.recordSuccess(this);
 
+        String source = result.optString("source", "");
         if (restocked.length() > 0) {
-            DiagnosticLog.recordRestock(this, product, restocked.toString());
+            String detail = restockDiagnostic.toString()
+                + (source.isBlank() ? "" : " · " + source);
+            DiagnosticLog.recordRestock(this, product, detail);
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
         }
         if (soldOut.length() > 0) {
-            DiagnosticLog.add(this, "SOLD_OUT", product, soldOut.toString());
+            String detail = soldOutDiagnostic.toString()
+                + (source.isBlank() ? "" : " · " + source);
+            DiagnosticLog.add(this, "SOLD_OUT", product, detail);
         }
         if (lowStock.length() > 0) {
             DiagnosticLog.add(this, "LOW_STOCK", product, lowStock.toString());
@@ -858,30 +872,38 @@ public class MonitorService extends Service {
             || now - noContentStormWindowStartedAt > NO_CONTENT_STORM_WINDOW_MS) {
             noContentStormWindowStartedAt = now;
             noContentStormProducts.clear();
+            noContentStormFailures = 0;
         }
         String id = currentProduct.optString("id", "");
         if (!id.isBlank()) noContentStormProducts.add(id);
+        noContentStormFailures++;
 
         if (shouldStartNoContentBackoff(
             noContentStormProducts.size(),
+            noContentStormFailures,
             now - noContentStormWindowStartedAt
         )) {
             noContentBackoffUntil = now + NO_CONTENT_STORM_BACKOFF_MS;
+            String detail = noContentStormFailures + "회 / "
+                + noContentStormProducts.size()
+                + "개 상품에서 HTTP 204 · 300초 보호 대기";
             DiagnosticLog.add(
                 this,
                 "NO_CONTENT_BACKOFF",
                 currentProduct,
-                noContentStormProducts.size()
-                    + "개 상품에서 연속 HTTP 204 · 300초 보호 대기"
+                detail
             );
             updateOngoingNotification("SmartStore 일시 오류 · 5분 후 다시 확인해요");
+            notifySmartStoreDelayed();
             noContentStormProducts.clear();
+            noContentStormFailures = 0;
             noContentStormWindowStartedAt = 0L;
         }
     }
 
     private void clearNoContentStorm() {
         noContentStormProducts.clear();
+        noContentStormFailures = 0;
         noContentStormWindowStartedAt = 0L;
         if (noContentBackoffUntil <= System.currentTimeMillis()) {
             noContentBackoffUntil = 0L;
@@ -906,8 +928,13 @@ public class MonitorService extends Service {
         return SiteSupport.NAVER_SMARTSTORE.equals(siteType) && !hasUsableNaverSession;
     }
 
-    static boolean shouldStartNoContentBackoff(int distinctProducts, long windowAgeMillis) {
-        return distinctProducts >= NO_CONTENT_STORM_DISTINCT_PRODUCTS
+    static boolean shouldStartNoContentBackoff(
+        int distinctProducts,
+        int failureCount,
+        long windowAgeMillis
+    ) {
+        return (distinctProducts >= NO_CONTENT_STORM_DISTINCT_PRODUCTS
+                || failureCount >= NO_CONTENT_STORM_FAILURES)
             && windowAgeMillis >= 0L
             && windowAgeMillis <= NO_CONTENT_STORM_WINDOW_MS;
     }
@@ -1142,6 +1169,18 @@ public class MonitorService extends Service {
             NOTIFICATION_MONITOR,
             buildOngoingNotification(text)
         );
+    }
+
+    private void notifySmartStoreDelayed() {
+        Notification notification = new Notification.Builder(this, CHANNEL_STATUS)
+            .setSmallIcon(android.R.drawable.stat_notify_error)
+            .setContentTitle("Restock · SmartStore 조회 지연")
+            .setContentText("일시적인 응답 오류로 5분 후 자동 재시도해요.")
+            .setContentIntent(openAppIntent())
+            .setAutoCancel(true)
+            .setCategory(Notification.CATEGORY_STATUS)
+            .build();
+        getSystemService(NotificationManager.class).notify(NOTIFICATION_STATUS, notification);
     }
 
     private void notifyLoginRequired() {
