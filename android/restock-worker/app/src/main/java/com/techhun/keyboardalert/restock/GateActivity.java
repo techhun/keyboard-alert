@@ -33,7 +33,7 @@ public class GateActivity extends Activity {
             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         );
 
-        if (SessionState.hasNaverSession()) {
+        if (SessionState.hasUsableNaverSession(this)) {
             openMain();
             return;
         }
@@ -107,7 +107,10 @@ public class GateActivity extends Activity {
         skip.setTypeface(null, Typeface.BOLD);
         skip.setGravity(Gravity.CENTER);
         skip.setPadding(0, dp(14), 0, dp(14));
-        skip.setOnClickListener(v -> openMain());
+        skip.setOnClickListener(v -> {
+            SessionState.enterGuestMode(this);
+            openMain();
+        });
         Motion.press(skip);
         LinearLayout.LayoutParams skipLp = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -137,13 +140,13 @@ public class GateActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode != REQUEST_LOGIN) return;
         loginLaunching = false;
-        if (resultCode == RESULT_OK && SessionState.hasNaverSession()) openMain();
+        if (resultCode == RESULT_OK && SessionState.hasUsableNaverSession(this)) openMain();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (!loginLaunching && SessionState.hasNaverSession()) openMain();
+        if (!loginLaunching && SessionState.hasUsableNaverSession(this)) openMain();
     }
 
     private void openMain() {
