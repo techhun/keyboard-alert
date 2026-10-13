@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T04:13:28.787Z",
+  "updatedAt": "2026-10-13T16:11:45.382Z",
   "announcement": {
     "heading": "업데이트(26.10.08)",
     "content": "SWG Forest Cadet이 추가되었습니다. SWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWG Forest Cadet has been added. SWS Fan U.C kitting and renders have been added.\nSWG Retroguardia의 렌더 및 구성이 추가되었습니다. / SWG Retroguardia kitting and renders have been added."
@@ -40,6 +40,123 @@
       "SWS FAN U.C"
     ]
   },
+  "roadmapDates": {
+    "beige": {
+      "product": "SWS Beige",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "rubber": {
+      "product": "SWG Rubber",
+      "saleStart": "2026-01-12",
+      "saleEnd": "2026-01-19"
+    },
+    "nimbus": {
+      "product": "SWG Nimbus",
+      "saleStart": "2026-01-23",
+      "saleEnd": "2026-02-06"
+    },
+    "euler": {
+      "product": "SWG Euler",
+      "saleStart": "2026-03-06",
+      "saleEnd": "2026-03-20"
+    },
+    "prepress": {
+      "product": "SWG Prepress",
+      "saleStart": "2026-03-16",
+      "saleEnd": "2026-03-30"
+    },
+    "classicred": {
+      "product": "SWG Classic Red",
+      "saleStart": "2026-03-26",
+      "saleEnd": "2026-04-26"
+    },
+    "ferrofluid": {
+      "product": "SWG Ferrofluid",
+      "saleStart": "2026-04-07",
+      "saleEnd": "2026-04-28"
+    },
+    "classicblue": {
+      "product": "SWG Classic Blue",
+      "saleStart": "2026-05-04",
+      "saleEnd": "2026-05-18"
+    },
+    "skeletoon": {
+      "product": "SWG Skeletoon",
+      "saleStart": "2026-05-18",
+      "saleEnd": "2026-06-01"
+    },
+    "rainbowalert": {
+      "product": "SWG Rainbow Alert",
+      "saleStart": "2026-06-01",
+      "saleEnd": "2026-06-15"
+    },
+    "tars": {
+      "product": "SWG TARS",
+      "saleStart": "2026-06-15",
+      "saleEnd": "2026-06-29"
+    },
+    "midnightrainbow": {
+      "product": "SWG Midnight Rainbow",
+      "saleStart": "2026-06-29",
+      "saleEnd": "2026-07-13"
+    },
+    "neowell": {
+      "product": "SWG Neowell",
+      "saleStart": "2026-07-06",
+      "saleEnd": "2026-07-27"
+    },
+    "nerve": {
+      "product": "SWG Nerve",
+      "saleStart": "2026-07-13",
+      "saleEnd": "2026-08-10"
+    },
+    "heartbreaker": {
+      "product": "SWG Heartbreaker",
+      "saleStart": "2026-07-20",
+      "saleEnd": "2026-08-03"
+    },
+    "hazakuralight": {
+      "product": "SWG Hazakura Light",
+      "saleStart": "2026-08-03",
+      "saleEnd": "2026-08-17"
+    },
+    "evileye": {
+      "product": "SWG Evil Eye",
+      "saleStart": "2026-08-05",
+      "saleEnd": "2026-08-19"
+    },
+    "hypermix": {
+      "product": "SWG Hypermix",
+      "saleStart": "2026-08-17",
+      "saleEnd": "2026-09-14"
+    },
+    "lavender": {
+      "product": "SWG Lavender",
+      "saleStart": "2026-08-24",
+      "saleEnd": "2026-09-07"
+    },
+    "feralis": {
+      "product": "SWG Feralis",
+      "saleStart": "2026-08-31",
+      "saleEnd": "2026-09-28"
+    },
+    "soware": {
+      "product": "SWS Soware",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "wob": {
+      "product": "SWS WoB",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "fanuc": {
+      "product": "SWS FAN U.C",
+      "saleStart": "",
+      "saleEnd": ""
+    }
+  },
   "rows": [
     {
       "product": "Ferrofluid",
@@ -74,7 +191,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-19",
+      "eta": "2026-10-15",
       "currentStatus": "배송중 (Shipping)"
     },
     {
@@ -282,8 +399,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-10-13T04:12:49.610Z",
-    "status": "2026-10-13T04:13:28.693Z"
-  }
+  "fallbackSince": {}
 }

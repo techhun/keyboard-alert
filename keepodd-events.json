@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T07:50:31.397Z",
+  "updatedAt": "2026-10-13T16:11:45.382Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -299,6 +299,25 @@
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "d3c4f7f7154785f83fbffdf55495c077",
+      "source": "SWAGKEYS",
+      "name": "SWG Classic Red",
+      "eventType": "eta_changed",
+      "before": "2026-10-19",
+      "after": "2026-10-15",
+      "occurredAt": "2026-10-13T16:11:45.382Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-03-26",
+      "saleEnd": "2026-04-26",
+      "eta": "2026-10-15",
+      "status": "배송중 (Shipping)",
+      "note": "컬러매칭 Complete",
+      "quarter": "Q1",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-classic-red-사본",
+      "sourceUrlType": "product"
     }
   ]
 }
