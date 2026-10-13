@@ -220,7 +220,7 @@ async function extractRoadmap(page) {
   }
 
   console.log(`SWAGKEYS quarter counts: ${Object.entries(quarters).map(([quarter, products]) => `${quarter}=${products.length}`).join(', ')}`);
-  return { announcement, quarters, roadmapDates };
+  return { announcement, quarters };
 }
 
 async function extractRows(page) {
@@ -565,7 +565,7 @@ async function fetchRoadmapFromNotionApi() {
   if (!quarterSnapshotIsValid(quarters)) {
     throw new Error('Notion public API returned an invalid SWAGKEYS roadmap snapshot');
   }
-  return { announcement, quarters };
+  return { announcement, quarters, roadmapDates };
 }
 
 async function fetchStatusRowsFromNotionApi() {
