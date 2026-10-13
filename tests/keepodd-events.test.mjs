@@ -7,6 +7,7 @@ import path from 'node:path';
 import {
   appendKeepoddEvents,
   buildGeonworksKeepoddEvents,
+  buildGeonworksReleaseKeepoddEvents,
   buildSwagkeysKeepoddEvents,
   canonicalProductKey,
   deterministicKeepoddEventId,
@@ -30,6 +31,21 @@ function geonRow(overrides = {}) {
     status: '판매 중 / GB on sale',
     update: '2026. 10. 12',
     note: '—',
+    ...overrides
+  };
+}
+
+function releaseRow(overrides = {}) {
+  return {
+    product: 'GMK CYL Test',
+    manufacturer: 'GMK',
+    region: 'KR/GLOBAL',
+    saleType: 'Group Buy',
+    type: 'Keycaps',
+    status: 'For Sale',
+    fixed: '확정 / Fixed',
+    start: '2026-10-13',
+    end: '2026-11-02',
     ...overrides
   };
 }
@@ -120,6 +136,83 @@ test('same event rerun does not append duplicate', () => {
   const events = buildGeonworksKeepoddEvents([{ kind: 'added', row: geonRow() }], { occurredAt: at });
   const first = mergeKeepoddEvents({ version: 1, updatedAt: at, events: [] }, events, { now: at });
   const second = mergeKeepoddEvents(first.feed, events, { now: '2026-10-12T11:00:00.000Z' });
+  assert.equal(first.added, 1);
+  assert.equal(second.added, 0);
+  assert.equal(second.feed.events.length, 1);
+});
+
+test('GEONWORKS Release IC addition creates zero Keepodd events', () => {
+  const events = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'added',
+    row: releaseRow({ status: 'Interest Check (IC)', fixed: '' })
+  }], { occurredAt: at });
+  assert.equal(events.length, 0);
+});
+
+test('GEONWORKS Release IC -> Fixed transition creates one new_gb event', () => {
+  const before = releaseRow({ status: 'Interest Check (IC)', fixed: '' });
+  const row = releaseRow();
+  const events = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'changed',
+    before,
+    row,
+    fields: [
+      { field: 'status', before: before.status, after: row.status },
+      { field: 'fixed', before: before.fixed, after: row.fixed }
+    ]
+  }], { occurredAt: at });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'new_gb');
+  assert.equal(events[0].saleStart, '2026-10-13');
+  assert.equal(events[0].sourceUrlType, 'update');
+  assert.equal(events[0].sourceUrl, 'https://geonworks.kr/customhtml/release/release.html');
+});
+
+test('GEONWORKS Release already-Fixed addition creates one new_gb event', () => {
+  const events = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'added',
+    row: releaseRow()
+  }], { occurredAt: at });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'new_gb');
+});
+
+test('GEONWORKS Release changes on an already-confirmed GB do not create another new_gb', () => {
+  const before = releaseRow({ end: '2026-11-01' });
+  const row = releaseRow({ end: '2026-11-02' });
+  const events = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'changed',
+    before,
+    row,
+    fields: [{ field: 'end', before: before.end, after: row.end }]
+  }], { occurredAt: at });
+  assert.equal(events.length, 0);
+});
+
+test('GEONWORKS Release new_gb is deduped when GB Schedule already emitted the same canonical product', () => {
+  const gb = buildGeonworksKeepoddEvents([{
+    kind: 'added',
+    row: geonRow({ product: 'GMK CYL Test', gbStart: '2026. 10. 12' })
+  }], { occurredAt: at });
+  const release = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'added',
+    row: releaseRow({ product: 'GMK CYL Test', start: '2026-10-13' })
+  }], { occurredAt: '2026-10-13T01:00:00.000Z' });
+
+  const first = mergeKeepoddEvents({ version: 1, updatedAt: at, events: [] }, gb, { now: at });
+  const second = mergeKeepoddEvents(first.feed, release, { now: '2026-10-13T01:00:00.000Z' });
+  assert.equal(first.added, 1);
+  assert.equal(second.added, 0);
+  assert.equal(second.feed.events.filter((event) => event.eventType === 'new_gb').length, 1);
+});
+
+test('GEONWORKS Release rerun does not duplicate new_gb', () => {
+  const release = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'added',
+    row: releaseRow()
+  }], { occurredAt: at });
+  const first = mergeKeepoddEvents({ version: 1, updatedAt: at, events: [] }, release, { now: at });
+  const second = mergeKeepoddEvents(first.feed, release, { now: '2026-10-13T01:00:00.000Z' });
   assert.equal(first.added, 1);
   assert.equal(second.added, 0);
   assert.equal(second.feed.events.length, 1);
