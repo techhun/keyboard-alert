@@ -31,13 +31,14 @@ public class MonitorServiceTest {
     }
 
     @Test
-    public void noContentBackoffRequiresSeveralProductsInOneShortWindow() {
-        assertFalse(MonitorService.shouldStartNoContentBackoff(1, 10_000L));
-        assertFalse(MonitorService.shouldStartNoContentBackoff(2, 60_000L));
-        assertTrue(MonitorService.shouldStartNoContentBackoff(3, 90_000L));
-        assertTrue(MonitorService.shouldStartNoContentBackoff(6, 120_000L));
-        assertFalse(MonitorService.shouldStartNoContentBackoff(3, 120_001L));
-        assertFalse(MonitorService.shouldStartNoContentBackoff(3, -1L));
+    public void noContentBackoffCoversCorrelatedAndRepeatedSingleProductFailures() {
+        assertFalse(MonitorService.shouldStartNoContentBackoff(1, 1, 10_000L));
+        assertFalse(MonitorService.shouldStartNoContentBackoff(2, 2, 60_000L));
+        assertTrue(MonitorService.shouldStartNoContentBackoff(3, 3, 90_000L));
+        assertTrue(MonitorService.shouldStartNoContentBackoff(1, 3, 90_000L));
+        assertTrue(MonitorService.shouldStartNoContentBackoff(6, 6, 120_000L));
+        assertFalse(MonitorService.shouldStartNoContentBackoff(3, 3, 120_001L));
+        assertFalse(MonitorService.shouldStartNoContentBackoff(3, 3, -1L));
     }
 
     @Test
