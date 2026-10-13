@@ -32,8 +32,10 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class MonitorService extends Service {
     static final String ACTION_STOP = "com.techhun.keyboardalert.restock.STOP";
@@ -55,6 +57,9 @@ public class MonitorService extends Service {
     private static final long SMARTSTORE_INITIAL_SETTLE_MS = 1_200L;
     private static final long SMARTSTORE_PAGE_RECHECK_MS = 1_500L;
     private static final int SMARTSTORE_PAGE_PROBES_BEFORE_API = 2;
+    private static final long NO_CONTENT_STORM_WINDOW_MS = 2 * 60_000L;
+    private static final long NO_CONTENT_STORM_BACKOFF_MS = 5 * 60_000L;
+    private static final int NO_CONTENT_STORM_DISTINCT_PRODUCTS = 3;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
     private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
@@ -119,6 +124,9 @@ public class MonitorService extends Service {
     private int noContentReloadCount;
     private int smartStorePageProbeCount;
     private boolean noContentRecovery;
+    private final Set<String> noContentStormProducts = new HashSet<>();
+    private long noContentStormWindowStartedAt;
+    private long noContentBackoffUntil;
 
     private final Runnable resultTimeout = () -> {
         if (!awaitingResult || stopping || pausedForOptionLookup) return;
@@ -162,7 +170,9 @@ public class MonitorService extends Service {
                     bootstrapSession();
                 } else {
                     backoffUntil = MonitorPrefs.prefs(this).getLong(KEY_BACKOFF_UNTIL, backoffUntil);
-                    long backoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+                    long rateBackoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+        long noContentBackoff = Math.max(0L, noContentBackoffUntil - System.currentTimeMillis());
+        long backoff = Math.max(rateBackoff, noContentBackoff);
                     scheduleNextCheck(Math.max(MIN_PRODUCT_SPACING_MS, backoff));
                 }
                 return START_STICKY;
@@ -341,6 +351,14 @@ public class MonitorService extends Service {
         }
 
         String siteType = currentSiteType();
+        if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)) {
+            long noContentBackoff = Math.max(0L, noContentBackoffUntil - System.currentTimeMillis());
+            if (noContentBackoff > 0L) {
+                updateOngoingNotification("SmartStore 일시 오류 · 잠시 후 다시 확인해요");
+                scheduleNextProduct();
+                return;
+            }
+        }
         if (!SiteSupport.isSupportedProductUrl(currentProduct.optString("url", ""))) {
             markCurrentFailure("지원하지 않는 상품 주소");
             scheduleNextProduct();
@@ -500,6 +518,7 @@ public class MonitorService extends Service {
                             "HTTP 204 후 페이지 데이터 확인 실패",
                             "NO_CONTENT"
                         );
+                        registerNoContentFailure();
                         scheduleNextProduct();
                         return;
                     }
@@ -540,6 +559,7 @@ public class MonitorService extends Service {
                         return;
                     }
                     markCurrentFailure("HTTP 204 · 상품 데이터 없음", "NO_CONTENT");
+                    registerNoContentFailure();
                     scheduleNextProduct();
                     return;
                 }
@@ -595,6 +615,7 @@ public class MonitorService extends Service {
             }
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
                 clearRateLimitBackoff();
+                clearNoContentStorm();
                 if (noContentRecovery) {
                     DiagnosticLog.add(
                         this,
@@ -786,6 +807,49 @@ public class MonitorService extends Service {
     static String inventoryStatusText(int availableCount, int requestedCount, String time) {
         String availability = availableCount > 0 ? "재고 있음" : "재고 없음";
         return availability + " " + availableCount + "/" + requestedCount + " · " + time;
+    }
+
+    private void registerNoContentFailure() {
+        if (currentProduct == null || !SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) return;
+        long now = System.currentTimeMillis();
+        if (noContentStormWindowStartedAt <= 0L
+            || now - noContentStormWindowStartedAt > NO_CONTENT_STORM_WINDOW_MS) {
+            noContentStormWindowStartedAt = now;
+            noContentStormProducts.clear();
+        }
+        String id = currentProduct.optString("id", "");
+        if (!id.isBlank()) noContentStormProducts.add(id);
+
+        if (shouldStartNoContentBackoff(
+            noContentStormProducts.size(),
+            now - noContentStormWindowStartedAt
+        )) {
+            noContentBackoffUntil = now + NO_CONTENT_STORM_BACKOFF_MS;
+            DiagnosticLog.add(
+                this,
+                "NO_CONTENT_BACKOFF",
+                currentProduct,
+                noContentStormProducts.size()
+                    + "개 상품에서 연속 HTTP 204 · 300초 보호 대기"
+            );
+            updateOngoingNotification("SmartStore 일시 오류 · 5분 후 다시 확인해요");
+            noContentStormProducts.clear();
+            noContentStormWindowStartedAt = 0L;
+        }
+    }
+
+    private void clearNoContentStorm() {
+        noContentStormProducts.clear();
+        noContentStormWindowStartedAt = 0L;
+        if (noContentBackoffUntil <= System.currentTimeMillis()) {
+            noContentBackoffUntil = 0L;
+        }
+    }
+
+    static boolean shouldStartNoContentBackoff(int distinctProducts, long windowAgeMillis) {
+        return distinctProducts >= NO_CONTENT_STORM_DISTINCT_PRODUCTS
+            && windowAgeMillis >= 0L
+            && windowAgeMillis <= NO_CONTENT_STORM_WINDOW_MS;
     }
 
     private void applyRateLimitBackoff(int status) {
