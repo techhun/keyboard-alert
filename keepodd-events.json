@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T05:05:00.000Z",
+  "updatedAt": "2026-10-13T05:47:00.000Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -13,9 +13,9 @@
       "saleStart": "2026-09-21",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-10-18",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
-      "sourceUrlType": "update"
+      "sourceUrlType": "update",
+      "saleEnd": "2026-10-18"
     },
     {
       "id": "b206c6fb22d18f6beebc5339fd367d0c",
@@ -48,22 +48,6 @@
       "status": "제작 중 / In progress",
       "note": "통관 중 / Currently undergoing customs clearance",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
-      "sourceUrlType": "update"
-    },
-    {
-      "id": "c4e656861989876889ed8bca01a72f19",
-      "source": "SWAGKEYS",
-      "name": "SWG Bolch",
-      "eventType": "status_changed",
-      "before": "배송중 (Shipping)",
-      "after": "인스탁 판매중 (In-Stock)",
-      "occurredAt": "2026-09-28T11:02:01.000Z",
-      "categoryHint": "키캡",
-      "maker": "Swagkeys",
-      "eta": "2026-09-18",
-      "status": "인스탁 판매중 (In-Stock)",
-      "note": "컬러매칭 Complete",
-      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
     },
     {
@@ -115,6 +99,22 @@
       "sourceUrlType": "update"
     },
     {
+      "id": "c4e656861989876889ed8bca01a72f19",
+      "source": "SWAGKEYS",
+      "name": "SWG Bolch",
+      "eventType": "status_changed",
+      "before": "배송중 (Shipping)",
+      "after": "인스탁 판매중 (In-Stock)",
+      "occurredAt": "2026-09-28T11:02:01.000Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "eta": "2026-09-18",
+      "status": "인스탁 판매중 (In-Stock)",
+      "note": "컬러매칭 Complete",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
       "id": "c7c6fc8dac290fb9bbeeab4b5a19074b",
       "source": "SWAGKEYS",
       "name": "SWG Classic Blue",
@@ -131,36 +131,6 @@
       "sourceUrlType": "update"
     },
     {
-      "id": "e75b4ad2f39ef9597ea362d7376ddd4e",
-      "source": "SWAGKEYS",
-      "name": "SWG Space Cadet",
-      "eventType": "note_changed",
-      "before": "Q4 Roadmap",
-      "after": "Q4 Roadmap에서 제외됨 · 판매 일정 재확인 필요",
-      "occurredAt": "2026-09-30T08:11:05Z",
-      "categoryHint": "키캡",
-      "maker": "Swagkeys",
-      "status": "Not started",
-      "note": "Q4 Roadmap에서 제외됨 · 판매 일정 재확인 필요",
-      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
-      "sourceUrlType": "update"
-    },
-    {
-      "id": "cea848398747f4caf2d637e0be6b5876",
-      "source": "SWAGKEYS",
-      "name": "SWG Crimson Cadet",
-      "eventType": "note_changed",
-      "before": "Q4 Roadmap",
-      "after": "Q4 Roadmap에서 제외됨 · 판매 일정 재확인 필요",
-      "occurredAt": "2026-09-30T08:11:05Z",
-      "categoryHint": "키캡",
-      "maker": "Swagkeys",
-      "status": "Not started",
-      "note": "Q4 Roadmap에서 제외됨 · 판매 일정 재확인 필요",
-      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
-      "sourceUrlType": "update"
-    },
-    {
       "id": "6db76986961e5f736fd99650383b6354",
       "source": "GEONWORKS",
       "name": "DCS NOTD",
@@ -171,9 +141,9 @@
       "saleStart": "2026-10-01",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-11-01",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
-      "sourceUrlType": "update"
+      "sourceUrlType": "update",
+      "saleEnd": "2026-11-01"
     },
     {
       "id": "1580824b53e6fd14d00137705d2a65d0",
@@ -186,9 +156,9 @@
       "saleStart": "2026-10-06",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-11-02",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
-      "sourceUrlType": "update"
+      "sourceUrlType": "update",
+      "saleEnd": "2026-11-02"
     },
     {
       "id": "e20e9f9ce27fcc39956df6da127a6026",
@@ -201,9 +171,9 @@
       "saleStart": "2026-10-06",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-11-03",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
-      "sourceUrlType": "update"
+      "sourceUrlType": "update",
+      "saleEnd": "2026-11-03"
     },
     {
       "id": "9512e8092f748d2426fd6b9c8b628495",
@@ -216,9 +186,9 @@
       "saleStart": "2026-10-07",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-11-02",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
-      "sourceUrlType": "update"
+      "sourceUrlType": "update",
+      "saleEnd": "2026-11-02"
     },
     {
       "id": "508dc31a4a5ca65e7b073ef4c95ec6d0",
@@ -231,8 +201,23 @@
       "saleStart": "2026-10-08",
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
-      "note": "판매 종료 2026-11-02",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update",
+      "saleEnd": "2026-11-02"
+    },
+    {
+      "id": "60c92f90ae5562a07f351eddd452cec0",
+      "source": "SWAGKEYS",
+      "name": "SWG Forest Cadet",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-08T00:00:00+09:00",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12",
+      "status": "Not Started",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
       "sourceUrlType": "update"
     },
     {
@@ -263,6 +248,24 @@
       "status": "배송중 (Shipping)",
       "note": "컬러매칭 Complete",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "080a2b27423aeb276d14b1a4798f9ea0",
+      "source": "SWAGKEYS",
+      "name": "SWG Crimson Cadet",
+      "eventType": "note_changed",
+      "before": "2026-10-05 ~ 2026-11-02",
+      "after": "2026-10-15 ~ 2026-11-12",
+      "occurredAt": "2026-10-13T05:47:00.000Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12",
+      "status": "Not Started",
+      "note": "판매 일정 2026-10-15 ~ 2026-11-12",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
       "sourceUrlType": "update"
     }
   ]
