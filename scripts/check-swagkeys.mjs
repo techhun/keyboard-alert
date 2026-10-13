@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
-import { buildSwagkeysKeepoddEvents, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
+import { buildSwagkeysKeepoddEvents, canonicalProductKey, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
 
 const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
@@ -220,7 +220,7 @@ async function extractRoadmap(page) {
   }
 
   console.log(`SWAGKEYS quarter counts: ${Object.entries(quarters).map(([quarter, products]) => `${quarter}=${products.length}`).join(', ')}`);
-  return { announcement, quarters };
+  return { announcement, quarters, roadmapDates };
 }
 
 async function extractRows(page) {
@@ -268,8 +268,8 @@ function notionText(value) {
   }).join('').trim();
 }
 
-function notionDate(value) {
-  let found = '';
+function notionDateRange(value) {
+  let found = null;
   const visit = (node) => {
     if (found || node == null) return;
     if (Array.isArray(node)) {
@@ -278,14 +278,21 @@ function notionDate(value) {
     }
     if (typeof node === 'object') {
       if (typeof node.start_date === 'string') {
-        found = node.start_date;
+        found = {
+          start: node.start_date,
+          end: typeof node.end_date === 'string' ? node.end_date : ''
+        };
         return;
       }
       for (const item of Object.values(node)) visit(item);
     }
   };
   visit(value);
-  return found;
+  return found || { start: '', end: '' };
+}
+
+function notionDate(value) {
+  return notionDateRange(value).start;
 }
 
 function findSchemaPropertyId(schema, matcher, fallbackId) {
@@ -418,14 +425,36 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
   return { announcement, sources };
 }
 
-export function parseSwagkeysRoadmapCollectionApi(collectionData) {
+export function parseSwagkeysRoadmapCollectionRowsApi(collectionData) {
   const blocks = collectionData?.recordMap?.block || {};
+  const collections = collectionData?.recordMap?.collection || {};
+  const collectionRecord = Object.values(collections)
+    .map(unwrapNotionRecord)
+    .find((record) => record?.schema);
+  const schema = collectionRecord?.schema || {};
+  const gbDateId = findSchemaPropertyId(schema, /(?:GB|Group[- ]?Buy)\s*Date|공제.*일|판매.*일/i, '');
   const blockIds = collectionData?.result?.reducerResults?.collection_group_results?.blockIds
     || Object.keys(blocks);
-  return [...new Set(blockIds
-    .map((blockId) => notionText(unwrapNotionRecord(blocks[blockId])?.properties?.title))
-    .map(clean)
-    .filter((product) => product && !isInvalidRoadmapValue(product)))];
+  const byProduct = new Map();
+
+  for (const blockId of blockIds) {
+    const block = unwrapNotionRecord(blocks[blockId]);
+    const properties = block?.properties || {};
+    const product = clean(notionText(properties.title));
+    if (!product || isInvalidRoadmapValue(product)) continue;
+    const range = gbDateId ? notionDateRange(properties[gbDateId]) : { start: '', end: '' };
+    byProduct.set(product.toLocaleLowerCase('en-US'), {
+      product,
+      saleStart: normalizeEta(range.start),
+      saleEnd: normalizeEta(range.end)
+    });
+  }
+
+  return [...byProduct.values()];
+}
+
+export function parseSwagkeysRoadmapCollectionApi(collectionData) {
+  return parseSwagkeysRoadmapCollectionRowsApi(collectionData).map((row) => row.product);
 }
 
 export function notionRetryDelayMs(status, retryAfterValue, attempt, nowMs = Date.now()) {
@@ -506,6 +535,7 @@ async function fetchRoadmapFromNotionApi() {
   const { announcement, sources } = parseSwagkeysRoadmapPageApi(pageData);
   const spaceId = pageData?.recordMap?.block?.[ROADMAP_PAGE_ID]?.spaceId || '';
   const quarters = {};
+  const roadmapDates = {};
 
   for (const quarter of QUARTERS) {
     const source = sources[quarter];
@@ -515,11 +545,21 @@ async function fetchRoadmapFromNotionApi() {
       source.query,
       spaceId
     );
-    const products = parseSwagkeysRoadmapCollectionApi(collectionData);
+    const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData);
+    const products = roadmapRows.map((row) => row.product);
     if (!products.length) {
       throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
     }
     quarters[quarter] = products;
+    for (const row of roadmapRows) {
+      const key = canonicalProductKey('SWAGKEYS', row.product);
+      if (!key || (!row.saleStart && !row.saleEnd)) continue;
+      roadmapDates[key] = {
+        product: row.product,
+        saleStart: row.saleStart || '',
+        saleEnd: row.saleEnd || ''
+      };
+    }
   }
 
   if (!quarterSnapshotIsValid(quarters)) {
@@ -610,7 +650,11 @@ async function fetchSnapshot(fallback = {}) {
           fallbackSince.roadmap = startedAt;
           fallbackMetadataChanged = true;
         }
-        roadmap = { announcement: fallback.announcement, quarters: fallback.quarters };
+        roadmap = {
+          announcement: fallback.announcement,
+          quarters: fallback.quarters,
+          ...(fallback.roadmapDates ? { roadmapDates: fallback.roadmapDates } : {})
+        };
         console.warn(`SWAGKEYS roadmap unavailable after retries. Reusing stored roadmap; fallback age=${Math.floor(ageMs / 60000)}m.`);
       }
     }
@@ -661,6 +705,7 @@ async function fetchSnapshot(fallback = {}) {
     return {
       announcement: roadmap.announcement,
       quarters: roadmap.quarters,
+      ...(roadmap.roadmapDates ? { roadmapDates: roadmap.roadmapDates } : {}),
       rows,
       roadmapFresh,
       statusFresh,
@@ -689,6 +734,7 @@ function statePayload(snapshot, updatedAt = new Date().toISOString()) {
     updatedAt,
     announcement: snapshot.announcement,
     quarters: snapshot.quarters,
+    ...(snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {}),
     rows: snapshot.rows.map((row) => ({ ...row, eta: normalizeEta(row.eta) })),
     fallbackSince: snapshot.fallbackSince || {}
   };
@@ -758,10 +804,34 @@ export function preserveIndependentFreshChanges({
     ...snapshot,
     announcement: removalNeedsRoadmapFresh ? state.announcement : snapshot.announcement,
     quarters: removalNeedsRoadmapFresh ? state.quarters : snapshot.quarters,
+    ...(removalNeedsRoadmapFresh
+      ? (state.roadmapDates ? { roadmapDates: state.roadmapDates } : {})
+      : (snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {})),
     rows: removalNeedsStatusFresh ? previousRows : snapshot.rows,
     fallbackSince: verificationSnapshot.fallbackSince,
     fallbackMetadataChanged: true
   };
+}
+
+export function diffRoadmapDates(previousDates = {}, currentDates = {}) {
+  const result = [];
+  const keys = new Set([...Object.keys(previousDates || {}), ...Object.keys(currentDates || {})]);
+  for (const key of keys) {
+    const before = previousDates?.[key] || {};
+    const after = currentDates?.[key] || {};
+    const beforeStart = normalizeEta(before.saleStart);
+    const beforeEnd = normalizeEta(before.saleEnd);
+    const afterStart = normalizeEta(after.saleStart);
+    const afterEnd = normalizeEta(after.saleEnd);
+    if (beforeStart === afterStart && beforeEnd === afterEnd) continue;
+    result.push({
+      product: clean(after.product || before.product || key),
+      quarter: '',
+      before: { saleStart: beforeStart, saleEnd: beforeEnd },
+      after: { saleStart: afterStart, saleEnd: afterEnd }
+    });
+  }
+  return result;
 }
 
 export function diffQuarters(previousQuarters = {}, currentQuarters = {}) {
@@ -789,7 +859,7 @@ export function diffQuarters(previousQuarters = {}, currentQuarters = {}) {
 }
 
 function hasQuarterChanges(changes) {
-  return changes.moved.length > 0 || changes.added.length > 0 || changes.removed.length > 0;
+  return changes.moved.length > 0 || changes.added.length > 0 || changes.removed.length > 0 || (changes.datesChanged?.length ?? 0) > 0;
 }
 
 function formatKst(isoString) {
@@ -829,6 +899,15 @@ export function quartersEmbed(changes, detectedAt = new Date().toISOString()) {
   if (changes.moved.length) fields.push({ name: '분기 이동', value: truncate(changes.moved.map((item) => `• ${item.product}: ${item.before} → ${item.after}`).join('\n')), inline: false });
   if (changes.added.length) fields.push({ name: '신규 배치', value: truncate(changes.added.map((item) => `• ${item.product} → ${item.quarter}`).join('\n')), inline: false });
   if (changes.removed.length) fields.push({ name: '로드맵 제외', value: truncate(changes.removed.map((item) => `• ${item.product} (기존 ${item.quarter})`).join('\n')), inline: false });
+  if (changes.datesChanged?.length) fields.push({
+    name: '판매 일정 변경',
+    value: truncate(changes.datesChanged.map((item) => {
+      const before = `${item.before.saleStart || '미정'} ~ ${item.before.saleEnd || '미정'}`;
+      const after = `${item.after.saleStart || '미정'} ~ ${item.after.saleEnd || '미정'}`;
+      return `• ${item.product}: ${before} → ${after}`;
+    }).join('\n')),
+    inline: false
+  });
   return { ...baseEmbed('🗺️ SWAGKEYS 분기별 로드맵 업데이트', ROADMAP_URL, detectedAt), fields: [...fields, ...auxiliaryFields(ROADMAP_URL, detectedAt)] };
 }
 
@@ -896,6 +975,7 @@ async function main() {
   const fallback = {
     announcement: state?.announcement,
     quarters: state?.quarters,
+    ...(state?.roadmapDates ? { roadmapDates: state.roadmapDates } : {}),
     rows: previousRows,
     fallbackSince: state?.fallbackSince && typeof state.fallbackSince === 'object' ? state.fallbackSince : {}
   };
@@ -930,6 +1010,9 @@ async function main() {
     const announcementChanged = clean(state.announcement?.heading) !== clean(candidateSnapshot.announcement.heading)
       || clean(state.announcement?.content) !== clean(candidateSnapshot.announcement.content);
     const quarterChanges = diffQuarters(state.quarters, candidateSnapshot.quarters);
+    quarterChanges.datesChanged = state.roadmapDates && candidateSnapshot.roadmapDates
+      ? diffRoadmapDates(state.roadmapDates, candidateSnapshot.roadmapDates)
+      : [];
     const changes = diffRows(previousRows, candidateSnapshot.rows);
     return { announcementChanged, quarterChanges, quartersChanged: hasQuarterChanges(quarterChanges), changes };
   };
