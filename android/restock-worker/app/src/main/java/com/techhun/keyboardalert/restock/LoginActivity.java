@@ -209,6 +209,7 @@ public class LoginActivity extends Activity {
         if (completing || !SessionState.hasNaverSession()) return;
         completing = true;
         SessionState.markNaverAuthenticated(this);
+        DiagnosticLog.add(this, "LOGIN_RESTORED", null, "Naver 로그인 세션 복구");
         CookieManager.getInstance().flush();
         Intent result = new Intent();
         result.putExtra(EXTRA_TARGET_URL, targetUrl);
