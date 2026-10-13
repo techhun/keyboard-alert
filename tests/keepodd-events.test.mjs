@@ -164,6 +164,7 @@ test('GEONWORKS Release IC -> Fixed transition creates one new_gb event', () => 
   assert.equal(events.length, 1);
   assert.equal(events[0].eventType, 'new_gb');
   assert.equal(events[0].saleStart, '2026-10-13');
+  assert.equal(events[0].saleEnd, '2026-11-02');
   assert.equal(events[0].sourceUrlType, 'update');
   assert.equal(events[0].sourceUrl, 'https://geonworks.kr/customhtml/release/release.html');
 });
@@ -230,6 +231,67 @@ test('SWAGKEYS roadmap/status addition collapses to one new_gb event', () => {
   assert.equal(events[0].eventType, 'new_gb');
   assert.equal(events[0].name, 'SWG Classic Red');
   assert.equal(events[0].quarter, 'Q1');
+});
+
+test('SWAGKEYS new GB carries roadmap sale start/end dates', () => {
+  const row = swagRow({ product: 'Space Cadet', eta: '' });
+  const events = buildSwagkeysKeepoddEvents({
+    changes: [],
+    quarterChanges: { added: [{ product: 'SWG Space Cadet', quarter: 'Q4' }] },
+    snapshot: {
+      rows: [row],
+      quarters: { Q4: ['SWG Space Cadet'] },
+      roadmapDates: {
+        spacecadet: {
+          product: 'SWG Space Cadet',
+          saleStart: '2026-10-05',
+          saleEnd: '2026-11-02'
+        }
+      },
+      roadmapFresh: true,
+      statusFresh: true
+    },
+    occurredAt: at
+  });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'new_gb');
+  assert.equal(events[0].saleStart, '2026-10-05');
+  assert.equal(events[0].saleEnd, '2026-11-02');
+});
+
+test('SWAGKEYS roadmap sale date change creates a note_changed event with current sale range', () => {
+  const row = swagRow({ product: 'Crimson Cadet', eta: '', currentStatus: 'Not started' });
+  const events = buildSwagkeysKeepoddEvents({
+    changes: [],
+    quarterChanges: {
+      added: [],
+      datesChanged: [{
+        product: 'SWG Crimson Cadet',
+        before: { saleStart: '2026-10-05', saleEnd: '2026-11-02' },
+        after: { saleStart: '2026-10-15', saleEnd: '2026-11-12' }
+      }]
+    },
+    snapshot: {
+      rows: [row],
+      quarters: { Q4: ['SWG Crimson Cadet'] },
+      roadmapDates: {
+        crimsoncadet: {
+          product: 'SWG Crimson Cadet',
+          saleStart: '2026-10-15',
+          saleEnd: '2026-11-12'
+        }
+      },
+      roadmapFresh: true,
+      statusFresh: true
+    },
+    occurredAt: at
+  });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'note_changed');
+  assert.equal(events[0].before, '2026-10-05 ~ 2026-11-02');
+  assert.equal(events[0].after, '2026-10-15 ~ 2026-11-12');
+  assert.equal(events[0].saleStart, '2026-10-15');
+  assert.equal(events[0].saleEnd, '2026-11-12');
 });
 
 test('SWAGKEYS eta/currentStatus/colorMatching map to supported types and progress-only does not', () => {
