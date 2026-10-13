@@ -815,7 +815,7 @@ export function preserveIndependentFreshChanges({
 
 export function diffRoadmapDates(previousDates = {}, currentDates = {}) {
   const result = [];
-  const keys = new Set([...Object.keys(previousDates || {}), ...Object.keys(currentDates || {})]);
+  const keys = Object.keys(previousDates || {}).filter((key) => Object.prototype.hasOwnProperty.call(currentDates || {}, key));
   for (const key of keys) {
     const before = previousDates?.[key] || {};
     const after = currentDates?.[key] || {};
