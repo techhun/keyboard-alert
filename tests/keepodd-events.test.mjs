@@ -12,6 +12,7 @@ import {
   canonicalProductKey,
   deterministicKeepoddEventId,
   enrichKeepoddEventSourceUrls,
+  fetchProductCatalog,
   findExactProductUrl,
   loadKeepoddEvents,
   mergeKeepoddEvents,
@@ -393,4 +394,91 @@ test('GEONWORKS exact title resolves while ambiguous/fuzzy name safely falls bac
 test('canonical SWAGKEYS key removes known prefix but does not fuzzy-match longer names', () => {
   assert.equal(canonicalProductKey('SWAGKEYS', 'SWG Classic Red'), canonicalProductKey('SWAGKEYS', 'Classic Red'));
   assert.notEqual(canonicalProductKey('SWAGKEYS', 'Classic Red'), canonicalProductKey('SWAGKEYS', 'Classic Red Light'));
+});
+
+
+test('GEONWORKS catalog pagination discovers exact products beyond page 2 and stops on empty page', async () => {
+  const calls = [];
+  const pages = new Map([
+    [1, '<a href="/product/alpha/1/">[예약판매] Alpha 키캡</a>'],
+    [2, '<a href="/product/beta/2/">[예약판매] Beta 키캡</a>'],
+    [3, '<a href="/product/gamma/3/">[예약판매] Gamma 키캡</a>'],
+    [4, '']
+  ]);
+  const fetchImpl = async (url) => {
+    calls.push(url);
+    const page = Number(new URL(url).searchParams.get('page'));
+    return {
+      ok: true,
+      status: 200,
+      text: async () => pages.get(page) ?? ''
+    };
+  };
+
+  const catalog = await fetchProductCatalog('GEONWORKS', { fetchImpl, maxPages: 10 });
+  assert.equal(catalog.length, 3);
+  assert.match(findExactProductUrl('GEONWORKS', 'Gamma', catalog), /\/product\/gamma\/3\//);
+  assert.equal(calls.length, 4);
+});
+
+test('GEONWORKS catalog pagination stops when a later page only repeats known product URLs', async () => {
+  const calls = [];
+  const html = '<a href="/product/alpha/1/">[예약판매] Alpha 키캡</a>';
+  const fetchImpl = async (url) => {
+    calls.push(url);
+    return { ok: true, status: 200, text: async () => html };
+  };
+
+  const catalog = await fetchProductCatalog('GEONWORKS', { fetchImpl, maxPages: 10 });
+  assert.equal(catalog.length, 1);
+  assert.equal(calls.length, 2);
+});
+
+test('SWAGKEYS catalog pagination continues after a full 250-product page', async () => {
+  const calls = [];
+  const first = Array.from({ length: 250 }, (_, index) => ({
+    title: `SWG Product ${index}`,
+    handle: `swg-product-${index}`
+  }));
+  const second = [{ title: '[Group-Buy] SWG Beyond 250', handle: 'group-buy-swg-beyond-250' }];
+
+  const fetchImpl = async (url) => {
+    calls.push(url);
+    const page = Number(new URL(url).searchParams.get('page'));
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({ products: page === 1 ? first : second })
+    };
+  };
+
+  const catalog = await fetchProductCatalog('SWAGKEYS', { fetchImpl, maxPages: 10 });
+  assert.equal(catalog.length, 251);
+  assert.equal(
+    findExactProductUrl('SWAGKEYS', 'SWG Beyond 250', catalog),
+    'https://swagkeys.com/products/group-buy-swg-beyond-250'
+  );
+  assert.equal(calls.length, 2);
+});
+
+test('product catalog lookup failure preserves update-page fallback and does not reject events', async () => {
+  const fallback = 'https://geonworks.kr/customhtml/GB_schedule.html';
+  const events = await enrichKeepoddEventSourceUrls([
+    {
+      id: 'lookup-failure',
+      source: 'GEONWORKS',
+      name: 'GMK CYL Test',
+      eventType: 'new_gb',
+      occurredAt: at,
+      sourceUrl: fallback,
+      sourceUrlType: 'update'
+    }
+  ], {
+    fetchImpl: async () => ({ ok: false, status: 503 }),
+    maxPages: 2
+  });
+
+  assert.equal(events.length, 1);
+  assert.equal(events[0].sourceUrl, fallback);
+  assert.equal(events[0].sourceUrlType, 'update');
 });
