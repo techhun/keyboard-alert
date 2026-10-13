@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T05:13:11.466Z",
+  "updatedAt": "2026-10-13T05:23:04.411Z",
   "rows": [
     {
       "category": "GMK",
@@ -86,17 +86,6 @@
       "status": "In production",
       "eta": "TBD",
       "progress": 10,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Thunder God",
-      "status": "In production",
-      "eta": "Q4 2026",
-      "progress": 50,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -1046,6 +1035,7 @@
     "031b9249a6430800445c6bce": "2026-10-12T13:41:08.657Z",
     "adc1d22993fb3f9b5edb169a": "2026-10-12T13:41:08.824Z",
     "b37e2c5203f5ef056f8fdd21": "2026-10-12T13:41:09.008Z",
-    "5856b7c593292b1b7e0e4d06": "2026-10-13T05:13:11.466Z"
+    "5856b7c593292b1b7e0e4d06": "2026-10-13T05:13:11.466Z",
+    "48a49a6d61883a9922e216a2": "2026-10-13T05:23:04.410Z"
   }
 }
