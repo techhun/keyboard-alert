@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T18:33:23.412Z",
+  "updatedAt": "2026-10-13T18:43:02.790Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -1464,7 +1464,7 @@
     {
       "category": "Keyset",
       "product": "GMK Gurokawa Keycaps",
-      "notes": "Further Delayed. Designer tweaking purple Alpha colour. All other colours approved. New estimated shipping October 2026",
+      "notes": "Further Delayed. Designer tweaking purple Alpha colour. All other colours approved. New estimated shipping November 2026",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -3833,6 +3833,7 @@
     }
   ],
   "sentChanges": {
-    "b7a9cedd94e017b5a9c5d525": "2026-10-13T18:33:23.411Z"
+    "b7a9cedd94e017b5a9c5d525": "2026-10-13T18:33:23.411Z",
+    "5dd31026310c158d45d87cca": "2026-10-13T18:43:02.789Z"
   }
 }
