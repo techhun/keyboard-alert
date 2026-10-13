@@ -85,7 +85,8 @@ function eventFrom({ source, name, eventType, before, after, occurredAt, row = {
     occurredAt,
     ...(cleanCategoryHint(row.type) ? { categoryHint: cleanCategoryHint(row.type) } : {}),
     ...(meaningful(row.manufacturer) ? { maker: meaningful(row.manufacturer) } : {}),
-    ...(normalizeKeepoddDate(row.gbStart) ? { saleStart: normalizeKeepoddDate(row.gbStart) } : {}),
+    ...(normalizeKeepoddDate(row.gbStart ?? row.saleStart) ? { saleStart: normalizeKeepoddDate(row.gbStart ?? row.saleStart) } : {}),
+    ...(normalizeKeepoddDate(row.saleEnd ?? row.end) ? { saleEnd: normalizeKeepoddDate(row.saleEnd ?? row.end) } : {}),
     ...(normalizeKeepoddDate(row.eta) ? { eta: normalizeKeepoddDate(row.eta) } : {}),
     ...(meaningful(row.status ?? row.currentStatus) ? { status: meaningful(row.status ?? row.currentStatus) } : {}),
     ...(meaningful(row.note) ? { note: meaningful(row.note) } : {}),
@@ -202,7 +203,7 @@ function swagRowMap(rows = []) {
   return map;
 }
 
-function swagEventRow(row = {}) {
+function swagEventRow(row = {}, roadmapDates = {}) {
   const colorMatching = meaningful(row.colorMatching);
   return {
     eta: row.eta,
@@ -210,8 +211,19 @@ function swagEventRow(row = {}) {
     status: row.currentStatus,
     manufacturer: 'Swagkeys',
     type: 'Keycap',
+    saleStart: roadmapDates.saleStart,
+    saleEnd: roadmapDates.saleEnd,
     ...(colorMatching ? { note: `컬러매칭 ${colorMatching}` } : {})
   };
+}
+
+function saleRangeLabel(value = {}) {
+  const start = normalizeKeepoddDate(value?.saleStart);
+  const end = normalizeKeepoddDate(value?.saleEnd);
+  if (start && end) return `${start} ~ ${end}`;
+  if (start) return `${start} ~ 미정`;
+  if (end) return `미정 ~ ${end}`;
+  return '미정';
 }
 
 export function buildSwagkeysKeepoddEvents({
@@ -225,6 +237,7 @@ export function buildSwagkeysKeepoddEvents({
   const events = new Map();
   const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
   const quarters = snapshot.quarters || {};
+  const roadmapDates = snapshot.roadmapDates || {};
   const rowByKey = swagRowMap(rows);
 
   if (snapshot.roadmapFresh !== false) {
@@ -235,9 +248,28 @@ export function buildSwagkeysKeepoddEvents({
       const row = rowByKey.get(canonicalKey) || {};
       const event = eventFrom({
         source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt,
-        row: swagEventRow(row), quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey,
+        row: swagEventRow(row, roadmapDates[canonicalKey]), quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey,
         idAfter: item.quarter || 'present'
       });
+      events.set(event.id, event);
+    }
+  }
+
+  if (snapshot.roadmapFresh !== false) {
+    for (const item of quarterChanges.datesChanged || []) {
+      const name = cleanKeepoddValue(item.product);
+      const canonicalKey = canonicalProductKey('SWAGKEYS', name);
+      if (!canonicalKey) continue;
+      const row = rowByKey.get(canonicalKey) || {};
+      const currentDates = roadmapDates[canonicalKey] || item.after || {};
+      const current = swagEventRow(row, currentDates);
+      const before = saleRangeLabel(item.before);
+      const after = saleRangeLabel(item.after);
+      const event = eventFrom({
+        source: 'SWAGKEYS', name, eventType: 'note_changed', before, after, occurredAt,
+        row: current, quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey
+      });
+      event.note = `판매 일정 ${after}`;
       events.set(event.id, event);
     }
   }
@@ -249,7 +281,7 @@ export function buildSwagkeysKeepoddEvents({
       const canonicalKey = canonicalProductKey('SWAGKEYS', row.product);
       const name = swagDisplayName(row.product, quarters);
       const quarter = swagQuarterFor(name, quarters);
-      const current = swagEventRow(row);
+      const current = swagEventRow(row, roadmapDates[canonicalKey]);
 
       if (change.kind === 'added') {
         const event = eventFrom({
