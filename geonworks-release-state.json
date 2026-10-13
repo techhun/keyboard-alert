@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T00:50:44.836Z",
+  "updatedAt": "2026-10-13T04:50:41.763Z",
   "rows": [
     {
       "product": "DCS SMRT R2",
@@ -70,18 +70,7 @@
       "end": "2026-11-02"
     },
     {
-      "product": "GMK CYL Tokyo Nights R2",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "Interest Check (IC)",
-      "fixed": "",
-      "start": "2026-10-13",
-      "end": "2026-10-23"
-    },
-    {
-      "product": "GMK CYL Miami Nights R2",
+      "product": "GMK CYL Tokyo & Miami Nights R2",
       "manufacturer": "GMK",
       "region": "KR/GLOBAL",
       "saleType": "Group Buy",
@@ -98,6 +87,9 @@
     "195697e06e4332c1b7abae00": "2026-10-12T01:30:44.359Z",
     "8f582c56de884cb70b4058cf": "2026-10-12T01:30:44.544Z",
     "7a9a094d3459a973cc442250": "2026-10-13T00:50:44.350Z",
-    "9f77b3e4c8b8b0681471c266": "2026-10-13T00:50:44.835Z"
+    "9f77b3e4c8b8b0681471c266": "2026-10-13T00:50:44.835Z",
+    "acb9ee0567387f9f229236aa": "2026-10-13T04:50:41.156Z",
+    "1fddecfb607a4639ca4f3d11": "2026-10-13T04:50:41.433Z",
+    "1e1cda21e0e3eda27846a216": "2026-10-13T04:50:41.763Z"
   }
 }
