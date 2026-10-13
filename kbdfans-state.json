@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T13:41:09.009Z",
+  "updatedAt": "2026-10-13T05:13:11.466Z",
   "rows": [
     {
       "category": "GMK",
@@ -788,8 +788,8 @@
       "category": "KEYBOARDS",
       "product": "Agar Micro",
       "status": "In production",
-      "eta": "Q4 2026",
-      "progress": 20,
+      "eta": "Dec 2026",
+      "progress": 86,
       "summary": "In production",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -1045,6 +1045,7 @@
     "3bd475caff6526908e58b50a": "2026-10-12T13:41:08.405Z",
     "031b9249a6430800445c6bce": "2026-10-12T13:41:08.657Z",
     "adc1d22993fb3f9b5edb169a": "2026-10-12T13:41:08.824Z",
-    "b37e2c5203f5ef056f8fdd21": "2026-10-12T13:41:09.008Z"
+    "b37e2c5203f5ef056f8fdd21": "2026-10-12T13:41:09.008Z",
+    "5856b7c593292b1b7e0e4d06": "2026-10-13T05:13:11.466Z"
   }
 }
