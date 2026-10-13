@@ -309,8 +309,14 @@ public class MonitorService extends Service {
     private void bootstrapSession() {
         if (stopping || pausedForOptionLookup) return;
         products = ProductStore.enabledList(this);
-        JSONObject first = products.optJSONObject(0);
+        JSONObject first = firstBootstrapProduct(products, SessionState.isNaverAuthRequired(this));
         if (first == null) {
+            if (SessionState.isNaverAuthRequired(this)) {
+                setStatus("로그인 필요");
+                updateOngoingNotification("SmartStore 로그인이 필요해요");
+                notifyLoginRequired();
+                MonitorPrefs.setRunning(this, false);
+            }
             stopSelf();
             return;
         }
@@ -351,6 +357,10 @@ public class MonitorService extends Service {
         }
 
         String siteType = currentSiteType();
+        if (shouldSkipForNaverAuth(siteType, SessionState.isNaverAuthRequired(this))) {
+            scheduleNextProduct();
+            return;
+        }
         if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)) {
             long noContentBackoff = Math.max(0L, noContentBackoffUntil - System.currentTimeMillis());
             if (noContentBackoff > 0L) {
@@ -846,6 +856,24 @@ public class MonitorService extends Service {
         }
     }
 
+    static JSONObject firstBootstrapProduct(JSONArray products, boolean naverAuthRequired) {
+        if (products == null) return null;
+        for (int i = 0; i < products.length(); i++) {
+            JSONObject product = products.optJSONObject(i);
+            if (product == null) continue;
+            String siteType = product.optString(
+                "siteType",
+                SiteSupport.detect(product.optString("url", ""))
+            );
+            if (!shouldSkipForNaverAuth(siteType, naverAuthRequired)) return product;
+        }
+        return null;
+    }
+
+    static boolean shouldSkipForNaverAuth(String siteType, boolean naverAuthRequired) {
+        return naverAuthRequired && SiteSupport.NAVER_SMARTSTORE.equals(siteType);
+    }
+
     static boolean shouldStartNoContentBackoff(int distinctProducts, long windowAgeMillis) {
         return distinctProducts >= NO_CONTENT_STORM_DISTINCT_PRODUCTS
             && windowAgeMillis >= 0L
@@ -872,10 +900,10 @@ public class MonitorService extends Service {
 
     private void invalidateSessionAndStop() {
         if (stopping) return;
+        SessionState.markNaverAuthRequired(this);
         setStatus("로그인 필요");
         DiagnosticLog.add(this, "LOGIN_REQUIRED", currentProduct, "Naver 세션 만료");
         notifyLoginRequired();
-        ProductStore.disableSite(this, SiteSupport.NAVER_SMARTSTORE);
         CookieManager cookies = CookieManager.getInstance();
         cookies.removeAllCookies(value -> cookies.flush());
         WebStorage.getInstance().deleteAllData();
