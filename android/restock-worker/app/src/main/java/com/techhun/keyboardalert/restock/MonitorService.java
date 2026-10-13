@@ -360,6 +360,12 @@ public class MonitorService extends Service {
 
         String siteType = currentSiteType();
         if (shouldSkipForNaverSession(siteType, SessionState.hasUsableNaverSession(this))) {
+            if (!SessionState.isGuestMode(this) && !SessionState.isNaverAuthRequired(this)) {
+                SessionState.markNaverAuthRequired(this);
+                setStatus("로그인 필요");
+                DiagnosticLog.add(this, "LOGIN_REQUIRED", currentProduct, "Naver 세션 쿠키 없음");
+                notifyLoginRequired();
+            }
             scheduleNextProduct();
             return;
         }
