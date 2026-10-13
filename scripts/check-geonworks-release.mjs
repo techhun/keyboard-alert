@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { chromium } from 'playwright';
 import { bulkChangeInfo, changeId, changeSignature, clean, comparableValue, normalizeKey, pruneSentChanges, validateReleaseRows } from './geonworks-safety.mjs';
+import { buildGeonworksReleaseKeepoddEvents, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
 
 const PAGE_URL = 'https://geonworks.kr/customhtml/release/release.html';
 const DATA_URL = 'https://script.google.com/macros/s/AKfycbzOHhh_erWY6B-Ru1hpRZbwImXFP4UBWZj6gRiuvcOv9bVPOAIWN3-zGWFaQyIQE6xG/exec';
@@ -215,17 +216,31 @@ function loadState() {
   }
 }
 
+function statePayload(rows, sentChanges = {}, updatedAt = new Date().toISOString()) {
+  return {
+    version: 1,
+    initialized: true,
+    updatedAt,
+    rows,
+    sentChanges: pruneSentChanges(sentChanges)
+  };
+}
+
 function saveState(rows, sentChanges = {}) {
-  fs.writeFileSync(
-    STATE_PATH,
-    JSON.stringify({
-      version: 1,
-      initialized: true,
-      updatedAt: new Date().toISOString(),
-      rows,
-      sentChanges: pruneSentChanges(sentChanges)
-    }, null, 2) + '\n'
-  );
+  fs.writeFileSync(STATE_PATH, JSON.stringify(statePayload(rows, sentChanges), null, 2) + '\n');
+}
+
+async function advanceStateWithKeepoddEvents(rows, sentChanges, changes) {
+  const occurredAt = new Date().toISOString();
+  const candidates = buildGeonworksReleaseKeepoddEvents(changes, { occurredAt, fallbackUrl: PAGE_URL });
+  const events = await enrichKeepoddEventSourceUrls(candidates);
+  const merged = commitStateAndKeepoddEvents({
+    statePath: STATE_PATH,
+    stateValue: statePayload(rows, sentChanges, occurredAt),
+    events,
+    now: occurredAt
+  });
+  console.log(`Keepodd GEONWORKS Release events committed: ${merged.added} new / ${events.length} candidate(s).`);
 }
 
 function buildMap(rows) {
@@ -444,5 +459,5 @@ for (const change of pendingChanges) {
   saveState(previousRows, sentChanges);
 }
 
-saveState(rows, sentChanges);
+await advanceStateWithKeepoddEvents(rows, sentChanges, changes);
 console.log(`Sent ${pendingChanges.length} GEONWORKS Release notification(s), suppressed ${changes.length - pendingChanges.length} duplicate(s), and updated state.`);
