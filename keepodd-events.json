@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T05:47:00.000Z",
+  "updatedAt": "2026-10-13T05:54:00.000Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -258,6 +258,24 @@
       "before": "2026-10-05 ~ 2026-11-02",
       "after": "2026-10-15 ~ 2026-11-12",
       "occurredAt": "2026-10-13T05:47:00.000Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12",
+      "status": "Not Started",
+      "note": "판매 일정 2026-10-15 ~ 2026-11-12",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8803900102d04a4ec53393163497067b",
+      "source": "SWAGKEYS",
+      "name": "SWG Space Cadet",
+      "eventType": "note_changed",
+      "before": "2026-10-05 ~ 2026-11-02",
+      "after": "2026-10-15 ~ 2026-11-12",
+      "occurredAt": "2026-10-13T05:54:00.000Z",
       "categoryHint": "키캡",
       "maker": "Swagkeys",
       "saleStart": "2026-10-15",
