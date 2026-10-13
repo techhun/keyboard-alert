@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,30 @@ public class MonitorServiceTest {
         assertTrue(MonitorService.shouldStartNoContentBackoff(6, 120_000L));
         assertFalse(MonitorService.shouldStartNoContentBackoff(3, 120_001L));
         assertFalse(MonitorService.shouldStartNoContentBackoff(3, -1L));
+    }
+
+    @Test
+    public void naverAuthPauseSkipsOnlySmartStoreAndKeepsSwagkeyEligible() throws Exception {
+        assertTrue(MonitorService.shouldSkipForNaverSession(SiteSupport.NAVER_SMARTSTORE, false));
+        assertFalse(MonitorService.shouldSkipForNaverSession(SiteSupport.NAVER_SMARTSTORE, true));
+        assertFalse(MonitorService.shouldSkipForNaverSession(SiteSupport.SWAGKEY_IMWEB, false));
+
+        JSONArray products = new JSONArray()
+            .put(new JSONObject()
+                .put("url", "https://m.smartstore.naver.com/store/products/123456789")
+                .put("siteType", SiteSupport.NAVER_SMARTSTORE))
+            .put(new JSONObject()
+                .put("url", "https://swagkey.kr/shop_view/?idx=123")
+                .put("siteType", SiteSupport.SWAGKEY_IMWEB));
+
+        assertEquals(
+            SiteSupport.SWAGKEY_IMWEB,
+            MonitorService.firstBootstrapProduct(products, false).optString("siteType")
+        );
+        assertEquals(
+            SiteSupport.NAVER_SMARTSTORE,
+            MonitorService.firstBootstrapProduct(products, true).optString("siteType")
+        );
     }
 
     @Test
