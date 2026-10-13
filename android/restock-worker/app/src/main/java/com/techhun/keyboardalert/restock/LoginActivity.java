@@ -208,6 +208,7 @@ public class LoginActivity extends Activity {
     private void completeLogin() {
         if (completing || !SessionState.hasNaverSession()) return;
         completing = true;
+        SessionState.markNaverAuthenticated(this);
         CookieManager.getInstance().flush();
         Intent result = new Intent();
         result.putExtra(EXTRA_TARGET_URL, targetUrl);
