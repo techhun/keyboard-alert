@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-13T06:16:00.000Z",
+  "updatedAt": "2026-10-13T07:50:31.397Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -284,6 +284,20 @@
       "note": "판매 일정 변경 · 반영 필요",
       "quarter": "Q4",
       "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "794f191e17a11ae5ad21d47d37b87943",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Tokyo & Miami Nights R2",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-13T07:50:31.397Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-13",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

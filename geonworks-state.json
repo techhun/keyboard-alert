@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T03:10:32.784Z",
+  "updatedAt": "2026-10-13T07:50:31.397Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -91,6 +91,16 @@
       "manufacturer": "Keyreative",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 12",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Tokyo & Miami Nights R2",
+      "gbStart": "2026. 10. 13",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 13",
       "note": "—"
     },
     {
@@ -710,6 +720,7 @@
     "6c5271dcecdce3ae4d76969f": "2026-10-12T03:10:31.734Z",
     "beda7de2879dc0ad3a42b4f3": "2026-10-12T03:10:31.931Z",
     "b807255fae288c54ae03b536": "2026-10-12T03:10:32.600Z",
-    "230e3f4ceddbbcbe6774b185": "2026-10-12T03:10:32.783Z"
+    "230e3f4ceddbbcbe6774b185": "2026-10-12T03:10:32.783Z",
+    "5bf3ccaa6520bb360bfed08a": "2026-10-13T07:50:31.397Z"
   }
 }
