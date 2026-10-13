@@ -389,14 +389,21 @@ public class MonitorService extends Service {
             return;
         }
 
-        // Inspect the loaded product page state. Reusing the saved internal API
-        // URL now produces empty HTTP 204 responses on otherwise valid pages.
+        // Inspect a fresh SmartStore page state. The document-start capture keeps
+        // the page's exact product API response in memory, so reusing the same
+        // loaded page on later cycles would replay an old stock snapshot.
         mode = Mode.DISCOVERY;
+        String currentProductId = currentProduct.optString("id", "");
         String loadedProductId = SiteSupport.productId(webView.getUrl());
-        if (currentProduct.optString("id", "").equals(loadedProductId)) {
+        if (!shouldReloadSmartStorePage(
+            currentProductId,
+            loadedProductId,
+            currentProduct.optLong("lastCheck", 0L)
+        )) {
             runDiscoveryCheck();
             return;
         }
+        webView.stopLoading();
         webView.loadUrl(currentProduct.optString("url"));
     }
 
@@ -758,6 +765,7 @@ public class MonitorService extends Service {
         }
 
         JSONArray restocked = new JSONArray();
+        JSONArray soldOut = new JSONArray();
         JSONArray lowStock = new JSONArray();
         int threshold = MonitorPrefs.lowStockThreshold(this);
         int availableCount = 0;
@@ -766,9 +774,15 @@ public class MonitorService extends Service {
             String id = entry.getKey();
             boolean now = entry.getValue();
             if (now) availableCount++;
-            boolean isRestocked = previous.has(id) && !previous.optBoolean(id, false) && now;
+            boolean hadPrevious = previous.has(id);
+            boolean wasAvailable = hadPrevious && previous.optBoolean(id, false);
+            boolean isRestocked = hadPrevious && !wasAvailable && now;
+            boolean isSoldOut = hadPrevious && wasAvailable && !now;
             if (isRestocked) {
                 restocked.put(resolved.labels.getOrDefault(id, id));
+            }
+            if (isSoldOut) {
+                soldOut.put(resolved.labels.getOrDefault(id, id));
             }
 
             Integer quantity = smartStore ? resolved.quantities.get(id) : null;
@@ -816,10 +830,20 @@ public class MonitorService extends Service {
             DiagnosticLog.recordRestock(this, product, restocked.toString());
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
         }
+        if (soldOut.length() > 0) {
+            DiagnosticLog.add(this, "SOLD_OUT", product, soldOut.toString());
+        }
         if (lowStock.length() > 0) {
+            DiagnosticLog.add(this, "LOW_STOCK", product, lowStock.toString());
             notifyLowStock(product.optString("title", "상품"), product.optString("url", ""), lowStock);
         }
         return true;
+    }
+
+    static boolean shouldReloadSmartStorePage(String currentProductId, String loadedProductId, long lastCheck) {
+        if (currentProductId == null || currentProductId.isBlank()) return true;
+        if (!currentProductId.equals(loadedProductId)) return true;
+        return lastCheck > 0L;
     }
 
     static String inventoryStatusText(int availableCount, int requestedCount, String time) {
