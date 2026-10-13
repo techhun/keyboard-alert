@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const slow = fs.readFileSync('.github/workflows/keyboard-alert-slow.yml', 'utf8');
 const geon = fs.readFileSync('scripts/check-geonworks.mjs', 'utf8');
+const geonRelease = fs.readFileSync('scripts/check-geonworks-release.mjs', 'utf8');
 const swag = fs.readFileSync('scripts/check-swagkeys.mjs', 'utf8');
 
 test('slow workflow restores and persists keepodd-events.json', () => {
@@ -21,6 +22,15 @@ test('GEONWORKS only advances Keepodd feed after the pending-webhook guard', () 
   assert.ok(guard >= 0);
   assert.ok(firstAdvance > guard);
   assert.match(geon, /Baseline initialization: storing .* without notifying/);
+});
+
+test('GEONWORKS Release only advances Keepodd feed after the pending-webhook guard', () => {
+  const guard = geonRelease.indexOf('Changes remain pending; state was not updated.');
+  const firstAdvance = geonRelease.indexOf('await advanceStateWithKeepoddEvents');
+  assert.ok(guard >= 0);
+  assert.ok(firstAdvance > guard);
+  assert.match(geonRelease, /Baseline initialization: storing .* without notifying/);
+  assert.match(geonRelease, /buildGeonworksReleaseKeepoddEvents/);
 });
 
 test('SWAGKEYS only advances Keepodd feed after the pending-webhook guard', () => {

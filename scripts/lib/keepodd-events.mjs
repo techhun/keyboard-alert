@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 export const KEEPODD_EVENTS_PATH = 'keepodd-events.json';
 export const KEEPODD_MAX_EVENTS = 500;
 export const GEONWORKS_UPDATE_URL = 'https://geonworks.kr/customhtml/GB_schedule.html';
+export const GEONWORKS_RELEASE_UPDATE_URL = 'https://geonworks.kr/customhtml/release/release.html';
 export const SWAGKEYS_UPDATE_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 export const SWAGKEYS_STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 const GEONWORKS_PRODUCTS_URLS = [
@@ -127,6 +128,45 @@ export function buildGeonworksKeepoddEvents(changes = [], options = {}) {
       }));
     }
   }
+  return result;
+}
+
+
+export function isConfirmedGeonworksReleaseGroupBuy(row = {}) {
+  const saleType = meaningful(row.saleType).toLocaleLowerCase('en-US');
+  const fixed = meaningful(row.fixed).toLocaleLowerCase('en-US');
+  const status = meaningful(row.status).toLocaleLowerCase('en-US');
+  return saleType === 'group buy'
+    && fixed === '확정 / fixed'
+    && !/interest\s*check|(?:^|\W)ic(?:$|\W)/i.test(status);
+}
+
+export function buildGeonworksReleaseKeepoddEvents(changes = [], options = {}) {
+  const occurredAt = options.occurredAt || new Date().toISOString();
+  const fallbackUrl = options.fallbackUrl || GEONWORKS_RELEASE_UPDATE_URL;
+  const result = [];
+
+  for (const change of changes || []) {
+    const row = change?.row || {};
+    if (!meaningful(row.product) || !isConfirmedGeonworksReleaseGroupBuy(row)) continue;
+
+    const becameConfirmed = change.kind === 'added'
+      || (change.kind === 'changed' && !isConfirmedGeonworksReleaseGroupBuy(change.before || {}));
+    if (!becameConfirmed) continue;
+
+    const canonicalKey = canonicalProductKey('GEONWORKS', row.product);
+    result.push(eventFrom({
+      source: 'GEONWORKS',
+      name: row.product,
+      eventType: 'new_gb',
+      occurredAt,
+      row: { ...row, gbStart: row.start },
+      fallbackUrl,
+      canonicalKey,
+      idAfter: normalizeKeepoddDate(row.start) || 'present'
+    }));
+  }
+
   return result;
 }
 
@@ -266,13 +306,23 @@ function eventTime(event) {
 export function mergeKeepoddEvents(feed, newEvents = [], { now = new Date().toISOString(), maxEvents = KEEPODD_MAX_EVENTS } = {}) {
   const existing = Array.isArray(feed?.events) ? feed.events.filter(validEvent) : [];
   const byId = new Map(existing.map((event) => [event.id, event]));
+  const geonworksNewGbKeys = new Set(existing
+    .filter((event) => cleanKeepoddValue(event.source).toUpperCase() === 'GEONWORKS' && cleanKeepoddValue(event.eventType) === 'new_gb')
+    .map((event) => canonicalProductKey('GEONWORKS', event.name))
+    .filter(Boolean));
   let added = 0;
 
   for (const raw of newEvents || []) {
     if (!raw?.name || !raw?.eventType || !raw?.source) continue;
+    const source = cleanKeepoddValue(raw.source).toUpperCase();
+    const eventType = cleanKeepoddValue(raw.eventType);
+    const canonicalKey = canonicalProductKey(source, raw.name);
+    if (source === 'GEONWORKS' && eventType === 'new_gb' && canonicalKey && geonworksNewGbKeys.has(canonicalKey)) continue;
+
     const id = raw.id || deterministicKeepoddEventId(raw);
     if (!id || byId.has(id)) continue;
     byId.set(id, { ...raw, id, occurredAt: raw.occurredAt || now });
+    if (source === 'GEONWORKS' && eventType === 'new_gb' && canonicalKey) geonworksNewGbKeys.add(canonicalKey);
     added += 1;
   }
 
