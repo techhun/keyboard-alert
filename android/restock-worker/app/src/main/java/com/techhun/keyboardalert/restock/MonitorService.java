@@ -309,9 +309,11 @@ public class MonitorService extends Service {
     private void bootstrapSession() {
         if (stopping || pausedForOptionLookup) return;
         products = ProductStore.enabledList(this);
-        JSONObject first = firstBootstrapProduct(products, SessionState.isNaverAuthRequired(this));
+        boolean usableNaverSession = SessionState.hasUsableNaverSession(this);
+        JSONObject first = firstBootstrapProduct(products, usableNaverSession);
         if (first == null) {
-            if (SessionState.isNaverAuthRequired(this)) {
+            if (!usableNaverSession && !SessionState.isGuestMode(this)) {
+                SessionState.markNaverAuthRequired(this);
                 setStatus("로그인 필요");
                 updateOngoingNotification("SmartStore 로그인이 필요해요");
                 notifyLoginRequired();
@@ -357,7 +359,7 @@ public class MonitorService extends Service {
         }
 
         String siteType = currentSiteType();
-        if (shouldSkipForNaverAuth(siteType, SessionState.isNaverAuthRequired(this))) {
+        if (shouldSkipForNaverSession(siteType, SessionState.hasUsableNaverSession(this))) {
             scheduleNextProduct();
             return;
         }
@@ -856,7 +858,7 @@ public class MonitorService extends Service {
         }
     }
 
-    static JSONObject firstBootstrapProduct(JSONArray products, boolean naverAuthRequired) {
+    static JSONObject firstBootstrapProduct(JSONArray products, boolean hasUsableNaverSession) {
         if (products == null) return null;
         for (int i = 0; i < products.length(); i++) {
             JSONObject product = products.optJSONObject(i);
@@ -865,13 +867,13 @@ public class MonitorService extends Service {
                 "siteType",
                 SiteSupport.detect(product.optString("url", ""))
             );
-            if (!shouldSkipForNaverAuth(siteType, naverAuthRequired)) return product;
+            if (!shouldSkipForNaverSession(siteType, hasUsableNaverSession)) return product;
         }
         return null;
     }
 
-    static boolean shouldSkipForNaverAuth(String siteType, boolean naverAuthRequired) {
-        return naverAuthRequired && SiteSupport.NAVER_SMARTSTORE.equals(siteType);
+    static boolean shouldSkipForNaverSession(String siteType, boolean hasUsableNaverSession) {
+        return SiteSupport.NAVER_SMARTSTORE.equals(siteType) && !hasUsableNaverSession;
     }
 
     static boolean shouldStartNoContentBackoff(int distinctProducts, long windowAgeMillis) {
