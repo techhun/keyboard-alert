@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  diffRoadmapDates,
   diffRows,
   parseSwagkeysStatusApi,
   preserveIndependentFreshChanges
@@ -29,6 +30,30 @@ const state = {
   announcement: { heading: '업데이트(26.09.08)', content: 'old' },
   quarters: { Q1: ['A'], Q2: ['B'], Q3: ['Classic Red'], Q4: ['D'] }
 };
+
+test('roadmap sale date diff reports only existing products whose dates changed', () => {
+  const changes = diffRoadmapDates(
+    {
+      spacecadet: { product: 'SWG Space Cadet', saleStart: '2026-10-05', saleEnd: '2026-11-02' },
+      removed: { product: 'SWG Removed', saleStart: '2026-10-01', saleEnd: '2026-10-31' }
+    },
+    {
+      spacecadet: { product: 'SWG Space Cadet', saleStart: '2026-10-05', saleEnd: '2026-11-02' },
+      crimsoncadet: { product: 'SWG Crimson Cadet', saleStart: '2026-10-15', saleEnd: '2026-11-12' }
+    }
+  );
+  assert.deepEqual(changes, []);
+  const changed = diffRoadmapDates(
+    { crimsoncadet: { product: 'SWG Crimson Cadet', saleStart: '2026-10-05', saleEnd: '2026-11-02' } },
+    { crimsoncadet: { product: 'SWG Crimson Cadet', saleStart: '2026-10-15', saleEnd: '2026-11-12' } }
+  );
+  assert.deepEqual(changed, [{
+    product: 'SWG Crimson Cadet',
+    quarter: '',
+    before: { saleStart: '2026-10-05', saleEnd: '2026-11-02' },
+    after: { saleStart: '2026-10-15', saleEnd: '2026-11-12' }
+  }]);
+});
 
 test('roadmap removal verification failure does not discard fresh status progress changes', () => {
   const snapshot = {
