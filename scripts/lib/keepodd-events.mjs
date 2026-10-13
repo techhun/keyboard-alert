@@ -265,9 +265,10 @@ export function buildSwagkeysKeepoddEvents({
       const current = swagEventRow(row, currentDates);
       const before = saleRangeLabel(item.before);
       const after = saleRangeLabel(item.after);
+      const quarter = swagQuarterFor(name, quarters);
       const event = eventFrom({
         source: 'SWAGKEYS', name, eventType: 'note_changed', before, after, occurredAt,
-        row: current, quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey
+        row: current, quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey
       });
       event.note = `판매 일정 ${after}`;
       events.set(event.id, event);
