@@ -75,6 +75,7 @@ public class MainActivity extends Activity {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable statusRefresh = new Runnable() {
         @Override public void run() {
+            if (redirectToGateIfNeeded()) return;
             renderProducts();
             refreshSessionButton();
             handler.postDelayed(this, 2500L);
@@ -299,7 +300,16 @@ public class MainActivity extends Activity {
     }
 
     private boolean hasNaverSession() {
-        return SessionState.hasNaverSession();
+        return SessionState.hasUsableNaverSession(this);
+    }
+
+    private boolean redirectToGateIfNeeded() {
+        if (loginLaunching || !SessionState.shouldShowGate(this)) return false;
+        Intent intent = new Intent(this, GateActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+        return true;
     }
 
     private void refreshSessionButton() {
@@ -1522,6 +1532,7 @@ public class MainActivity extends Activity {
     }
 
     private void clearAppLogin() {
+        SessionState.clearForLogout(this);
         CookieManager cookies = CookieManager.getInstance();
         cookies.removeAllCookies(value -> {
             cookies.flush();
@@ -1717,6 +1728,7 @@ public class MainActivity extends Activity {
 
     @Override protected void onResume() {
         super.onResume();
+        if (redirectToGateIfNeeded()) return;
         handler.removeCallbacks(statusRefresh);
         handler.removeCallbacks(resumeRefresh);
 
