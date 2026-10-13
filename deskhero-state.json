@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-09T16:01:15.817Z",
+  "updatedAt": "2026-10-13T18:33:23.412Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -690,7 +690,7 @@
     {
       "category": "Keyset",
       "product": "GMK Motif Keycaps",
-      "notes": "Artisans received. Keysets further delayed again. New estimated shipping for keysets late October 2026/early November if last sample is approved by designer. Motif Cables still in production. | Artisans received. Further delayed again. New estimated shipping for keysets late October 2026/early November. Initial production samples not approved. Quality adjustments being made. Motif Cables still in production.",
+      "notes": "Artisans received. Keysets further delayed again. New estimated shipping for keysets late October 2026/early November if last sample is approved by designer. Motif Cables still in production. Oct 12 - Colour matching finally completed - production to start. New estimated shipping December 2026 | Artisans received. Motif Cables still in production. Oct 12 - Colour matching finally completed - production to start. New estimated shipping December 2026",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -3832,5 +3832,7 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "b7a9cedd94e017b5a9c5d525": "2026-10-13T18:33:23.411Z"
+  }
 }
