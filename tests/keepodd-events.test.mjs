@@ -376,6 +376,19 @@ test('SWAGKEYS exact catalog match resolves product page', async () => {
   assert.equal(events[0].sourceUrl, 'https://swagkeys.com/products/group-buy-swg-classic-red');
 });
 
+test('GEONWORKS Cafe24 상품명 label still resolves as an exact product match', () => {
+  const html = `
+    <a href="/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-rainy-day-r3-%ED%82%A4%EC%BA%A1/732/category/47/display/1/">
+      <strong class="name">상품명 : <span>[예약판매] GMK CYL Rainy Day R3 키캡</span></strong>
+    </a>`;
+  const catalog = parseGeonworksCatalogHtml(html);
+  assert.equal(catalog.length, 1);
+  assert.equal(
+    findExactProductUrl('GEONWORKS', 'GMK CYL Rainy Day R3', catalog),
+    'https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-rainy-day-r3-%ED%82%A4%EC%BA%A1/732/category/47/display/1/'
+  );
+});
+
 test('GEONWORKS exact title resolves while ambiguous/fuzzy name safely falls back', async () => {
   const html = `
     <a href="/product/gmk-varenye/101/category/47/display/1/"><span>[예약판매] GMK CYL Varenye 키캡</span></a>
