@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T20:11:55.201Z",
+  "updatedAt": "2026-10-14T19:10:59.231Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1248,16 +1248,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
-      "product": "DCS Hangul PBT",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Classic-Red-36404233415480bc9a96cdd3ca69953a",
       "product": "SWG Classic Red",
       "status": "In Manufacturing",
@@ -1448,6 +1438,16 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Evil-Eye-3b50423341548099b2dddb055e5a623b",
+      "product": "SWG Evil Eye",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/Abandoned-Pets-Artisans-Beige-31704233415480428c6adffc7408fae3",
       "product": "Abandoned Pets Artisans - Beige",
       "status": "Shipping to Prototypist",
@@ -1500,6 +1500,16 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Ferrofluid-3f7042334154809784ccd3ade77930bd",
       "product": "SWG Ferrofluid",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
+      "product": "DCS Hangul PBT",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q4 2026"
     },
