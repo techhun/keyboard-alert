@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-13T08:33:26.338Z",
+  "updatedAt": "2026-10-14T05:01:15.738Z",
   "rows": [
     {
       "category": "GMK",
@@ -128,8 +128,8 @@
       "category": "KEYCAPS",
       "product": "GMK CYL Gurokawa",
       "status": "In production",
-      "eta": "Oct, 2026",
-      "progress": 60,
+      "eta": "Nov 2026",
+      "progress": 74,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -764,17 +764,6 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "+84 Classic TKL",
-      "status": "In production",
-      "eta": "Start shipping",
-      "progress": 99,
-      "summary": "Shipping in progress — orders are being fulfilled sequentially",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYBOARDS",
       "product": "Agar Micro",
       "status": "In production",
       "eta": "Dec 2026",
@@ -1035,6 +1024,8 @@
     "adc1d22993fb3f9b5edb169a": "2026-10-12T13:41:08.824Z",
     "b37e2c5203f5ef056f8fdd21": "2026-10-12T13:41:09.008Z",
     "5856b7c593292b1b7e0e4d06": "2026-10-13T05:13:11.466Z",
-    "48a49a6d61883a9922e216a2": "2026-10-13T05:23:04.410Z"
+    "48a49a6d61883a9922e216a2": "2026-10-13T05:23:04.410Z",
+    "126a02aaf2c60d3058336d89": "2026-10-14T05:01:15.474Z",
+    "510c5c538f6e516e6ba9807f": "2026-10-14T05:01:15.738Z"
   }
 }
