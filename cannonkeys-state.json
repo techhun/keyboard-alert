@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T19:13:14.009Z",
+  "updatedAt": "2026-10-14T17:51:09.114Z",
   "rows": [
     {
       "id": 349,
@@ -739,7 +739,7 @@
       "id": 225,
       "displayName": "OGR2",
       "category": "keyboard",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2025-07-25",
       "endDate": "2025-08-25",
       "eta": "Q1 2026",
@@ -3403,6 +3403,7 @@
   "sentChanges": {
     "32d2f3cb1e7e5601e9e9141a": "2026-10-08T16:31:26.939Z",
     "36edc12a4b8b0db371314497": "2026-10-09T20:31:10.396Z",
-    "1f9b8766dec7a349fab55098": "2026-10-09T20:41:50.092Z"
+    "1f9b8766dec7a349fab55098": "2026-10-09T20:41:50.092Z",
+    "414aa97c76a9c83d790aaaf4": "2026-10-14T17:51:09.113Z"
   }
 }
