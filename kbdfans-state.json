@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-14T05:01:15.738Z",
+  "updatedAt": "2026-10-14T06:01:20.424Z",
   "rows": [
     {
       "category": "GMK",
@@ -29,7 +29,7 @@
       "category": "KEYCAPS",
       "product": "PBTfans G3",
       "status": "In production",
-      "eta": "Sep 2026",
+      "eta": "Nov 2026",
       "progress": 90,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
@@ -1026,6 +1026,7 @@
     "5856b7c593292b1b7e0e4d06": "2026-10-13T05:13:11.466Z",
     "48a49a6d61883a9922e216a2": "2026-10-13T05:23:04.410Z",
     "126a02aaf2c60d3058336d89": "2026-10-14T05:01:15.474Z",
-    "510c5c538f6e516e6ba9807f": "2026-10-14T05:01:15.738Z"
+    "510c5c538f6e516e6ba9807f": "2026-10-14T05:01:15.738Z",
+    "41c339d775697c201f44c829": "2026-10-14T06:01:20.424Z"
   }
 }
