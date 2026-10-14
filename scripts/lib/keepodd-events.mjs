@@ -35,6 +35,7 @@ export function normalizeKeepoddDate(value) {
 
 function stripDecorations(value) {
   return cleanKeepoddValue(value)
+    .replace(/^(?:상품명|product\s*name)\s*[:：]\s*/i, ' ')
     .replace(/\[(?:예약판매|예판|group[- ]?buy|pre[- ]?order|in[- ]?stock)\]/gi, ' ')
     .replace(/\((?:국내\s*)?인스탁\s*판매\)/gi, ' ')
     .replace(/\(in[- ]?stock\)/gi, ' ')
