@@ -1,28 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T06:20:39.689Z",
+  "updatedAt": "2026-10-15T07:50:35.363Z",
   "rows": [
-    {
-      "product": "+84 TKL",
-      "gbStart": "2025. 12. 5",
-      "eta": "2026. 7. 31",
-      "type": "Keyboard",
-      "manufacturer": "Nuxroskb",
-      "status": "검수 중 / inspecting",
-      "update": "2026. 10. 8",
-      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
-    },
-    {
-      "product": "Seal80",
-      "gbStart": "2026. 3. 24",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "검수 중 / inspecting",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
     {
       "product": "DCS SMRT R2",
       "gbStart": "2026. 9. 21",
@@ -30,7 +10,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 9. 22",
+      "update": "2026. 10. 15",
       "note": "—"
     },
     {
@@ -40,7 +20,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 12",
+      "update": "2026. 10. 15",
       "note": "—"
     },
     {
@@ -702,6 +682,26 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
       "note": "—"
+    },
+    {
+      "product": "+84 TKL",
+      "gbStart": "2025. 12. 5",
+      "eta": "2026. 7. 31",
+      "type": "Keyboard",
+      "manufacturer": "Nuxroskb",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 15",
+      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
+    },
+    {
+      "product": "Seal80",
+      "gbStart": "2026. 3. 24",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 8",
+      "note": "—"
     }
   ],
   "sentChanges": {
@@ -715,6 +715,10 @@
     "230e3f4ceddbbcbe6774b185": "2026-10-12T03:10:32.783Z",
     "5bf3ccaa6520bb360bfed08a": "2026-10-13T07:50:31.397Z",
     "faada0dde9cd19cf1ca36d36": "2026-10-14T23:30:37.133Z",
-    "0a0fb9a03b28d8a42a382216": "2026-10-15T04:30:38.821Z"
+    "0a0fb9a03b28d8a42a382216": "2026-10-15T04:30:38.821Z",
+    "61acd2a077a1da19db0e3617": "2026-10-15T07:50:34.728Z",
+    "aa1756beecb21257672fb066": "2026-10-15T07:50:35.004Z",
+    "2148d4a77acf39bdd33bc72f": "2026-10-15T07:50:35.124Z",
+    "49c665d49791d2e732525b21": "2026-10-15T07:50:35.362Z"
   }
 }

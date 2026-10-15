@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-14T23:30:37.134Z",
+  "updatedAt": "2026-10-15T07:50:35.363Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -347,6 +347,39 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "10월 마지막 주 제조사에서 발송 예정 / Scheduled to ship from the manufacturer in the last week of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "74973a6598d131e8b069fbcdda66f608",
+      "source": "GEONWORKS",
+      "name": "+84 TKL",
+      "eventType": "status_changed",
+      "before": "검수 중 / inspecting",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-15T07:50:35.363Z",
+      "categoryHint": "키보드",
+      "maker": "Nuxroskb",
+      "saleStart": "2025-12-05",
+      "eta": "2026-07-31",
+      "status": "검수 중 / Inspecting",
+      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d5f96b681b1467149871f73a5f205b7a",
+      "source": "GEONWORKS",
+      "name": "Seal80",
+      "eventType": "status_changed",
+      "before": "검수 중 / inspecting",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-15T07:50:35.363Z",
+      "categoryHint": "키보드",
+      "maker": "SENSY",
+      "saleStart": "2026-03-24",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
