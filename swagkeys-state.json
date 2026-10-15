@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T15:01:25.919Z",
+  "updatedAt": "2026-10-15T23:41:02.622Z",
   "announcement": {
     "heading": "업데이트(26.10.14)",
     "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
@@ -239,7 +239,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-11-20",
+      "eta": "2026-12-08",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -251,7 +251,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-12-11",
+      "eta": "2027-01-04",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -263,7 +263,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2026-12-18",
+      "eta": "2027-01-25",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -275,7 +275,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-12-25",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -287,7 +287,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2026-12-31",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -299,7 +299,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2026-12-31",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -311,7 +311,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Not started",
-      "eta": "2027-01-31",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -323,7 +323,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2027-02-28",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -335,7 +335,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2027-02-28",
+      "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -388,6 +388,18 @@
     },
     {
       "product": "Crimson Cadet",
+      "groupBuy": 0,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Not started",
+      "eta": "",
+      "currentStatus": "Not started"
+    },
+    {
+      "product": "Forest Cadet",
       "groupBuy": 0,
       "waitingProduction": 0,
       "inProduction": 0,
