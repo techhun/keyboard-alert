@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-12T19:13:11.729Z",
+  "updatedAt": "2026-10-15T02:51:10.320Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -222,20 +222,6 @@
     },
     {
       "category": "Keycap",
-      "product": "GMK Centinela Extension Kit",
-      "status": "Shipping to customers.",
-      "eta": "Q4 2026",
-      "url": "https://novelkeys.com/products/gmk-centinela-extension-kit"
-    },
-    {
-      "category": "Keycap",
-      "product": "GMK CYL Prussian Alert",
-      "status": "Shipping to customers.",
-      "eta": "Q4 2026",
-      "url": "https://novelkeys.com/products/gmk-cyl-prussian-alert-keycaps"
-    },
-    {
-      "category": "Keycap",
       "product": "DCS Cream Cheese and Green R3",
       "status": "In production.",
       "eta": "Q3 2026",
@@ -358,6 +344,8 @@
     "68affbcc815c4f6a8ba3eeea": "2026-10-08T16:50:59.855Z",
     "dc47de97fcee8727be367352": "2026-10-12T16:33:07.155Z",
     "541f10544cad5a5a7083b91c": "2026-10-12T16:33:07.336Z",
-    "f41653d55a9943ff0bf2933b": "2026-10-12T17:13:30.278Z"
+    "f41653d55a9943ff0bf2933b": "2026-10-12T17:13:30.278Z",
+    "d9e715b4fcfc0f5bbe38532d": "2026-10-15T02:51:10.043Z",
+    "8c16b514eff2290c6f194f6c": "2026-10-15T02:51:10.320Z"
   }
 }
