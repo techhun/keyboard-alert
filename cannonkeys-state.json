@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T16:11:04.775Z",
+  "updatedAt": "2026-10-16T18:51:06.140Z",
   "rows": [
     {
       "id": 349,
@@ -139,13 +139,13 @@
       "id": 342,
       "displayName": "GMK British Racing Green (BRG) R3 - Simple Base Kit",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-06-03",
       "endDate": "2026-06-15",
       "eta": "Q4 2026",
-      "latestUpdateId": 1855,
-      "latestUpdateDate": "2026-09-15",
-      "latestUpdateDescription": "GMK British Racing Green (BRG) R3 - Simple Base Kit has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1894,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All group buy orders for GMK British Racing Green (BRG) R3 - Simple Base Kit! have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 341,
@@ -167,9 +167,9 @@
       "startDate": "2026-04-24",
       "endDate": "2026-05-24",
       "eta": "Late July 2026",
-      "latestUpdateId": 1824,
-      "latestUpdateDate": "2026-08-27",
-      "latestUpdateDescription": "Salted Butter Deskmat have arrived at our facilities! They are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1898,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All pre-orders for the Salted Butter Deskmat have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 271,
@@ -263,9 +263,9 @@
       "startDate": "2026-03-31",
       "endDate": "2026-04-14",
       "eta": "Aug/Sept 2026",
-      "latestUpdateId": 1853,
-      "latestUpdateDate": "2026-09-15",
-      "latestUpdateDescription": "Wuque has discovered that some of the batteries failed the appearance inspection. Additionally, they were short on the quantity of batteries received. Wuque estimates that the Paper65 will be available for shipment to our forwarder around the end of September."
+      "latestUpdateId": 1899,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "We're currently waiting on production of about 50% of PCBs. Wuque expects to ship the keyboards to our freight forwarder in 1–2 weeks. From there, ocean freight to CannonKeys will take an additional 6–8 weeks."
     },
     {
       "id": 265,
@@ -307,13 +307,13 @@
       "id": 259,
       "displayName": "PBS WoB",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-02-20",
       "endDate": "2026-03-22",
       "eta": "July 2026",
-      "latestUpdateId": 1883,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "PBS WoB has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. During our quality check of the 40s kits, we noticed an error in the production files: the 1u ALT keycap was mistakenly printed as ALTGR. Given the isolated nature of the issue, we have decided not to produce replacement keys. We apologize for the inconvenience, and if this impacts your satisfaction with the kit, please contact our support team so we can assist you with your options"
+      "latestUpdateId": 1895,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All group buy orders for PBS WoB have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 253,
@@ -463,13 +463,13 @@
       "id": 303,
       "displayName": "NAMA",
       "category": "keyboard",
-      "status": "en_route",
+      "status": "complete",
       "startDate": "2025-12-09",
       "endDate": "2025-12-23",
       "eta": "April/May 2026",
-      "latestUpdateId": 1856,
-      "latestUpdateDate": "2026-09-16",
-      "latestUpdateDescription": "9/16 - We've received the second round of NAMA replacements and we're happy to report that they've passed the QC process! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipment next week."
+      "latestUpdateId": 1897,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All NAMA orders have shipped! Please fully inspect your units prior to building and let us know if you have any questions."
     },
     {
       "id": 247,
@@ -799,13 +799,13 @@
       "id": 219,
       "displayName": "PBS Strawberry Milk",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2025-06-20",
       "endDate": "2025-07-20",
       "eta": "Mid March",
-      "latestUpdateId": 1852,
-      "latestUpdateDate": "2026-09-15",
-      "latestUpdateDescription": "PBS Strawberry Milk Novelties Replacements have arrived at our facilities! Kits are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1896,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All group buy orders for PBS Strawberry Milk have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 221,
@@ -3407,6 +3407,12 @@
     "0dd9cb9a744a2caa13afe718": "2026-10-16T15:31:22.695Z",
     "19838acae966373f87d2e0aa": "2026-10-16T15:41:11.432Z",
     "c13e041bf6adb165a5f63fd3": "2026-10-16T15:41:11.611Z",
-    "88ffa265fff733c0f3bb2436": "2026-10-16T16:11:04.773Z"
+    "88ffa265fff733c0f3bb2436": "2026-10-16T16:11:04.773Z",
+    "f52e3ced1d34af9626d26161": "2026-10-16T18:51:01.736Z",
+    "5d0762ea9521feeb16049124": "2026-10-16T18:51:01.943Z",
+    "b979abb5a45ed93ff79d983b": "2026-10-16T18:51:04.253Z",
+    "e10f0555cde31f447a8f4cae": "2026-10-16T18:51:05.249Z",
+    "b4c44ae5a70d4fa608aec8e4": "2026-10-16T18:51:05.721Z",
+    "2d1d3d0c4bf8a13ebb0d26b7": "2026-10-16T18:51:06.138Z"
   }
 }
