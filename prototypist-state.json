@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T14:51:14.048Z",
+  "updatedAt": "2026-10-16T09:41:13.577Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -768,16 +768,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Masterpiece-R2-39d042334154805591bae9d56228579d",
-      "product": "GMK CYL Masterpiece R2",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Pandemonium-39d0423341548003a512d782f036caea",
       "product": "GMK CYL Pandemonium",
       "status": "In Manufacturing",
@@ -932,6 +922,16 @@
       "product": "GMK CYL Gonzales",
       "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Masterpiece-R2-39d042334154805591bae9d56228579d",
+      "product": "GMK CYL Masterpiece R2",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "gmk",
