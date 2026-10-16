@@ -1,8 +1,28 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T00:00:54.000Z",
+  "updatedAt": "2026-10-16T00:50:38.388Z",
   "rows": [
+    {
+      "product": "+84 TKL",
+      "gbStart": "2025. 12. 5",
+      "eta": "2026. 7. 31",
+      "type": "Keyboard",
+      "manufacturer": "Nuxroskb",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 15",
+      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
+    },
+    {
+      "product": "Seal80",
+      "gbStart": "2026. 3. 24",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "SENSY",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 8",
+      "note": "—"
+    },
     {
       "product": "DCS SMRT R2",
       "gbStart": "2026. 9. 21",
@@ -10,7 +30,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 15",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -154,23 +174,13 @@
       "note": "PVD 코팅 제외 유닛 : 9월 21일 발송 PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) /Units without PVD coating: Shipping on September 21. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
     },
     {
-      "product": "Keycult Wristrest",
-      "gbStart": "2025. 10. 14",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "제작 중 / In progress",
-      "update": "2026. 9. 28",
-      "note": "통관 중 / Currently undergoing customs clearance"
-    },
-    {
       "product": "Keycult No. 2 TKL",
       "gbStart": "2025. 12. 19",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
       "manufacturer": "Novelkeys",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 8",
+      "update": "2026. 10. 16",
       "note": "PCB 완성, 알루 파츠 제작 중 / PCB completed; aluminum parts currently being manufactured"
     },
     {
@@ -682,26 +692,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
       "note": "—"
-    },
-    {
-      "product": "+84 TKL",
-      "gbStart": "2025. 12. 5",
-      "eta": "2026. 7. 31",
-      "type": "Keyboard",
-      "manufacturer": "Nuxroskb",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 15",
-      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
-    },
-    {
-      "product": "Seal80",
-      "gbStart": "2026. 3. 24",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 8",
-      "note": "—"
     }
   ],
   "sentChanges": {
@@ -729,6 +719,9 @@
     "4f6bb9544343e1d5bbc8df47": "2026-10-16T00:00:53.315Z",
     "8100c0f59b58623df91f042f": "2026-10-16T00:00:53.497Z",
     "915d4ae110a0ababec971ee2": "2026-10-16T00:00:53.761Z",
-    "833dd298bb40541fa6fdf2f2": "2026-10-16T00:00:53.999Z"
+    "833dd298bb40541fa6fdf2f2": "2026-10-16T00:00:53.999Z",
+    "f4af8c67c0a95b275c1f1234": "2026-10-16T00:50:37.999Z",
+    "f9027828ab47d891b5214e81": "2026-10-16T00:50:38.220Z",
+    "0996d63d791d67c381897ae6": "2026-10-16T00:50:38.387Z"
   }
 }
