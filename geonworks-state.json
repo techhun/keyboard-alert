@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T04:50:31.369Z",
+  "updatedAt": "2026-10-16T06:20:30.156Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -140,8 +140,8 @@
       "type": "Keyboard",
       "manufacturer": "TypePlus",
       "status": "제작 중 / In progress",
-      "update": "2026. 7. 14",
-      "note": "EC 킷 미입고 / EC kits have not yet arrived."
+      "update": "2026. 10. 16",
+      "note": "10월 4주 EC킷"
     },
     {
       "product": "Keycult No. 3 TKL",
@@ -721,6 +721,7 @@
     "833dd298bb40541fa6fdf2f2": "2026-10-16T00:00:53.999Z",
     "f4af8c67c0a95b275c1f1234": "2026-10-16T00:50:37.999Z",
     "f9027828ab47d891b5214e81": "2026-10-16T00:50:38.220Z",
-    "0996d63d791d67c381897ae6": "2026-10-16T00:50:38.387Z"
+    "0996d63d791d67c381897ae6": "2026-10-16T00:50:38.387Z",
+    "426ba07cca22cecdb244e632": "2026-10-16T06:20:30.156Z"
   }
 }

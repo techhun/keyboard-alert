@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-15T23:41:02.622Z",
+  "updatedAt": "2026-10-16T06:20:30.156Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -553,6 +553,23 @@
       "note": "컬러매칭 Not started",
       "quarter": "Q3",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2c8215480a46ed8035abf4edf036d0cc",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "note_changed",
+      "before": "EC 킷 미입고 / EC kits have not yet arrived.",
+      "after": "10월 4주 EC킷",
+      "occurredAt": "2026-10-16T06:20:30.156Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
+      "status": "제작 중 / In progress",
+      "note": "10월 4주 EC킷",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]
