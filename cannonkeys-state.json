@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T15:31:22.697Z",
+  "updatedAt": "2026-10-16T15:41:11.612Z",
   "rows": [
     {
       "id": 349,
@@ -331,25 +331,25 @@
       "id": 257,
       "displayName": "PFF WoB",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-02-03",
       "endDate": "2026-03-08",
       "eta": "June/July 2026",
-      "latestUpdateId": 1869,
-      "latestUpdateDate": "2026-09-23",
-      "latestUpdateDescription": "Production of PFF WoB has completed and sets are currently shipping to us via sea shipping! We expect to receive the shipment in the next 6-8 weeks!"
+      "latestUpdateId": 1891,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "PFF WoB has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
     },
     {
       "id": 256,
       "displayName": "PFF Verdant Retro",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-02-05",
       "endDate": "2026-03-08",
       "eta": "June/July 2026",
-      "latestUpdateId": 1870,
-      "latestUpdateDate": "2026-09-23",
-      "latestUpdateDescription": "Production of PFF Verdant Retro has completed and sets are currently shipping to us via sea shipping! We expect to receive the shipment in the next 6-8 weeks!"
+      "latestUpdateId": 1892,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "PFF Verdant Retro has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
     },
     {
       "id": 252,
@@ -3404,6 +3404,8 @@
     "36edc12a4b8b0db371314497": "2026-10-09T20:31:10.396Z",
     "1f9b8766dec7a349fab55098": "2026-10-09T20:41:50.092Z",
     "414aa97c76a9c83d790aaaf4": "2026-10-14T17:51:09.113Z",
-    "0dd9cb9a744a2caa13afe718": "2026-10-16T15:31:22.695Z"
+    "0dd9cb9a744a2caa13afe718": "2026-10-16T15:31:22.695Z",
+    "19838acae966373f87d2e0aa": "2026-10-16T15:41:11.432Z",
+    "c13e041bf6adb165a5f63fd3": "2026-10-16T15:41:11.611Z"
   }
 }
