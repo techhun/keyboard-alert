@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T06:20:30.156Z",
+  "updatedAt": "2026-10-16T06:30:38.293Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -141,7 +141,7 @@
       "manufacturer": "TypePlus",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 16",
-      "note": "10월 4주 EC킷"
+      "note": "10월 4주 제조사에서 EC킷 발송 예정 / The manufacturer is scheduled to ship the EC kits during the fourth week of October."
     },
     {
       "product": "Keycult No. 3 TKL",
@@ -722,6 +722,7 @@
     "f4af8c67c0a95b275c1f1234": "2026-10-16T00:50:37.999Z",
     "f9027828ab47d891b5214e81": "2026-10-16T00:50:38.220Z",
     "0996d63d791d67c381897ae6": "2026-10-16T00:50:38.387Z",
-    "426ba07cca22cecdb244e632": "2026-10-16T06:20:30.156Z"
+    "426ba07cca22cecdb244e632": "2026-10-16T06:20:30.156Z",
+    "899e865a2377a58a6da22081": "2026-10-16T06:30:38.292Z"
   }
 }
