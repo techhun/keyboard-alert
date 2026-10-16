@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T07:50:35.363Z",
+  "updatedAt": "2026-10-16T00:00:54.000Z",
   "rows": [
     {
       "product": "DCS SMRT R2",
@@ -110,7 +110,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 21",
+      "update": "2026. 10. 16",
       "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
     },
     {
@@ -240,7 +240,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 1",
+      "update": "2026. 10. 16",
       "note": "통관 중, 이중사출 WIN 키캡 4EA 추가 동봉 예정 / Currently undergoing customs clearance, 4 additional dual-shot WIN keycaps will be included"
     },
     {
@@ -320,7 +320,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 8",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -390,7 +390,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 7. 30",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -430,7 +430,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 3",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -440,7 +440,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 7. 3",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -460,7 +460,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 10",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -490,7 +490,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 3",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -520,7 +520,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 19",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -550,7 +550,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 1",
+      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -719,6 +719,16 @@
     "61acd2a077a1da19db0e3617": "2026-10-15T07:50:34.728Z",
     "aa1756beecb21257672fb066": "2026-10-15T07:50:35.004Z",
     "2148d4a77acf39bdd33bc72f": "2026-10-15T07:50:35.124Z",
-    "49c665d49791d2e732525b21": "2026-10-15T07:50:35.362Z"
+    "49c665d49791d2e732525b21": "2026-10-15T07:50:35.362Z",
+    "b8860f9f8fb01ee67ad80a7f": "2026-10-16T00:00:51.239Z",
+    "2a723a338e88ea58022973fa": "2026-10-16T00:00:51.598Z",
+    "00d5136e95b6e3e960ba7c40": "2026-10-16T00:00:51.790Z",
+    "1a5b5d05007479606a5c7fa8": "2026-10-16T00:00:52.569Z",
+    "857c011d89741daa79bb6e92": "2026-10-16T00:00:52.772Z",
+    "bf58881318050ded32bb8ffa": "2026-10-16T00:00:53.004Z",
+    "4f6bb9544343e1d5bbc8df47": "2026-10-16T00:00:53.315Z",
+    "8100c0f59b58623df91f042f": "2026-10-16T00:00:53.497Z",
+    "915d4ae110a0ababec971ee2": "2026-10-16T00:00:53.761Z",
+    "833dd298bb40541fa6fdf2f2": "2026-10-16T00:00:53.999Z"
   }
 }

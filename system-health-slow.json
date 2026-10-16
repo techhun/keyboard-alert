@@ -1,14 +1,11 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T23:50:31.133Z",
+  "updatedAt": "2026-10-16T00:00:54.124Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
-      "changedAt": "2026-09-17T11:30:44.545Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "38825948008",
-      "lastFailureAt": "2026-10-15T23:50:31.133Z"
+      "changedAt": "2026-09-17T11:30:44.545Z"
     },
     "geonworks-release": {
       "status": "ok",
