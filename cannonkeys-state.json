@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T15:41:11.612Z",
+  "updatedAt": "2026-10-16T16:11:04.775Z",
   "rows": [
     {
       "id": 349,
@@ -115,13 +115,13 @@
       "id": 338,
       "displayName": "GMK Spark",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1878,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "Production of GMK Spark Keycaps has completed and sets will be shipping to us next week! We expect to receive the shipment in the next 3-4 weeks! Spark Deskmats are currently in production and should take another 3 weeks to complete, we will have more information as soon as we hear back from the manufacturer."
+      "latestUpdateId": 1893,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "GMK Spark Keycaps & Artisans has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. Spark Deskmats should arrive to us in the next week or two."
     },
     {
       "id": 336,
@@ -3406,6 +3406,7 @@
     "414aa97c76a9c83d790aaaf4": "2026-10-14T17:51:09.113Z",
     "0dd9cb9a744a2caa13afe718": "2026-10-16T15:31:22.695Z",
     "19838acae966373f87d2e0aa": "2026-10-16T15:41:11.432Z",
-    "c13e041bf6adb165a5f63fd3": "2026-10-16T15:41:11.611Z"
+    "c13e041bf6adb165a5f63fd3": "2026-10-16T15:41:11.611Z",
+    "88ffa265fff733c0f3bb2436": "2026-10-16T16:11:04.773Z"
   }
 }
