@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-19T20:11:27.846Z",
+  "updatedAt": "2026-10-19T20:22:29.358Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -918,9 +918,19 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Masterpiece-R2-39d042334154805591bae9d56228579d",
+      "product": "GMK CYL Masterpiece R2",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-MTNU-Welles-36404233415480db8b4ee25239c0c4ec",
       "product": "GMK MTNU Welles",
-      "status": "Shipping to Prototypist",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -930,18 +940,8 @@
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gonzales-36404233415480f29ac5e40b7f05f59b",
       "product": "GMK CYL Gonzales",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Masterpiece-R2-39d042334154805591bae9d56228579d",
-      "product": "GMK CYL Masterpiece R2",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "gmk",
@@ -1184,16 +1184,6 @@
       "expectedShipping": "Q2 2026"
     },
     {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Hangulbeit-2ca04233415480fba8acdd942c279ebe",
-      "product": "GMK CYL Hangulbeit",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
       "sourceId": "keyset",
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
@@ -1248,38 +1238,8 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Cream-Cheese-Green-R3-36404233415480e494eae3a020d55e81",
-      "product": "DCS Cream Cheese & Green R3",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Classic-Red-36404233415480bc9a96cdd3ca69953a",
       "product": "SWG Classic Red",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Bowl-Pit-364042334154804dae9cd782331dc85a",
-      "product": "DCS Bowl Pit",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DSS-Distortion-36404233415480c7a112f1841c026aae",
-      "product": "DSS Distortion",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -1458,10 +1418,30 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/Abandoned-Pets-Artisans-Beige-31704233415480428c6adffc7408fae3",
-      "product": "Abandoned Pets Artisans - Beige",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q3 2026"
+      "itemUrl": "https://prototypist.notion.site/SWG-Hazakura-Light-3b504233415480e2abd8c3d7dabd8945",
+      "product": "SWG Hazakura Light",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/PBS-BoB-3ba0423341548072bba8e271cb5af8e3",
+      "product": "PBS BoB",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/MW-Virtual-3d104233415480949bd8d9b1c28cce9e",
+      "product": "MW Virtual",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "keyset",
@@ -1528,9 +1508,49 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DSS-Distortion-36404233415480c7a112f1841c026aae",
+      "product": "DSS Distortion",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Cream-Cheese-Green-R3-36404233415480e494eae3a020d55e81",
+      "product": "DCS Cream Cheese & Green R3",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Bowl-Pit-364042334154804dae9cd782331dc85a",
+      "product": "DCS Bowl Pit",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/Abandoned-Pets-Artisans-Beige-31704233415480428c6adffc7408fae3",
+      "product": "Abandoned Pets Artisans - Beige",
+      "status": "Completed",
+      "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/CRP-r7-3170423341548085bf01eeb91d2388fe",
       "product": "CRP r7",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Late Q3 2026"
     },
     {
@@ -1762,30 +1782,7 @@
       "product": "KAP Grey Alert",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/SWG-Nimbus-31704233415480909efcfcf0cb254e75",
-      "product": "SWG Nimbus",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KAP-Buff-Bride-24204233415480c79f88cd0b14dea4bc",
-      "product": "KAP Buff Bride",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "gmk": "2026-10-19T20:11:13.765Z",
-    "keyset": "2026-10-19T20:11:26.263Z"
-  }
+  "fallbackSince": {}
 }
