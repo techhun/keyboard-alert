@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-19T17:22:51.780Z",
+  "updatedAt": "2026-10-19T18:23:01.483Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -223,7 +223,7 @@
     {
       "category": "Keycap",
       "product": "DCS Cream Cheese and Green R3",
-      "status": "In production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q3 2026",
       "url": "https://novelkeys.com/products/dcs-cream-cheese-r3"
     },
@@ -342,6 +342,7 @@
   ],
   "sentChanges": {
     "d9e715b4fcfc0f5bbe38532d": "2026-10-15T02:51:10.043Z",
-    "8c16b514eff2290c6f194f6c": "2026-10-15T02:51:10.320Z"
+    "8c16b514eff2290c6f194f6c": "2026-10-15T02:51:10.320Z",
+    "9f1ba2de5627dbac0ef8f6e3": "2026-10-19T18:23:01.482Z"
   }
 }
