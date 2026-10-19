@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-19T14:11:38.732Z",
+  "updatedAt": "2026-10-19T14:21:39.069Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -178,16 +178,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Tofu65-Pad-36404233415480dd9e6dc02997acf367",
-      "product": "Tofu65 Pad",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Juna60-3640423341548021aaa0decbaf4608c1",
       "product": "Juna60",
       "status": "In Manufacturing",
@@ -250,6 +240,16 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Pixtendo-x-Keykobo-Pixel67-39d042334154809f9d39dbd3f74c4145",
       "product": "Pixtendo x Keykobo Pixel67",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Keyboy-Advance-50-39d04233415480499de3c0419f86c1bd",
+      "product": "Keyboy Advance 50%",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -422,6 +422,16 @@
       "product": "Ramune60",
       "status": "Shipping to Customers",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Tofu65-Pad-36404233415480dd9e6dc02997acf367",
+      "product": "Tofu65 Pad",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -1775,8 +1785,7 @@
     }
   ],
   "fallbackSince": {
-    "keyboard": "2026-10-19T14:11:12.091Z",
-    "gmk": "2026-10-19T14:11:24.603Z",
-    "keyset": "2026-10-19T14:11:37.156Z"
+    "gmk": "2026-10-19T14:21:22.128Z",
+    "keyset": "2026-10-19T14:21:34.661Z"
   }
 }
