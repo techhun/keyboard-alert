@@ -1,19 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-15T00:50:33.056Z",
+  "updatedAt": "2026-10-19T01:10:37.735Z",
   "rows": [
-    {
-      "product": "DCS SMRT R2",
-      "manufacturer": "Signature Plastics",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-09-21",
-      "end": "2026-10-18"
-    },
     {
       "product": "DCS NOTD",
       "manufacturer": "Signature Plastics",
@@ -117,6 +106,7 @@
     "be6d346a18c3464c46fead78": "2026-10-13T08:30:50.496Z",
     "5a962c46c331a289e77fc440": "2026-10-14T03:10:33.902Z",
     "9ac52d082d37651b2ce1b94e": "2026-10-14T03:10:34.330Z",
-    "1a34bb92246b215ff864cdc7": "2026-10-14T07:20:36.373Z"
+    "1a34bb92246b215ff864cdc7": "2026-10-14T07:20:36.373Z",
+    "da20fa8fa59fd11aca67dd49": "2026-10-19T01:10:37.735Z"
   }
 }
