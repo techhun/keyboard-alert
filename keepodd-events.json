@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T02:30:45.189Z",
+  "updatedAt": "2026-10-20T05:30:38.823Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -637,6 +637,20 @@
       "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Zionworks around the end of October.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "6a89462de5517394b85dc75e6bee66d0",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Blanks",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-20T05:30:38.823Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-20",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-blanks-%ED%82%A4%EC%BA%A1/742/category/47/display/1/",
+      "sourceUrlType": "product"
     }
   ]
 }

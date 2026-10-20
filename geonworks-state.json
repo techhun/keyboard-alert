@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T02:30:45.189Z",
+  "updatedAt": "2026-10-20T05:30:38.823Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -101,6 +101,16 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 15",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Blanks",
+      "gbStart": "2026. 10. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 20",
       "note": "—"
     },
     {
@@ -719,6 +729,7 @@
     "899e865a2377a58a6da22081": "2026-10-16T06:30:38.292Z",
     "3083ec536c49f88d5fd8ac42": "2026-10-20T02:20:38.033Z",
     "4b60c54b7dfc70b037a39394": "2026-10-20T02:20:38.231Z",
-    "790b4459c6ebeb4ac9307f84": "2026-10-20T02:30:45.189Z"
+    "790b4459c6ebeb4ac9307f84": "2026-10-20T02:30:45.189Z",
+    "a360a4f5303d6f3c0d0e2d97": "2026-10-20T05:30:38.822Z"
   }
 }
