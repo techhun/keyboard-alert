@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-16T20:51:21.225Z",
+  "updatedAt": "2026-10-20T00:11:00.738Z",
   "rows": [
     {
       "id": 349,
@@ -647,9 +647,9 @@
       "startDate": "2025-09-19",
       "endDate": "2025-10-20",
       "eta": "Q3 2026",
-      "latestUpdateId": 1889,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "The current status for Altair + Altair-X R2 has not changed since our last update. For reference, assembly is finished for and keyboards have been sent to our partner and they are being kitted and organized by vendor."
+      "latestUpdateId": 1900,
+      "latestUpdateDate": "2026-10-20",
+      "latestUpdateDescription": "Delay Update: During our packing and vendor kitting process in China, our team identified a few issues: Altair: Missing kitting Components: We are missing a portion of the PC plates and all the daughterboard screws required for keyboard kitting. Missing Addons: We are also missing a number of the steel weight and aluminum tripod weight addons needed to complete fulfillment. Altair-X: Missing kitting Components: We are also missing a portion of the PC plates and all the daughterboard screws required for keyboard kitting. Machining Error: Unfortunately, the manufacturer mistakenly used the wrong file to machine the aluminum tripod weights for the Altair-X. Because of this error, every aluminum tripod weight for the Altair-X must be remade from scratch using the correct files. Next Steps & Timeline We are already in direct communication with our manufacturing partner to locate, produce and deliver the missing and the incorrect parts. The factory has prioritized these remakes, and while we are keeping the timeline flexible until all components are physically in hand and verified, they expect a relatively quick turnaround. We know delays are frustrating, so we really appreciate you hanging in there with us. We’ll keep a close eye on the progress of these remakes and touch base as soon as we have a more concrete timeline to share."
     },
     {
       "id": 231,
@@ -3411,6 +3411,7 @@
     "b979abb5a45ed93ff79d983b": "2026-10-16T18:51:04.253Z",
     "e10f0555cde31f447a8f4cae": "2026-10-16T18:51:05.249Z",
     "b4c44ae5a70d4fa608aec8e4": "2026-10-16T18:51:05.721Z",
-    "2d1d3d0c4bf8a13ebb0d26b7": "2026-10-16T18:51:06.138Z"
+    "2d1d3d0c4bf8a13ebb0d26b7": "2026-10-16T18:51:06.138Z",
+    "bcb1eba484544dafb26d0d9e": "2026-10-20T00:11:00.737Z"
   }
 }
