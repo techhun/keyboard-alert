@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-16T06:30:38.293Z",
+  "updatedAt": "2026-10-20T02:20:38.232Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -586,6 +586,38 @@
       "eta": "2026-05-31",
       "status": "제작 중 / In progress",
       "note": "10월 4주 제조사에서 EC킷 발송 예정 / The manufacturer is scheduled to ship the EC kits during the fourth week of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2932e4f24af9898f5e260dd354ecf093",
+      "source": "GEONWORKS",
+      "name": "DCS SMRT R2",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-10-20T02:20:38.232Z",
+      "categoryHint": "키캡",
+      "maker": "Signature Plastics",
+      "saleStart": "2026-09-21",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "78febb8bd414d6fb853f5a5ae8164347",
+      "source": "GEONWORKS",
+      "name": "Seal80",
+      "eventType": "note_changed",
+      "after": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items.",
+      "occurredAt": "2026-10-20T02:20:38.232Z",
+      "categoryHint": "키보드",
+      "maker": "SENSY",
+      "saleStart": "2026-03-24",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }

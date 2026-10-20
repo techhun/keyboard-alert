@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-19T03:20:29.242Z",
+  "updatedAt": "2026-10-20T02:20:38.232Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -20,18 +20,8 @@
       "type": "Keyboard",
       "manufacturer": "SENSY",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "DCS SMRT R2",
-      "gbStart": "2026. 9. 21",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 16",
-      "note": "—"
+      "update": "2026. 10. 20",
+      "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
     },
     {
       "product": "DCS NOTD",
@@ -684,6 +674,16 @@
       "note": "—"
     },
     {
+      "product": "DCS SMRT R2",
+      "gbStart": "2026. 9. 21",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 20",
+      "note": "—"
+    },
+    {
       "product": "Nexus60",
       "gbStart": "2026. 9. 21",
       "eta": "2026. 12. 31",
@@ -716,6 +716,8 @@
     "f9027828ab47d891b5214e81": "2026-10-16T00:50:38.220Z",
     "0996d63d791d67c381897ae6": "2026-10-16T00:50:38.387Z",
     "426ba07cca22cecdb244e632": "2026-10-16T06:20:30.156Z",
-    "899e865a2377a58a6da22081": "2026-10-16T06:30:38.292Z"
+    "899e865a2377a58a6da22081": "2026-10-16T06:30:38.292Z",
+    "3083ec536c49f88d5fd8ac42": "2026-10-20T02:20:38.033Z",
+    "4b60c54b7dfc70b037a39394": "2026-10-20T02:20:38.231Z"
   }
 }
