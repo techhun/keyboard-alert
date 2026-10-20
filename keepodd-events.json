@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T05:30:38.823Z",
+  "updatedAt": "2026-10-20T06:50:31.219Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -651,6 +651,56 @@
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-blanks-%ED%82%A4%EC%BA%A1/742/category/47/display/1/",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "65a5ff6d60531ed4fbbec8335647cc7c",
+      "source": "GEONWORKS",
+      "name": "DCS Cream Cheese and Green R3",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-20T06:50:31.219Z",
+      "categoryHint": "키캡",
+      "maker": "Signature Plastics",
+      "saleStart": "2026-02-20",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "b3c1e18a24dd4c3864bd4149f5b63664",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "note_changed",
+      "before": "통관 중 / Currently undergoing customs clearance",
+      "after": "베이스킷 일부 키캡 측각 누락되어 확인 중",
+      "occurredAt": "2026-10-20T06:50:31.219Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "b5f9925d46b6c668b2197c91841cd162",
+      "source": "GEONWORKS",
+      "name": "DCS Cream Cheese and Green R3",
+      "eventType": "note_changed",
+      "after": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating.",
+      "occurredAt": "2026-10-20T06:50:31.219Z",
+      "categoryHint": "키캡",
+      "maker": "Signature Plastics",
+      "saleStart": "2026-02-20",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }

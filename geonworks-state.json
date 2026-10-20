@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T05:30:38.823Z",
+  "updatedAt": "2026-10-20T06:50:31.219Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -12,6 +12,16 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 10. 15",
       "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
+    },
+    {
+      "product": "DCS Cream Cheese and Green R3",
+      "gbStart": "2026. 2. 20",
+      "eta": "2026. 9. 30",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 20",
+      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating."
     },
     {
       "product": "Seal80",
@@ -200,18 +210,8 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 12",
-      "note": "통관 중 / Currently undergoing customs clearance"
-    },
-    {
-      "product": "DCS Cream Cheese and Green R3",
-      "gbStart": "2026. 2. 20",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "제작 중 / In progress",
-      "update": "2026. 7. 31",
-      "note": "—"
+      "update": "2026. 10. 20",
+      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중"
     },
     {
       "product": "Katina TKL",
@@ -730,6 +730,8 @@
     "3083ec536c49f88d5fd8ac42": "2026-10-20T02:20:38.033Z",
     "4b60c54b7dfc70b037a39394": "2026-10-20T02:20:38.231Z",
     "790b4459c6ebeb4ac9307f84": "2026-10-20T02:30:45.189Z",
-    "a360a4f5303d6f3c0d0e2d97": "2026-10-20T05:30:38.822Z"
+    "a360a4f5303d6f3c0d0e2d97": "2026-10-20T05:30:38.822Z",
+    "15d5b35b02bb5b2abb48af35": "2026-10-20T06:50:30.985Z",
+    "2545a8d87bc0af53b6b26bd9": "2026-10-20T06:50:31.218Z"
   }
 }
