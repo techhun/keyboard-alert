@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T02:20:38.232Z",
+  "updatedAt": "2026-10-20T02:30:45.189Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -618,6 +618,23 @@
       "eta": "2026-12-31",
       "status": "검수 중 / Inspecting",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8d2ac323d99901f7fe5c888fa5bd5861",
+      "source": "GEONWORKS",
+      "name": "Overture 2",
+      "eventType": "note_changed",
+      "before": "케이스: 9월 중순 CNC 완료, PCB: 9월 2주 중 완료. 키캡, 가방: 9월 말 경 완료. 스위치: 9월 말 발주 예정. 9월말에서 10월 중순 사이 발송 예정 / Case: CNC machining to be completed in mid-September; PCB: to be completed during the second week of September; Keycaps and bag: to be completed around the end of September; Switches: scheduled to be ordered at the end of September; Scheduled to ship between the end of September and mid-October.",
+      "after": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Zionworks around the end of October.",
+      "occurredAt": "2026-10-20T02:30:45.189Z",
+      "categoryHint": "키보드",
+      "maker": "MACHINA",
+      "saleStart": "2026-04-09",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Zionworks around the end of October.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
