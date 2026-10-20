@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T18:40:57.531Z",
+  "updatedAt": "2026-10-20T18:51:27.639Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -3833,7 +3833,6 @@
     }
   ],
   "sentChanges": {
-    "5dd31026310c158d45d87cca": "2026-10-13T18:43:02.789Z",
     "b2e6bd925bf504438f7ff47d": "2026-10-14T15:41:10.255Z"
   }
 }
