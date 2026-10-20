@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T00:11:00.738Z",
+  "updatedAt": "2026-10-20T20:01:15.118Z",
   "rows": [
     {
       "id": 349,
@@ -119,9 +119,9 @@
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1893,
-      "latestUpdateDate": "2026-10-16",
-      "latestUpdateDescription": "GMK Spark Keycaps & Artisans has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. Spark Deskmats should arrive to us in the next week or two."
+      "latestUpdateId": 1901,
+      "latestUpdateDate": "2026-10-20",
+      "latestUpdateDescription": "10/20 Update: It was brought to our attention that the mold used for the BAE in the Extension kit was incorrect. GMK has been informed, and has already begun steps to make the correct enter keys. They expect the keys to be completed in the coming week, and then they will be shipped directly to CannonKeys. We expect shipping to take 1-2 weeks. This delay will only affect those who purchased the Extension Kit of GMK Spark. If you only purchased a Base Kit and/or Artisans, your order will be packed this week."
     },
     {
       "id": 336,
@@ -3412,6 +3412,7 @@
     "e10f0555cde31f447a8f4cae": "2026-10-16T18:51:05.249Z",
     "b4c44ae5a70d4fa608aec8e4": "2026-10-16T18:51:05.721Z",
     "2d1d3d0c4bf8a13ebb0d26b7": "2026-10-16T18:51:06.138Z",
-    "bcb1eba484544dafb26d0d9e": "2026-10-20T00:11:00.737Z"
+    "bcb1eba484544dafb26d0d9e": "2026-10-20T00:11:00.737Z",
+    "877618b0aa5d59de5bbedcfd": "2026-10-20T20:01:15.117Z"
   }
 }
