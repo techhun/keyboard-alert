@@ -15,6 +15,7 @@ final class SmartStorePageCapture {
           if (window.__RESTOCK_CAPTURE_INSTALLED__) return;
           window.__RESTOCK_CAPTURE_INSTALLED__ = true;
           window.__RESTOCK_CAPTURED_RESPONSES__ = [];
+          window.__RESTOCK_PRODUCT_OUTCOMES__ = [];
 
           const smartStoreUrl = (value) => {
             try {
@@ -33,6 +34,17 @@ final class SmartStorePageCapture {
             } catch (ignored) {
               return false;
             }
+          };
+
+          // Status-only telemetry: do not retain headers, cookies, or error bodies.
+          const recordOutcome = (url, status, kind) => {
+            try {
+              if (!smartStoreUrl(url) || !isExactProductApi(url)) return;
+              const productNo = new URL(String(url), location.href).pathname.split('/').filter(Boolean).pop();
+              const list = window.__RESTOCK_PRODUCT_OUTCOMES__;
+              list.push({ productNo, status: Number(status || 0), kind, age: Math.round(performance.now()) });
+              while (list.length > 12) list.shift();
+            } catch (ignored) {}
           };
 
           const looksRelevant = (url, data) => {
@@ -59,10 +71,18 @@ final class SmartStorePageCapture {
             const originalFetch = window.fetch;
             if (typeof originalFetch === 'function') {
               window.fetch = async function(...args) {
-                const response = await originalFetch.apply(this, args);
+                let response;
+                try {
+                  response = await originalFetch.apply(this, args);
+                } catch (error) {
+                  recordOutcome(args[0]?.url || args[0], 0, 'network-error');
+                  throw error;
+                }
+                recordOutcome(response.url, response.status, 'http');
                 try {
                   const clone = response.clone();
-                  clone.json().then((data) => record(response.url, response.status, data)).catch(() => {});
+                  clone.json().then((data) => record(response.url, response.status, data))
+                    .catch(() => recordOutcome(response.url, response.status, 'not-json'));
                 } catch (ignored) {}
                 return response;
               };
@@ -78,6 +98,7 @@ final class SmartStorePageCapture {
             };
             XMLHttpRequest.prototype.send = function(...args) {
               this.addEventListener('load', function() {
+                recordOutcome(this.responseURL || this.__restockUrl, this.status, 'http');
                 try {
                   let data = null;
                   if (this.responseType === 'json') data = this.response;

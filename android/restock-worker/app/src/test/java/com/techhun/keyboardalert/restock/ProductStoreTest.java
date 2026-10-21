@@ -44,6 +44,27 @@ public class ProductStoreTest {
     }
 
     @Test
+    public void failedAttemptPreservesSuccessfulSnapshotTimeAndStock() throws Exception {
+        JSONObject product = new JSONObject()
+            .put("id", "123")
+            .put("url", "https://smartstore.naver.com/example/products/123")
+            .put("lastAvailability", new JSONObject().put("option-1", true))
+            .put("lastStockQuantity", new JSONObject().put("option-1", 1))
+            .put("lastSuccess", 1000L)
+            .put("lastCheck", 1000L);
+        ProductStore.save(context, new JSONArray().put(product));
+        JSONObject failed = ProductStore.find(context, "123");
+        failed.put("lastCheck", 2000L);
+        failed.put("lastStatus", "조회 실패");
+        ProductStore.updateRuntime(context, failed);
+        JSONObject stored = ProductStore.find(context, "123");
+        assertEquals(1000L, stored.optLong("lastSuccess"));
+        assertEquals(2000L, stored.optLong("lastCheck"));
+        assertEquals(1, stored.optJSONObject("lastStockQuantity").optInt("option-1"));
+        assertTrue(stored.optJSONObject("lastAvailability").optBoolean("option-1"));
+    }
+
+    @Test
     public void backupRestoresLowStockThresholdAndDefaultsOldBackupsToFive() throws Exception {
         MonitorPrefs.prefs(context).edit().putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, 7).commit();
         JSONObject product = new JSONObject()

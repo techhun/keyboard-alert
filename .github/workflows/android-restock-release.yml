@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - fix/restock-option-query
+      - fix/restock-recovery-observability
     paths:
       - 'android/restock-worker/**'
       - '.github/workflows/android-restock-release.yml'

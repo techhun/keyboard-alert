@@ -437,8 +437,13 @@ final class InventoryScript {
                 }
               }
 
+              const outcomes = (Array.isArray(window.__RESTOCK_PRODUCT_OUTCOMES__)
+                ? window.__RESTOCK_PRODUCT_OUTCOMES__ : []).filter((item) => item.productNo === productNo);
+              const pageDiagnostic = `ready=${document.readyState}; ms=${Math.round(performance.now())}; hook=${!!window.__RESTOCK_CAPTURE_INSTALLED__}; cap=${capturedResponses.length}; exact=${!!capturedProduct}; model=${!!pageModel}; HTTP=${outcomes.slice(-2).map((item) => item.status + ':' + item.kind).join(',') || 'none'}`;
+
               if (!allowApiFallback) {
-                send({ ok: false, error: 'API_DEFERRED', pageUrl: location.href, title: document.title });
+                send({ ok: false, error: 'API_DEFERRED', pageUrl: location.href, title: document.title,
+                  pageDiagnostic });
                 return;
               }
 
@@ -469,7 +474,7 @@ final class InventoryScript {
                   }
                   if (response.status === 204) {
                     attempts.push({ url: apiUrl, status: response.status, noContent: true });
-                    send({ ok: false, error: 'NO_CONTENT', status: response.status, pageUrl: location.href, apiUrl, attempts });
+                    send({ ok: false, error: 'NO_CONTENT', status: response.status, pageUrl: location.href, apiUrl, attempts, pageDiagnostic });
                     return;
                   }
                   if (response.status === 429) {

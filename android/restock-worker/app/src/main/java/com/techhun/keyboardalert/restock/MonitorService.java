@@ -518,6 +518,11 @@ public class MonitorService extends Service {
             currentProduct = latest;
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
+                if ("NO_CONTENT".equals(error) || ("API_DEFERRED".equals(error) && noContentRecovery)) {
+                    DiagnosticLog.add(this, "INVENTORY_DIAGNOSTIC", currentProduct,
+                        (noContentRecovery ? "페이지 복구" : "API fallback") + " · "
+                            + result.optString("pageDiagnostic", "정보 없음"));
+                }
                 int status = result.optInt("status", 0);
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
                     && ("AUTH_REQUIRED".equals(error) || status == 401 || status == 403)) {
@@ -542,8 +547,8 @@ public class MonitorService extends Service {
                         && mode == Mode.DISCOVERY
                         && noContentRecovery) {
                         markCurrentFailure(
-                            "HTTP 204 후 페이지 데이터 확인 실패",
-                            "NO_CONTENT"
+                            "204 후 페이지 복구 실패 · " + smartStorePageProbeCount + "회 확인",
+                            "PAGE_RECOVERY_FAILED"
                         );
                         registerNoContentFailure();
                         scheduleNextProduct();
@@ -826,6 +831,7 @@ public class MonitorService extends Service {
         product.put("lowStockAfterRestock", afterRestock);
         product.put("lastStatus", inventoryStatusText(availableCount, resolved.requestedCount, time));
         product.put("lastCheck", System.currentTimeMillis());
+        product.put("lastSuccess", product.optLong("lastCheck"));
 
         int enabledCount = ProductStore.enabledCount(this);
         MonitorPrefs.prefs(this).edit()
@@ -837,13 +843,13 @@ public class MonitorService extends Service {
 
         String source = result.optString("source", "");
         if (restocked.length() > 0) {
-            String detail = restockDiagnostic.toString()
+            String detail = "상품상태=" + result.optString("statusType", "미확인") + " · " + restockDiagnostic.toString()
                 + (source.isBlank() ? "" : " · " + source);
             DiagnosticLog.recordRestock(this, product, detail);
             notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
         }
         if (soldOut.length() > 0) {
-            String detail = soldOutDiagnostic.toString()
+            String detail = "상품상태=" + result.optString("statusType", "미확인") + " · " + soldOutDiagnostic.toString()
                 + (source.isBlank() ? "" : " · " + source);
             DiagnosticLog.add(this, "SOLD_OUT", product, detail);
         }
@@ -988,7 +994,13 @@ public class MonitorService extends Service {
     private void markCurrentFailure(String message, String event) {
         if (currentProduct != null) {
             try {
-                currentProduct.put("lastStatus", message);
+                String lastSuccessText = currentProduct.optLong("lastSuccess", 0L) > 0L
+                    ? new SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(new Date(currentProduct.optLong("lastSuccess")))
+                    : "시각 미기록";
+                JSONObject lastAvailability = currentProduct.optJSONObject("lastAvailability");
+                boolean hasPreviousStock = lastAvailability != null && lastAvailability.length() > 0;
+                currentProduct.put("lastStatus", hasPreviousStock
+                    ? message + " · 이전 재고 보존 (" + lastSuccessText + ")" : message);
                 currentProduct.put("lastCheck", System.currentTimeMillis());
                 ProductStore.updateRuntime(this, currentProduct);
             } catch (Exception ignored) {}

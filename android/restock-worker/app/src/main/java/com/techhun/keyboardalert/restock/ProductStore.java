@@ -100,6 +100,7 @@ final class ProductStore {
                 if (!next.has("lowStockAfterRestock")) next.put("lowStockAfterRestock", new JSONObject());
                 if (!next.has("lastStatus")) next.put("lastStatus", "");
                 if (!next.has("lastCheck")) next.put("lastCheck", 0L);
+                next.remove("lastSuccess");
             } catch (Exception ignored) {}
             updated.put(next);
         }
@@ -129,6 +130,7 @@ final class ProductStore {
                     product.put("lowStockAfterRestock", new JSONObject());
                     product.put("lastStatus", "준비 중");
                     product.put("lastCheck", 0L);
+                    product.remove("lastSuccess");
                 } else if (!enabled) {
                     product.put("lastStatus", "");
                 }
@@ -185,6 +187,7 @@ final class ProductStore {
             copyIfPresent(runtime, target, "lowStockAfterRestock");
             copyIfPresent(runtime, target, "lastStatus");
             copyIfPresent(runtime, target, "lastCheck");
+            copyIfPresent(runtime, target, "lastSuccess");
             break;
         }
         save(context, products);
@@ -346,12 +349,14 @@ final class ProductStore {
                 next.put("lowStockAfterRestock", oldProduct.optJSONObject("lowStockAfterRestock") == null ? new JSONObject() : oldProduct.optJSONObject("lowStockAfterRestock"));
                 next.put("lastStatus", oldProduct.optString("lastStatus", ""));
                 next.put("lastCheck", oldProduct.optLong("lastCheck", 0L));
+                next.put("lastSuccess", oldProduct.optLong("lastSuccess", 0L));
             } else {
                 next.put("lastAvailability", new JSONObject());
                 next.put("lastStockQuantity", new JSONObject());
                 next.put("lowStockAfterRestock", new JSONObject());
                 next.put("lastStatus", oldProduct.optBoolean("enabled", false) ? "준비 중" : "");
                 next.put("lastCheck", 0L);
+                next.remove("lastSuccess");
             }
         } catch (Exception ignored) {}
     }
