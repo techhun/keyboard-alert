@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-21T15:51:20.402Z",
+  "updatedAt": "2026-10-21T16:11:01.968Z",
   "rows": [
     {
       "id": 350,
@@ -13,7 +13,7 @@
       "eta": "Early Q1 2027",
       "latestUpdateId": 1904,
       "latestUpdateDate": "2026-10-21",
-      "latestUpdateDescription": "PBS Black on Black has been ordered and is currently waiting in the factory's production queue."
+      "latestUpdateDescription": "PBS Black on Black is currently waiting on the factory's production queue."
     },
     {
       "id": 349,
@@ -3427,6 +3427,7 @@
     "bcb1eba484544dafb26d0d9e": "2026-10-20T00:11:00.737Z",
     "877618b0aa5d59de5bbedcfd": "2026-10-20T20:01:15.117Z",
     "6f6474009ca7eabca203ba4e": "2026-10-21T15:51:20.180Z",
-    "a4801766c16dde08c9a47116": "2026-10-21T15:51:20.400Z"
+    "a4801766c16dde08c9a47116": "2026-10-21T15:51:20.400Z",
+    "fca9a0c851386f945ff95d60": "2026-10-21T16:11:01.966Z"
   }
 }
