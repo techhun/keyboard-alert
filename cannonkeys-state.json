@@ -1,8 +1,20 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T20:01:15.118Z",
+  "updatedAt": "2026-10-21T15:51:20.402Z",
   "rows": [
+    {
+      "id": 350,
+      "displayName": "PBS Black on Black",
+      "category": "keyset",
+      "status": "ordered",
+      "startDate": "2026-07-17",
+      "endDate": "2026-10-16",
+      "eta": "Early Q1 2027",
+      "latestUpdateId": 1904,
+      "latestUpdateDate": "2026-10-21",
+      "latestUpdateDescription": "PBS Black on Black has been ordered and is currently waiting in the factory's production queue."
+    },
     {
       "id": 349,
       "displayName": "Optical Illusion Deskmats",
@@ -11,9 +23,9 @@
       "startDate": "2026-08-21",
       "endDate": "2026-09-21",
       "eta": "November 2026",
-      "latestUpdateId": 1866,
-      "latestUpdateDate": "2026-09-22",
-      "latestUpdateDescription": "GB has concluded."
+      "latestUpdateId": 1903,
+      "latestUpdateDate": "2026-10-21",
+      "latestUpdateDescription": "Order placed."
     },
     {
       "id": 347,
@@ -688,18 +700,6 @@
       "latestUpdateDescription": "Unfortunately due to low sales, we have had to cancel this group buy. All orders made for items in this GB will be cancelled and fully refunded within 1-2 business days. We're so sorry for the bad news."
     },
     {
-      "id": 227,
-      "displayName": "Cat-Shaped Clouds Deskmats",
-      "category": "deskmat",
-      "status": "complete",
-      "startDate": "2025-08-22",
-      "endDate": "2025-09-22",
-      "eta": "Q4 2025",
-      "latestUpdateId": 1462,
-      "latestUpdateDate": "2026-01-30",
-      "latestUpdateDescription": "GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/cat-shaped-clouds-deskmats)**"
-    },
-    {
       "id": 228,
       "displayName": "Manga Faces Deskmats",
       "category": "deskmat",
@@ -710,6 +710,18 @@
       "latestUpdateId": 1463,
       "latestUpdateDate": "2026-01-30",
       "latestUpdateDescription": "GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/manga-faces-deskmats)**"
+    },
+    {
+      "id": 227,
+      "displayName": "Cat-Shaped Clouds Deskmats",
+      "category": "deskmat",
+      "status": "complete",
+      "startDate": "2025-08-22",
+      "endDate": "2025-09-22",
+      "eta": "Q4 2025",
+      "latestUpdateId": 1462,
+      "latestUpdateDate": "2026-01-30",
+      "latestUpdateDescription": "GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/cat-shaped-clouds-deskmats)**"
     },
     {
       "id": 251,
@@ -856,18 +868,6 @@
       "latestUpdateDescription": "All ZoomTKL DYNA GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update."
     },
     {
-      "id": 215,
-      "displayName": "Link Split Ergo",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2025-05-16",
-      "endDate": "2025-06-15",
-      "eta": "Q4 2025",
-      "latestUpdateId": 1550,
-      "latestUpdateDate": "2026-04-14",
-      "latestUpdateDescription": "Link Split Ergo has arrived at our facilities! They are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
-    },
-    {
       "id": 214,
       "displayName": "PBS Modern Abacus",
       "category": "keyset",
@@ -878,6 +878,18 @@
       "latestUpdateId": 1429,
       "latestUpdateDate": "2026-01-02",
       "latestUpdateDescription": "All GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/pbs-modern-abacus)**"
+    },
+    {
+      "id": 215,
+      "displayName": "Link Split Ergo",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2025-05-16",
+      "endDate": "2025-06-15",
+      "eta": "Q4 2025",
+      "latestUpdateId": 1550,
+      "latestUpdateDate": "2026-04-14",
+      "latestUpdateDescription": "Link Split Ergo has arrived at our facilities! They are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
     },
     {
       "id": 213,
@@ -1444,18 +1456,6 @@
       "latestUpdateDescription": "All GB orders of Zoom75 Akuamarin have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras info.**"
     },
     {
-      "id": 165,
-      "displayName": "WS Entwined Flowers",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2024-03-07",
-      "endDate": "2024-03-20",
-      "eta": "Q3 2024",
-      "latestUpdateId": 977,
-      "latestUpdateDate": "2024-09-24",
-      "latestUpdateDescription": "All orders have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras info**"
-    },
-    {
       "id": 166,
       "displayName": "Timeline Deskmats",
       "category": "deskmat",
@@ -1466,6 +1466,18 @@
       "latestUpdateId": 930,
       "latestUpdateDate": "2024-07-19",
       "latestUpdateDescription": "All GB orders have been fulfilled and shipped to participants! Please wait 3-5 business days for tracking info to update. **Waiting on extras info.**"
+    },
+    {
+      "id": 165,
+      "displayName": "WS Entwined Flowers",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2024-03-07",
+      "endDate": "2024-03-20",
+      "eta": "Q3 2024",
+      "latestUpdateId": 977,
+      "latestUpdateDate": "2024-09-24",
+      "latestUpdateDescription": "All orders have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras info**"
     },
     {
       "id": 157,
@@ -2200,18 +2212,6 @@
       "latestUpdateDescription": "**[Heart of Steel Artisans are still available in-stock and ready to ship!](https://cannonkeys.com/products/ua-trident-artisan)**"
     },
     {
-      "id": 99,
-      "displayName": "[Sea Shipping] Zoom TKL EE",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-11-15",
-      "endDate": "2022-11-29",
-      "eta": "Q1 2023",
-      "latestUpdateId": 438,
-      "latestUpdateDate": "2023-03-10",
-      "latestUpdateDescription": "All Zoom TKL EE units sent to us via sea shipping have shipped out to all group buy participants! Please allow 3-5 business days for tracking information to update. Currently awaiting on extras information."
-    },
-    {
       "id": 98,
       "displayName": "[Air Shipping] Zoom TKL EE",
       "category": "keyboard",
@@ -2222,6 +2222,18 @@
       "latestUpdateId": 415,
       "latestUpdateDate": "2023-02-11",
       "latestUpdateDescription": "All Zoom TKL EE units sent to us via air shipping have shipped out to all group buy participants! Please allow **3-5 business days** for tracking information to update. Currently awaiting on extras information."
+    },
+    {
+      "id": 99,
+      "displayName": "[Sea Shipping] Zoom TKL EE",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-11-15",
+      "endDate": "2022-11-29",
+      "eta": "Q1 2023",
+      "latestUpdateId": 438,
+      "latestUpdateDate": "2023-03-10",
+      "latestUpdateDescription": "All Zoom TKL EE units sent to us via sea shipping have shipped out to all group buy participants! Please allow 3-5 business days for tracking information to update. Currently awaiting on extras information."
     },
     {
       "id": 95,
@@ -2284,18 +2296,6 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/dd-40-keyboard)**"
     },
     {
-      "id": 93,
-      "displayName": "[Sea Shipping] Zoom65 Essential Edition R2",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-09-21",
-      "endDate": "2022-11-01",
-      "eta": "Q1 2023",
-      "latestUpdateId": 390,
-      "latestUpdateDate": "2023-01-17",
-      "latestUpdateDescription": "Units have shipped out to all group buy participants! Please allow **3-5 business days** for tracking to update. Extras are live as well - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
-    },
-    {
       "id": 92,
       "displayName": "[Air Shipping] Zoom65 Essential Edition R2",
       "category": "keyboard",
@@ -2306,6 +2306,18 @@
       "latestUpdateId": 389,
       "latestUpdateDate": "2023-01-17",
       "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
+    },
+    {
+      "id": 93,
+      "displayName": "[Sea Shipping] Zoom65 Essential Edition R2",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-09-21",
+      "endDate": "2022-11-01",
+      "eta": "Q1 2023",
+      "latestUpdateId": 390,
+      "latestUpdateDate": "2023-01-17",
+      "latestUpdateDescription": "Units have shipped out to all group buy participants! Please allow **3-5 business days** for tracking to update. Extras are live as well - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
     },
     {
       "id": 94,
@@ -2332,18 +2344,6 @@
       "latestUpdateDescription": "All GB orders have been shipped to participants! Please wait 3-5 business days for tracking info to update. **Waiting on extras info.**"
     },
     {
-      "id": 87,
-      "displayName": "Ikki68 Aurora x Camping",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-08-23",
-      "endDate": "2022-09-12",
-      "eta": "April 2023",
-      "latestUpdateId": 529,
-      "latestUpdateDate": "2023-06-20",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-camping?variant=40918913613935)**"
-    },
-    {
       "id": 88,
       "displayName": "WS Camping",
       "category": "keyset",
@@ -2354,6 +2354,18 @@
       "latestUpdateId": 530,
       "latestUpdateDate": "2023-06-20",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ws-camping-keycaps)**"
+    },
+    {
+      "id": 87,
+      "displayName": "Ikki68 Aurora x Camping",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-08-23",
+      "endDate": "2022-09-12",
+      "eta": "April 2023",
+      "latestUpdateId": 529,
+      "latestUpdateDate": "2023-06-20",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-camping?variant=40918913613935)**"
     },
     {
       "id": 86,
@@ -2404,18 +2416,6 @@
       "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/aella)**"
     },
     {
-      "id": 50,
-      "displayName": "AluMizu",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2022-06-03",
-      "endDate": "2022-06-21",
-      "eta": "Q1 2023",
-      "latestUpdateId": 527,
-      "latestUpdateDate": "2023-06-20",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/alumizu-keycaps?_pos=2&_psq=alumizu&_ss=e&_v=1.0)**"
-    },
-    {
       "id": 17,
       "displayName": "Aurora x AluMizu Bundle",
       "category": "keyboard",
@@ -2426,6 +2426,18 @@
       "latestUpdateId": 526,
       "latestUpdateDate": "2023-06-20",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-alumizu-bundle?_pos=1&_psq=alumizu&_ss=e&_v=1.0&variant=40846319419503)**"
+    },
+    {
+      "id": 50,
+      "displayName": "AluMizu",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2022-06-03",
+      "endDate": "2022-06-21",
+      "eta": "Q1 2023",
+      "latestUpdateId": 527,
+      "latestUpdateDate": "2023-06-20",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/alumizu-keycaps?_pos=2&_psq=alumizu&_ss=e&_v=1.0)**"
     },
     {
       "id": 89,
@@ -2476,16 +2488,16 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/iron160?_pos=1&_psq=iron160&_ss=e&_v=1.0)**"
     },
     {
-      "id": 54,
-      "displayName": "Voynich Deskmats",
-      "category": "deskmat",
+      "id": 15,
+      "displayName": "Zoom65 - [Air Express] Essential Edition",
+      "category": "keyboard",
       "status": "complete",
-      "startDate": "2022-03-22",
+      "startDate": "2022-04-16",
       "endDate": "2022-04-23",
-      "eta": "Q1 2023",
-      "latestUpdateId": 462,
-      "latestUpdateDate": "2023-04-07",
-      "latestUpdateDescription": "Voynich Deskmat GB orders have been fulfilled and shipped out to GB participants! **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/voynich-deskmats?_pos=2&_psq=voynich&_ss=e&_v=1.0)**"
+      "eta": "July 2022",
+      "latestUpdateId": 280,
+      "latestUpdateDate": "2022-09-22",
+      "latestUpdateDescription": "Extras have sold out and project is complete!"
     },
     {
       "id": 16,
@@ -2500,16 +2512,16 @@
       "latestUpdateDescription": "Extras have sold out and project is complete!"
     },
     {
-      "id": 15,
-      "displayName": "Zoom65 - [Air Express] Essential Edition",
-      "category": "keyboard",
+      "id": 54,
+      "displayName": "Voynich Deskmats",
+      "category": "deskmat",
       "status": "complete",
-      "startDate": "2022-04-16",
+      "startDate": "2022-03-22",
       "endDate": "2022-04-23",
-      "eta": "July 2022",
-      "latestUpdateId": 280,
-      "latestUpdateDate": "2022-09-22",
-      "latestUpdateDescription": "Extras have sold out and project is complete!"
+      "eta": "Q1 2023",
+      "latestUpdateId": 462,
+      "latestUpdateDate": "2023-04-07",
+      "latestUpdateDescription": "Voynich Deskmat GB orders have been fulfilled and shipped out to GB participants! **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/voynich-deskmats?_pos=2&_psq=voynich&_ss=e&_v=1.0)**"
     },
     {
       "id": 49,
@@ -2524,18 +2536,6 @@
       "latestUpdateDescription": "MW Voynich GB orders have been fulfilled and shipped out to GB participants! **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gb-mw-voynich?_pos=1&_psq=voynich&_ss=e&_v=1.0&variant=40773177016431)**"
     },
     {
-      "id": 53,
-      "displayName": "Orange Boi Deskmats",
-      "category": "deskmat",
-      "status": "complete",
-      "startDate": "2022-03-02",
-      "endDate": "2022-04-01",
-      "eta": "Q4 2022",
-      "latestUpdateId": 535,
-      "latestUpdateDate": "2023-06-20",
-      "latestUpdateDescription": "**[Orange Boi deskmat extras are available in-stock and ready to ship!](https://cannonkeys.com/products/orange-boi-deskmats?variant=40757376614511)**"
-    },
-    {
       "id": 47,
       "displayName": "GMK Orange Boi",
       "category": "keyset",
@@ -2546,6 +2546,18 @@
       "latestUpdateId": 629,
       "latestUpdateDate": "2023-08-30",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-orange-boi)**"
+    },
+    {
+      "id": 53,
+      "displayName": "Orange Boi Deskmats",
+      "category": "deskmat",
+      "status": "complete",
+      "startDate": "2022-03-02",
+      "endDate": "2022-04-01",
+      "eta": "Q4 2022",
+      "latestUpdateId": 535,
+      "latestUpdateDate": "2023-06-20",
+      "latestUpdateDescription": "**[Orange Boi deskmat extras are available in-stock and ready to ship!](https://cannonkeys.com/products/orange-boi-deskmats?variant=40757376614511)**"
     },
     {
       "id": 75,
@@ -2632,18 +2644,6 @@
       "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/crin-keyboard)**"
     },
     {
-      "id": 52,
-      "displayName": "Ghost Deskmats",
-      "category": "deskmat",
-      "status": "complete",
-      "startDate": "2021-11-01",
-      "endDate": "2021-12-02",
-      "eta": "Q4 2022",
-      "latestUpdateId": 347,
-      "latestUpdateDate": "2022-11-15",
-      "latestUpdateDescription": "All extras are sold out and the project is complete!"
-    },
-    {
       "id": 51,
       "displayName": "November Fog Deskmats",
       "category": "deskmat",
@@ -2668,6 +2668,18 @@
       "latestUpdateDescription": "**[Extras for DMK Ghost are available in-stock and ready to ship!](https://cannonkeys.com/products/domikey-ghost?_pos=1&_psq=ghost&_ss=e&_v=1.0)**"
     },
     {
+      "id": 52,
+      "displayName": "Ghost Deskmats",
+      "category": "deskmat",
+      "status": "complete",
+      "startDate": "2021-11-01",
+      "endDate": "2021-12-02",
+      "eta": "Q4 2022",
+      "latestUpdateId": 347,
+      "latestUpdateDate": "2022-11-15",
+      "latestUpdateDescription": "All extras are sold out and the project is complete!"
+    },
+    {
       "id": 12,
       "displayName": "Ikki68 Aurora R2 x Winter Breath",
       "category": "keyboard",
@@ -2676,18 +2688,6 @@
       "endDate": "2021-11-27",
       "eta": "June 2022",
       "latestUpdateId": 233,
-      "latestUpdateDate": "2022-08-19",
-      "latestUpdateDescription": "Extras are live - **[view the collection here!](https://cannonkeys.com/collections/ikki68-aurora-r2-extras)**"
-    },
-    {
-      "id": 10,
-      "displayName": "Ikki68 Aurora R2",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2021-11-13",
-      "endDate": "2021-11-27",
-      "eta": "June 2022",
-      "latestUpdateId": 232,
       "latestUpdateDate": "2022-08-19",
       "latestUpdateDescription": "Extras are live - **[view the collection here!](https://cannonkeys.com/collections/ikki68-aurora-r2-extras)**"
     },
@@ -2704,6 +2704,18 @@
       "latestUpdateDescription": "Extras are live - **[view the collection here!](https://cannonkeys.com/collections/ikki68-aurora-r2-extras)**"
     },
     {
+      "id": 10,
+      "displayName": "Ikki68 Aurora R2",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2021-11-13",
+      "endDate": "2021-11-27",
+      "eta": "June 2022",
+      "latestUpdateId": 232,
+      "latestUpdateDate": "2022-08-19",
+      "latestUpdateDescription": "Extras are live - **[view the collection here!](https://cannonkeys.com/collections/ikki68-aurora-r2-extras)**"
+    },
+    {
       "id": 45,
       "displayName": "GMK Villanelle",
       "category": "keyset",
@@ -2716,18 +2728,6 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-villanelle?_pos=1&_psq=gmk+villanelle&_ss=e&_v=1.0)**"
     },
     {
-      "id": 41,
-      "displayName": "GMK Rudy R2",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2021-10-02",
-      "endDate": "2021-11-02",
-      "eta": "June 2023",
-      "latestUpdateId": 587,
-      "latestUpdateDate": "2023-07-24",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gb-gmk-rudy?_pos=1&_psq=gmk+rudy&_ss=e&_v=1.0)**"
-    },
-    {
       "id": 44,
       "displayName": "GMK November Fog",
       "category": "keyset",
@@ -2738,6 +2738,18 @@
       "latestUpdateId": 615,
       "latestUpdateDate": "2023-08-18",
       "latestUpdateDescription": "All orders for GMK November Fog have been fulfilled and are currently shipping to GB and pre-order participants! Please allow 3-5 business days for tracking information to update. **Waiting on extras info.**"
+    },
+    {
+      "id": 41,
+      "displayName": "GMK Rudy R2",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2021-10-02",
+      "endDate": "2021-11-02",
+      "eta": "June 2023",
+      "latestUpdateId": 587,
+      "latestUpdateDate": "2023-07-24",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gb-gmk-rudy?_pos=1&_psq=gmk+rudy&_ss=e&_v=1.0)**"
     },
     {
       "id": 42,
@@ -3413,6 +3425,8 @@
     "b4c44ae5a70d4fa608aec8e4": "2026-10-16T18:51:05.721Z",
     "2d1d3d0c4bf8a13ebb0d26b7": "2026-10-16T18:51:06.138Z",
     "bcb1eba484544dafb26d0d9e": "2026-10-20T00:11:00.737Z",
-    "877618b0aa5d59de5bbedcfd": "2026-10-20T20:01:15.117Z"
+    "877618b0aa5d59de5bbedcfd": "2026-10-20T20:01:15.117Z",
+    "6f6474009ca7eabca203ba4e": "2026-10-21T15:51:20.180Z",
+    "a4801766c16dde08c9a47116": "2026-10-21T15:51:20.400Z"
   }
 }
