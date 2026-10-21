@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-20T06:50:31.219Z",
+  "updatedAt": "2026-10-21T00:00:51.140Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -699,6 +699,23 @@
       "eta": "2026-09-30",
       "status": "검수 중 / Inspecting",
       "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "321c2ed4fb79a90d735add75ae3ac0c8",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "note_changed",
+      "before": "베이스킷 일부 키캡 측각 누락되어 확인 중",
+      "after": "통관 중 / Currently clearing customs",
+      "occurredAt": "2026-10-21T00:00:51.140Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "통관 중 / Currently clearing customs",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }

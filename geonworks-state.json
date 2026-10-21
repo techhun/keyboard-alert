@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T07:50:31.759Z",
+  "updatedAt": "2026-10-21T00:00:51.140Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -210,8 +210,8 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 20",
-      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중"
+      "update": "2026. 10. 21",
+      "note": "통관 중 / Currently clearing customs"
     },
     {
       "product": "Katina TKL",
@@ -731,6 +731,7 @@
     "790b4459c6ebeb4ac9307f84": "2026-10-20T02:30:45.189Z",
     "a360a4f5303d6f3c0d0e2d97": "2026-10-20T05:30:38.822Z",
     "15d5b35b02bb5b2abb48af35": "2026-10-20T06:50:30.985Z",
-    "2545a8d87bc0af53b6b26bd9": "2026-10-20T06:50:31.218Z"
+    "2545a8d87bc0af53b6b26bd9": "2026-10-20T06:50:31.218Z",
+    "c96620ab741758af53fb1e14": "2026-10-21T00:00:51.140Z"
   }
 }
