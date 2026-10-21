@@ -281,7 +281,7 @@ jobs:
                               JSONObject d=new JSONObject((String)value);
                               if(!d.optBoolean("ok")){
                                   String reason=d.optString("reason","");
-                                  if(!reason.matches("NOT_HISTORY|NO_NEXT_DATA|NO_QUERIES|NO_PAYMENT_LIST|PARSE_ERROR"))
+                                  if(!reason.matches("NOT_PAY_ORIGIN|NO_NEXT_DATA|NO_QUERIES|NO_PAYMENT_LIST|PARSE_ERROR"))
                                       reason="UNKNOWN";
                                   result.setText("주문 건수: 확인 실패");
                                   finish(seq,"E_DATA · "+reason+" · 결제내역 화면에서 로딩 후 재검사");
