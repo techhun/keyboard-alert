@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.7 history scan
+run-name: NPay probe v0.1.8 history scan
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.7-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.8-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -74,11 +74,22 @@ jobs:
 
           public class MainActivity extends Activity {
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
+              private Button autoButton;
+              private boolean collectDetails=false, autoRunning=false, autoReading=false;
+              private int autoRun=0, autoStep=0, autoIndex=0, autoDone=0, autoMatched=0, autoMissing=0, autoFailed=0, autoUnbound=0, autoNoLink=0, autoListCount=0;
+              private final java.util.LinkedHashMap<String,String> detailQueue=new java.util.LinkedHashMap<>();
+              private final java.util.ArrayList<String> detailKeys=new java.util.ArrayList<>();
+              private final java.util.ArrayList<String> shippingQueue=new java.util.ArrayList<>();
+              private final java.util.LinkedHashMap<String,java.util.LinkedHashSet<String>> linkedResults=new java.util.LinkedHashMap<>();
+              private int shippingIndex=-1;
+              private String autoExpected="";
+              private boolean autoOrderFailed=false,autoOrderUnbound=false;
+              private final String autoJs="(function(){var d=JSON.parse((function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v)){inv=v.replace(/[ -]/g,'');break;}}for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([0-9][0-9 -]{6,28}[0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:number.slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})());if(!d.ok)return JSON.stringify(d);var links=[],a=document.querySelectorAll('a[href]');for(var i=0;i<a.length&&i<12000;i++){if(!a[i].getClientRects().length||!(/^배송\\s*조회$/).test((a[i].innerText||'').trim()))continue;try{var u=new URL(a[i].getAttribute('href'),location.href);if(u.protocol==='https:'&&!u.username&&!u.password&&(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com'))&&links.indexOf(u.href)<0)links.push(u.href);}catch(_){}}d.shippingLinks=links.slice(0,20);d.tooManyLinks=links.length>20;return JSON.stringify(d);})()";
               private Button sweepButton;
               private boolean sweeping=false, sweepReading=false;
               private int sweepRun=0, sweepPage=0, sweepTotal=-1, sweepDuplicates=0, sweepReadPages=0;
               private final java.util.HashSet<String> sweepKeys=new java.util.HashSet<>();
-              private final String sweepJs="(function(){try{if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||!(/^\\/(?:pc\\/)?history\\/?$/).test(location.pathname))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'WAIT_DATA'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,reason:'WAIT_DATA'});var entry=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){entry=q[i];break;}}if(!entry)return JSON.stringify({ok:false,reason:'WAIT_DATA'});var pages=entry.state&&entry.state.data&&entry.state.data.pages;if(!Array.isArray(pages))return JSON.stringify({ok:false,reason:'BAD_PAGES'});var page=null;for(var j=0;j<pages.length;j++){if(Number(pages[j].curPage)===__PAGE__){page=pages[j];break;}}if(!page)return JSON.stringify({ok:false,reason:'PAGE_MISMATCH'});var total=Number(page.totalPage);if(!Number.isInteger(total)||total<0||total>500||!Array.isArray(page.items))return JSON.stringify({ok:false,reason:'BAD_PAGE'});if(page.items.length>1000)return JSON.stringify({ok:false,reason:'PAGE_TOO_LARGE'});var ids=[];for(var k=0;k<page.items.length;k++){var item=page.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,reason:'MISSING_ORDER_KEY'});ids.push(id);}return JSON.stringify({ok:true,page:__PAGE__,total:total,ids:ids});}catch(_){return JSON.stringify({ok:false,reason:'SWEEP_PARSE_ERROR'});}})()";
+              private final String sweepJs="(function(){try{if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||!(/^\\/(?:pc\\/)?history\\/?$/).test(location.pathname))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'WAIT_DATA'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,reason:'WAIT_DATA'});var entry=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){entry=q[i];break;}}if(!entry)return JSON.stringify({ok:false,reason:'WAIT_DATA'});var pages=entry.state&&entry.state.data&&entry.state.data.pages;if(!Array.isArray(pages))return JSON.stringify({ok:false,reason:'BAD_PAGES'});var page=null;for(var j=0;j<pages.length;j++){if(Number(pages[j].curPage)===__PAGE__){page=pages[j];break;}}if(!page)return JSON.stringify({ok:false,reason:'PAGE_MISMATCH'});var total=Number(page.totalPage);if(!Number.isInteger(total)||total<0||total>500||!Array.isArray(page.items))return JSON.stringify({ok:false,reason:'BAD_PAGE'});if(page.items.length>1000)return JSON.stringify({ok:false,reason:'PAGE_TOO_LARGE'});var ids=[],links=[];for(var k=0;k<page.items.length;k++){var item=page.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,reason:'MISSING_ORDER_KEY'});ids.push(id);var link='';try{if(typeof item.orderDetailUrl!=='string'||!item.orderDetailUrl.trim())throw Error();var u=new URL(item.orderDetailUrl,location.href);if(u.protocol==='https:'&&!u.username&&!u.password&&(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com')))link=u.href;}catch(_){}links.push(link);}return JSON.stringify({ok:true,page:__PAGE__,total:total,ids:ids,links:links});}catch(_){return JSON.stringify({ok:false,reason:'SWEEP_PARSE_ERROR'});}})()";
               private WebView browser;
               private TextView status, result, pageStatus;
               private int openTaps=0, inspectTaps=0, testTaps=0, detailTaps=0;
@@ -109,7 +120,7 @@ jobs:
                   root.setPadding(16,32,16,12);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증 v0.1.7");
+                  title.setText("네이버페이 연동 검증 v0.1.8");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
@@ -143,6 +154,7 @@ jobs:
                   Button reload=new Button(this);
                   reload.setText("결제내역 열기");
                   reload.setOnClickListener(v->{
+                      if(autoRunning)stopAuto("화면 이동으로 중지 · 부분 결과");
                       if(sweeping)stopSweep("화면 이동으로 중지 · 부분 결과");
                       noteTouch("결제내역 열기");
                       if(browser!=null)browser.loadUrl(URL);
@@ -167,9 +179,18 @@ jobs:
                   sweepButton=new Button(this);
                   sweepButton.setText("전체 목록 검사");
                   sweepButton.setOnClickListener(v->{
-                      if(sweeping)stopSweep("사용자 중지 · 부분 결과");else startSweep();
+                      if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
+                      if(sweeping)stopSweep("사용자 중지 · 부분 결과");else if(!autoRunning){collectDetails=false;startSweep();}
                   });
                   root.addView(sweepButton);
+                  autoButton=new Button(this);
+                  autoButton.setText("전체 목록 + 배송정보 자동 검사");
+                  autoButton.setOnClickListener(v->{
+                      if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
+                      if(sweeping){stopSweep("사용자 중지 · 부분 결과");return;}
+                      collectDetails=true;startSweep();
+                  });
+                  root.addView(autoButton);
                   browser=new WebView(this);
                   WebSettings s=browser.getSettings();
                   s.setJavaScriptEnabled(true);
@@ -202,6 +223,7 @@ jobs:
                       }
                       @Override public void onReceivedError(WebView view,WebResourceRequest request,android.webkit.WebResourceError error){
                           if(request.isForMainFrame()){
+                              if(autoRunning)stopAuto("E_AUTO_PAGE · 페이지 로딩 실패 · 부분 결과");
                               if(sweeping)stopSweep("E_SWEEP_PAGE · 페이지 로딩 실패 · 부분 결과");
                               pageStatus.setText("페이지: 로딩 실패 · 코드 "+error.getErrorCode());
                               if(inspecting){result.setText("주문 건수: 확인 실패");finish(inspectSeq,"E_PAGE · 페이지 로딩 실패");}
@@ -211,11 +233,17 @@ jobs:
                           pageStatus.setText("E_RENDERER · 화면 엔진 종료. 앱을 다시 실행해줘.");
                           if(inspecting){result.setText("주문 건수: 확인 실패");finish(inspectSeq,"E_RENDERER · 검사 중단");}
                           if(sweeping)stopSweep("E_SWEEP_RENDERER · 화면 엔진 종료 · 부분 결과");
+                          if(autoRunning)stopAuto("E_AUTO_RENDERER · 화면 엔진 종료 · 부분 결과");
                           view.destroy();browser=null;return true;
                       }
                       @Override public void onPageFinished(WebView view,String url){
                           pageStatus.setText("페이지: 로딩 완료 · "+safePage(url));
                           CookieManager.getInstance().flush();
+                          if(autoRunning&&!autoReading&&url.equals(view.getUrl())){
+                              if(!safeAutoUrl(url))stopAuto("E_AUTO_SESSION · 로그인 또는 외부 화면으로 이동 · 부분 결과");
+                              else if(sameAutoPage(url)){autoReading=true;pollAuto(autoRun,autoStep,0);}
+                              else{autoStep++;autoOrderUnbound=true;advanceAuto(autoRun);}
+                          }
                           if(sweeping&&!sweepReading){sweepReading=true;pollSweep(sweepRun,sweepPage,0);}
                       }
                   });
@@ -270,6 +298,7 @@ jobs:
                   status.setText(message);
               }
               private void inspect(){
+                  if(autoRunning)stopAuto("현재 목록 검사로 중지 · 부분 결과");
                   if(sweeping)stopSweep("현재 목록 검사로 중지 · 부분 결과");
                   final int seq=++inspectSeq;
                   inspecting=true;
@@ -325,6 +354,7 @@ jobs:
                   }
               }
               private void inspectDetail(){
+                  if(autoRunning)stopAuto("상세 검사로 중지 · 부분 결과");
                   if(sweeping)stopSweep("상세 검사로 중지 · 부분 결과");
                   final int seq=++inspectSeq;
                   inspecting=true;
@@ -396,6 +426,8 @@ jobs:
                       !("/history".equals(path)||"/history/".equals(path)||"/pc/history".equals(path)||"/pc/history/".equals(path))){
                       status.setText("결제내역 목록에서 로그인한 뒤 전체 목록 검사를 눌러줘.");return;
                   }
+                  detailQueue.clear();linkedResults.clear();
+                  if(collectDetails)autoButton.setText("자동 검사 중지 · 목록 수집 중");
                   inspectSeq++;inspecting=false;
                   sweeping=true;sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
                   sweepButton.setText("전체 검사 중지");
@@ -410,6 +442,7 @@ jobs:
                   status.setText(reason+" · 중복 "+sweepDuplicates+"건 제외"+
                       "\n묶음 내 개별 상품·배송정보 수집은 미포함. 재시작하면 처음부터 검사.");
                   sweepKeys.clear();
+                  if(collectDetails){collectDetails=false;detailQueue.clear();autoButton.setText("전체 목록 + 배송정보 자동 검사");}
               }
               private void loadSweepPage(int run){
                   if(!sweeping||run!=sweepRun||browser==null)return;
@@ -451,6 +484,8 @@ jobs:
                                   if(sweepTotal>=0&&sweepTotal!=total){stopSweep("E_SWEEP_TOTAL_CHANGED · 전체 페이지 변경 · 부분 결과");return;}
                                   sweepTotal=total;
                                   JSONArray ids=d.getJSONArray("ids");
+                                  JSONArray links=d.getJSONArray("links");
+                                  if(ids.length()!=links.length())throw new IllegalArgumentException();
                                   java.util.HashSet<String> batch=new java.util.HashSet<>();
                                   java.security.MessageDigest digest=java.security.MessageDigest.getInstance("SHA-256");
                                   for(int i=0;i<ids.length();i++){
@@ -458,13 +493,23 @@ jobs:
                                       if(!id.matches("[A-Za-z0-9_-]{1,80}"))throw new IllegalArgumentException();
                                       String hash=android.util.Base64.encodeToString(digest.digest(id.getBytes(java.nio.charset.StandardCharsets.UTF_8)),android.util.Base64.NO_WRAP);
                                       if(!batch.add(hash))sweepDuplicates++;
+                                      if(collectDetails&&!detailQueue.containsKey(hash)){
+                                          String link=links.getString(i);
+                                          detailQueue.put(hash,safeAutoUrl(link)?link:"");
+                                      }
                                   }
                                   if(batch.isEmpty()&&!(page==1&&total==0)){stopSweep("E_SWEEP_EMPTY · 예상 밖 빈 페이지 · 부분 결과");return;}
                                   int added=0;for(String key:batch){if(sweepKeys.add(key))added++;else sweepDuplicates++;}
                                   if(added==0&&!batch.isEmpty()){stopSweep("E_SWEEP_REPEATED · 같은 목록 반복 · 부분 결과");return;}
                                   sweepReadPages++;
                                   if(sweepKeys.size()>100000){stopSweep("E_SWEEP_LIMIT · 검사 한도 · 부분 결과");return;}
-                                  if(page>=total){stopSweep("페이지 검사 완료 · 현재 조회조건 기준");return;}
+                                  if(page>=total){
+                                      if(collectDetails){
+                                          autoListCount=sweepKeys.size();collectDetails=false;
+                                          stopSweep("페이지 검사 완료 · 배송정보 연결 준비");startAuto();
+                                      }else stopSweep("페이지 검사 완료 · 현재 조회조건 기준");
+                                      return;
+                                  }
                                   sweepPage++;
                                   loadSweepPage(run);
                               }catch(Exception e){stopSweep("E_SWEEP_JSON · 응답 검증 실패 · 부분 결과");}
@@ -472,11 +517,126 @@ jobs:
                       }catch(Exception e){stopSweep("E_SWEEP_EXEC · 검사 실행 실패 · 부분 결과");}
                   },1200);
               }
+              private boolean safeAutoUrl(String address){
+                  try{
+                      if(address.length()>4096)return false;
+                      Uri u=Uri.parse(address);String host=u.getHost();
+                      return "https".equals(u.getScheme())&&u.getUserInfo()==null&&host!=null&&
+                          ("pay.naver.com".equals(host)||host.endsWith(".pay.naver.com"));
+                  }catch(Exception e){return false;}
+              }
+              private boolean sameAutoPage(String current){
+                  try{return Uri.parse(current).buildUpon().fragment(null).build().toString().equals(
+                      Uri.parse(autoExpected).buildUpon().fragment(null).build().toString());}
+                  catch(Exception e){return false;}
+              }
+              private void startAuto(){
+                  detailKeys.clear();detailKeys.addAll(detailQueue.keySet());
+                  autoRunning=true;autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
+                  autoFailed=0;autoUnbound=0;autoNoLink=0;
+                  autoButton.setText("배송정보 자동 검사 중지");
+                  nextAutoOrder(autoRun);
+              }
+              private void stopAuto(String reason){
+                  if(!autoRunning)return;
+                  autoRunning=false;autoRun++;autoStep++;autoReading=false;
+                  autoButton.setText("전체 목록 + 배송정보 다시 검사");
+                  sweepButton.setText("전체 목록 다시 검사");
+                  result.setText("목록 "+autoListCount+"건 · 처리 "+autoDone+"/"+detailKeys.size()+
+                      " · 배송 연결 "+autoMatched+"건");
+                  status.setText(reason+" · 미검출 "+autoMissing+" / 실패 "+autoFailed+
+                      " / 링크 없음 "+autoNoLink+" / 추가 확인 "+autoUnbound+
+                      "\n이번 실행의 조회 가능한 링크 기준. 묶음 내 전체 상품·전체 배송 보장 아님. 저장·외부 전송 없음.");
+                  detailQueue.clear();detailKeys.clear();shippingQueue.clear();linkedResults.clear();
+              }
+              private void nextAutoOrder(int run){
+                  if(!autoRunning||run!=autoRun)return;
+                  while(autoIndex<detailKeys.size()){
+                      String key=detailKeys.get(autoIndex),link=detailQueue.get(key);
+                      if(link==null||link.isEmpty()){autoNoLink++;autoDone++;autoIndex++;continue;}
+                      shippingQueue.clear();shippingIndex=-1;autoOrderFailed=false;autoOrderUnbound=false;
+                      linkedResults.put(key,new java.util.LinkedHashSet<>());
+                      loadAutoPage(run,link);return;
+                  }
+                  stopAuto("자동 검사 완료");
+              }
+              private void loadAutoPage(int run,String address){
+                  if(!autoRunning||run!=autoRun)return;
+                  if(!safeAutoUrl(address)){autoOrderFailed=true;completeAutoOrder(run);return;}
+                  autoExpected=address;autoReading=false;final int step=++autoStep;
+                  status.setText("배송정보 자동 검사 · "+(autoIndex+1)+"/"+detailKeys.size()+
+                      (shippingIndex<0?" · 주문 상세":" · 배송조회 "+(shippingIndex+1)+"/"+shippingQueue.size()));
+                  result.setText("처리 "+autoDone+"건 · 배송 연결 "+autoMatched+"건 · 미검출 "+autoMissing+"건");
+                  handler.postDelayed(()->{
+                      if(autoRunning&&run==autoRun&&step==autoStep){
+                          autoStep++;autoOrderFailed=true;advanceAuto(run);
+                      }
+                  },25000);
+                  try{browser.loadUrl(address);}catch(Exception e){autoStep++;autoOrderFailed=true;advanceAuto(run);}
+              }
+              private void completeAutoOrder(int run){
+                  if(!autoRunning||run!=autoRun)return;
+                  java.util.Set<String> pairs=linkedResults.get(detailKeys.get(autoIndex));
+                  if(pairs!=null&&!pairs.isEmpty())autoMatched++;
+                  else if(autoOrderFailed)autoFailed++;
+                  else if(!autoOrderUnbound)autoMissing++;
+                  if(autoOrderUnbound)autoUnbound++;
+                  autoDone++;autoIndex++;autoStep++;
+                  nextAutoOrder(run);
+              }
+              private void advanceAuto(int run){
+                  if(!autoRunning||run!=autoRun)return;
+                  if(shippingIndex+1<shippingQueue.size()){
+                      shippingIndex++;loadAutoPage(run,shippingQueue.get(shippingIndex));
+                  }else completeAutoOrder(run);
+              }
+              private void pollAuto(int run,int step,int attempt){
+                  handler.postDelayed(()->{
+                      if(!autoRunning||run!=autoRun||step!=autoStep||browser==null)return;
+                      String current=browser.getUrl()==null?"":browser.getUrl();
+                      if(!safeAutoUrl(current)){stopAuto("E_AUTO_SESSION · 로그인 또는 외부 화면으로 이동 · 부분 결과");return;}
+                      if(!sameAutoPage(current)){
+                          autoStep++;autoOrderUnbound=true;advanceAuto(run);return;
+                      }
+                      try{browser.evaluateJavascript(autoJs,ret->{
+                          if(!autoRunning||run!=autoRun||step!=autoStep)return;
+                          try{
+                              if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){autoOrderUnbound=true;autoStep++;advanceAuto(run);return;}
+                              if(ret==null||ret.length()>100000)throw new IllegalArgumentException();
+                              Object value=new JSONArray("["+ret+"]").get(0);
+                              if(!(value instanceof String))throw new IllegalArgumentException();
+                              JSONObject d=new JSONObject((String)value);
+                              if(!d.optBoolean("ok"))throw new IllegalArgumentException();
+                              JSONArray pairs=d.getJSONArray("domPairs"),links=d.getJSONArray("shippingLinks");
+                              if(pairs.length()==0&&links.length()==0&&attempt<4){pollAuto(run,step,attempt+1);return;}
+                              java.util.Set<String> connected=linkedResults.get(detailKeys.get(autoIndex));
+                              String allowed="CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox";
+                              for(int i=0;i<pairs.length()&&i<10;i++){
+                                  JSONObject pair=pairs.getJSONObject(i);
+                                  String company=pair.getString("carrier"),tail=pair.getString("tail");
+                                  if(!company.matches(allowed)||!tail.matches("[0-9]{4}"))throw new IllegalArgumentException();
+                                  connected.add(company+" · ****"+tail);
+                              }
+                              if(d.optBoolean("tooManyLinks")||d.optBoolean("limited"))autoOrderUnbound=true;
+                              if(shippingIndex<0){
+                                  for(int i=0;i<links.length()&&i<20;i++){
+                                      String link=links.getString(i);
+                                      if(safeAutoUrl(link)&&!link.equals(autoExpected)&&!shippingQueue.contains(link))shippingQueue.add(link);
+                                  }
+                              }
+                              if(!connected.isEmpty())result.setText("현재 주문 연결: "+android.text.TextUtils.join(" / ",connected));
+                              autoStep++;advanceAuto(run);
+                          }catch(Exception e){autoStep++;autoOrderFailed=true;advanceAuto(run);}
+                      });}catch(Exception e){autoStep++;autoOrderFailed=true;advanceAuto(run);}
+                  },2000);
+              }
               @Override public void onBackPressed(){
+                  if(autoRunning){stopAuto("뒤로가기로 중지 · 부분 결과");return;}
                   if(sweeping){stopSweep("뒤로가기로 중지 · 부분 결과");return;}
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
               }
               @Override protected void onDestroy(){
+                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();
                   sweeping=false;sweepRun++;sweepKeys.clear();
                   handler.removeCallbacksAndMessages(null);
                   if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
@@ -491,7 +651,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.7 debug APK
+      - name: Lint and assemble v0.1.8 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
