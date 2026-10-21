@@ -772,6 +772,8 @@ public class MonitorService extends Service {
             }
         }
 
+        boolean salesResumed = "OUTOFSTOCK".equals(product.optString("lastProductStatus"))
+            && "SALE".equals(result.optString("statusType"));
         JSONArray restocked = new JSONArray();
         JSONArray restockDiagnostic = new JSONArray();
         JSONArray soldOut = new JSONArray();
@@ -830,7 +832,15 @@ public class MonitorService extends Service {
         product.put("lastAvailability", previous);
         product.put("lastStockQuantity", previousQuantities);
         product.put("lowStockAfterRestock", afterRestock);
-        product.put("lastStatus", inventoryStatusText(availableCount, resolved.requestedCount, time));
+        int stockedCount = 0;
+        for (Integer quantity : resolved.quantities.values()) {
+            if (quantity != null && quantity > 0) stockedCount++;
+        }
+        boolean purchaseBlocked = "OUTOFSTOCK".equals(result.optString("statusType"));
+        product.put("lastProductStatus", result.optString("statusType", ""));
+        product.put("lastStatus", purchaseBlocked
+            ? (stockedCount > 0 ? "재고 있음 " : "재고 없음 ") + stockedCount + "/" + resolved.requestedCount + " · 구매 불가 · " + time
+            : inventoryStatusText(availableCount, resolved.requestedCount, time));
         product.put("lastCheck", System.currentTimeMillis());
         product.put("lastSuccess", product.optLong("lastCheck"));
 
@@ -846,8 +856,9 @@ public class MonitorService extends Service {
         if (restocked.length() > 0) {
             String detail = "상품상태=" + result.optString("statusType", "미확인") + " · " + restockDiagnostic.toString()
                 + (source.isBlank() ? "" : " · " + source);
-            DiagnosticLog.recordRestock(this, product, detail);
-            notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked);
+            if (salesResumed) DiagnosticLog.add(this, "SALE_RESUMED", product, detail);
+            else DiagnosticLog.recordRestock(this, product, detail);
+            notifyRestock(product.optString("title", "재입고"), product.optString("url", ""), restocked, salesResumed);
         }
         if (soldOut.length() > 0) {
             String detail = "상품상태=" + result.optString("statusType", "미확인") + " · " + soldOutDiagnostic.toString()
@@ -1208,7 +1219,7 @@ public class MonitorService extends Service {
         getSystemService(NotificationManager.class).notify(NOTIFICATION_STATUS, notification);
     }
 
-    private void notifyRestock(String title, String productUrl, JSONArray labels) {
+    private void notifyRestock(String title, String productUrl, JSONArray labels, boolean salesResumed) {
         StringBuilder text = new StringBuilder();
         for (int i = 0; i < labels.length(); i++) {
             if (i > 0) text.append(" · ");
@@ -1228,7 +1239,7 @@ public class MonitorService extends Service {
 
         Notification notification = new Notification.Builder(this, CHANNEL_ALERT)
             .setSmallIcon(android.R.drawable.stat_notify_more)
-            .setContentTitle("📦 재입고 · " + title)
+            .setContentTitle((salesResumed ? "📦 판매 재개 · " : "📦 재입고 · ") + title)
             .setContentText(text.toString())
             .setStyle(new Notification.BigTextStyle().bigText(text.toString()))
             .setContentIntent(contentIntent)
