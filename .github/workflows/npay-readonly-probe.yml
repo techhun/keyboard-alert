@@ -32,7 +32,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.1-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.2-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -57,6 +57,8 @@ jobs:
           import android.os.Bundle;
           import android.os.Handler;
           import android.os.Looper;
+          import android.widget.Toast;
+          import android.view.View;
           import android.webkit.CookieManager;
           import android.webkit.WebChromeClient;
           import android.webkit.WebResourceRequest;
@@ -75,6 +77,8 @@ jobs:
               private TextView status;
               private final Handler handler=new Handler(Looper.getMainLooper());
               private int inspectSeq=0;
+              private int tapCount=0;
+              private TextView tapStatus;
               private boolean inspecting=false;
               private final String js = "(function(){try{if(location.hostname!=='pay.naver.com'||!location.pathname.startsWith('/pc/history'))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});"+
                   "var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'NO_NEXT_DATA'});"+
@@ -93,9 +97,10 @@ jobs:
                   WebView.setWebContentsDebuggingEnabled(false);
                   LinearLayout root=new LinearLayout(this);
                   root.setOrientation(LinearLayout.VERTICAL);
+                  root.setBackgroundColor(Color.WHITE);
                   root.setPadding(16,32,16,12);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증 v0.1.1");
+                  title.setText("네이버페이 연동 검증 v0.1.2");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
@@ -105,18 +110,34 @@ jobs:
                   status.setBackgroundColor(Color.rgb(239,243,248));
                   status.setPadding(16,16,16,16);
                   status.setText("네이버페이 로그인 후 아래 목록 검사 버튼을 눌러줘.\n계정/주문 정보는 저장하거나 전송하지 않아.");
-                  status.setPadding(0,12,0,12);
                   root.addView(status);
+                  tapStatus=new TextView(this);
+                  tapStatus.setTextColor(Color.rgb(120,10,30));
+                  tapStatus.setTextSize(16f);
+                  tapStatus.setBackgroundColor(Color.rgb(255,236,240));
+                  tapStatus.setText("터치 진단: 아직 누른 버튼 없음");
+                  tapStatus.setPadding(16,14,16,14);
+                  root.addView(tapStatus);
                   LinearLayout buttons=new LinearLayout(this);
                   Button reload=new Button(this);
                   reload.setText("결제내역 열기");
-                  reload.setOnClickListener(v->browser.loadUrl(URL));
+                  reload.setOnClickListener(v->{
+                      noteTouch("결제내역 열기");
+                      if(browser!=null)browser.loadUrl(URL);
+                  });
                   buttons.addView(reload,new LinearLayout.LayoutParams(0,150,1));
                   Button inspect=new Button(this);
                   inspect.setText("현재 목록 검사");
-                  inspect.setOnClickListener(v->inspect());
+                  inspect.setOnClickListener(v->{
+                      noteTouch("현재 목록 검사");
+                      inspect();
+                  });
                   buttons.addView(inspect,new LinearLayout.LayoutParams(0,150,1));
                   root.addView(buttons);
+                  Button nativeTest=new Button(this);
+                  nativeTest.setText("버튼 동작 확인 (로그인 무관)");
+                  nativeTest.setOnClickListener(v->noteTouch("버튼 동작 확인"));
+                  root.addView(nativeTest);
                   browser=new WebView(this);
                   WebSettings s=browser.getSettings();
                   s.setJavaScriptEnabled(true);
@@ -153,6 +174,11 @@ jobs:
                   setContentView(root);
                   browser.loadUrl(URL);
               }
+              private void noteTouch(String label){
+                  ++tapCount;
+                  tapStatus.setText("터치 진단: "+label+" · "+tapCount+"회");
+                  Toast.makeText(this,"버튼 입력 인식: "+tapCount+"회",Toast.LENGTH_SHORT).show();
+              }
               private boolean navigate(String address){
                   try {
                       Uri uri=Uri.parse(address);
@@ -172,7 +198,7 @@ jobs:
               private void inspect(){
                   final int seq=++inspectSeq;
                   inspecting=true;
-                  status.setText("버튼 입력 확인 · 검사 시작 중...");
+                  status.setText("검사 시작 중… 9초 이내 결과 표시");
                   if(browser==null){inspecting=false;status.setText("WebView가 초기화되지 않았어.");return;}
                   String url=browser.getUrl();
                   if(url==null||!url.startsWith("https://pay.naver.com/pc/history")){
