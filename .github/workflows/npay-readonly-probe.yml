@@ -1,0 +1,207 @@
+name: NPay Readonly Probe APK
+
+on:
+  push:
+    branches:
+      - test/npay-readonly-probe
+    paths:
+      - .github/workflows/npay-readonly-probe.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          gradle-version: '9.6.0'
+      - name: Set up isolated debug APK project
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -r android/restock-worker android/npay-probe-ci
+          rm -rf android/npay-probe-ci/app/src/main/java
+          rm -rf android/npay-probe-ci/app/src/test
+          mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
+          sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.0-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <application android:label="NPay 조회 테스트" android:usesCleartextTraffic="false" android:allowBackup="false">
+              <activity android:name=".MainActivity" android:exported="true">
+                <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+              </activity>
+            </application>
+          </manifest>
+          MANIFEST
+          cat > android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/MainActivity.java <<'JAVA'
+          package com.techhun.keyboardalert.restock;
+
+          import android.annotation.SuppressLint;
+          import android.app.Activity;
+          import android.content.Intent;
+          import android.graphics.Color;
+          import android.net.Uri;
+          import android.os.Bundle;
+          import android.webkit.CookieManager;
+          import android.webkit.WebChromeClient;
+          import android.webkit.WebResourceRequest;
+          import android.webkit.WebSettings;
+          import android.webkit.WebView;
+          import android.webkit.WebViewClient;
+          import android.widget.Button;
+          import android.widget.LinearLayout;
+          import android.widget.TextView;
+          import org.json.JSONArray;
+          import org.json.JSONObject;
+
+          public class MainActivity extends Activity {
+              private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
+              private WebView browser;
+              private TextView status;
+              private final String js = "(function(){try{if(location.hostname!=='pay.naver.com'||!location.pathname.startsWith('/pc/history'))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});"+
+                  "var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'NO_NEXT_DATA'});"+
+                  "var d=JSON.parse(el.textContent),q=d?.props?.pageProps?.dehydratedState?.queries;"+
+                  "if(!Array.isArray(q))return JSON.stringify({ok:false,reason:'NO_QUERIES'});"+
+                  "var e=q.find(x=>Array.isArray(x.queryKey)&&x.queryKey[0]==='PAYMENT_LIST');"+
+                  "if(!e)return JSON.stringify({ok:false,reason:'NO_PAYMENT_LIST'});"+
+                  "var p=e?.state?.data?.pages||[],a=p.flatMap(x=>Array.isArray(x.items)?x.items:[]);"+
+                  "return JSON.stringify({ok:true,items:a.length,hasOrderNo:a.filter(x=>!!x?.additionalData?.productOrderNo).length,"+
+                  "hasDetail:a.filter(x=>!!x?.orderDetailUrl).length,bundles:a.filter(x=>Number(x?.bundlePaymentCount)>1).length,"+
+                  "pages:Number(p[0]?.totalPage||0)});}catch(_){return JSON.stringify({ok:false,reason:'PARSE_ERROR'});}})()";
+
+              @Override @SuppressLint("SetJavaScriptEnabled")
+              protected void onCreate(Bundle state) {
+                  super.onCreate(state);
+                  WebView.setWebContentsDebuggingEnabled(false);
+                  LinearLayout root=new LinearLayout(this);
+                  root.setOrientation(LinearLayout.VERTICAL);
+                  root.setPadding(16,32,16,12);
+                  TextView title=new TextView(this);
+                  title.setText("네이버페이 연동 검증");
+                  title.setTextColor(Color.BLACK);
+                  title.setTextSize(20);
+                  root.addView(title);
+                  status=new TextView(this);
+                  status.setText("네이버페이 로그인 후 아래 목록 검사 버튼을 눌러줘.\n계정/주문 정보는 저장하거나 전송하지 않아.");
+                  status.setPadding(0,12,0,12);
+                  root.addView(status);
+                  LinearLayout buttons=new LinearLayout(this);
+                  Button reload=new Button(this);
+                  reload.setText("결제내역 열기");
+                  reload.setOnClickListener(v->browser.loadUrl(URL));
+                  buttons.addView(reload,new LinearLayout.LayoutParams(0,150,1));
+                  Button inspect=new Button(this);
+                  inspect.setText("현재 목록 검사");
+                  inspect.setOnClickListener(v->inspect());
+                  buttons.addView(inspect,new LinearLayout.LayoutParams(0,150,1));
+                  root.addView(buttons);
+                  browser=new WebView(this);
+                  WebSettings s=browser.getSettings();
+                  s.setJavaScriptEnabled(true);
+                  s.setDomStorageEnabled(true);
+                  s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+                  s.setAllowFileAccess(false);
+                  s.setAllowContentAccess(false);
+                  s.setAllowFileAccessFromFileURLs(false);
+                  s.setAllowUniversalAccessFromFileURLs(false);
+                  s.setJavaScriptCanOpenWindowsAutomatically(false);
+                  String agent=s.getUserAgentString();
+                  s.setUserAgentString(agent.replace("; wv)", ")").replace("Version/4.0 ", ""));
+                  CookieManager cm=CookieManager.getInstance();
+                  cm.setAcceptCookie(true);
+                  cm.setAcceptThirdPartyCookies(browser,true);
+                  browser.setWebChromeClient(new WebChromeClient());
+                  browser.setWebViewClient(new WebViewClient(){
+                      @Override public boolean shouldOverrideUrlLoading(WebView view,WebResourceRequest request){
+                          return navigate(request.getUrl().toString());
+                      }
+                      @Override public boolean shouldOverrideUrlLoading(WebView view,String url){
+                          return navigate(url);
+                      }
+                      @Override public void onPageFinished(WebView view,String url){
+                          if(url.startsWith("https://pay.naver.com/pc/history")){
+                              status.setText("결제내역 표시됨. [현재 목록 검사]를 눌러줘.");
+                          } else status.setText("네이버 공식 로그인 화면에서 인증해줘.");
+                          CookieManager.getInstance().flush();
+                      }
+                  });
+                  root.addView(browser,new LinearLayout.LayoutParams(-1,0,1));
+                  setContentView(root);
+                  browser.loadUrl(URL);
+              }
+              private boolean navigate(String address){
+                  try {
+                      Uri uri=Uri.parse(address);
+                      String scheme=uri.getScheme();
+                      if("https".equalsIgnoreCase(scheme)){
+                          String host=uri.getHost();
+                          return host==null||!(host.equals("naver.com")||host.endsWith(".naver.com"));
+                      }
+                      if("nidlogin".equalsIgnoreCase(scheme)){
+                          Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                          intent.setPackage("com.nhn.android.search");
+                          try{startActivity(intent);}catch(Exception e){status.setText("네이버 앱 대신 아래 웹 화면에서 로그인해줘.");}
+                      }
+                  } catch(Exception ignored){}
+                  return true;
+              }
+              private void inspect(){
+                  if(browser==null){return;}
+                  String url=browser.getUrl();
+                  if(url==null||!url.startsWith("https://pay.naver.com/pc/history")){
+                      status.setText("결제내역 화면에서 검사할 수 있어.");return;
+                  }
+                  browser.evaluateJavascript(js,ret->{
+                      try{
+                          String raw=new JSONArray("["+ret+"]").getString(0);
+                          JSONObject d=new JSONObject(raw);
+                          if(!d.optBoolean("ok")){
+                              status.setText("조회 실패: "+d.optString("reason")+"\n페이지 새로고침 후 다시 검사해줘.");
+                          }else{
+                              status.setText("조회 성공!\n목록 "+d.optInt("items")+"건 / 상품주문번호 "+d.optInt("hasOrderNo")+
+                                  "건 / 상세링크 "+d.optInt("hasDetail")+"건 / 묶음 "+d.optInt("bundles")+
+                                  "건 / 전체 "+d.optInt("pages")+"페이지");
+                          }
+                          CookieManager.getInstance().flush();
+                      }catch(Exception e){status.setText("응답 해석 실패. 페이지 새로고침 후 다시 검사해줘.");}
+                  });
+              }
+              @Override public void onBackPressed(){
+                  if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
+              }
+              @Override protected void onDestroy(){
+                  if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
+                  super.onDestroy();
+              }
+          }
+          JAVA
+      - name: Setup Android SDK
+        shell: bash
+        run: |
+          set -e
+          if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
+            yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
+          fi
+      - name: Build debug APK
+        run: |
+          cd android/npay-probe-ci
+          gradle :app:assembleDebug --stacktrace
+      - uses: actions/upload-artifact@v7
+        with:
+          name: npay-readonly-probe-debug-apk
+          path: android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7
+          if-no-files-found: error
