@@ -6,6 +6,7 @@ on:
     branches:
       - fix/restock-option-query
       - fix/restock-recovery-observability
+      - restock-v0.14.37-stable
     paths:
       - 'android/restock-worker/**'
       - '.github/workflows/android-restock-release.yml'
