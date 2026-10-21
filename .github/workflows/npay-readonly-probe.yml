@@ -1,4 +1,5 @@
 name: NPay Readonly Probe APK
+run-name: NPay probe v0.1.7 history scan
 
 on:
   push:
