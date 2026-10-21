@@ -1,8 +1,41 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-20T07:01:18.744Z",
+  "updatedAt": "2026-10-21T00:20:59.268Z",
   "rows": [
+    {
+      "category": "GMK",
+      "product": "GMK Red Devils",
+      "status": "In production",
+      "eta": "Q1 2027",
+      "progress": 75,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Zombie",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Rainy Day R3",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
     {
       "category": "KEYCAPS",
       "product": "PBTfans 1984 dark",
@@ -719,28 +752,6 @@
       "latestUpdateBody": "Interest Survey Stage"
     },
     {
-      "category": "GMK",
-      "product": "GMK CYL Zombie",
-      "status": "Group buy",
-      "eta": "Q1 2027",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "GMK",
-      "product": "GMK CYL Rainy Day R3",
-      "status": "Group buy",
-      "eta": "Q1 2027",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
       "category": "KEYBOARDS",
       "product": "Ko-Onibi 60",
       "status": "Prototyping",
@@ -1034,6 +1045,7 @@
     "c0827fde6ef46917339efe86": "2026-10-19T01:31:04.051Z",
     "cba52bb48dc06496e09f1051": "2026-10-19T01:31:04.179Z",
     "c351c57604c9bc0d38a81f3f": "2026-10-20T06:11:09.278Z",
-    "2b79b8cabbe194c63d887cec": "2026-10-20T07:01:18.743Z"
+    "2b79b8cabbe194c63d887cec": "2026-10-20T07:01:18.743Z",
+    "795600390432ce5b91079df6": "2026-10-21T00:20:59.267Z"
   }
 }
