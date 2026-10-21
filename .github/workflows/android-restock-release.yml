@@ -74,6 +74,9 @@ jobs:
           fi
           rm -f "$verify_store"
 
+      - name: Verify SmartStore inventory status behavior
+        run: node --test ../../tests/restock-inventory-status.test.mjs
+
       - name: Test, lint and build signed release APK
         run: gradle :app:testDebugUnitTest :app:lintRelease :app:assembleRelease --stacktrace
 

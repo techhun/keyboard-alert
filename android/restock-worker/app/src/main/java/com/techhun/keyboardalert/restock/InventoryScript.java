@@ -347,6 +347,10 @@ final class InventoryScript {
                   available: Number.isFinite(stock) ? stock > 0 : status === 'SALE'
                 });
               }
+              const productStatus = String(product?.statusType || data?.statusType || data?.productStatusType || '').toUpperCase();
+              if (productStatus === 'OUTOFSTOCK') {
+                for (const option of options) option.available = false;
+              }
               return {
                 ok: true,
                 source,

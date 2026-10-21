@@ -32,6 +32,9 @@ jobs:
         with:
           gradle-version: '9.6.0'
 
+      - name: Verify SmartStore inventory status behavior
+        run: node --test ../../tests/restock-inventory-status.test.mjs
+
       - name: Test, lint and build debug APK
         run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --stacktrace
 

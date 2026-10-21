@@ -986,8 +986,10 @@ public class MainActivity extends Activity {
                 ));
                 String displayLabel = grouped ? optionSubLabel(option) : optionLabel(option);
                 left.addView(text(displayLabel, 14, TEXT, Typeface.BOLD));
-                String stockLabel = stock > 0 ? "재고 " + stock + "개" : stock == 0 ? "품절" : "재고 확인 중";
-                TextView stockView = text(stockLabel, 12, stock > 0 ? GREEN : SUB, Typeface.NORMAL);
+                boolean available = option != null && option.optBoolean("available", false);
+                String stockLabel = stock > 0 && !available ? "구매 불가 (옵션 수량 " + stock + "개)"
+                    : stock > 0 ? "재고 " + stock + "개" : stock == 0 ? "품절" : "재고 확인 중";
+                TextView stockView = text(stockLabel, 12, stock > 0 && available ? GREEN : SUB, Typeface.NORMAL);
                 stockView.setPadding(0, dp(3), 0, 0);
                 left.addView(stockView);
 

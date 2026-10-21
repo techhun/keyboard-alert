@@ -797,7 +797,8 @@ public class MonitorService extends Service {
             }
             if (isSoldOut) {
                 soldOut.put(optionLabel);
-                soldOutDiagnostic.put(optionLabel + " · 0개");
+                soldOutDiagnostic.put(optionLabel + (quantity != null && quantity > 0
+                    ? " · 구매 불가 (옵션 수량 " + quantity + "개)" : " · 0개"));
             }
 
             if (quantity != null) {

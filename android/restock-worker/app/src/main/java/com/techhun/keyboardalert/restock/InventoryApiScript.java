@@ -125,9 +125,14 @@ final class InventoryApiScript {
                     });
                   }
 
+                  const productStatus = String(originProduct?.statusType || data?.statusType || data?.productStatusType || '').toUpperCase();
+                  if (productStatus === 'OUTOFSTOCK') {
+                    for (const option of options) option.available = false;
+                  }
                   send({
                     ok: true,
                     productId,
+                    statusType: productStatus || null,
                     apiUrl,
                     title: originProduct?.name || data?.smartstoreChannelProduct?.channelProductName || fallbackTitle,
                     stockQuantity: originProduct?.stockQuantity ?? data?.stockQuantity ?? null,
