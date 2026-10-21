@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-21T00:20:59.268Z",
+  "updatedAt": "2026-10-21T01:01:22.987Z",
   "rows": [
     {
       "category": "GMK",
@@ -96,17 +96,6 @@
       "product": "KeyKobo Cross Impact",
       "status": "In Production",
       "eta": "Jan 2027",
-      "progress": 10,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Prussian Alert",
-      "status": "In production",
-      "eta": "TBD",
       "progress": 10,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
@@ -1046,6 +1035,7 @@
     "cba52bb48dc06496e09f1051": "2026-10-19T01:31:04.179Z",
     "c351c57604c9bc0d38a81f3f": "2026-10-20T06:11:09.278Z",
     "2b79b8cabbe194c63d887cec": "2026-10-20T07:01:18.743Z",
-    "795600390432ce5b91079df6": "2026-10-21T00:20:59.267Z"
+    "795600390432ce5b91079df6": "2026-10-21T00:20:59.267Z",
+    "97ef9a4e7c62e7d1a3a80bd2": "2026-10-21T01:01:22.986Z"
   }
 }
