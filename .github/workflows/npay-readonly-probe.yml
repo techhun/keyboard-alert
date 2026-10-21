@@ -32,7 +32,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.0-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.1-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -55,6 +55,8 @@ jobs:
           import android.graphics.Color;
           import android.net.Uri;
           import android.os.Bundle;
+          import android.os.Handler;
+          import android.os.Looper;
           import android.webkit.CookieManager;
           import android.webkit.WebChromeClient;
           import android.webkit.WebResourceRequest;
@@ -71,6 +73,9 @@ jobs:
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
               private WebView browser;
               private TextView status;
+              private final Handler handler=new Handler(Looper.getMainLooper());
+              private int inspectSeq=0;
+              private boolean inspecting=false;
               private final String js = "(function(){try{if(location.hostname!=='pay.naver.com'||!location.pathname.startsWith('/pc/history'))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});"+
                   "var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'NO_NEXT_DATA'});"+
                   "var d=JSON.parse(el.textContent),q=d?.props?.pageProps?.dehydratedState?.queries;"+
@@ -90,11 +95,15 @@ jobs:
                   root.setOrientation(LinearLayout.VERTICAL);
                   root.setPadding(16,32,16,12);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증");
+                  title.setText("네이버페이 연동 검증 v0.1.1");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
                   status=new TextView(this);
+                  status.setTextColor(Color.rgb(25,31,40));
+                  status.setTextSize(14f);
+                  status.setBackgroundColor(Color.rgb(239,243,248));
+                  status.setPadding(16,16,16,16);
                   status.setText("네이버페이 로그인 후 아래 목록 검사 버튼을 눌러줘.\n계정/주문 정보는 저장하거나 전송하지 않아.");
                   status.setPadding(0,12,0,12);
                   root.addView(status);
@@ -132,9 +141,11 @@ jobs:
                           return navigate(url);
                       }
                       @Override public void onPageFinished(WebView view,String url){
-                          if(url.startsWith("https://pay.naver.com/pc/history")){
-                              status.setText("결제내역 표시됨. [현재 목록 검사]를 눌러줘.");
-                          } else status.setText("네이버 공식 로그인 화면에서 인증해줘.");
+                          if(!inspecting){
+                              if(url.startsWith("https://pay.naver.com/pc/history")){
+                                  status.setText("결제내역 표시됨. [현재 목록 검사]를 눌러줘.");
+                              } else status.setText("네이버 공식 로그인 화면에서 인증해줘.");
+                          }
                           CookieManager.getInstance().flush();
                       }
                   });
@@ -159,30 +170,46 @@ jobs:
                   return true;
               }
               private void inspect(){
-                  if(browser==null){return;}
+                  final int seq=++inspectSeq;
+                  inspecting=true;
+                  status.setText("버튼 입력 확인 · 검사 시작 중...");
+                  if(browser==null){inspecting=false;status.setText("WebView가 초기화되지 않았어.");return;}
                   String url=browser.getUrl();
                   if(url==null||!url.startsWith("https://pay.naver.com/pc/history")){
-                      status.setText("결제내역 화면에서 검사할 수 있어.");return;
+                      inspecting=false;status.setText("결제내역 화면이 아니야. [결제내역 열기]를 먼저 눌러줘.");return;
                   }
+                  handler.postDelayed(()->{
+                      if(seq==inspectSeq&&inspecting){
+                          inspecting=false;
+                          inspectSeq++;
+                          status.setText("검사 시간 초과: WebView에서 JavaScript 응답이 오지 않았어.\\n결제내역 화면을 새로고침하거나 다시 검사해줘.");
+                      }
+                  },9000);
                   browser.evaluateJavascript(js,ret->{
+                      if(seq!=inspectSeq)return;
+                      inspecting=false;
+                      if(ret==null||"null".equals(ret)){
+                          status.setText("검사 실패: JavaScript가 응답을 반환하지 않았어.");return;
+                      }
                       try{
                           String raw=new JSONArray("["+ret+"]").getString(0);
                           JSONObject d=new JSONObject(raw);
                           if(!d.optBoolean("ok")){
-                              status.setText("조회 실패: "+d.optString("reason")+"\n페이지 새로고침 후 다시 검사해줘.");
+                              status.setText("검사 실패: "+d.optString("reason","UNKNOWN")+"\\n결제내역 새로고침 후 다시 검사해줘.");
                           }else{
-                              status.setText("조회 성공!\n목록 "+d.optInt("items")+"건 / 상품주문번호 "+d.optInt("hasOrderNo")+
+                              status.setText("목록 읽기 성공!\\n목록 "+d.optInt("items")+"건 / 상품주문번호 "+d.optInt("hasOrderNo")+
                                   "건 / 상세링크 "+d.optInt("hasDetail")+"건 / 묶음 "+d.optInt("bundles")+
                                   "건 / 전체 "+d.optInt("pages")+"페이지");
                           }
                           CookieManager.getInstance().flush();
-                      }catch(Exception e){status.setText("응답 해석 실패. 페이지 새로고침 후 다시 검사해줘.");}
+                      }catch(Exception e){status.setText("응답 해석 실패: JSON_PARSING\\n목록 페이지를 새로고침한 뒤 재검사해줘.");}
                   });
               }
               @Override public void onBackPressed(){
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
               }
               @Override protected void onDestroy(){
+                  handler.removeCallbacksAndMessages(null);
                   if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
                   super.onDestroy();
               }
@@ -198,7 +225,7 @@ jobs:
       - name: Build debug APK
         run: |
           cd android/npay-probe-ci
-          gradle :app:assembleDebug --stacktrace
+          gradle :app:lintDebug :app:assembleDebug --stacktrace
       - uses: actions/upload-artifact@v7
         with:
           name: npay-readonly-probe-debug-apk
