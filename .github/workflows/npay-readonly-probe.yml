@@ -32,7 +32,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.3-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.4-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -81,7 +81,7 @@ jobs:
               private int tapCount=0;
               private TextView tapStatus;
               private boolean inspecting=false;
-              private final String js = "(function(){try{if(location.hostname!=='pay.naver.com'||!location.pathname.startsWith('/pc/history'))return JSON.stringify({ok:false,reason:'NOT_HISTORY'});"+
+              private final String js = "(function(){try{if(location.protocol!=='https:'||location.hostname!=='pay.naver.com')return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});"+
                   "var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,reason:'NO_NEXT_DATA'});"+
                   "var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;"+
                   "if(!Array.isArray(q))return JSON.stringify({ok:false,reason:'NO_QUERIES'});"+
@@ -102,7 +102,7 @@ jobs:
                   root.setPadding(16,32,16,12);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증 v0.1.3");
+                  title.setText("네이버페이 연동 검증 v0.1.4");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
@@ -176,7 +176,7 @@ jobs:
                           return navigate(url);
                       }
                       @Override public void onPageStarted(WebView view,String url,android.graphics.Bitmap icon){
-                          pageStatus.setText("페이지: 로딩 중 · "+safeHost(url));
+                          pageStatus.setText("페이지: 로딩 중 · "+safePage(url));
                           if(inspecting){
                               result.setText("주문 건수: 확인 실패");
                               finish(inspectSeq,"E_NAVIGATION · 검사 중 페이지 이동. 로딩 후 재검사");
@@ -194,7 +194,7 @@ jobs:
                           view.destroy();browser=null;return true;
                       }
                       @Override public void onPageFinished(WebView view,String url){
-                          pageStatus.setText("페이지: 로딩 완료 · "+safeHost(url));
+                          pageStatus.setText("페이지: 로딩 완료 · "+safePage(url));
                           CookieManager.getInstance().flush();
                       }
                   });
@@ -230,6 +230,18 @@ jobs:
                   try {String host=Uri.parse(address).getHost();return host==null?"호스트 없음":host;}
                   catch(Exception e){return "호스트 확인 불가";}
               }
+              private String safePage(String address){
+                  String host=safeHost(address);
+                  if(!"pay.naver.com".equals(host))return host+" · 경로 숨김";
+                  try{
+                      String path=Uri.parse(address).getPath();
+                      String[] known={"/pc/history","/history","/m/history","/historybenefit/paymenthistory"};
+                      for(String route:known){
+                          if(route.equals(path)||(route+"/").equals(path))return host+route;
+                      }
+                      return host+" · 기타 경로(숨김)";
+                  }catch(Exception e){return host+" · 경로 확인 불가";}
+              }
               private void finish(int seq,String message){
                   if(seq!=inspectSeq||!inspecting)return;
                   inspecting=false;
@@ -249,11 +261,10 @@ jobs:
                   try{
                       if(browser==null)throw new IllegalStateException();
                       Uri current=Uri.parse(browser.getUrl()==null?"":browser.getUrl());
-                      pageStatus.setText("페이지 호스트: "+safeHost(browser.getUrl()==null?"":browser.getUrl()));
-                      if(!"https".equals(current.getScheme())||!"pay.naver.com".equals(current.getHost())||
-                          current.getPath()==null||!current.getPath().startsWith("/pc/history")){
+                      pageStatus.setText("페이지: "+safePage(browser.getUrl()==null?"":browser.getUrl()));
+                      if(!"https".equals(current.getScheme())||!"pay.naver.com".equals(current.getHost())){
                           result.setText("주문 건수: 확인 실패");
-                          finish(seq,"E_URL · 결제내역 열기 후 로그인하고 다시 검사해줘.");
+                          finish(seq,"E_URL · 네이버페이 호스트가 아니야. 결제내역 열기 후 다시 검사해줘.");
                           return;
                       }
                       status.setText("검사 #"+seq+" · S2 JavaScript 응답 대기");
@@ -273,7 +284,7 @@ jobs:
                                   if(!reason.matches("NOT_HISTORY|NO_NEXT_DATA|NO_QUERIES|NO_PAYMENT_LIST|PARSE_ERROR"))
                                       reason="UNKNOWN";
                                   result.setText("주문 건수: 확인 실패");
-                                  finish(seq,"E_DATA · "+reason+" · 새로고침 후 재검사");
+                                  finish(seq,"E_DATA · "+reason+" · 결제내역 화면에서 로딩 후 재검사");
                               }else{
                                   result.setText("현재 불러온 목록: "+d.getInt("items")+"건");
                                   finish(seq,"완료 #"+seq+" · 상품주문번호 "+d.getInt("hasOrderNo")+
