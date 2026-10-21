@@ -577,7 +577,7 @@ jobs:
               private void completeAutoOrder(int run){
                   if(!autoRunning||run!=autoRun)return;
                   java.util.Set<String> pairs=linkedResults.get(detailKeys.get(autoIndex));
-                  if(pairs!=null&&!pairs.isEmpty())autoMatched++;
+                  if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)autoOrderUnbound=true;}
                   else if(autoOrderFailed)autoFailed++;
                   else if(!autoOrderUnbound)autoMissing++;
                   if(autoOrderUnbound)autoUnbound++;
