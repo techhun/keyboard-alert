@@ -32,7 +32,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.4-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.5-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -75,7 +75,7 @@ jobs:
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
               private WebView browser;
               private TextView status, result, pageStatus;
-              private int openTaps=0, inspectTaps=0, testTaps=0;
+              private int openTaps=0, inspectTaps=0, testTaps=0, detailTaps=0;
               private final Handler handler=new Handler(Looper.getMainLooper());
               private int inspectSeq=0;
               private int tapCount=0;
@@ -92,6 +92,7 @@ jobs:
                   "hasDetail:a.filter(x=>!!(x&&x.orderDetailUrl)).length,bundles:a.filter(x=>Number(x&&x.bundlePaymentCount)>1).length,"+
                   "pages:Number((p[0]&&p[0].totalPage)||0)});}catch(_){return JSON.stringify({ok:false,reason:'PARSE_ERROR'});}})()";
 
+              private final String detailJs = "(function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v)){inv=v.replace(/[ -]/g,'');break;}}for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});return JSON.stringify({ok:true,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})()";
               @Override @SuppressLint("SetJavaScriptEnabled")
               protected void onCreate(Bundle state) {
                   super.onCreate(state);
@@ -102,7 +103,7 @@ jobs:
                   root.setPadding(16,32,16,12);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증 v0.1.4");
+                  title.setText("네이버페이 연동 검증 v0.1.5");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
@@ -152,6 +153,10 @@ jobs:
                   nativeTest.setText("버튼 동작 확인 (로그인 무관)");
                   nativeTest.setOnClickListener(v->noteTouch("버튼 동작 확인"));
                   root.addView(nativeTest);
+                  Button detail=new Button(this);
+                  detail.setText("현재 상세·배송 화면 검사");
+                  detail.setOnClickListener(v->{noteTouch("상세 검사");inspectDetail();});
+                  root.addView(detail);
                   browser=new WebView(this);
                   WebSettings s=browser.getSettings();
                   s.setJavaScriptEnabled(true);
@@ -206,8 +211,9 @@ jobs:
                   ++tapCount;
                   if("결제내역 열기".equals(label))openTaps++;
                   else if("현재 목록 검사".equals(label))inspectTaps++;
+                  else if("상세 검사".equals(label))detailTaps++;
                   else testTaps++;
-                  tapStatus.setText("열기 "+openTaps+" / 검사 "+inspectTaps+" / 터치 진단 "+testTaps+"회");
+                  tapStatus.setText("열기 "+openTaps+" / 검사 "+inspectTaps+" / 상세 "+detailTaps+" / 진단 "+testTaps+"회");
                   Toast.makeText(this,"버튼 입력 인식: "+tapCount+"회",Toast.LENGTH_SHORT).show();
               }
               private boolean navigate(String address){
@@ -299,6 +305,57 @@ jobs:
                   }catch(Exception e){
                       result.setText("주문 건수: 확인 실패");
                       finish(seq,"E_EXEC · WebView 검사 실행 실패");
+                  }
+              }
+              private void inspectDetail(){
+                  final int seq=++inspectSeq;
+                  inspecting=true;
+                  result.setText("배송 정보 후보: 검사 중");
+                  status.setText("상세 검사 #"+seq+" · 주문 상세 또는 배송조회 화면을 직접 연 뒤 사용");
+                  handler.postDelayed(()->{
+                      if(seq==inspectSeq&&inspecting){
+                          result.setText("배송 정보 후보: 확인 실패");
+                          finish(seq,"E_DETAIL_TIMEOUT · 응답 없음. 로딩 후 재검사");
+                      }
+                  },9000);
+                  try{
+                      if(browser==null)throw new IllegalStateException();
+                      Uri uri=Uri.parse(browser.getUrl()==null?"":browser.getUrl());
+                      String host=uri.getHost();
+                      pageStatus.setText("상세 페이지 호스트: "+safeHost(browser.getUrl()==null?"":browser.getUrl()));
+                      if(!"https".equals(uri.getScheme())||host==null||
+                          !("pay.naver.com".equals(host)||host.endsWith(".pay.naver.com"))){
+                          result.setText("배송 정보 후보: 확인 실패");
+                          finish(seq,"E_DETAIL_ORIGIN · 네이버페이 상세·배송 화면에서 검사해줘.");return;
+                      }
+                      browser.evaluateJavascript(detailJs,ret->{
+                          if(seq!=inspectSeq||!inspecting)return;
+                          try{
+                              if(ret==null||ret.length()>8192)throw new IllegalArgumentException();
+                              Object value=new JSONArray("["+ret+"]").get(0);
+                              if(!(value instanceof String))throw new IllegalArgumentException();
+                              JSONObject d=new JSONObject((String)value);
+                              if(!d.optBoolean("ok")){
+                                  String reason=d.optString("reason","");
+                                  if(!reason.matches("NOT_PAY_ORIGIN|DATA_TOO_LARGE|DETAIL_PARSE_ERROR"))reason="UNKNOWN";
+                                  result.setText("배송 정보 후보: 확인 실패");
+                                  finish(seq,"E_DETAIL_DATA · "+reason);return;
+                              }
+                              result.setText("구조 내 운송장 후보 "+d.getInt("structuredInvoices")+
+                                  "건 · 택배사 동시 후보 "+d.getInt("structuredPairs")+"건");
+                              finish(seq,"후보 검사 완료 · 화면 번호 후보 "+d.getInt("domInvoices")+
+                                  "건 / 번호 라벨 "+(d.getBoolean("hasLabel")?"있음":"없음")+
+                                  " / 초기 데이터 "+(d.getBoolean("hasData")?"있음":"없음")+
+                                  (d.getBoolean("limited")?" · 검사 한도 도달":"")+
+                                  "\\n확정 추출 아님. 후보 0건도 운송장 없음으로 단정할 수 없어.");
+                          }catch(Exception e){
+                              result.setText("배송 정보 후보: 확인 실패");
+                              finish(seq,"E_DETAIL_JSON · 응답 해석 실패");
+                          }
+                      });
+                  }catch(Exception e){
+                      result.setText("배송 정보 후보: 확인 실패");
+                      finish(seq,"E_DETAIL_EXEC · 검사 실행 실패");
                   }
               }
               @Override public void onBackPressed(){
