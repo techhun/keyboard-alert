@@ -1,18 +1,18 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-22T19:00:47.858Z",
+  "updatedAt": "2026-10-22T19:01:17.069Z",
   "sources": {
     "guheyo": {
       "status": "ok",
       "changedAt": "2026-09-16T12:50:00.000Z"
     },
     "dcinside": {
-      "status": "ok",
-      "changedAt": "2026-09-17T23:03:14.878Z",
-      "consecutiveFailures": 2,
-      "lastFailureRunId": "39835837908",
-      "lastFailureAt": "2026-10-22T19:00:47.858Z"
+      "status": "fail",
+      "changedAt": "2026-10-22T19:01:16.764Z",
+      "consecutiveFailures": 3,
+      "lastFailureRunId": "39836324530",
+      "lastFailureAt": "2026-10-22T19:01:16.764Z"
     },
     "restock": {
       "status": "ok",
