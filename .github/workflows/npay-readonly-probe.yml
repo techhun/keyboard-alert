@@ -550,10 +550,17 @@ jobs:
                   if(!autoRunning)return;
                   autoRunning=false;autoRun++;autoStep++;autoReading=false;autoShipping=false;
                   autoButton.setText("전체 자동 검사");sweepButton.setText("전체 목록 검사");
-                  result.setText("처리 "+autoDone+"/"+detailKeys.size()+" · 배송 확인 "+autoMatched+"건");
+                  String oneOrder="";
+                  if(detailKeys.size()==1){
+                      java.util.Set<String> pairs=linkedResults.get(detailKeys.get(0));
+                      if(pairs!=null&&!pairs.isEmpty())oneOrder=android.text.TextUtils.join(" / ",pairs);
+                  }
+                  result.setText("처리 "+autoDone+"/"+detailKeys.size()+" · 배송 확인 "+autoMatched+"건"+
+                      (oneOrder.isEmpty()?"":"\n"+oneOrder));
                   status.setText(reason+" · 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 검사 "+autoButtonsDone+"/"+autoButtonsTotal+
-                      " · 주문 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음.");
+                      " · 주문 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음."+
+                      (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
                   detailQueue.clear();detailKeys.clear();linkedResults.clear();autoSignature="";autoExpected="";
               }
               private void nextAutoOrder(int run){
