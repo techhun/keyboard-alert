@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-21T00:00:51.140Z",
+  "updatedAt": "2026-10-22T07:10:36.795Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -716,6 +716,23 @@
       "eta": "2026-09-30",
       "status": "제작 중 / In progress",
       "note": "통관 중 / Currently clearing customs",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "cf5f864f625b11735056e2faf3d7d46d",
+      "source": "GEONWORKS",
+      "name": "KRAZE",
+      "eventType": "note_changed",
+      "before": "알루미늄 웨이트 60% 가공, SS 배터리 무게추 50% 가공 / 60% of aluminum weights machined; 50% of SS battery weights machined",
+      "after": "50% 포장 완료, 10월 말 경 포장 완료 예정 / 50 percent of the packaging has been completed; packaging is expected to be completed by the end of October",
+      "occurredAt": "2026-10-22T07:10:36.795Z",
+      "categoryHint": "키보드",
+      "maker": "Nuxroskb",
+      "saleStart": "2026-06-08",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "50% 포장 완료, 10월 말 경 포장 완료 예정 / 50 percent of the packaging has been completed; packaging is expected to be completed by the end of October",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }

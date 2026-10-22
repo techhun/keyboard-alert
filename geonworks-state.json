@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-22T04:40:32.487Z",
+  "updatedAt": "2026-10-22T07:10:36.795Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -390,8 +390,8 @@
       "type": "Keyboard",
       "manufacturer": "Nuxroskb",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 31",
-      "note": "알루미늄 웨이트 60% 가공, SS 배터리 무게추 50% 가공 / 60% of aluminum weights machined; 50% of SS battery weights machined"
+      "update": "2026. 10. 22",
+      "note": "50% 포장 완료, 10월 말 경 포장 완료 예정 / 50 percent of the packaging has been completed; packaging is expected to be completed by the end of October"
     },
     {
       "product": "GMK TA NEO",
@@ -730,6 +730,7 @@
     "a360a4f5303d6f3c0d0e2d97": "2026-10-20T05:30:38.822Z",
     "15d5b35b02bb5b2abb48af35": "2026-10-20T06:50:30.985Z",
     "2545a8d87bc0af53b6b26bd9": "2026-10-20T06:50:31.218Z",
-    "c96620ab741758af53fb1e14": "2026-10-21T00:00:51.140Z"
+    "c96620ab741758af53fb1e14": "2026-10-21T00:00:51.140Z",
+    "8f9be7693957a693c8a777e3": "2026-10-22T07:10:36.794Z"
   }
 }
