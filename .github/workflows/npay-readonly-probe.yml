@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.8 automatic shipping scan
+run-name: NPay probe v0.1.9 automatic shipping scan
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.8-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.9-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -120,7 +120,7 @@ jobs:
                   root.setPadding(16,32,16,12);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("네이버페이 연동 검증 v0.1.8");
+                  title.setText("네이버페이 연동 검증 v0.1.9");
                   title.setTextColor(Color.BLACK);
                   title.setTextSize(20);
                   root.addView(title);
@@ -176,6 +176,10 @@ jobs:
                   detail.setText("현재 상세·배송 화면 검사");
                   detail.setOnClickListener(v->{noteTouch("상세 검사");inspectDetail();});
                   root.addView(detail);
+              Button entry=new Button(this);
+              entry.setText("현재 주문 한 건 · 배송조회 진입 검사");
+              entry.setOnClickListener(v->inspectEntry());
+              root.addView(entry);
                   sweepButton=new Button(this);
                   sweepButton.setText("전체 목록 검사");
                   sweepButton.setOnClickListener(v->{
@@ -252,6 +256,7 @@ jobs:
                   browser.loadUrl(URL);
               }
               private void noteTouch(String label){
+                  ++entrySeq;
                   ++tapCount;
                   if("결제내역 열기".equals(label))openTaps++;
                   else if("현재 목록 검사".equals(label))inspectTaps++;
@@ -352,6 +357,34 @@ jobs:
                       result.setText("주문 건수: 확인 실패");
                       finish(seq,"E_EXEC · WebView 검사 실행 실패");
                   }
+              }
+              private int entrySeq=0;
+              private void inspectEntry(){
+                  if(autoRunning)stopAuto("한 건 검사로 중지 · 부분 결과");
+                  if(sweeping)stopSweep("한 건 검사로 중지 · 부분 결과");
+                  inspecting=false;++inspectSeq;
+                  final int seq=++entrySeq;
+                  status.setText("현재 주문의 배송조회 버튼 확인 중 · 정확히 한 개일 때만 실행");
+                  result.setText("한 건 배송조회: 검사 중");
+                  if(browser==null)return;
+                  browser.evaluateJavascript("(function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({state:'ORIGIN'});var nodes=document.querySelectorAll('button,a,[role=\"button\"]'),found=[],blocked=0;for(var i=0;i<nodes.length&&i<12000;i++){var n=nodes[i];if(!n.getClientRects().length||n.disabled||n.getAttribute('aria-disabled')==='true'||!/^배송\\s*조회$/.test((n.innerText||'').trim()))continue;if(n.tagName==='A'){var href=n.getAttribute('href');if(href&&href!=='#'){var u=new URL(href,location.href);if(u.protocol!=='https:'||u.username||u.password||!(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com'))){blocked++;continue;}}if(n.target&&n.target!=='_self'){blocked++;continue;}}if(!found.some(function(x){return x.contains(n)||n.contains(x);}))found.push(n);}if(nodes.length>12000)return JSON.stringify({state:'LIMIT'});if(found.length!==1)return JSON.stringify({state:'COUNT',count:found.length,blocked:blocked});found[0].click();return JSON.stringify({state:'CLICKED',count:1,blocked:blocked});}catch(_){return JSON.stringify({state:'ERROR'});}})()",ret->{
+                      if(seq!=entrySeq)return;
+                      try{
+                          Object value=new JSONArray("["+ret+"]").get(0);
+                          JSONObject d=new JSONObject((String)value);
+                          String state=d.optString("state");
+                          if("CLICKED".equals(state)){
+                              status.setText("배송조회 버튼 1개 실행 · 3초 뒤 현재 화면 검사 · 주문 연결 확정 아님");
+                              handler.postDelayed(()->{if(seq==entrySeq&&browser!=null)inspectDetail();},3000);
+                          }else if("COUNT".equals(state)){
+                              result.setText("배송조회 버튼 "+d.optInt("count")+"개 · 차단 "+d.optInt("blocked")+"개");
+                              status.setText("버튼이 없거나 여러 개여서 실행하지 않았어. 배송조회할 상품 한 건을 열어줘.");
+                          }else{
+                              result.setText("한 건 배송조회: 실행 안 됨");
+                              status.setText("네이버페이 상세 화면인지 확인해줘. 외부 링크·새 창·검사 한도는 자동 실행하지 않아.");
+                          }
+                      }catch(Exception ignored){result.setText("한 건 배송조회: 응답 확인 실패");}
+                  });
               }
               private void inspectDetail(){
                   if(autoRunning)stopAuto("상세 검사로 중지 · 부분 결과");
@@ -631,6 +664,7 @@ jobs:
                   },2000);
               }
               @Override public void onBackPressed(){
+                  ++entrySeq;
                   if(autoRunning){stopAuto("뒤로가기로 중지 · 부분 결과");return;}
                   if(sweeping){stopSweep("뒤로가기로 중지 · 부분 결과");return;}
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
@@ -651,7 +685,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.8 debug APK
+      - name: Lint and assemble v0.1.9 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
