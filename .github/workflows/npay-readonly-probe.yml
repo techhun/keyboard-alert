@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.10 automatic shipping scan
+run-name: NPay probe v0.1.11 automatic shipping scan
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.10-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.11-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -74,6 +74,66 @@ jobs:
 
           public class MainActivity extends Activity {
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
+              private static final int SAMPLE_LIMIT=10;
+              private final java.util.LinkedHashMap<String,String> detailLabels=new java.util.LinkedHashMap<>();
+              private final java.util.ArrayList<ReportRow> reportRows=new java.util.ArrayList<>();
+              private final java.util.LinkedHashSet<String> orderReasons=new java.util.LinkedHashSet<>();
+              private final java.util.ArrayList<String> buttonNotes=new java.util.ArrayList<>();
+              private final java.util.HashSet<String> observedButtonPairs=new java.util.HashSet<>();
+              private String buttonNote="",reportSummary="";
+              private static class ReportRow {
+                  final String label,state,details,address;
+                  ReportRow(String l,String s,String d,String a){label=l;state=s;details=d;address=a;}
+              }
+              private void markUnbound(String reason){autoOrderUnbound=true;orderReasons.add(reason);}
+              private void markFailed(String reason){autoOrderFailed=true;orderReasons.add(reason);}
+              private String pairsText(JSONObject d) throws Exception {
+                  JSONArray a=d.getJSONArray("domPairs");java.util.ArrayList<String> out=new java.util.ArrayList<>();
+                  for(int i=0;i<a.length();i++){
+                      JSONObject p=a.getJSONObject(i);out.add(p.getString("carrier")+" · ****"+p.getString("tail"));
+                  }
+                  java.util.Collections.sort(out);return android.text.TextUtils.join(" / ",out);
+              }
+              private void recordCurrentOrder(boolean partial){
+                  if(autoIndex>=detailKeys.size())return;
+                  String key=detailKeys.get(autoIndex),label=detailLabels.get(key);
+                  if(label==null)label="선택한 주문";
+                  java.util.Set<String> pairs=linkedResults.get(key);
+                  boolean matched=pairs!=null&&!pairs.isEmpty();
+                  String state=partial?"중지 · 미완료":matched?"배송 확인":autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
+                  if(!partial&&matched&&(autoOrderUnbound||autoOrderFailed))state+=" · 추가 확인";
+                  StringBuilder body=new StringBuilder();
+                  body.append("배송조회 버튼 ").append(Math.max(0,autoButtonCount)).append("개 · 검사 완료 ").append(autoButtonIndex).append("개");
+                  if(matched)body.append("\n확인된 표시 정보: ").append(android.text.TextUtils.join(" / ",pairs));
+                  if(!orderReasons.isEmpty())body.append("\n사유: ").append(android.text.TextUtils.join(" / ",orderReasons));
+                  for(String note:buttonNotes)body.append("\n").append(note);
+                  if(autoShipping)body.append("\n배송조회 ").append(autoButtonIndex+1).append(": ").append(buttonNote);
+                  if(!matched&&!partial&&!autoOrderFailed&&!autoOrderUnbound)body.append("\n운송장 없음으로 확정한 결과가 아님");
+                  reportRows.add(new ReportRow(label,state,body.toString(),detailQueue.get(key)));
+              }
+              private void showReport(){
+                  if(autoRunning||sweeping||reportRows.isEmpty()){
+                      new android.app.AlertDialog.Builder(this).setTitle("검사 안내").setMessage(status.getText()).setPositiveButton("닫기",null).show();return;
+                  }
+                  android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("항목별 검사 결과")
+                      .setPositiveButton("닫기",null).create();
+                  android.widget.ScrollView scroll=new android.widget.ScrollView(this);
+                  LinearLayout content=new LinearLayout(this);content.setOrientation(LinearLayout.VERTICAL);content.setPadding(dp(16),dp(8),dp(16),dp(8));scroll.addView(content);
+                  TextView summary=new TextView(this);summary.setText(reportSummary+"\n목록 순서 기준. 동일 주문의 다른 항목이 포함될 수 있음. 표시 정보가 같아도 동일 송장으로 확정할 수 없음. 앱을 종료하면 결과는 사라짐.");summary.setTextSize(13);content.addView(summary);
+                  for(ReportRow row:reportRows){
+                      TextView text=new TextView(this);text.setText(row.label+" · "+row.state+"\n"+row.details);text.setTextSize(14);
+                      text.setTextColor(Color.BLACK);text.setPadding(0,dp(16),0,dp(4));content.addView(text);
+                      if(row.address!=null&&safeAutoUrl(row.address)){
+                          Button open=new Button(this);open.setText(row.label.split(" · ")[0]+" 주문상세 대조");
+                          open.setOnClickListener(v->{
+                              dialog.dismiss();closeDiagnostics();
+                              if(browser!=null){status.setText(row.label+" · 직접 대조 중. 결과 칸을 누르면 검사 목록을 다시 볼 수 있어.");browser.loadUrl(row.address);}
+                          });content.addView(open);
+                      }
+                  }
+                  dialog.setView(scroll);dialog.show();
+              }
+
               private Button autoButton;
               private boolean collectDetails=false, autoRunning=false, autoReading=false;
               private int autoRun=0, autoStep=0, autoIndex=0, autoDone=0, autoMatched=0, autoMissing=0, autoFailed=0, autoUnbound=0, autoNoLink=0, autoListCount=0;
@@ -124,7 +184,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.10");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.11");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -132,9 +192,9 @@ jobs:
                   result.setText("주문 검사 전");root.addView(result);
                   status=new TextView(this);status.setTextColor(Color.DKGRAY);status.setTextSize(12);
                   status.setMaxLines(2);status.setEllipsize(android.text.TextUtils.TruncateAt.END);
-                  status.setPadding(dp(8),dp(3),dp(8),dp(3));status.setText("로그인 후 전체 자동 검사 · 안내를 누르면 자세히 볼 수 있어.");
-                  status.setOnClickListener(v->new android.app.AlertDialog.Builder(this).setTitle("검사 안내")
-                      .setMessage(status.getText()).setPositiveButton("닫기",null).show());
+                  status.setPadding(dp(8),dp(3),dp(8),dp(3));status.setText("로그인 후 최근 10건 검사 · 결과/안내를 누르면 항목별로 볼 수 있어.");
+                  status.setOnClickListener(v->showReport());
+                  result.setOnClickListener(v->showReport());
                   root.addView(status);
                   LinearLayout buttons=new LinearLayout(this);
                   Button reload=new Button(this);reload.setText("결제내역");
@@ -143,7 +203,7 @@ jobs:
                       if(sweeping)stopSweep("화면 이동으로 중지 · 부분 결과");
                       noteTouch("결제내역 열기");closeDiagnostics();if(browser!=null)browser.loadUrl(URL);
                   });
-                  autoButton=new Button(this);autoButton.setText("전체 자동 검사");
+                  autoButton=new Button(this);autoButton.setText("최근 10건 검사");
                   autoButton.setOnClickListener(v->{
                       ++entrySeq;
                       if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
@@ -425,7 +485,7 @@ jobs:
                       !("/history".equals(path)||"/history/".equals(path)||"/pc/history".equals(path)||"/pc/history/".equals(path))){
                       status.setText("결제내역 목록에서 로그인한 뒤 전체 목록 검사를 눌러줘.");return;
                   }
-                  detailQueue.clear();linkedResults.clear();
+                  detailQueue.clear();linkedResults.clear();detailLabels.clear();reportRows.clear();reportSummary="";
                   if(collectDetails)autoButton.setText("목록 검사 중지");
                   inspectSeq++;inspecting=false;
                   sweeping=true;sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
@@ -441,7 +501,7 @@ jobs:
                   status.setText(reason+" · 중복 "+sweepDuplicates+"건 제외"+
                       "\n묶음 내 개별 상품·배송정보 수집은 미포함. 재시작하면 처음부터 검사.");
                   sweepKeys.clear();
-                  if(collectDetails){collectDetails=false;detailQueue.clear();autoButton.setText("전체 자동 검사");}
+                  if(collectDetails){collectDetails=false;detailQueue.clear();autoButton.setText("최근 10건 검사");}
               }
               private void loadSweepPage(int run){
                   if(!sweeping||run!=sweepRun||browser==null)return;
@@ -492,9 +552,10 @@ jobs:
                                       if(!id.matches("[A-Za-z0-9_-]{1,80}"))throw new IllegalArgumentException();
                                       String hash=android.util.Base64.encodeToString(digest.digest(id.getBytes(java.nio.charset.StandardCharsets.UTF_8)),android.util.Base64.NO_WRAP);
                                       if(!batch.add(hash))sweepDuplicates++;
-                                      if(collectDetails&&!detailQueue.containsKey(hash)){
+                                      if(collectDetails&&detailQueue.size()<SAMPLE_LIMIT&&!detailQueue.containsKey(hash)){
                                           String link=links.getString(i);
                                           detailQueue.put(hash,safeAutoUrl(link)?link:"");
+                                          detailLabels.put(hash,"목록 "+detailQueue.size()+(id.length()>4?" · 상품주문키 ****"+id.substring(id.length()-4):""));
                                       }
                                   }
                                   if(batch.isEmpty()&&!(page==1&&total==0)){stopSweep("E_SWEEP_EMPTY · 예상 밖 빈 페이지 · 부분 결과");return;}
@@ -502,10 +563,10 @@ jobs:
                                   if(added==0&&!batch.isEmpty()){stopSweep("E_SWEEP_REPEATED · 같은 목록 반복 · 부분 결과");return;}
                                   sweepReadPages++;
                                   if(sweepKeys.size()>100000){stopSweep("E_SWEEP_LIMIT · 검사 한도 · 부분 결과");return;}
-                                  if(page>=total){
+                                  if((collectDetails&&detailQueue.size()>=SAMPLE_LIMIT)||page>=total){
                                       if(collectDetails){
-                                          autoListCount=sweepKeys.size();collectDetails=false;
-                                          stopSweep("페이지 검사 완료 · 배송정보 연결 준비");startAuto();
+                                          autoListCount=detailQueue.size();collectDetails=false;
+                                          stopSweep("최대 10건 수집 완료 · 배송 검사 준비");startAuto();
                                       }else stopSweep("페이지 검사 완료 · 현재 조회조건 기준");
                                       return;
                                   }
@@ -537,10 +598,11 @@ jobs:
                       status.setText("검사할 주문상세를 직접 연 뒤 눌러줘.");return;
                   }
                   ++entrySeq;++inspectSeq;inspecting=false;collectDetails=false;
-                  detailQueue.clear();linkedResults.clear();detailQueue.put("current",address);
+                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailQueue.put("current",address);detailLabels.put("current","선택한 주문");
                   autoListCount=1;closeDiagnostics();startAuto();
               }
               private void startAuto(){
+                  reportRows.clear();reportSummary="";
                   detailKeys.clear();detailKeys.addAll(detailQueue.keySet());
                   autoRunning=true;autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
                   autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;
@@ -548,8 +610,11 @@ jobs:
               }
               private void stopAuto(String reason){
                   if(!autoRunning)return;
+                  if(autoIndex<detailKeys.size()){
+                      orderReasons.add(reason);recordCurrentOrder(true);
+                  }
                   autoRunning=false;autoRun++;autoStep++;autoReading=false;autoShipping=false;
-                  autoButton.setText("전체 자동 검사");sweepButton.setText("전체 목록 검사");
+                  autoButton.setText("최근 10건 검사");sweepButton.setText("전체 목록 검사");
                   String oneOrder="";
                   if(detailKeys.size()==1){
                       java.util.Set<String> pairs=linkedResults.get(detailKeys.get(0));
@@ -559,40 +624,47 @@ jobs:
                       (oneOrder.isEmpty()?"":"\n"+oneOrder));
                   status.setText(reason+" · 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 검사 "+autoButtonsDone+"/"+autoButtonsTotal+
-                      " · 주문 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음."+
+                      " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
-                  detailQueue.clear();detailKeys.clear();linkedResults.clear();autoSignature="";autoExpected="";
+                  reportSummary=result.getText()+"\n"+status.getText();
+                  detailQueue.clear();detailKeys.clear();detailLabels.clear();linkedResults.clear();autoSignature="";autoExpected="";
+                  if("자동 검사 완료".equals(reason))showReport();
               }
               private void nextAutoOrder(int run){
                   if(!autoRunning||run!=autoRun)return;
                   while(autoIndex<detailKeys.size()){
                       String key=detailKeys.get(autoIndex),link=detailQueue.get(key);
-                      if(link==null||link.isEmpty()){autoNoLink++;autoDone++;autoIndex++;continue;}
+                      if(link==null||link.isEmpty()){
+                          String label=detailLabels.get(key);if(label==null)label="목록 "+(autoIndex+1);
+                          reportRows.add(new ReportRow(label,"링크 없음","허용된 네이버페이 주문상세 링크를 찾지 못함",null));
+                          autoNoLink++;autoDone++;autoIndex++;continue;
+                      }
                       autoButtonIndex=0;autoButtonCount=-1;autoSignature="";autoRootPairs="";autoShipping=false;
-                      autoOrderFailed=false;autoOrderUnbound=false;
+                      autoOrderFailed=false;autoOrderUnbound=false;orderReasons.clear();buttonNotes.clear();observedButtonPairs.clear();buttonNote="";
                       linkedResults.put(key,new java.util.LinkedHashSet<>());loadAutoPage(run,link);return;
                   }
                   stopAuto("자동 검사 완료");
               }
               private void loadAutoPage(int run,String address){
                   if(!autoRunning||run!=autoRun||browser==null)return;
-                  if(!safeAutoUrl(address)){autoOrderFailed=true;completeAutoOrder(run);return;}
+                  if(!safeAutoUrl(address)){markFailed("주문상세 링크 검증 실패");completeAutoOrder(run);return;}
                   autoExpected=address;autoReading=false;autoShipping=false;final int step=++autoStep;
                   status.setText("주문 "+(autoIndex+1)+"/"+detailKeys.size()+" · 상세 화면 로딩"+
                       (autoButtonCount>=0?" · 다음 배송조회 "+(autoButtonIndex+1)+"/"+autoButtonCount:""));
                   result.setText("처리 "+autoDone+"건 · 배송 확인 "+autoMatched+"건");
                   handler.postDelayed(()->{
-                      if(autoRunning&&run==autoRun&&step==autoStep){autoOrderUnbound=true;completeAutoOrder(run);}
+                      if(autoRunning&&run==autoRun&&step==autoStep){markUnbound(sameAutoPage(browser.getUrl()==null?"":browser.getUrl())?"주문상세 응답 시간 초과":"주문상세 주소 변경 또는 로딩 지연");completeAutoOrder(run);}
                   },25000);
-                  try{browser.loadUrl(address);}catch(Exception ignored){autoOrderFailed=true;completeAutoOrder(run);}
+                  try{browser.loadUrl(address);}catch(Exception ignored){markFailed("상세 검사 실행·응답 검증 실패");completeAutoOrder(run);}
               }
               private void completeAutoOrder(int run){
                   if(!autoRunning||run!=autoRun)return;
                   java.util.Set<String> pairs=linkedResults.get(detailKeys.get(autoIndex));
-                  if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)autoOrderUnbound=true;}
+                  if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)markUnbound("일부 검사 실패");}
                   else if(autoOrderFailed)autoFailed++;
                   else if(!autoOrderUnbound)autoMissing++;
                   if(autoOrderUnbound)autoUnbound++;
+                  recordCurrentOrder(false);
                   autoDone++;autoIndex++;autoStep++;nextAutoOrder(run);
               }
               private void readAutoPairs(JSONObject d) throws Exception {
@@ -606,7 +678,7 @@ jobs:
                       if(!company.matches(allowed)||!tail.matches("[0-9]{4}"))throw new IllegalArgumentException();
                       connected.add(company+" · ****"+tail);
                   }
-                  if(d.optBoolean("limited"))autoOrderUnbound=true;
+                  if(d.optBoolean("limited"))markUnbound("배송정보 추출 한도 도달");
                   if(!connected.isEmpty())result.setText("현재 주문: "+android.text.TextUtils.join(" / ",connected));
               }
               private JSONObject decodeAuto(String ret) throws Exception {
@@ -618,41 +690,44 @@ jobs:
               private void pollAuto(int run,int step,int attempt){
                   handler.postDelayed(()->{
                       if(!autoRunning||run!=autoRun||step!=autoStep||browser==null||autoShipping)return;
-                      if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){autoOrderUnbound=true;completeAutoOrder(run);return;}
+                      if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){markUnbound("주문상세 주소 변경");completeAutoOrder(run);return;}
                       try{browser.evaluateJavascript(autoJs,ret->{
                           if(!autoRunning||run!=autoRun||step!=autoStep)return;
                           try{
-                              if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){autoOrderUnbound=true;completeAutoOrder(run);return;}
+                              if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){markUnbound("주문상세 주소 변경");completeAutoOrder(run);return;}
                               JSONObject d=decodeAuto(ret);if(!d.optBoolean("ok"))throw new IllegalArgumentException();
                               JSONArray keys=d.getJSONArray("controlKeys");int count=keys.length();
                               if(count==0&&d.getJSONArray("domPairs").length()==0&&attempt<4){pollAuto(run,step,attempt+1);return;}
                               readAutoPairs(d);
-                              if(d.optBoolean("controlLimited")){autoOrderUnbound=true;completeAutoOrder(run);return;}
-                              if(d.optInt("blockedControls")>0)autoOrderUnbound=true;
+                              if(d.optBoolean("controlLimited")){markUnbound("배송조회 버튼 검사 한도 초과");completeAutoOrder(run);return;}
+                              if(d.optInt("blockedControls")>0)markUnbound("자동 실행 제외 버튼 "+d.optInt("blockedControls")+"개 (외부 링크·새 창 등)");
                               String signature=keys.toString();
                               if(autoButtonCount<0){autoButtonCount=count;autoSignature=signature;autoRootPairs=d.getJSONArray("domPairs").toString();autoButtonsTotal+=count;}
-                              else if(autoButtonCount!=count||!autoSignature.equals(signature)){autoOrderUnbound=true;completeAutoOrder(run);return;}
-                              if(autoButtonIndex>=count){completeAutoOrder(run);return;}
+                              else if(autoButtonCount!=count||!autoSignature.equals(signature)){markUnbound("주문상세 복귀 후 버튼 구성·주변 내용 변경");completeAutoOrder(run);return;}
+                              if(autoButtonIndex>=count){
+                                  if(count==0&&d.getJSONArray("domPairs").length()==0)orderReasons.add("상세 화면 배송조회 버튼 0개 · 택배사/번호 조합 미검출");
+                                  completeAutoOrder(run);return;
+                              }
                               clickAutoControl(run);
-                          }catch(Exception ignored){autoOrderFailed=true;completeAutoOrder(run);}
-                      });}catch(Exception ignored){autoOrderFailed=true;completeAutoOrder(run);}
+                          }catch(Exception ignored){markFailed("상세 검사 실행·응답 검증 실패");completeAutoOrder(run);}
+                      });}catch(Exception ignored){markFailed("상세 검사 실행·응답 검증 실패");completeAutoOrder(run);}
                   },1200);
               }
               private void clickAutoControl(int run){
                   if(!autoRunning||run!=autoRun||browser==null)return;
-                  autoShipping=true;autoReading=true;final int step=++autoStep;
+                  autoShipping=true;autoReading=true;buttonNote="응답 대기 중";final int step=++autoStep;
                   status.setText("주문 "+(autoIndex+1)+"/"+detailKeys.size()+" · 배송조회 "+(autoButtonIndex+1)+"/"+autoButtonCount);
                   handler.postDelayed(()->{
-                      if(autoRunning&&run==autoRun&&step==autoStep){autoOrderUnbound=true;finishAutoShipping(run);}
+                      if(autoRunning&&run==autoRun&&step==autoStep){markUnbound("배송조회 응답 시간 초과");buttonNote="응답 시간 초과";finishAutoShipping(run);}
                   },25000);
                   String script=clickControlJs+"("+JSONObject.quote(autoExpected)+","+JSONObject.quote(autoSignature)+","+autoButtonIndex+")";
                   try{browser.evaluateJavascript(script,ret->{
                       if(!autoRunning||run!=autoRun||step!=autoStep)return;
                       try{
-                          if(!"CLICKED".equals(decodeAuto(ret).optString("state"))){autoOrderUnbound=true;completeAutoOrder(run);return;}
+                          if(!"CLICKED".equals(decodeAuto(ret).optString("state"))){buttonNote="실행 전 화면·버튼 변경 또는 실행 실패";markUnbound("배송조회 버튼 실행 전 검증 실패");completeAutoOrder(run);return;}
                           pollAutoShipping(run,step,0);
-                      }catch(Exception ignored){autoOrderFailed=true;completeAutoOrder(run);}
-                  });}catch(Exception ignored){autoOrderFailed=true;completeAutoOrder(run);}
+                      }catch(Exception ignored){buttonNote="실행·응답 검증 실패";markFailed("배송조회 버튼 실행·응답 검증 실패");completeAutoOrder(run);}
+                  });}catch(Exception ignored){buttonNote="실행·응답 검증 실패";markFailed("배송조회 버튼 실행·응답 검증 실패");completeAutoOrder(run);}
               }
               private void pollAutoShipping(int run,int step,int attempt){
                   handler.postDelayed(()->{
@@ -662,18 +737,23 @@ jobs:
                       try{browser.evaluateJavascript(detailJs,ret->{
                           if(!autoRunning||run!=autoRun||step!=autoStep)return;
                           try{
-                              if(!page.equals(browser.getUrl())){if(attempt<11){pollAutoShipping(run,step,attempt+1);return;}autoOrderUnbound=true;finishAutoShipping(run);return;}
+                              if(!page.equals(browser.getUrl())){if(attempt<11){pollAutoShipping(run,step,attempt+1);return;}markUnbound("배송조회 로딩 중 주소 변경 지속");buttonNote="주소 변경 지속";finishAutoShipping(run);return;}
                               JSONObject d=decodeAuto(ret);if(!d.optBoolean("ok"))throw new IllegalArgumentException();
                               if(d.getJSONArray("domPairs").length()==0&&attempt<11){pollAutoShipping(run,step,attempt+1);return;}
                               readAutoPairs(d);
-                              if(d.getJSONArray("domPairs").length()==0||(sameAutoPage(page)&&autoRootPairs.equals(d.getJSONArray("domPairs").toString())))autoOrderUnbound=true;
+                              String found=pairsText(d);
+                              buttonNote=found.isEmpty()?"택배사/번호 조합 미검출":found;
+                              if(!found.isEmpty()&&!observedButtonPairs.add(found))buttonNote+=" (앞 버튼과 표시 정보 같음 · 동일 송장 여부 미확정)";
+                              if(found.isEmpty())markUnbound("배송조회 "+(autoButtonIndex+1)+" · 화면 배송정보 미검출");
+                              if(sameAutoPage(page)&&autoRootPairs.equals(d.getJSONArray("domPairs").toString()))markUnbound("배송조회 실행 후 화면 전환 미확인");
                               finishAutoShipping(run);
-                          }catch(Exception ignored){autoOrderFailed=true;finishAutoShipping(run);}
-                      });}catch(Exception ignored){autoOrderFailed=true;finishAutoShipping(run);}
+                          }catch(Exception ignored){markFailed("배송조회 실행·응답 검증 실패");buttonNote="응답 검증 실패";finishAutoShipping(run);}
+                      });}catch(Exception ignored){markFailed("배송조회 실행·응답 검증 실패");buttonNote="응답 검증 실패";finishAutoShipping(run);}
                   },1200);
               }
               private void finishAutoShipping(int run){
                   if(!autoRunning||run!=autoRun)return;
+                  buttonNotes.add("배송조회 "+(autoButtonIndex+1)+": "+buttonNote);
                   autoButtonsDone++;autoButtonIndex++;autoStep++;autoShipping=false;
                   if(autoButtonIndex<autoButtonCount)loadAutoPage(run,autoExpected);else completeAutoOrder(run);
               }
@@ -685,7 +765,7 @@ jobs:
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
               }
               @Override protected void onDestroy(){
-                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();
+                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();detailLabels.clear();reportRows.clear();
                   sweeping=false;sweepRun++;sweepKeys.clear();
                   handler.removeCallbacksAndMessages(null);
                   if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
@@ -700,7 +780,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.10 debug APK
+      - name: Lint and assemble v0.1.11 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
