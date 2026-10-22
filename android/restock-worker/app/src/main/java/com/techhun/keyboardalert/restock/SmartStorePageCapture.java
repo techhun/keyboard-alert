@@ -16,6 +16,7 @@ final class SmartStorePageCapture {
           window.__RESTOCK_CAPTURE_INSTALLED__ = true;
           window.__RESTOCK_CAPTURED_RESPONSES__ = [];
           window.__RESTOCK_PRODUCT_OUTCOMES__ = [];
+          const trace = window.__RESTOCK_CAPTURE_TRACE__ = { installedAt: Math.round(performance.now()), requests: [] };
 
           const smartStoreUrl = (value) => {
             try {
@@ -34,6 +35,22 @@ final class SmartStorePageCapture {
             } catch (ignored) {
               return false;
             }
+          };
+
+          const startRequest = (url, transport) => {
+            try {
+              if (!smartStoreUrl(url) || !isExactProductApi(url)) return null;
+              const productNo = new URL(String(url), location.href).pathname.split('/').filter(Boolean).pop();
+              const request = { productNo, transport, start: Math.round(performance.now()), done: false };
+              trace.requests.push(request);
+              while (trace.requests.length > 12) trace.requests.shift();
+              return request;
+            } catch (ignored) { return null; }
+          };
+          const finishRequest = (request) => {
+            if (!request) return;
+            request.done = true;
+            request.end = Math.round(performance.now());
           };
 
           // Status-only telemetry: do not retain headers, cookies, or error bodies.
@@ -70,14 +87,17 @@ final class SmartStorePageCapture {
           try {
             const originalFetch = window.fetch;
             if (typeof originalFetch === 'function') {
-              window.fetch = async function(...args) {
+              window.fetch = trace.fetchHook = async function(...args) {
+                const request = startRequest(args[0]?.url || args[0], 'fetch');
                 let response;
                 try {
                   response = await originalFetch.apply(this, args);
                 } catch (error) {
+                  finishRequest(request);
                   recordOutcome(args[0]?.url || args[0], 0, 'network-error');
                   throw error;
                 }
+                finishRequest(request);
                 recordOutcome(response.url, response.status, 'http');
                 try {
                   const clone = response.clone();
@@ -96,7 +116,9 @@ final class SmartStorePageCapture {
               this.__restockUrl = url;
               return originalOpen.call(this, method, url, ...rest);
             };
-            XMLHttpRequest.prototype.send = function(...args) {
+            XMLHttpRequest.prototype.send = trace.xhrHook = function(...args) {
+              const request = startRequest(this.__restockUrl, 'xhr');
+              this.addEventListener('loadend', () => finishRequest(request), { once: true });
               this.addEventListener('load', function() {
                 recordOutcome(this.responseURL || this.__restockUrl, this.status, 'http');
                 try {
@@ -104,7 +126,9 @@ final class SmartStorePageCapture {
                   if (this.responseType === 'json') data = this.response;
                   else if (!this.responseType || this.responseType === 'text') data = JSON.parse(this.responseText);
                   record(this.responseURL || this.__restockUrl, this.status, data);
-                } catch (ignored) {}
+                } catch (ignored) {
+                  recordOutcome(this.responseURL || this.__restockUrl, this.status, 'not-json');
+                }
               }, { once: true });
               return originalSend.apply(this, args);
             };

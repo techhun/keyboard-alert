@@ -443,7 +443,15 @@ final class InventoryScript {
 
               const outcomes = (Array.isArray(window.__RESTOCK_PRODUCT_OUTCOMES__)
                 ? window.__RESTOCK_PRODUCT_OUTCOMES__ : []).filter((item) => item.productNo === productNo);
-              const pageDiagnostic = `ready=${document.readyState}; ms=${Math.round(performance.now())}; hook=${!!window.__RESTOCK_CAPTURE_INSTALLED__}; cap=${capturedResponses.length}; exact=${!!capturedProduct}; model=${!!pageModel}; HTTP=${outcomes.slice(-2).map((item) => item.status + ':' + item.kind).join(',') || 'none'}`;
+              const trace = window.__RESTOCK_CAPTURE_TRACE__;
+              const requests = (trace?.requests || []).filter((item) => item.productNo === productNo);
+              const pending = requests.filter((item) => !item.done);
+              const resourceCount = resources.filter((value) => {
+                try { return new URL(value, location.href).pathname.endsWith('/products/' + productNo); }
+                catch (ignored) { return false; }
+              }).length;
+              const traceDiagnostic = `started=${requests.length}; pending=${pending.length}; oldest=${pending.length ? Math.round(performance.now()) - pending[0].start : 0}; resource=${resourceCount}; fetchHook=${!!trace && window.fetch === trace.fetchHook}; xhrHook=${!!trace && typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.send === trace.xhrHook}`;
+              const pageDiagnostic = `ready=${document.readyState}; ms=${Math.round(performance.now())}; hook=${!!window.__RESTOCK_CAPTURE_INSTALLED__}; cap=${capturedResponses.length}; exact=${!!capturedProduct}; model=${!!pageModel}; ${traceDiagnostic}; HTTP=${outcomes.slice(-2).map((item) => item.status + ':' + item.kind).join(',') || 'none'}`;
 
               if (!allowApiFallback) {
                 send({ ok: false, error: 'API_DEFERRED', pageUrl: location.href, title: document.title,
