@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-22T18:01:16.296Z",
+  "updatedAt": "2026-10-23T14:31:23.980Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -202,7 +202,7 @@
     {
       "category": "Keycap",
       "product": "GMK 2Pack",
-      "status": "Order placed.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-2pack-keycaps"
     },
@@ -216,7 +216,7 @@
     {
       "category": "Keycap",
       "product": "GMK CYL Masterpiece R2",
-      "status": "In queue for production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-keycaps"
     },
@@ -344,6 +344,8 @@
     "9f1ba2de5627dbac0ef8f6e3": "2026-10-19T18:23:01.482Z",
     "1721acc184e7a5b1151609ef": "2026-10-19T18:32:59.283Z",
     "9ecd823d6d6ef5842c8af8c6": "2026-10-22T18:01:15.999Z",
-    "8916739901a863f7e7510f74": "2026-10-22T18:01:16.293Z"
+    "8916739901a863f7e7510f74": "2026-10-22T18:01:16.293Z",
+    "328505f551055b3c88f939eb": "2026-10-23T14:31:23.752Z",
+    "726a50e3c03e88a13e6e9c9a": "2026-10-23T14:31:23.979Z"
   }
 }
