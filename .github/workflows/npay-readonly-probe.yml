@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.11 automatic shipping scan
+run-name: NPay probe v0.1.12 automatic shipping scan
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.11-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.12-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -75,6 +75,9 @@ jobs:
           public class MainActivity extends Activity {
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
               private static final int SAMPLE_LIMIT=10;
+              private final java.util.LinkedHashMap<String,String> detailIds=new java.util.LinkedHashMap<>();
+              private int autoCancelled=0;
+              private boolean targetCancelled=false;
               private final java.util.LinkedHashMap<String,String> detailLabels=new java.util.LinkedHashMap<>();
               private final java.util.ArrayList<ReportRow> reportRows=new java.util.ArrayList<>();
               private final java.util.LinkedHashSet<String> orderReasons=new java.util.LinkedHashSet<>();
@@ -100,7 +103,7 @@ jobs:
                   if(label==null)label="선택한 주문";
                   java.util.Set<String> pairs=linkedResults.get(key);
                   boolean matched=pairs!=null&&!pairs.isEmpty();
-                  String state=partial?"중지 · 미완료":matched?"배송 확인":autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
+                  String state=partial?"중지 · 미완료":targetCancelled?"취소완료 · 배송조회 대상 제외":matched?"배송 확인":autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
                   if(!partial&&matched&&(autoOrderUnbound||autoOrderFailed))state+=" · 추가 확인";
                   StringBuilder body=new StringBuilder();
                   body.append("배송조회 버튼 ").append(Math.max(0,autoButtonCount)).append("개 · 검사 완료 ").append(autoButtonIndex).append("개");
@@ -108,7 +111,7 @@ jobs:
                   if(!orderReasons.isEmpty())body.append("\n사유: ").append(android.text.TextUtils.join(" / ",orderReasons));
                   for(String note:buttonNotes)body.append("\n").append(note);
                   if(autoShipping)body.append("\n배송조회 ").append(autoButtonIndex+1).append(": ").append(buttonNote);
-                  if(!matched&&!partial&&!autoOrderFailed&&!autoOrderUnbound)body.append("\n운송장 없음으로 확정한 결과가 아님");
+                  if(!matched&&!partial&&!targetCancelled&&!autoOrderFailed&&!autoOrderUnbound)body.append("\n운송장 없음으로 확정한 결과가 아님");
                   reportRows.add(new ReportRow(label,state,body.toString(),detailQueue.get(key)));
               }
               private void showReport(){
@@ -147,7 +150,7 @@ jobs:
               private String autoSignature="",autoRootPairs="";
               private String autoExpected="";
               private boolean autoOrderFailed=false,autoOrderUnbound=false;
-              private final String autoJs="(function(){try{var d=JSON.parse((function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v)){inv=v.replace(/[ -]/g,'');break;}}for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([0-9][0-9 -]{6,28}[0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:number.slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})());if(!d.ok)return JSON.stringify(d);function controls(){\n var all=document.querySelectorAll('button,a,[role=\"button\"]'),nodes=[],keys=[],blocked=0;\n for(var i=0;i<all.length&&i<12000;i++){\n  var n=all[i];\n  if(!n.getClientRects().length||n.disabled||n.getAttribute('aria-disabled')==='true'||!/^배송\\s*조회$/.test((n.innerText||'').trim()))continue;\n  var style=getComputedStyle(n);if(style.visibility==='hidden'||style.visibility==='collapse')continue;\n  var href='';\n  var context=n,stamp=(n.innerText||'').trim();\n  for(var depth=0;depth<3&&context.parentElement;depth++){\n   context=context.parentElement;\n   var text=(context.innerText||'').replace(/\\s+/g,' ').trim();\n   if(text.length>2000)break;\n   stamp=text;\n  }\n  var h1=2166136261,h2=5381;\n  for(var pos=0;pos<stamp.length;pos++){h1=Math.imul(h1^stamp.charCodeAt(pos),16777619);h2=Math.imul(h2,33)^stamp.charCodeAt(pos);}\n  var fingerprint=(h1>>>0).toString(16)+'-'+(h2>>>0).toString(16);\n  if(n.tagName==='A'){\n   var raw=n.getAttribute('href');\n   if(raw&&raw!=='#'){\n    try{var u=new URL(raw,location.href);if(u.protocol!=='https:'||u.username||u.password||!(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com'))){blocked++;continue;}href=u.href;}catch(_){blocked++;continue;}\n   }\n   if(n.target&&n.target!=='_self'){blocked++;continue;}\n  }\n  if(nodes.some(function(x){return x.contains(n)||n.contains(x);}))continue;\n  nodes.push(n);keys.push(n.tagName+'|'+href+'|'+fingerprint);\n }\n return {nodes:nodes,keys:keys,blocked:blocked,limited:all.length>12000||nodes.length>20};\n}\nvar c=controls();d.controlKeys=c.keys;d.blockedControls=c.blocked;d.controlLimited=c.limited;return JSON.stringify(d);}catch(_){return JSON.stringify({ok:false});}})()";
+              private final String autoJs="(function(__TARGET__){try{var d=JSON.parse((function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v,c){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');if(c==='컬리넥스트마일')return /^[A-Za-z0-9]{8,40}$/.test(n)&&/[0-9]/.test(n);return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v,car)){inv=v.replace(/[ -]/g,'');break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([A-Za-z0-9][A-Za-z0-9 -]{6,38}[A-Za-z0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2],pm[1]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:(pm[1]==='컬리넥스트마일'?number.toUpperCase():number).slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})());if(!d.ok)return JSON.stringify(d);function controls(){\n var all=document.querySelectorAll('button,a,[role=\"button\"]'),nodes=[],keys=[],blocked=0;\n for(var i=0;i<all.length&&i<12000;i++){\n  var n=all[i];\n  if(!n.getClientRects().length||n.disabled||n.getAttribute('aria-disabled')==='true'||!/^배송\\s*조회$/.test((n.innerText||'').trim()))continue;\n  var style=getComputedStyle(n);if(style.visibility==='hidden'||style.visibility==='collapse')continue;\n  var href='';\n  var context=n,stamp=(n.innerText||'').trim();\n  for(var depth=0;depth<3&&context.parentElement;depth++){\n   context=context.parentElement;\n   var text=(context.innerText||'').replace(/\\s+/g,' ').trim();\n   if(text.length>2000)break;\n   stamp=text;\n  }\n  var h1=2166136261,h2=5381;\n  for(var pos=0;pos<stamp.length;pos++){h1=Math.imul(h1^stamp.charCodeAt(pos),16777619);h2=Math.imul(h2,33)^stamp.charCodeAt(pos);}\n  var fingerprint=(h1>>>0).toString(16)+'-'+(h2>>>0).toString(16);\n  if(n.tagName==='A'){\n   var raw=n.getAttribute('href');\n   if(raw&&raw!=='#'){\n    try{var u=new URL(raw,location.href);if(u.protocol!=='https:'||u.username||u.password||!(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com'))){blocked++;continue;}href=u.href;}catch(_){blocked++;continue;}\n   }\n   if(n.target&&n.target!=='_self'){blocked++;continue;}\n  }\n  if(nodes.some(function(x){return x.contains(n)||n.contains(x);}))continue;\n  nodes.push(n);keys.push(n.tagName+'|'+href+'|'+fingerprint);\n }\n return {nodes:nodes,keys:keys,blocked:blocked,limited:all.length>12000||nodes.length>20};\n}\nvar c=controls();d.controlKeys=c.keys;d.blockedControls=c.blocked;d.controlLimited=c.limited;function cancelStatus(expected){\n var result={cancelled:false,limited:false,ambiguous:false};\n if(typeof expected!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(expected))return result;\n var all=document.querySelectorAll('div,section,li,p,span,dl'),labels=[];\n if(all.length>12000){result.limited=true;return result;}\n function visible(n){return n.getClientRects().length&&getComputedStyle(n).visibility!=='hidden'&&getComputedStyle(n).visibility!=='collapse';}\n var label=/^상품주문번호\\s*[:：]?\\s*([A-Za-z0-9_-]{1,80})\\s*(?:복사하기|복사)?$/;\n for(var i=0;i<all.length;i++){\n  var n=all[i];if(!visible(n))continue;\n  var text=(n.innerText||'').trim();if(text.length>160)continue;\n  var m=text.match(label);if(!m)continue;\n  // Prefer the smallest element that contains the complete label and key.\n  var nested=false;\n  for(var j=labels.length-1;j>=0;j--){\n   if(labels[j].node.contains(n))labels.splice(j,1);\n   else if(n.contains(labels[j].node))nested=true;\n  }\n  if(!nested)labels.push({node:n,key:m[1]});\n }\n var target=labels.filter(function(x){return x.key===expected;});\n if(target.length!==1){result.ambiguous=target.length>1;return result;}\n var block=target[0].node;\n for(var depth=0;depth<7&&block;depth++,block=block.parentElement){\n  var text=(block.innerText||'');if(text.length>12000){result.limited=true;return result;}\n  if(labels.filter(function(x){return block.contains(x.node);}).length!==1)return result;\n  var nodes=block.querySelectorAll('div,section,li,p,span,dl');\n  if(nodes.length>1500){result.limited=true;return result;}\n  var cancelled=false;\n  for(var k=0;k<nodes.length;k++){\n   var status=nodes[k];if(!visible(status)||(status.innerText||'').trim()!=='취소완료')continue;\n   if(status.closest('a,button,[role=\"button\"]'))continue;\n   cancelled=true;break;\n  }\n  if(!cancelled)continue;\n  var actions=block.querySelectorAll('button,a,[role=\"button\"]');\n  for(var a=0;a<actions.length;a++){\n   if(visible(actions[a])&&/^배송\\s*조회$/.test((actions[a].innerText||'').trim()))return result;\n  }\n  result.cancelled=true;return result;\n }\n return result;\n}\nvar state=cancelStatus(__TARGET__);d.targetCancelled=state.cancelled;d.cancelLimited=state.limited;d.cancelAmbiguous=state.ambiguous;return JSON.stringify(d);}catch(_){return JSON.stringify({ok:false});}})";
               private final String clickControlJs="(function(__ROOT__,__EXPECTED__,__INDEX__){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com'))||location.href.split('#')[0]!==__ROOT__.split('#')[0])return JSON.stringify({state:'PAGE_CHANGED'});function controls(){\n var all=document.querySelectorAll('button,a,[role=\"button\"]'),nodes=[],keys=[],blocked=0;\n for(var i=0;i<all.length&&i<12000;i++){\n  var n=all[i];\n  if(!n.getClientRects().length||n.disabled||n.getAttribute('aria-disabled')==='true'||!/^배송\\s*조회$/.test((n.innerText||'').trim()))continue;\n  var style=getComputedStyle(n);if(style.visibility==='hidden'||style.visibility==='collapse')continue;\n  var href='';\n  var context=n,stamp=(n.innerText||'').trim();\n  for(var depth=0;depth<3&&context.parentElement;depth++){\n   context=context.parentElement;\n   var text=(context.innerText||'').replace(/\\s+/g,' ').trim();\n   if(text.length>2000)break;\n   stamp=text;\n  }\n  var h1=2166136261,h2=5381;\n  for(var pos=0;pos<stamp.length;pos++){h1=Math.imul(h1^stamp.charCodeAt(pos),16777619);h2=Math.imul(h2,33)^stamp.charCodeAt(pos);}\n  var fingerprint=(h1>>>0).toString(16)+'-'+(h2>>>0).toString(16);\n  if(n.tagName==='A'){\n   var raw=n.getAttribute('href');\n   if(raw&&raw!=='#'){\n    try{var u=new URL(raw,location.href);if(u.protocol!=='https:'||u.username||u.password||!(u.hostname==='pay.naver.com'||u.hostname.endsWith('.pay.naver.com'))){blocked++;continue;}href=u.href;}catch(_){blocked++;continue;}\n   }\n   if(n.target&&n.target!=='_self'){blocked++;continue;}\n  }\n  if(nodes.some(function(x){return x.contains(n)||n.contains(x);}))continue;\n  nodes.push(n);keys.push(n.tagName+'|'+href+'|'+fingerprint);\n }\n return {nodes:nodes,keys:keys,blocked:blocked,limited:all.length>12000||nodes.length>20};\n}\nvar c=controls();if(c.limited||JSON.stringify(c.keys)!==__EXPECTED__||__INDEX__<0||__INDEX__>=c.nodes.length)return JSON.stringify({state:'CONTROLS_CHANGED'});c.nodes[__INDEX__].click();return JSON.stringify({state:'CLICKED'});}catch(_){return JSON.stringify({state:'ERROR'});}})";
               private Button sweepButton;
               private boolean sweeping=false, sweepReading=false;
@@ -173,7 +176,7 @@ jobs:
                   "hasDetail:a.filter(x=>!!(x&&x.orderDetailUrl)).length,bundles:a.filter(x=>Number(x&&x.bundlePaymentCount)>1).length,"+
                   "pages:Number((p[0]&&p[0].totalPage)||0)});}catch(_){return JSON.stringify({ok:false,reason:'PARSE_ERROR'});}})()";
 
-              private final String detailJs = "(function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v)){inv=v.replace(/[ -]/g,'');break;}}for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([0-9][0-9 -]{6,28}[0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:number.slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})()";
+              private final String detailJs = "(function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v,c){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');if(c==='컬리넥스트마일')return /^[A-Za-z0-9]{8,40}$/.test(n)&&/[0-9]/.test(n);return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v,car)){inv=v.replace(/[ -]/g,'');break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([A-Za-z0-9][A-Za-z0-9 -]{6,38}[A-Za-z0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2],pm[1]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:(pm[1]==='컬리넥스트마일'?number.toUpperCase():number).slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})()";
               @Override @SuppressLint("SetJavaScriptEnabled")
               protected void onCreate(Bundle state) {
                   super.onCreate(state);
@@ -184,7 +187,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.11");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.12");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -450,11 +453,11 @@ jobs:
                               }
                               JSONArray pairs=d.getJSONArray("domPairs");
                               StringBuilder matched=new StringBuilder();
-                              String allowed="CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox";
+                              String allowed="CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일";
                               for(int i=0;i<pairs.length()&&i<10;i++){
                                   JSONObject pair=pairs.getJSONObject(i);
                                   String company=pair.getString("carrier"),tail=pair.getString("tail");
-                                  if(!company.matches(allowed)||!tail.matches("[0-9]{4}"))throw new IllegalArgumentException();
+                                  if(!company.matches(allowed)||!tail.matches("컬리넥스트마일".equals(company)?"[A-Z0-9]{4}":"[0-9]{4}"))throw new IllegalArgumentException();
                                   if(matched.length()>0)matched.append(" / ");
                                   matched.append(company).append(" · ****").append(tail);
                               }
@@ -485,7 +488,7 @@ jobs:
                       !("/history".equals(path)||"/history/".equals(path)||"/pc/history".equals(path)||"/pc/history/".equals(path))){
                       status.setText("결제내역 목록에서 로그인한 뒤 전체 목록 검사를 눌러줘.");return;
                   }
-                  detailQueue.clear();linkedResults.clear();detailLabels.clear();reportRows.clear();reportSummary="";
+                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();reportSummary="";
                   if(collectDetails)autoButton.setText("목록 검사 중지");
                   inspectSeq++;inspecting=false;
                   sweeping=true;sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
@@ -555,6 +558,7 @@ jobs:
                                       if(collectDetails&&detailQueue.size()<SAMPLE_LIMIT&&!detailQueue.containsKey(hash)){
                                           String link=links.getString(i);
                                           detailQueue.put(hash,safeAutoUrl(link)?link:"");
+                                          detailIds.put(hash,id);
                                           detailLabels.put(hash,"목록 "+detailQueue.size()+(id.length()>4?" · 상품주문키 ****"+id.substring(id.length()-4):""));
                                       }
                                   }
@@ -598,14 +602,14 @@ jobs:
                       status.setText("검사할 주문상세를 직접 연 뒤 눌러줘.");return;
                   }
                   ++entrySeq;++inspectSeq;inspecting=false;collectDetails=false;
-                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailQueue.put("current",address);detailLabels.put("current","선택한 주문");
+                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();detailQueue.put("current",address);detailLabels.put("current","선택한 주문");
                   autoListCount=1;closeDiagnostics();startAuto();
               }
               private void startAuto(){
                   reportRows.clear();reportSummary="";
                   detailKeys.clear();detailKeys.addAll(detailQueue.keySet());
                   autoRunning=true;autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
-                  autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;
+                  autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;autoCancelled=0;
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
               }
               private void stopAuto(String reason){
@@ -622,12 +626,12 @@ jobs:
                   }
                   result.setText("처리 "+autoDone+"/"+detailKeys.size()+" · 배송 확인 "+autoMatched+"건"+
                       (oneOrder.isEmpty()?"":"\n"+oneOrder));
-                  status.setText(reason+" · 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
+                  status.setText(reason+" · 취소 제외 "+autoCancelled+" / 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 검사 "+autoButtonsDone+"/"+autoButtonsTotal+
                       " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
                   reportSummary=result.getText()+"\n"+status.getText();
-                  detailQueue.clear();detailKeys.clear();detailLabels.clear();linkedResults.clear();autoSignature="";autoExpected="";
+                  detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();autoSignature="";autoExpected="";
                   if("자동 검사 완료".equals(reason))showReport();
               }
               private void nextAutoOrder(int run){
@@ -640,7 +644,7 @@ jobs:
                           autoNoLink++;autoDone++;autoIndex++;continue;
                       }
                       autoButtonIndex=0;autoButtonCount=-1;autoSignature="";autoRootPairs="";autoShipping=false;
-                      autoOrderFailed=false;autoOrderUnbound=false;orderReasons.clear();buttonNotes.clear();observedButtonPairs.clear();buttonNote="";
+                      autoOrderFailed=false;autoOrderUnbound=false;targetCancelled=false;orderReasons.clear();buttonNotes.clear();observedButtonPairs.clear();buttonNote="";
                       linkedResults.put(key,new java.util.LinkedHashSet<>());loadAutoPage(run,link);return;
                   }
                   stopAuto("자동 검사 완료");
@@ -660,7 +664,8 @@ jobs:
               private void completeAutoOrder(int run){
                   if(!autoRunning||run!=autoRun)return;
                   java.util.Set<String> pairs=linkedResults.get(detailKeys.get(autoIndex));
-                  if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)markUnbound("일부 검사 실패");}
+                  if(targetCancelled)autoCancelled++;
+                  else if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)markUnbound("일부 검사 실패");}
                   else if(autoOrderFailed)autoFailed++;
                   else if(!autoOrderUnbound)autoMissing++;
                   if(autoOrderUnbound)autoUnbound++;
@@ -672,10 +677,10 @@ jobs:
                   JSONArray pairs=d.getJSONArray("domPairs");
                   if(pairs.length()>10)throw new IllegalArgumentException();
                   java.util.Set<String> connected=linkedResults.get(detailKeys.get(autoIndex));
-                  String allowed="CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox";
+                  String allowed="CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일";
                   for(int i=0;i<pairs.length();i++){
                       JSONObject pair=pairs.getJSONObject(i);String company=pair.getString("carrier"),tail=pair.getString("tail");
-                      if(!company.matches(allowed)||!tail.matches("[0-9]{4}"))throw new IllegalArgumentException();
+                      if(!company.matches(allowed)||!tail.matches("컬리넥스트마일".equals(company)?"[A-Z0-9]{4}":"[0-9]{4}"))throw new IllegalArgumentException();
                       connected.add(company+" · ****"+tail);
                   }
                   if(d.optBoolean("limited"))markUnbound("배송정보 추출 한도 도달");
@@ -691,13 +696,20 @@ jobs:
                   handler.postDelayed(()->{
                       if(!autoRunning||run!=autoRun||step!=autoStep||browser==null||autoShipping)return;
                       if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){markUnbound("주문상세 주소 변경");completeAutoOrder(run);return;}
-                      try{browser.evaluateJavascript(autoJs,ret->{
+                      try{browser.evaluateJavascript(autoJs+"("+JSONObject.quote(detailIds.containsKey(detailKeys.get(autoIndex))?detailIds.get(detailKeys.get(autoIndex)):"")+")",ret->{
                           if(!autoRunning||run!=autoRun||step!=autoStep)return;
                           try{
                               if(!sameAutoPage(browser.getUrl()==null?"":browser.getUrl())){markUnbound("주문상세 주소 변경");completeAutoOrder(run);return;}
                               JSONObject d=decodeAuto(ret);if(!d.optBoolean("ok"))throw new IllegalArgumentException();
                               JSONArray keys=d.getJSONArray("controlKeys");int count=keys.length();
-                              if(count==0&&d.getJSONArray("domPairs").length()==0&&attempt<4){pollAuto(run,step,attempt+1);return;}
+                              if(!d.optBoolean("targetCancelled")&&count==0&&d.getJSONArray("domPairs").length()==0&&attempt<4){pollAuto(run,step,attempt+1);return;}
+                              if(d.optBoolean("targetCancelled")){
+                                  targetCancelled=true;autoButtonCount=0;
+                                  orderReasons.add("현재 상품주문키와 같은 상품 영역에서 취소완료 확인 · 해당 영역에 배송조회 버튼 없음");
+                                  completeAutoOrder(run);return;
+                              }
+                              if(d.optBoolean("cancelLimited"))orderReasons.add("취소 상태 영역 검사 한도 도달 · 제외 판정 안 함");
+                              if(d.optBoolean("cancelAmbiguous"))orderReasons.add("동일 상품주문키 영역이 여러 개 · 취소 제외 판정 안 함");
                               readAutoPairs(d);
                               if(d.optBoolean("controlLimited")){markUnbound("배송조회 버튼 검사 한도 초과");completeAutoOrder(run);return;}
                               if(d.optInt("blockedControls")>0)markUnbound("자동 실행 제외 버튼 "+d.optInt("blockedControls")+"개 (외부 링크·새 창 등)");
@@ -765,7 +777,7 @@ jobs:
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
               }
               @Override protected void onDestroy(){
-                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();detailLabels.clear();reportRows.clear();
+                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();
                   sweeping=false;sweepRun++;sweepKeys.clear();
                   handler.removeCallbacksAndMessages(null);
                   if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
@@ -780,7 +792,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.11 debug APK
+      - name: Lint and assemble v0.1.12 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
