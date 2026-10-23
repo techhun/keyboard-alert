@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.13 automatic shipping scan
+run-name: NPay probe v0.1.14 automatic shipping scan
 
 on:
   push:
@@ -33,7 +33,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.13-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.14-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 114/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -73,6 +74,7 @@ jobs:
           import org.json.JSONObject;
 
           public class MainActivity extends Activity {
+              private boolean loginReturnPending=false;
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
               private final java.util.LinkedHashMap<String,String> detailIds=new java.util.LinkedHashMap<>();
               private int autoCancelled=0;
@@ -121,7 +123,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.13\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.14\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -266,7 +268,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.13");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.14");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -353,6 +355,7 @@ jobs:
                           return navigate(url);
                       }
                       @Override public void onPageStarted(WebView view,String url,android.graphics.Bitmap icon){
+                          if(isLoginPage(url))loginReturnPending=true;
                           pageStatus.setText("페이지: 로딩 중 · "+safePage(url));
                           if(inspecting){
                               result.setText("주문 건수: 확인 실패");
@@ -377,6 +380,15 @@ jobs:
                       @Override public void onPageFinished(WebView view,String url){
                           pageStatus.setText("페이지: 로딩 완료 · "+safePage(url));
                           CookieManager.getInstance().flush();
+                          if(url.equals(view.getUrl())&&loginReturnPending&&isLoginReturn(url)){
+                              loginReturnPending=false;
+                              if(!isHistoryPage(url)){
+                                  if(autoRunning)stopAuto("로그인 복귀 · 부분 결과");
+                                  if(sweeping)stopSweep("로그인 복귀 · 부분 결과");
+                                  status.setText("로그인 화면에서 복귀 · 결제내역으로 이동 중");
+                                  view.loadUrl(URL);return;
+                              }
+                          }
                           if(autoRunning&&!autoShipping&&!autoReading&&url.equals(view.getUrl())){
                               if(!safeAutoUrl(url))stopAuto("로그인 또는 외부 화면으로 이동 · 부분 결과");
                               else if(sameAutoPage(url)){autoReading=true;pollAuto(autoRun,autoStep,0);}
@@ -398,13 +410,40 @@ jobs:
                   tapStatus.setText("열기 "+openTaps+" / 검사 "+inspectTaps+" / 상세 "+detailTaps+" / 진단 "+testTaps+"회");
                   Toast.makeText(this,"버튼 입력 인식: "+tapCount+"회",Toast.LENGTH_SHORT).show();
               }
+              private boolean isLoginPage(String address){
+                  try{Uri u=Uri.parse(address);return "https".equals(u.getScheme())&&"nid.naver.com".equals(u.getHost())&&"/nidlogin.login".equals(u.getPath());}
+                  catch(Exception ignored){return false;}
+              }
+              private boolean isHistoryPage(String address){
+                  try{Uri u=Uri.parse(address);return "https".equals(u.getScheme())&&"pay.naver.com".equals(u.getHost())&&("/history".equals(u.getPath())||"/history/".equals(u.getPath())||"/pc/history".equals(u.getPath())||"/pc/history/".equals(u.getPath()));}
+                  catch(Exception ignored){return false;}
+              }
+              private boolean isLoginReturn(String address){
+                  try{Uri u=Uri.parse(address);String h=u.getHost(),p=u.getPath();
+                      return "https".equals(u.getScheme())&&u.getUserInfo()==null&&
+                          ("pay.naver.com".equals(h)||(("www.naver.com".equals(h)||"m.naver.com".equals(h)||"naver.com".equals(h))&&(p==null||p.isEmpty()||"/".equals(p))));
+                  }catch(Exception ignored){return false;}
+              }
+              private String loginAddress(String address){
+                  if(!isLoginPage(address))return address;
+                  Uri u=Uri.parse(address);Uri.Builder b=u.buildUpon().clearQuery();
+                  for(String key:u.getQueryParameterNames())if(!"url".equals(key))
+                      for(String value:u.getQueryParameters(key))b.appendQueryParameter(key,value);
+                  return b.appendQueryParameter("url",URL).build().toString();
+              }
               private boolean navigate(String address){
                   try {
                       Uri uri=Uri.parse(address);
                       String scheme=uri.getScheme();
                       if("https".equalsIgnoreCase(scheme)){
                           String host=uri.getHost();
-                          return host==null||!(host.equals("naver.com")||host.endsWith(".naver.com"));
+                          if(host==null||!(host.equals("naver.com")||host.endsWith(".naver.com")))return true;
+                          if(isLoginPage(address)){
+                              loginReturnPending=true;
+                              String target=loginAddress(address);
+                              if(!target.equals(address)){browser.loadUrl(target);return true;}
+                          }
+                          return false;
                       }
                       if("nidlogin".equalsIgnoreCase(scheme)){
                           Intent intent=new Intent(Intent.ACTION_VIEW,uri);
@@ -872,13 +911,22 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.13 debug APK
+      - name: Lint and assemble v0.1.14 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
+      # CI APK is an intermediate only. Distribute after signing with the
+      # dedicated private NPay key retained outside this repository.
+      - name: Prepare APK signature verification tool
+        shell: bash
+        run: |
+          mkdir -p android/npay-probe-ci/signing-tools
+          cp "$ANDROID_HOME/build-tools/37.0.0/lib/apksigner.jar" android/npay-probe-ci/signing-tools/apksigner.jar
       - uses: actions/upload-artifact@v7
         with:
           name: npay-readonly-probe-debug-apk
-          path: android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
+            android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
