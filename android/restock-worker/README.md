@@ -167,7 +167,7 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 
 ## 버전
 
-현재 앱 버전: **0.14.37**
+현재 앱 버전: **0.14.39**
 
 204 복구 횟수와 API 호출 정책은 0.14.35 그대로 유지합니다. 페이지 자체 상품 요청의 HTTP 상태/JSON 해석 여부와 앱 API fallback의 204를 구분해 진단합니다. 쿠키·헤더·오류 응답 본문은 기록하지 않습니다. 실패 상태에는 이전 재고 보존과 마지막 정상 확인 시각을 표시합니다(업데이트 이전 값은 시각 미기록). 재입고/품절 이벤트에는 상품 판매 상태를 함께 기록합니다. 204 원인 해결은 실기기 진단 후 판단합니다.
 
@@ -181,5 +181,5 @@ OUTOFSTOCK 회귀 검증: 저장소 루트에서 `node --test tests/restock-inve
 - 페이지 전용 확인 후에도 감시 상품 API 요청이 진행 중이면 추가 API를 호출하지 않고 `PAGE_REQUEST_PENDING`으로 이번 회차를 마칩니다. 이전 재고를 보존하고 다음 정기 조회에서 다시 확인합니다. 복구 회차의 기존 페이지 전용 확인 횟수·조회 간격·204 보호 대기는 변경하지 않습니다.
 - `PAGE_HTTP_ERROR`와 `PAGE_LOAD_ERROR`는 현재 상품 문서 및 관련 스크립트의 상태 코드/오류 코드만 기록합니다. 본문, 요청 헤더, 쿠키, 인증값, 전체 URL은 기록하지 않습니다.
 - 실패 진단에 본문 글자 수, 스크립트 수, 스크립트 로딩/실행 오류 수, 탐색 HTTP 상태(미지원 시 unknown), 제한·보안문자 안내 문구의 존재 여부를 추가합니다. 문구 검출만으로 차단으로 확정하지 않습니다.
-- `node --test tests/restock-inventory-status.test.mjs tests/restock-page-capture.test.mjs`로 기존 판매 상태/재고 보존 및 진행 중 요청에서 추가 API 미호출을 검증합니다.
+- `node --test tests/restock-inventory-status.test.mjs tests/restock-page-capture.test.mjs`로 기존 판매 상태/재고 보존 및 진행 중 요청에서 추가 API 미호출을 검증합니다. 디버그·릴리스 GitHub Actions에서도 두 테스트 파일을 모두 실행합니다.
 - 실기기에서 오류 재발 후 새 진단 로그 확인이 필요하며 204의 전체 근본 원인은 아직 미확정입니다. 문제가 있으면 0.14.38 코드로 되돌려 더 높은 versionCode로 재빌드합니다(데이터 구조 변경 없음).
