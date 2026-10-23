@@ -8,6 +8,8 @@ on:
       - fix/restock-recovery-observability
     paths:
       - 'android/restock-worker/**'
+      - 'tests/restock-inventory-status.test.mjs'
+      - 'tests/restock-page-capture.test.mjs'
       - '.github/workflows/android-restock-release.yml'
 
 permissions:
@@ -75,7 +77,7 @@ jobs:
           rm -f "$verify_store"
 
       - name: Verify SmartStore inventory status behavior
-        run: node --test ../../tests/restock-inventory-status.test.mjs
+        run: node --test ../../tests/restock-inventory-status.test.mjs ../../tests/restock-page-capture.test.mjs
 
       - name: Test, lint and build signed release APK
         run: gradle :app:testDebugUnitTest :app:lintRelease :app:assembleRelease --stacktrace
