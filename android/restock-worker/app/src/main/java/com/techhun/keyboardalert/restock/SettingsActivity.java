@@ -39,8 +39,8 @@ public class SettingsActivity extends Activity {
     private static final int FIELD = Color.rgb(242, 244, 246);
     private static final int GREEN = Color.rgb(20, 180, 110);
     private static final int GREEN_SOFT = Color.rgb(232, 249, 241);
-    private static final int[] VALUES = {15, 30, 60};
-    private static final String[] LABELS = {"15초", "30초", "60초"};
+    private static final int[] VALUES = {10, 15, 30, 60};
+    private static final String[] LABELS = {"10초", "15초", "30초", "60초"};
     private static final int REQUEST_EXPORT = 9201;
     private static final int REQUEST_IMPORT = 9202;
 

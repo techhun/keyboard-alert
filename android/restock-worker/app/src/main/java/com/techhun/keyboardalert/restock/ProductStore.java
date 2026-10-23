@@ -296,7 +296,7 @@ final class ProductStore {
         }
 
         int interval = root.optInt("intervalSeconds", MonitorPrefs.intervalSeconds(context));
-        if (interval != 15 && interval != 30 && interval != 60) interval = 30;
+        if (interval != 10 && interval != 15 && interval != 30 && interval != 60) interval = 30;
         int threshold = root.optInt("lowStockThreshold", 5);
         if (threshold < 1 || threshold > 999) threshold = 5;
         MonitorPrefs.prefs(context).edit()

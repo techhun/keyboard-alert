@@ -79,7 +79,7 @@ final class MonitorPrefs {
     }
 
     static int intervalSeconds(Context context) {
-        return Math.max(15, prefs(context).getInt(KEY_INTERVAL, 30));
+        return Math.max(10, prefs(context).getInt(KEY_INTERVAL, 30));
     }
 
     static int lowStockThreshold(Context context) {

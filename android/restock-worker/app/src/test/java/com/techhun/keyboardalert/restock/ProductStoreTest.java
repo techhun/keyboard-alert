@@ -65,6 +65,19 @@ public class ProductStoreTest {
     }
 
     @Test
+    public void tenSecondIntervalPersistsAndRestoresFromBackup() throws Exception {
+        MonitorPrefs.prefs(context).edit().putInt(MonitorPrefs.KEY_INTERVAL, 10).commit();
+        assertEquals(10, MonitorPrefs.intervalSeconds(context));
+        String backup = ProductStore.exportBackup(context);
+        MonitorPrefs.prefs(context).edit().putInt(MonitorPrefs.KEY_INTERVAL, 15).commit();
+        ProductStore.importBackup(context, backup);
+        assertEquals(10, MonitorPrefs.intervalSeconds(context));
+        JSONObject invalid = new JSONObject(backup).put("intervalSeconds", 5);
+        ProductStore.importBackup(context, invalid.toString());
+        assertEquals(30, MonitorPrefs.intervalSeconds(context));
+    }
+
+    @Test
     public void backupRestoresLowStockThresholdAndDefaultsOldBackupsToFive() throws Exception {
         MonitorPrefs.prefs(context).edit().putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, 7).commit();
         JSONObject product = new JSONObject()

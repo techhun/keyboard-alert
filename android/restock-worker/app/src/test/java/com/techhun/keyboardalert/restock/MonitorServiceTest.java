@@ -16,6 +16,9 @@ import org.robolectric.annotation.Config;
 public class MonitorServiceTest {
     @Test
     public void productSpacingKeepsFiveSecondSafetyFloor() {
+        assertEquals(5_000L, MonitorService.productSpacingMillis(10, 2));
+        assertEquals(7_500L, MonitorService.productSpacingMillis(15, 2));
+        assertEquals(5_000L, MonitorService.productSpacingMillis(5, 2));
         assertEquals(5_000L, MonitorService.productSpacingMillis(15, 7));
         assertEquals(15_000L, MonitorService.productSpacingMillis(15, 1));
         assertEquals(30_000L, MonitorService.productSpacingMillis(60, 2));
