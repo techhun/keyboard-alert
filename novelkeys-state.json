@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-23T14:31:23.980Z",
+  "updatedAt": "2026-10-23T14:50:57.308Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -41,8 +41,8 @@
     {
       "category": "Keyboard",
       "product": "NESON NoryTek70",
-      "status": "In transit to NovelKeys.",
-      "eta": "Q4 2026",
+      "status": "Fulfilled!",
+      "eta": "",
       "url": "https://novelkeys.com/products/neson-norytek-70"
     },
     {
@@ -76,7 +76,7 @@
     {
       "category": "Keyboard",
       "product": "Cloudnine 2",
-      "status": "All Cloudnine Parts are currently in transit to NovelKeys via sea shipment except for the PVD keyboards. We expect to receive the shipment by the end of October.",
+      "status": "Shipping to customers, except for the PVD keyboards.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/cloudnine-2-keyboard"
     },
@@ -346,6 +346,8 @@
     "9ecd823d6d6ef5842c8af8c6": "2026-10-22T18:01:15.999Z",
     "8916739901a863f7e7510f74": "2026-10-22T18:01:16.293Z",
     "328505f551055b3c88f939eb": "2026-10-23T14:31:23.752Z",
-    "726a50e3c03e88a13e6e9c9a": "2026-10-23T14:31:23.979Z"
+    "726a50e3c03e88a13e6e9c9a": "2026-10-23T14:31:23.979Z",
+    "bfa494fbd46925b540d99825": "2026-10-23T14:50:57.060Z",
+    "1870be829193a3b8ae9e2669": "2026-10-23T14:50:57.307Z"
   }
 }
