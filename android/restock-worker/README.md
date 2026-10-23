@@ -174,3 +174,12 @@ GitHub Actions의 **Android Restock Worker APK** workflow는 다음을 자동 �
 상품 상태 OUTOFSTOCK은 옵션 수량이 남아 있어도 구매 불가로 판정합니다. 원본 옵션 수량은 보존하며 재입고·저재고 알림을 보내지 않습니다. SALE로 돌아오고 선택 옵션에 재고가 있을 때는 재입고 전환을 정상 처리합니다. 204의 서버 측 원인은 미확정입니다.
 
 OUTOFSTOCK 회귀 검증: 저장소 루트에서 `node --test tests/restock-inventory-status.test.mjs` 실행. 캡처·fallback·직접 API 경로와 무옵션 상품, SALE 전환, 옵션 0개/사용불가를 검사하며 Android 빌드 workflow에서도 실행합니다.
+
+
+### 0.14.39: 페이지 로딩 진단과 진행 중 요청 중복 방지
+
+- 페이지 전용 확인 후에도 감시 상품 API 요청이 진행 중이면 추가 API를 호출하지 않고 `PAGE_REQUEST_PENDING`으로 이번 회차를 마칩니다. 이전 재고를 보존하고 다음 정기 조회에서 다시 확인합니다. 복구 회차의 기존 페이지 전용 확인 횟수·조회 간격·204 보호 대기는 변경하지 않습니다.
+- `PAGE_HTTP_ERROR`와 `PAGE_LOAD_ERROR`는 현재 상품 문서 및 관련 스크립트의 상태 코드/오류 코드만 기록합니다. 본문, 요청 헤더, 쿠키, 인증값, 전체 URL은 기록하지 않습니다.
+- 실패 진단에 본문 글자 수, 스크립트 수, 스크립트 로딩/실행 오류 수, 탐색 HTTP 상태(미지원 시 unknown), 제한·보안문자 안내 문구의 존재 여부를 추가합니다. 문구 검출만으로 차단으로 확정하지 않습니다.
+- `node --test tests/restock-inventory-status.test.mjs tests/restock-page-capture.test.mjs`로 기존 판매 상태/재고 보존 및 진행 중 요청에서 추가 API 미호출을 검증합니다.
+- 실기기에서 오류 재발 후 새 진단 로그 확인이 필요하며 204의 전체 근본 원인은 아직 미확정입니다. 문제가 있으면 0.14.38 코드로 되돌려 더 높은 versionCode로 재빌드합니다(데이터 구조 변경 없음).
