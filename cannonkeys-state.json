@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-23T15:41:11.013Z",
+  "updatedAt": "2026-10-23T15:51:08.377Z",
   "rows": [
     {
       "id": 350,
@@ -191,9 +191,9 @@
       "startDate": "2026-04-17",
       "endDate": "2026-05-17",
       "eta": "Q1 2027",
-      "latestUpdateId": 1845,
-      "latestUpdateDate": "2026-09-04",
-      "latestUpdateDescription": "Nyawice is currently in the machining/finishing process! Once that has wrapped up, the manufacturer will move onto assembly."
+      "latestUpdateId": 1905,
+      "latestUpdateDate": "2026-10-23",
+      "latestUpdateDescription": "For PC Plate Customers: We wanted to let you know about a small modification to the Nyawice PC plate design. The final production plate differs slightly from the initial product render and will not include flex cuts. Since Polycarbonate is inherently flexible, we removed these cuts to prevent excessive flex and protect internal components from bottoming out during use. If you have any questions, comments, or concerns regarding this change, please feel free to reach out to our team!"
     },
     {
       "id": 270,
@@ -3413,8 +3413,6 @@
     }
   ],
   "sentChanges": {
-    "19838acae966373f87d2e0aa": "2026-10-16T15:41:11.432Z",
-    "c13e041bf6adb165a5f63fd3": "2026-10-16T15:41:11.611Z",
     "88ffa265fff733c0f3bb2436": "2026-10-16T16:11:04.773Z",
     "f52e3ced1d34af9626d26161": "2026-10-16T18:51:01.736Z",
     "5d0762ea9521feeb16049124": "2026-10-16T18:51:01.943Z",
@@ -3426,6 +3424,7 @@
     "877618b0aa5d59de5bbedcfd": "2026-10-20T20:01:15.117Z",
     "6f6474009ca7eabca203ba4e": "2026-10-21T15:51:20.180Z",
     "a4801766c16dde08c9a47116": "2026-10-21T15:51:20.400Z",
-    "fca9a0c851386f945ff95d60": "2026-10-21T16:11:01.966Z"
+    "fca9a0c851386f945ff95d60": "2026-10-21T16:11:01.966Z",
+    "54da6bf55a828657699fffd4": "2026-10-23T15:51:08.376Z"
   }
 }
