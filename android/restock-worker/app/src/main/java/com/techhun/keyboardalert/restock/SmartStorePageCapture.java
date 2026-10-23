@@ -16,7 +16,11 @@ final class SmartStorePageCapture {
           window.__RESTOCK_CAPTURE_INSTALLED__ = true;
           window.__RESTOCK_CAPTURED_RESPONSES__ = [];
           window.__RESTOCK_PRODUCT_OUTCOMES__ = [];
-          const trace = window.__RESTOCK_CAPTURE_TRACE__ = { installedAt: Math.round(performance.now()), requests: [] };
+          const trace = window.__RESTOCK_CAPTURE_TRACE__ = { installedAt: Math.round(performance.now()), requests: [], scriptErrors: 0, jsErrors: 0 };
+          window.addEventListener('error', (event) => {
+            if (event.target && event.target.tagName === 'SCRIPT') trace.scriptErrors++;
+            else if (event.target === window) trace.jsErrors++;
+          }, true);
 
           const smartStoreUrl = (value) => {
             try {

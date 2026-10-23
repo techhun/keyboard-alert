@@ -450,11 +450,23 @@ final class InventoryScript {
                 try { return new URL(value, location.href).pathname.endsWith('/products/' + productNo); }
                 catch (ignored) { return false; }
               }).length;
+              const bodyText = String(document.body?.innerText || '');
+              const navigation = performance.getEntriesByType('navigation')[0];
+              const navigationStatus = Number(navigation?.responseStatus || 0);
+              const pageShape = `bodyChars=${bodyText.length}; scripts=${document.scripts.length}; scriptErrors=${trace?.scriptErrors || 0}; jsErrors=${trace?.jsErrors || 0}; navHTTP=${navigationStatus || 'unknown'}; restrictionText=${/접속이 제한|접근이 제한|비정상적인 접근|일시적으로 제한|서비스 접속이 불가/.test(bodyText)}; captchaText=${/자동입력 방지|보안문자|로봇이 아닙니다/.test(bodyText)}`;
               const traceDiagnostic = `started=${requests.length}; pending=${pending.length}; oldest=${pending.length ? Math.round(performance.now()) - pending[0].start : 0}; resource=${resourceCount}; fetchHook=${!!trace && window.fetch === trace.fetchHook}; xhrHook=${!!trace && typeof XMLHttpRequest !== 'undefined' && XMLHttpRequest.prototype.send === trace.xhrHook}`;
-              const pageDiagnostic = `ready=${document.readyState}; ms=${Math.round(performance.now())}; hook=${!!window.__RESTOCK_CAPTURE_INSTALLED__}; cap=${capturedResponses.length}; exact=${!!capturedProduct}; model=${!!pageModel}; ${traceDiagnostic}; HTTP=${outcomes.slice(-2).map((item) => item.status + ':' + item.kind).join(',') || 'none'}`;
+              const pageDiagnostic = `ready=${document.readyState}; ms=${Math.round(performance.now())}; hook=${!!window.__RESTOCK_CAPTURE_INSTALLED__}; cap=${capturedResponses.length}; exact=${!!capturedProduct}; model=${!!pageModel}; ${traceDiagnostic}; ${pageShape}; HTTP=${outcomes.slice(-2).map((item) => item.status + ':' + item.kind).join(',') || 'none'}`;
 
               if (!allowApiFallback) {
                 send({ ok: false, error: 'API_DEFERRED', pageUrl: location.href, title: document.title,
+                  pageDiagnostic });
+                return;
+              }
+
+              // A page request already in flight must not be duplicated by fallback.
+              // Preserve the previous snapshot and let the regular cycle check again.
+              if (pending.length > 0) {
+                send({ ok: false, error: 'PAGE_REQUEST_PENDING', pageUrl: location.href,
                   pageDiagnostic });
                 return;
               }

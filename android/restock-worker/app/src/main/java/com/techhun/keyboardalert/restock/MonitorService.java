@@ -22,6 +22,8 @@ import android.os.PowerManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
@@ -273,6 +275,43 @@ public class MonitorService extends Service {
                 }
             }
 
+            private boolean isRelevantLoad(WebResourceRequest request) {
+                if (currentProduct == null || request == null
+                    || !SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) return false;
+                // Discard late callbacks belonging to a different navigation.
+                if (!SiteSupport.isSameProductPage(currentSiteType(),
+                    currentProduct.optString("url", ""), viewUrl())) return false;
+                String host = request.getUrl().getHost();
+                String path = request.getUrl().getPath();
+                return request.isForMainFrame() || (host != null && path != null
+                    && (host.equals("naver.net") || host.endsWith(".naver.net")
+                        || host.equals("pstatic.net") || host.endsWith(".pstatic.net")
+                        || host.equals("smartstore.naver.com") || host.endsWith(".smartstore.naver.com"))
+                    && path.endsWith(".js"));
+            }
+
+            private String viewUrl() {
+                return webView == null ? "" : webView.getUrl();
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request,
+                                            WebResourceResponse response) {
+                if (stopping || !isRelevantLoad(request)) return;
+                DiagnosticLog.add(MonitorService.this, "PAGE_HTTP_ERROR", currentProduct,
+                    (request.isForMainFrame() ? "document" : "script")
+                        + " · HTTP " + response.getStatusCode());
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request,
+                                        WebResourceError error) {
+                if (stopping || !isRelevantLoad(request)) return;
+                DiagnosticLog.add(MonitorService.this, "PAGE_LOAD_ERROR", currentProduct,
+                    (request.isForMainFrame() ? "document" : "script")
+                        + " · code=" + error.getErrorCode());
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 if (stopping) return;
@@ -518,7 +557,8 @@ public class MonitorService extends Service {
             currentProduct = latest;
             if (!result.optBoolean("ok", false)) {
                 String error = result.optString("error", "UNKNOWN");
-                if ("NO_CONTENT".equals(error) || ("API_DEFERRED".equals(error) && noContentRecovery)) {
+                if ("NO_CONTENT".equals(error) || "PAGE_REQUEST_PENDING".equals(error)
+                    || ("API_DEFERRED".equals(error) && noContentRecovery)) {
                     DiagnosticLog.add(this, "INVENTORY_DIAGNOSTIC", currentProduct,
                         (noContentRecovery ? "페이지 복구" : "API fallback") + " · "
                             + result.optString("pageDiagnostic", "정보 없음"));
@@ -527,6 +567,12 @@ public class MonitorService extends Service {
                 if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
                     && ("AUTH_REQUIRED".equals(error) || status == 401 || status == 403)) {
                     invalidateSessionAndStop();
+                    return;
+                }
+
+                if ("PAGE_REQUEST_PENDING".equals(error)) {
+                    markCurrentFailure("페이지 상품 요청 진행 중 · 이전 재고 유지", "PAGE_REQUEST_PENDING");
+                    scheduleNextProduct();
                     return;
                 }
 

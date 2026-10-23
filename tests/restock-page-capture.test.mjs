@@ -8,7 +8,7 @@ const url = 'https://m.smartstore.naver.com/i/v2/channels/test/products/123456';
 function setup(fetch) {
   class Xhr { open() {} send() {} }
   let clock = 10;
-  const context = { URL, location: { href: url }, performance: { now: () => ++clock }, window: { fetch }, XMLHttpRequest: Xhr };
+  const context = { URL, location: { href: url }, performance: { now: () => ++clock }, window: { fetch, addEventListener: (name, callback) => { context.errorListener = callback; } }, XMLHttpRequest: Xhr };
   vm.runInNewContext(script, context);
   return context;
 }
@@ -54,4 +54,14 @@ test('successful JSON capture remains reusable and request history is bounded', 
   assert.equal(context.window.__RESTOCK_CAPTURE_TRACE__.requests.length, 12);
   assert.equal(context.window.__RESTOCK_CAPTURED_RESPONSES__.length, 12);
   assert.equal(context.window.__RESTOCK_CAPTURED_RESPONSES__[0].data.optionCombinations[0].stockQuantity, 1);
+});
+
+test('records script and runtime failures without keeping message or URL', () => {
+  const context = setup(async () => ({}));
+  context.errorListener({ target: { tagName: 'SCRIPT' }, message: 'private' });
+  context.errorListener({ target: context.window, message: 'private' });
+  const trace = context.window.__RESTOCK_CAPTURE_TRACE__;
+  assert.equal(trace.scriptErrors, 1);
+  assert.equal(trace.jsErrors, 1);
+  assert.equal(JSON.stringify(trace).includes('private'), false);
 });
