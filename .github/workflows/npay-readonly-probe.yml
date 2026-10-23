@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.12 automatic shipping scan
+run-name: NPay probe v0.1.13 automatic shipping scan
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.12-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.13-probe"/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -74,7 +74,6 @@ jobs:
 
           public class MainActivity extends Activity {
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
-              private static final int SAMPLE_LIMIT=10;
               private final java.util.LinkedHashMap<String,String> detailIds=new java.util.LinkedHashMap<>();
               private int autoCancelled=0;
               private boolean targetCancelled=false;
@@ -114,16 +113,93 @@ jobs:
                   if(!matched&&!partial&&!targetCancelled&&!autoOrderFailed&&!autoOrderUnbound)body.append("\n운송장 없음으로 확정한 결과가 아님");
                   reportRows.add(new ReportRow(label,state,body.toString(),detailQueue.get(key)));
               }
-              private void showReport(){
-                  if(autoRunning||sweeping||reportRows.isEmpty()){
+              private static final int REPORT_PAGE_SIZE=50, COPY_CHAR_LIMIT=180000, EXPORT_REQUEST=7021;
+              private int reportPage=0,reportExpected=0;
+              private long reportStartedAt=0,reportFinishedAt=0;
+              private String pendingExportText=null;
+              private String reportTime(long value){
+                  return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
+              }
+              private String buildReportText(){
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.13\n");
+                  out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
+                  out.append("\n").append(reportSummary);
+                  out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
+                  out.append("\n검사 미시작 ").append(Math.max(0,reportExpected-reportRows.size())).append("건");
+                  out.append("\n현재 조회 가능한 쇼핑 목록의 항목 기준. 동일 주문의 다른 상품이 포함될 수 있음.");
+                  out.append("\n상품주문키와 운송장은 끝 4자리만 표시. 같은 표시 정보만으로 동일 송장으로 확정할 수 없음.");
+                  out.append("\n상세 주소·로그인 정보는 포함하지 않음. 결과는 앱 종료 시 사라짐.\n");
+                  for(ReportRow row:reportRows){
+                      out.append("\n[").append(row.label).append("] ").append(row.state).append("\n").append(row.details).append("\n");
+                  }
+                  return out.toString();
+              }
+              private void offerReportFile(String text){
+                  new android.app.AlertDialog.Builder(this).setTitle("전체 결과 파일로 저장")
+                      .setMessage("결과가 커서 클립보드에 담기 어려워. 생략 없이 TXT 파일로 저장할 수 있어.")
+                      .setPositiveButton("파일 저장",(d,w)->exportReportText(text)).setNegativeButton("취소",null).show();
+              }
+              private void copyReport(){
+                  String text=buildReportText();
+                  if(text.length()>COPY_CHAR_LIMIT){offerReportFile(text);return;}
+                  try{
+                      android.content.ClipboardManager clipboard=(android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                      if(clipboard==null)throw new IllegalStateException();
+                      clipboard.setPrimaryClip(android.content.ClipData.newPlainText("NPay 검사 결과",text));
+                      Toast.makeText(this,"전체 결과 "+reportRows.size()+"건 복사 완료",Toast.LENGTH_SHORT).show();
+                  }catch(RuntimeException ignored){offerReportFile(text);}
+              }
+              private void exportReportText(String text){
+                  Intent intent=new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                  intent.addCategory(Intent.CATEGORY_OPENABLE);intent.setType("text/plain");
+                  intent.putExtra(Intent.EXTRA_TITLE,"npay-results-"+new java.text.SimpleDateFormat("yyyyMMdd-HHmmss",java.util.Locale.ROOT).format(new java.util.Date())+".txt");
+                  pendingExportText=text;
+                  try{startActivityForResult(intent,EXPORT_REQUEST);}
+                  catch(RuntimeException ignored){pendingExportText=null;Toast.makeText(this,"파일 저장 화면을 열지 못했어. 전체 복사를 이용해줘.",Toast.LENGTH_LONG).show();}
+              }
+              @Override protected void onActivityResult(int requestCode,int resultCode,Intent data){
+                  super.onActivityResult(requestCode,resultCode,data);
+                  if(requestCode!=EXPORT_REQUEST)return;
+                  final String snapshot=pendingExportText;pendingExportText=null;
+                  if(resultCode!=RESULT_OK||data==null||data.getData()==null||snapshot==null)return;
+                  final Uri destination=data.getData();
+                  new Thread(()->{
+                      boolean saved=false;
+                      try(java.io.OutputStream stream=getContentResolver().openOutputStream(destination,"wt")){
+                          if(stream==null)throw new java.io.IOException();
+                          stream.write(snapshot.getBytes(java.nio.charset.StandardCharsets.UTF_8));stream.flush();saved=true;
+                      }catch(Exception ignored){saved=false;}
+                      final boolean success=saved;
+                      handler.post(()->{if(!isFinishing()&&!isDestroyed())Toast.makeText(this,success?"전체 결과 TXT 저장 완료":"TXT 저장 실패. 다시 시도해줘.",Toast.LENGTH_LONG).show();});
+                  }).start();
+              }
+              private void updateScanAwake(){
+                  if(autoRunning||sweeping)getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                  else getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+              }
+              private void showReport(){reportPage=0;showReportPage();}
+              private void showReportPage(){
+                  if(autoRunning||sweeping||(reportRows.isEmpty()&&reportSummary.isEmpty())){
                       new android.app.AlertDialog.Builder(this).setTitle("검사 안내").setMessage(status.getText()).setPositiveButton("닫기",null).show();return;
                   }
-                  android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("항목별 검사 결과")
-                      .setPositiveButton("닫기",null).create();
+                  int pages=Math.max(1,(reportRows.size()+REPORT_PAGE_SIZE-1)/REPORT_PAGE_SIZE);
+                  reportPage=Math.max(0,Math.min(reportPage,pages-1));
+                  int from=reportPage*REPORT_PAGE_SIZE,to=Math.min(from+REPORT_PAGE_SIZE,reportRows.size());
+                  android.app.AlertDialog dialog=new android.app.AlertDialog.Builder(this).setTitle("항목별 검사 결과 "+(reportPage+1)+"/"+pages)
+                      .setPositiveButton("닫기",null).setNegativeButton("전체 복사",null).setNeutralButton("TXT 저장",null).create();
                   android.widget.ScrollView scroll=new android.widget.ScrollView(this);
                   LinearLayout content=new LinearLayout(this);content.setOrientation(LinearLayout.VERTICAL);content.setPadding(dp(16),dp(8),dp(16),dp(8));scroll.addView(content);
-                  TextView summary=new TextView(this);summary.setText(reportSummary+"\n목록 순서 기준. 동일 주문의 다른 항목이 포함될 수 있음. 표시 정보가 같아도 동일 송장으로 확정할 수 없음. 앱을 종료하면 결과는 사라짐.");summary.setTextSize(13);content.addView(summary);
-                  for(ReportRow row:reportRows){
+                  TextView summary=new TextView(this);summary.setText(reportSummary+"\n화면은 50건씩 표시. 전체 복사·TXT 저장에는 모든 결과가 포함됨. 앱 종료 시 결과는 사라짐.");summary.setTextSize(13);content.addView(summary);
+                  if(pages>1){
+                      LinearLayout navigation=new LinearLayout(this);
+                      Button previous=new Button(this);previous.setText("이전 50건");previous.setEnabled(reportPage>0);
+                      previous.setOnClickListener(v->{dialog.dismiss();reportPage--;showReportPage();});
+                      Button next=new Button(this);next.setText("다음 50건");next.setEnabled(reportPage+1<pages);
+                      next.setOnClickListener(v->{dialog.dismiss();reportPage++;showReportPage();});
+                      navigation.addView(previous,new LinearLayout.LayoutParams(0,-2,1));navigation.addView(next,new LinearLayout.LayoutParams(0,-2,1));content.addView(navigation);
+                  }
+                  for(int i=from;i<to;i++){
+                      ReportRow row=reportRows.get(i);
                       TextView text=new TextView(this);text.setText(row.label+" · "+row.state+"\n"+row.details);text.setTextSize(14);
                       text.setTextColor(Color.BLACK);text.setPadding(0,dp(16),0,dp(4));content.addView(text);
                       if(row.address!=null&&safeAutoUrl(row.address)){
@@ -135,7 +211,10 @@ jobs:
                       }
                   }
                   dialog.setView(scroll);dialog.show();
+                  dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE).setOnClickListener(v->copyReport());
+                  dialog.getButton(android.app.AlertDialog.BUTTON_NEUTRAL).setOnClickListener(v->exportReportText(buildReportText()));
               }
+
 
               private Button autoButton;
               private boolean collectDetails=false, autoRunning=false, autoReading=false;
@@ -187,7 +266,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.12");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.13");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -195,7 +274,7 @@ jobs:
                   result.setText("주문 검사 전");root.addView(result);
                   status=new TextView(this);status.setTextColor(Color.DKGRAY);status.setTextSize(12);
                   status.setMaxLines(2);status.setEllipsize(android.text.TextUtils.TruncateAt.END);
-                  status.setPadding(dp(8),dp(3),dp(8),dp(3));status.setText("로그인 후 최근 10건 검사 · 결과/안내를 누르면 항목별로 볼 수 있어.");
+                  status.setPadding(dp(8),dp(3),dp(8),dp(3));status.setText("로그인 후 전체 배송 검사 · 결과/안내를 누르면 항목별로 볼 수 있어.");
                   status.setOnClickListener(v->showReport());
                   result.setOnClickListener(v->showReport());
                   root.addView(status);
@@ -206,7 +285,7 @@ jobs:
                       if(sweeping)stopSweep("화면 이동으로 중지 · 부분 결과");
                       noteTouch("결제내역 열기");closeDiagnostics();if(browser!=null)browser.loadUrl(URL);
                   });
-                  autoButton=new Button(this);autoButton.setText("최근 10건 검사");
+                  autoButton=new Button(this);autoButton.setText("전체 배송 검사");
                   autoButton.setOnClickListener(v->{
                       ++entrySeq;
                       if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
@@ -488,23 +567,24 @@ jobs:
                       !("/history".equals(path)||"/history/".equals(path)||"/pc/history".equals(path)||"/pc/history/".equals(path))){
                       status.setText("결제내역 목록에서 로그인한 뒤 전체 목록 검사를 눌러줘.");return;
                   }
-                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();reportSummary="";
+                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();reportSummary="";reportPage=0;reportExpected=0;reportStartedAt=System.currentTimeMillis();reportFinishedAt=0;
                   if(collectDetails)autoButton.setText("목록 검사 중지");
                   inspectSeq++;inspecting=false;
-                  sweeping=true;sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
+                  sweeping=true;updateScanAwake();sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
                   sweepButton.setText("전체 검사 중지");
                   loadSweepPage(sweepRun);
               }
               private void stopSweep(String reason){
                   if(!sweeping)return;
-                  sweeping=false;sweepReading=false;sweepRun++;
+                  sweeping=false;updateScanAwake();sweepReading=false;sweepRun++;
                   sweepButton.setText("전체 목록 다시 검사");
                   result.setText("목록 항목 "+sweepKeys.size()+"건 · 확인한 페이지 "+sweepReadPages+
                       (sweepTotal>=0?"/"+sweepTotal:""));
                   status.setText(reason+" · 중복 "+sweepDuplicates+"건 제외"+
                       "\n묶음 내 개별 상품·배송정보 수집은 미포함. 재시작하면 처음부터 검사.");
+                  reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText()+"\n배송 검사 시작 전 목록 수집 결과";
                   sweepKeys.clear();
-                  if(collectDetails){collectDetails=false;detailQueue.clear();autoButton.setText("최근 10건 검사");}
+                  if(collectDetails){collectDetails=false;detailQueue.clear();detailLabels.clear();detailIds.clear();autoButton.setText("전체 배송 검사");}
               }
               private void loadSweepPage(int run){
                   if(!sweeping||run!=sweepRun||browser==null)return;
@@ -555,7 +635,7 @@ jobs:
                                       if(!id.matches("[A-Za-z0-9_-]{1,80}"))throw new IllegalArgumentException();
                                       String hash=android.util.Base64.encodeToString(digest.digest(id.getBytes(java.nio.charset.StandardCharsets.UTF_8)),android.util.Base64.NO_WRAP);
                                       if(!batch.add(hash))sweepDuplicates++;
-                                      if(collectDetails&&detailQueue.size()<SAMPLE_LIMIT&&!detailQueue.containsKey(hash)){
+                                      if(collectDetails&&!detailQueue.containsKey(hash)){
                                           String link=links.getString(i);
                                           detailQueue.put(hash,safeAutoUrl(link)?link:"");
                                           detailIds.put(hash,id);
@@ -567,10 +647,10 @@ jobs:
                                   if(added==0&&!batch.isEmpty()){stopSweep("E_SWEEP_REPEATED · 같은 목록 반복 · 부분 결과");return;}
                                   sweepReadPages++;
                                   if(sweepKeys.size()>100000){stopSweep("E_SWEEP_LIMIT · 검사 한도 · 부분 결과");return;}
-                                  if((collectDetails&&detailQueue.size()>=SAMPLE_LIMIT)||page>=total){
+                                  if(page>=total){
                                       if(collectDetails){
                                           autoListCount=detailQueue.size();collectDetails=false;
-                                          stopSweep("최대 10건 수집 완료 · 배송 검사 준비");startAuto();
+                                          stopSweep("전체 목록 수집 완료 · 배송 검사 준비");startAuto();
                                       }else stopSweep("페이지 검사 완료 · 현재 조회조건 기준");
                                       return;
                                   }
@@ -603,12 +683,12 @@ jobs:
                   }
                   ++entrySeq;++inspectSeq;inspecting=false;collectDetails=false;
                   detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();detailQueue.put("current",address);detailLabels.put("current","선택한 주문");
-                  autoListCount=1;closeDiagnostics();startAuto();
+                  reportStartedAt=System.currentTimeMillis();autoListCount=1;closeDiagnostics();startAuto();
               }
               private void startAuto(){
                   reportRows.clear();reportSummary="";
-                  detailKeys.clear();detailKeys.addAll(detailQueue.keySet());
-                  autoRunning=true;autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
+                  detailKeys.clear();detailKeys.addAll(detailQueue.keySet());reportExpected=detailKeys.size();reportPage=0;reportFinishedAt=0;
+                  autoRunning=true;updateScanAwake();autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
                   autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;autoCancelled=0;
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
               }
@@ -617,8 +697,8 @@ jobs:
                   if(autoIndex<detailKeys.size()){
                       orderReasons.add(reason);recordCurrentOrder(true);
                   }
-                  autoRunning=false;autoRun++;autoStep++;autoReading=false;autoShipping=false;
-                  autoButton.setText("최근 10건 검사");sweepButton.setText("전체 목록 검사");
+                  autoRunning=false;updateScanAwake();autoRun++;autoStep++;autoReading=false;autoShipping=false;
+                  autoButton.setText("전체 배송 검사");sweepButton.setText("전체 목록 검사");
                   String oneOrder="";
                   if(detailKeys.size()==1){
                       java.util.Set<String> pairs=linkedResults.get(detailKeys.get(0));
@@ -628,11 +708,11 @@ jobs:
                       (oneOrder.isEmpty()?"":"\n"+oneOrder));
                   status.setText(reason+" · 취소 제외 "+autoCancelled+" / 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 검사 "+autoButtonsDone+"/"+autoButtonsTotal+
-                      " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 저장·외부 전송 없음."+
+                      " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 자동 저장·자동 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
-                  reportSummary=result.getText()+"\n"+status.getText();
+                  reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText();
                   detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();autoSignature="";autoExpected="";
-                  if("자동 검사 완료".equals(reason))showReport();
+                  showReport();
               }
               private void nextAutoOrder(int run){
                   if(!autoRunning||run!=autoRun)return;
@@ -777,7 +857,7 @@ jobs:
                   if(browser!=null&&browser.canGoBack())browser.goBack();else super.onBackPressed();
               }
               @Override protected void onDestroy(){
-                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();
+                  autoRunning=false;autoRun++;detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();pendingExportText=null;
                   sweeping=false;sweepRun++;sweepKeys.clear();
                   handler.removeCallbacksAndMessages(null);
                   if(browser!=null){browser.stopLoading();browser.destroy();browser=null;}
@@ -792,7 +872,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.12 debug APK
+      - name: Lint and assemble v0.1.13 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
