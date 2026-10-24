@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.16 resumable shipping scan
+run-name: NPay probe v0.1.17 consolidated diagnostics and resume fixes
 
 on:
   push:
@@ -33,8 +33,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.16-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 116/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.17-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 117/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -89,6 +89,28 @@ jobs:
                   final String label,state,details,address;
                   ReportRow(String l,String s,String d,String a){label=l;state=s;details=d;address=a;}
               }
+              // Compact identical displayed results, but never skip inspection of controls.
+              private String conciseButtonNotes(){
+                  if(buttonNotes.size()<4)return android.text.TextUtils.join(System.lineSeparator(),buttonNotes);
+                  String first=buttonValue(buttonNotes.get(0));
+                  if(first.isEmpty())return android.text.TextUtils.join(System.lineSeparator(),buttonNotes);
+                  for(String item:buttonNotes)if(!first.equals(buttonValue(item)))
+                      return android.text.TextUtils.join(System.lineSeparator(),buttonNotes);
+                  return "배송조회 1~"+buttonNotes.size()+": "+first+
+                      " (각 버튼 검사 결과의 표시값 동일 · 실제 동일 송장 여부 미확정)";
+              }
+              private String buttonValue(String note){
+                  int colon=note.indexOf(": ");
+                  if(colon<0||!note.startsWith("배송조회 "))return "";
+                  return note.substring(colon+2).replace(" (앞 버튼과 표시 정보 같음 · 동일 송장 여부 미확정)","");
+              }
+              private String diagnosticCounts(JSONObject d){
+                  return "화면정보쌍 "+d.optInt("domPairCount",-1)+
+                      " · 구조 운송장 후보 "+d.optInt("structuredInvoices",-1)+
+                      " · 구조 택배사쌍 "+d.optInt("structuredPairs",-1)+
+                      " · 화면 번호라벨 "+(d.optBoolean("hasLabel")?"있음":"없음")+
+                      " · 추출한도 "+(d.optBoolean("limited")?"도달":"정상");
+              }
               private void markUnbound(String reason){autoOrderUnbound=true;orderReasons.add(reason);}
               private void markFailed(String reason){autoOrderFailed=true;orderReasons.add(reason);}
               private String pairsText(JSONObject d) throws Exception {
@@ -107,12 +129,15 @@ jobs:
                   String state=partial?"중지 · 미완료":targetCancelled?"취소완료 · 배송조회 대상 제외":matched?"배송 확인":autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
                   if(!partial&&matched&&(autoOrderUnbound||autoOrderFailed))state+=" · 추가 확인";
                   if(reusedButtons>0)state+=" · 같은 주문 결과 재사용";
+                  boolean kurlyReview=matched&&pairs.contains("컬리넥스트마일 · ****0001");
+                  if(kurlyReview)state+=" · 컬리번호 재확인";
                   StringBuilder body=new StringBuilder();
                   if(autoButtonCount<0)body.append("배송조회 버튼 수 미확인 · 직접 검사 완료 0개");
                   else body.append("배송조회 버튼 ").append(autoButtonCount).append("개 · 직접 검사 완료 ").append(autoButtonIndex-reusedButtons).append("개 · 결과 재사용 ").append(reusedButtons).append("개");
                   if(matched)body.append("\n확인된 표시 정보: ").append(android.text.TextUtils.join(" / ",pairs));
                   if(!orderReasons.isEmpty())body.append("\n사유: ").append(android.text.TextUtils.join(" / ",orderReasons));
-                  for(String note:buttonNotes)body.append("\n").append(note);
+                  if(kurlyReview)body.append("\n컬리넥스트마일 끝자리 0001이 여러 주문에서 관찰됨 · 고유 운송장 및 상품별 연결 검증 필요");
+                  if(!buttonNotes.isEmpty())body.append("\n").append(conciseButtonNotes());
                   if(autoShipping)body.append("\n배송조회 ").append(autoButtonIndex+1).append(": ").append(buttonNote);
                   if(!matched&&!partial&&!targetCancelled&&!autoOrderFailed&&!autoOrderUnbound)body.append("\n운송장 없음으로 확정한 결과가 아님");
                   reportRows.add(new ReportRow(label,state,body.toString(),detailQueue.get(key)));
@@ -125,7 +150,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.16\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.17\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -281,7 +306,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.16");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.17");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -298,6 +323,10 @@ jobs:
                   reload.setOnClickListener(v->{
                       if(autoRunning)stopAuto("화면 이동으로 중지 · 부분 결과");
                       if(sweeping)stopSweep("화면 이동으로 중지 · 부분 결과");
+                      if(resumeAvailable){
+                          resumeAvailable=false;detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();orderCache.clear();
+                          autoButton.setText("전체 배송 검사");
+                      }
                       noteTouch("결제내역 열기");closeDiagnostics();if(browser!=null)browser.loadUrl(URL);
                   });
                   autoButton=new Button(this);autoButton.setText("전체 배송 검사");
@@ -760,8 +789,9 @@ jobs:
                       status.setText("남은 주문상세 주소가 유효하지 않아 이어할 수 없어.");return;
                   }
                   reportRows.remove(reportRows.size()-1);
-                  // The interrupted item's buttons are counted again on the resumed pass.
+                  // The interrupted item is fully retried; roll back its partial counters.
                   if(autoButtonCount>=0)autoButtonsTotal=Math.max(0,autoButtonsTotal-autoButtonCount);
+                  autoButtonsDone=Math.max(0,autoButtonsDone-autoButtonIndex);
                   reportSummary="";reportFinishedAt=0;resumeAvailable=false;
                   inspectSeq++;inspecting=false;autoRunning=true;updateScanAwake();autoRun++;
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
@@ -785,10 +815,11 @@ jobs:
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 직접 검사 "+autoButtonsDone+" / 결과 재사용 "+totalReusedButtons+" / 확인된 대상 "+autoButtonsTotal+
                       " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 자동 저장·자동 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
-                  reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText();
                   if(resumeAvailable){
                       status.append("\n앱 실행 중 '남은 검사 이어하기'를 누르면 중지된 항목부터 다시 검사합니다. 기기 저장 없음.");
-                  }else{
+                  }
+                  reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText();
+                  if(!resumeAvailable){
                       detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();orderCache.clear();autoSignature="";autoExpected="";
                   }
                   showReport();
@@ -914,7 +945,8 @@ jobs:
                               currentCacheKey=autoExpected+"\n"+signature;
                               if(reuseCachedOrder(run,count))return;
                               if(autoButtonIndex>=count){
-                                  if(count==0&&d.getJSONArray("domPairs").length()==0)orderReasons.add("상세 화면 배송조회 버튼 0개 · 택배사/번호 조합 미검출");
+                                  if(count==0&&d.getJSONArray("domPairs").length()==0)
+                                      orderReasons.add("상세 화면 배송조회 버튼 0개 · 택배사/번호 조합 미검출 · "+diagnosticCounts(d));
                                   completeAutoOrder(run);return;
                               }
                               clickAutoControl(run);
@@ -956,7 +988,7 @@ jobs:
                               String found=pairsText(d);
                               buttonNote=found.isEmpty()?"택배사/번호 조합 미검출":found;
                               if(!found.isEmpty()&&!observedButtonPairs.add(found))buttonNote+=" (앞 버튼과 표시 정보 같음 · 동일 송장 여부 미확정)";
-                              if(found.isEmpty())markUnbound("배송조회 "+(autoButtonIndex+1)+" · 화면 배송정보 미검출");
+                              if(found.isEmpty())markUnbound("배송조회 "+(autoButtonIndex+1)+" · 화면 배송정보 미검출 · "+diagnosticCounts(d)+" · 화면호스트 "+safeHost(page));
                               if(sameAutoPage(page)&&autoRootPairs.equals(d.getJSONArray("domPairs").toString()))markUnbound("배송조회 실행 후 화면 전환 미확인");
                               finishAutoShipping(run);
                           }catch(Exception ignored){markFailed("배송조회 실행·응답 검증 실패");buttonNote="응답 검증 실패";finishAutoShipping(run);}
@@ -992,7 +1024,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.16 debug APK
+      - name: Lint and assemble v0.1.17 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
