@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.15 automatic shipping scan
+run-name: NPay probe v0.1.16 resumable shipping scan
 
 on:
   push:
@@ -33,8 +33,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.15-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 115/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.16-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 116/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -125,7 +125,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.15\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.16\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -221,7 +221,7 @@ jobs:
 
 
               private Button autoButton;
-              private boolean collectDetails=false, autoRunning=false, autoReading=false;
+              private boolean collectDetails=false, autoRunning=false, autoReading=false, resumeAvailable=false;
               private int autoRun=0, autoStep=0, autoIndex=0, autoDone=0, autoMatched=0, autoMissing=0, autoFailed=0, autoUnbound=0, autoNoLink=0, autoListCount=0;
               private final java.util.LinkedHashMap<String,String> detailQueue=new java.util.LinkedHashMap<>();
               private final java.util.ArrayList<String> detailKeys=new java.util.ArrayList<>();
@@ -281,7 +281,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.15");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.16");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -305,6 +305,7 @@ jobs:
                       ++entrySeq;
                       if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
                       if(sweeping){stopSweep("사용자 중지 · 부분 결과");return;}
+                      if(resumeAvailable){resumeAuto();return;}
                       collectDetails=true;closeDiagnostics();startSweep();
                   });
                   diagnosticToggle=new Button(this);diagnosticToggle.setText("진단 ▾");
@@ -623,7 +624,7 @@ jobs:
                       !("/history".equals(path)||"/history/".equals(path)||"/pc/history".equals(path)||"/pc/history/".equals(path))){
                       status.setText("결제내역 목록에서 로그인한 뒤 전체 목록 검사를 눌러줘.");return;
                   }
-                  detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();reportSummary="";reportPage=0;reportExpected=0;reportStartedAt=System.currentTimeMillis();reportFinishedAt=0;
+                  resumeAvailable=false;detailQueue.clear();linkedResults.clear();detailLabels.clear();detailIds.clear();reportRows.clear();reportSummary="";reportPage=0;reportExpected=0;reportStartedAt=System.currentTimeMillis();reportFinishedAt=0;
                   if(collectDetails)autoButton.setText("목록 검사 중지");
                   inspectSeq++;inspecting=false;
                   sweeping=true;updateScanAwake();sweepRun++;sweepPage=1;sweepTotal=-1;sweepDuplicates=0;sweepReadPages=0;sweepKeys.clear();
@@ -742,19 +743,37 @@ jobs:
                   reportStartedAt=System.currentTimeMillis();autoListCount=1;closeDiagnostics();startAuto();
               }
               private void startAuto(){
-                  reportRows.clear();reportSummary="";
+                  resumeAvailable=false;reportRows.clear();reportSummary="";
                   detailKeys.clear();detailKeys.addAll(detailQueue.keySet());reportExpected=detailKeys.size();reportPage=0;reportFinishedAt=0;
                   autoRunning=true;updateScanAwake();autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
                   autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;autoCancelled=0;totalReusedButtons=0;orderCache.clear();
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
               }
+              private void resumeAuto(){
+                  if(!resumeAvailable||autoRunning||sweeping||browser==null||autoIndex>=detailKeys.size())return;
+                  // The last row records the interrupted item; it will be rechecked.
+                  if(reportRows.size()!=autoDone+1||!reportRows.get(reportRows.size()-1).state.startsWith("중지 ·")){
+                      status.setText("이전 검사 상태가 달라 이어할 수 없어. 전체 검사를 다시 시작해줘.");return;
+                  }
+                  String address=detailQueue.get(detailKeys.get(autoIndex));
+                  if(address==null||(!address.isEmpty()&&!safeAutoUrl(address))){
+                      status.setText("남은 주문상세 주소가 유효하지 않아 이어할 수 없어.");return;
+                  }
+                  reportRows.remove(reportRows.size()-1);
+                  // The interrupted item's buttons are counted again on the resumed pass.
+                  if(autoButtonCount>=0)autoButtonsTotal=Math.max(0,autoButtonsTotal-autoButtonCount);
+                  reportSummary="";reportFinishedAt=0;resumeAvailable=false;
+                  inspectSeq++;inspecting=false;autoRunning=true;updateScanAwake();autoRun++;
+                  autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
+              }
               private void stopAuto(String reason){
                   if(!autoRunning)return;
+                  boolean paused="사용자 중지 · 부분 결과".equals(reason)&&detailKeys.size()>1&&autoIndex<detailKeys.size()&&autoDone==autoIndex;
                   if(autoIndex<detailKeys.size()){
                       orderReasons.add(reason);recordCurrentOrder(true);
                   }
                   autoRunning=false;updateScanAwake();autoRun++;autoStep++;autoReading=false;autoShipping=false;
-                  autoButton.setText("전체 배송 검사");sweepButton.setText("전체 목록 검사");
+                  resumeAvailable=paused;autoButton.setText(paused?"남은 검사 이어하기":"전체 배송 검사");sweepButton.setText("전체 목록 검사");
                   String oneOrder="";
                   if(detailKeys.size()==1){
                       java.util.Set<String> pairs=linkedResults.get(detailKeys.get(0));
@@ -767,7 +786,11 @@ jobs:
                       " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 자동 저장·자동 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
                   reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText();
-                  detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();orderCache.clear();autoSignature="";autoExpected="";
+                  if(resumeAvailable){
+                      status.append("\\n앱 실행 중 '남은 검사 이어하기'를 누르면 중지된 항목부터 다시 검사합니다. 기기 저장 없음.");
+                  }else{
+                      detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();orderCache.clear();autoSignature="";autoExpected="";
+                  }
                   showReport();
               }
               private void nextAutoOrder(int run){
@@ -969,7 +992,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.15 debug APK
+      - name: Lint and assemble v0.1.16 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
