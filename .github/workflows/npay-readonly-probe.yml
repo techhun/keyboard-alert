@@ -787,7 +787,7 @@ jobs:
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
                   reportFinishedAt=System.currentTimeMillis();reportSummary=result.getText()+"\n"+status.getText();
                   if(resumeAvailable){
-                      status.append("\\n앱 실행 중 '남은 검사 이어하기'를 누르면 중지된 항목부터 다시 검사합니다. 기기 저장 없음.");
+                      status.append("\n앱 실행 중 '남은 검사 이어하기'를 누르면 중지된 항목부터 다시 검사합니다. 기기 저장 없음.");
                   }else{
                       detailQueue.clear();detailKeys.clear();detailLabels.clear();detailIds.clear();linkedResults.clear();orderCache.clear();autoSignature="";autoExpected="";
                   }
