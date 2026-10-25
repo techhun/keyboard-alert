@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-22T07:10:36.795Z",
+  "updatedAt": "2026-10-25T23:30:47.077Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -734,6 +734,20 @@
       "status": "제작 중 / In progress",
       "note": "50% 포장 완료, 10월 말 경 포장 완료 예정 / 50 percent of the packaging has been completed; packaging is expected to be completed by the end of October",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "6c985dd38f2456c00eec22d170a97630",
+      "source": "GEONWORKS",
+      "name": "Lilith Original Remake Artisan Keycap",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-25T23:30:47.077Z",
+      "categoryHint": "키캡",
+      "maker": "Nuxros",
+      "saleStart": "2026-10-23",
+      "saleEnd": "2025-10-30",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-21T07:20:37.980Z",
+  "updatedAt": "2026-10-25T23:30:47.077Z",
   "rows": [
     {
       "product": "DCS NOTD",
@@ -70,17 +70,6 @@
       "end": "2026-11-09"
     },
     {
-      "product": "GMK CYL Tokyo & Miami Nights R2",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-10-13",
-      "end": "2026-10-23"
-    },
-    {
       "product": "GMK Salamander",
       "manufacturer": "GMK",
       "region": "KR/GLOBAL",
@@ -101,10 +90,23 @@
       "fixed": "확정 / Fixed",
       "start": "2026-10-20",
       "end": "2026-11-16"
+    },
+    {
+      "product": "Lilith Original Remake Artisan Keycap",
+      "manufacturer": "Nuxros",
+      "region": "KR",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-10-23",
+      "end": "2025-10-30"
     }
   ],
   "sentChanges": {
     "da20fa8fa59fd11aca67dd49": "2026-10-19T01:10:37.735Z",
-    "0ef01c3624c21b73bf06b681": "2026-10-20T05:40:34.144Z"
+    "0ef01c3624c21b73bf06b681": "2026-10-20T05:40:34.144Z",
+    "bafff49b5caa67be247575bf": "2026-10-25T23:30:46.786Z",
+    "f62a9626a7eaa5e4a271c803": "2026-10-25T23:30:47.076Z"
   }
 }
