@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-23T19:21:08.318Z",
+  "updatedAt": "2026-10-26T21:13:01.979Z",
   "rows": [
     {
       "id": 350,
@@ -139,13 +139,13 @@
       "id": 336,
       "displayName": "GMK MTNU Welles",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-05-15",
       "endDate": "2026-06-16",
       "eta": "Q4 2026",
-      "latestUpdateId": 1879,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "Production of GMK MTNU Welles has completed and sets will be shipping to us next week! We expect to receive the shipment in the next 3-4 weeks!"
+      "latestUpdateId": 1906,
+      "latestUpdateDate": "2026-10-26",
+      "latestUpdateDescription": "GMK MTNU Welles has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
     },
     {
       "id": 342,
@@ -3419,6 +3419,7 @@
     "a4801766c16dde08c9a47116": "2026-10-21T15:51:20.400Z",
     "fca9a0c851386f945ff95d60": "2026-10-21T16:11:01.966Z",
     "54da6bf55a828657699fffd4": "2026-10-23T15:51:08.376Z",
-    "36d52ba943dbea75cddd159d": "2026-10-23T19:21:08.316Z"
+    "36d52ba943dbea75cddd159d": "2026-10-23T19:21:08.316Z",
+    "4f32ad3eb9f86207c9620784": "2026-10-26T21:13:01.977Z"
   }
 }
