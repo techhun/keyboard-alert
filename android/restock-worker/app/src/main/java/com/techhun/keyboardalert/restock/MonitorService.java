@@ -365,7 +365,7 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (pausedForOptionLookup || pageHttpRateLimited) return;
+                if (pausedForOptionLookup || (pageHttpRateLimited && SiteSupport.NAVER_SMARTSTORE.equals(siteType))) return;
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
                     currentIndex = 0;
