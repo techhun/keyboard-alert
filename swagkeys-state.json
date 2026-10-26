@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-25T21:40:50.575Z",
+  "updatedAt": "2026-10-26T01:31:10.383Z",
   "announcement": {
     "heading": "업데이트(26.10.14)",
     "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
@@ -187,23 +187,23 @@
       "groupBuy": 100,
       "waitingProduction": 100,
       "inProduction": 100,
-      "shipping": 50,
-      "fulfilled": 0,
-      "inStock": 0,
+      "shipping": 100,
+      "fulfilled": 100,
+      "inStock": 100,
       "colorMatching": "Complete",
       "eta": "2026-10-15",
-      "currentStatus": "배송중 (Shipping)"
+      "currentStatus": "인스탁 판매중 (In-Stock)"
     },
     {
       "product": "Classic Blue",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 50,
+      "inProduction": 83.3,
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-10-26",
+      "eta": "2026-10-30",
       "currentStatus": "생산중 (In Production)"
     },
     {
@@ -227,7 +227,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-12-08",
+      "eta": "2026-12-23",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -239,7 +239,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2027-01-04",
+      "eta": "2027-01-11",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
@@ -251,7 +251,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "In Progress",
-      "eta": "2027-01-25",
+      "eta": "2027-02-08",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
