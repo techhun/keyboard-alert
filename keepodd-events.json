@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-25T23:30:47.077Z",
+  "updatedAt": "2026-10-26T01:20:32.709Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -748,6 +748,73 @@
       "saleEnd": "2025-10-30",
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "407f702a7dbbed5976797990a011ba4d",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "note_changed",
+      "before": "통관 중 / Currently clearing customs",
+      "after": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October.",
+      "occurredAt": "2026-10-26T01:20:32.709Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "893e3d41e841179e8ac8afb152192e5e",
+      "source": "GEONWORKS",
+      "name": "GMK MASTERPIECE R2",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-26T01:20:32.709Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-06-05",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d3f8219d7e34bc9ce31dd5f44974953c",
+      "source": "GEONWORKS",
+      "name": "GMK MASTERPIECE R2",
+      "eventType": "note_changed",
+      "after": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly",
+      "occurredAt": "2026-10-26T01:20:32.709Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-06-05",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "fe1bee6e3e2b3e6373e51e707f1057e3",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-26T01:20:32.709Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

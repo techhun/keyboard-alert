@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-26T01:10:31.502Z",
+  "updatedAt": "2026-10-26T01:20:32.709Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -14,13 +14,23 @@
       "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
     },
     {
+      "product": "TYPFACE KAFKA Barebones Kit",
+      "gbStart": "2026. 1. 29",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "TYPFACE",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 26",
+      "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October."
+    },
+    {
       "product": "DCS Cream Cheese and Green R3",
       "gbStart": "2026. 2. 20",
       "eta": "2026. 9. 30",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 20",
+      "update": "2026. 10. 26",
       "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating."
     },
     {
@@ -30,8 +40,18 @@
       "type": "Keyboard",
       "manufacturer": "SENSY",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 20",
+      "update": "2026. 10. 26",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
+    },
+    {
+      "product": "GMK MASTERPIECE R2",
+      "gbStart": "2026. 6. 5",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 10. 26",
+      "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly"
     },
     {
       "product": "DCS NOTD",
@@ -204,16 +224,6 @@
       "note": "완료 항목: 아노다이징, MX PCB, 보강판 전량, 패키징 상자, RAW 무게추, 포장재 전량 / 진행 중 항목: 코팅, 무게추 / 대기/지연 항목: HE 및 EC 키트용 구성품/일부 부품 입고 대기 중 / Completed Items: Anodizing, MX PCB, all reinforcement plates, packaging boxes, RAW weights, all packaging materials / 제작 중 / In progress: Coating, weights / Pending/Delayed: Components for HE and EC kits / Awaiting arrival of some parts"
     },
     {
-      "product": "TYPFACE KAFKA Barebones Kit",
-      "gbStart": "2026. 1. 29",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "TYPFACE",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 21",
-      "note": "통관 중 / Currently clearing customs"
-    },
-    {
       "product": "Katina TKL",
       "gbStart": "2026. 3. 18",
       "eta": "2026. 9. 30",
@@ -371,16 +381,6 @@
       "manufacturer": "",
       "status": "제작 중 / In progress",
       "update": "2026. 6. 16",
-      "note": "—"
-    },
-    {
-      "product": "GMK MASTERPIECE R2",
-      "gbStart": "2026. 6. 5",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 26",
       "note": "—"
     },
     {
@@ -715,6 +715,10 @@
     "8f9be7693957a693c8a777e3": "2026-10-22T07:10:36.794Z",
     "2d3d65b990f137f543d717c2": "2026-10-26T00:50:31.667Z",
     "251dc53ce012c78cd2d4ebcb": "2026-10-26T01:10:31.231Z",
-    "252a140a991b097f8340fdc5": "2026-10-26T01:10:31.501Z"
+    "252a140a991b097f8340fdc5": "2026-10-26T01:10:31.501Z",
+    "1c1b1d7f54ac4942f6c12509": "2026-10-26T01:20:32.200Z",
+    "4a1aaa95422664748cae2597": "2026-10-26T01:20:32.380Z",
+    "b11e9a53745d04a0dbc3ec42": "2026-10-26T01:20:32.507Z",
+    "0ffbf500ae12ff3c315789e2": "2026-10-26T01:20:32.708Z"
   }
 }
