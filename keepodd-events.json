@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-26T01:31:10.383Z",
+  "updatedAt": "2026-10-26T07:00:48.708Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -910,6 +910,39 @@
       "note": "컬러매칭 In Progress",
       "quarter": "Q2",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "3a0e5a47ff11e7f7c6153cbd8962bfcb",
+      "source": "GEONWORKS",
+      "name": "KBDfans Tofu Pad",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-10-26T07:00:48.708Z",
+      "categoryHint": "키보드",
+      "maker": "KBDfans",
+      "saleStart": "2026-05-06",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "일부 제품 미입고되어 대기 중. / Some products are currently on back order.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "5fa270de183b763d8012d408cc9fe173",
+      "source": "GEONWORKS",
+      "name": "KBDfans Tofu Pad",
+      "eventType": "note_changed",
+      "after": "일부 제품 미입고되어 대기 중. / Some products are currently on back order.",
+      "occurredAt": "2026-10-26T07:00:48.708Z",
+      "categoryHint": "키보드",
+      "maker": "KBDfans",
+      "saleStart": "2026-05-06",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "일부 제품 미입고되어 대기 중. / Some products are currently on back order.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]
