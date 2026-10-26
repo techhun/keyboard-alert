@@ -25,6 +25,18 @@ public class MonitorServiceTest {
     }
 
     @Test
+    public void document429TriggersCooldownButScriptErrorsAndOtherProductsDoNot() {
+        String monitored = "https://m.smartstore.naver.com/example/products/123";
+        assertTrue(MonitorService.isSmartStoreDocumentRateLimit(true, 429, monitored, monitored));
+        assertFalse(MonitorService.isSmartStoreDocumentRateLimit(false, 429, monitored, monitored));
+        assertFalse(MonitorService.isSmartStoreDocumentRateLimit(true, 204, monitored, monitored));
+        assertFalse(MonitorService.isSmartStoreDocumentRateLimit(true, 429, monitored,
+            "https://m.smartstore.naver.com/example/products/456"));
+        assertFalse(MonitorService.isSmartStoreDocumentRateLimit(true, 429, monitored,
+            "https://nid.naver.com/nidlogin.login"));
+    }
+
+    @Test
     public void smartStoreApiFallbackWaitsForPageStateAndNeverRunsDuring204Recovery() {
         assertFalse(MonitorService.allowSmartStoreApiFallback(0, false, 0L));
         assertFalse(MonitorService.allowSmartStoreApiFallback(1, false, 0L));

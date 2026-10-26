@@ -127,6 +127,9 @@ public class MonitorService extends Service {
     private int noContentReloadCount;
     private int smartStorePageProbeCount;
     private boolean noContentRecovery;
+    private boolean pageHttpRateLimited;
+    private int pageNavigationSerial;
+    private int handledRateLimitNavigation = -1;
     private final Set<String> noContentStormProducts = new HashSet<>();
     private int noContentStormFailures;
     private long noContentStormWindowStartedAt;
@@ -269,6 +272,11 @@ public class MonitorService extends Service {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 if (stopping) return;
                 String siteType = currentSiteType();
+                if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && currentProduct != null
+                    && SiteSupport.isSameProductPage(siteType, currentProduct.optString("url", ""), url)) {
+                    pageNavigationSerial++;
+                    pageHttpRateLimited = false;
+                }
                 if (SiteSupport.NAVER_SMARTSTORE.equals(siteType) && SiteSupport.isNaverLoginUrl(url)) {
                     setStatus("로그인 필요");
                     updateOngoingNotification("로그인이 필요해요");
@@ -301,6 +309,32 @@ public class MonitorService extends Service {
                 DiagnosticLog.add(MonitorService.this, "PAGE_HTTP_ERROR", currentProduct,
                     (request.isForMainFrame() ? "document" : "script")
                         + " · HTTP " + response.getStatusCode());
+                if (!isSmartStoreDocumentRateLimit(
+                    request.isForMainFrame(), response.getStatusCode(),
+                    currentProduct.optString("url", ""), request.getUrl().toString())) return;
+                // A 429 on the document is already a server-side rate limit.
+                // Do not run JS probes or a 204-producing API fallback on its error page.
+                pageHttpRateLimited = true;
+                final int navigation = pageNavigationSerial;
+                handler.post(() -> {
+                    if (stopping || pausedForOptionLookup || currentProduct == null
+                        || navigation != pageNavigationSerial
+                        || handledRateLimitNavigation == navigation
+                        || !SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())
+                        || !SiteSupport.isSameProductPage(currentSiteType(),
+                            currentProduct.optString("url", ""), view.getUrl())) return;
+                    handledRateLimitNavigation = navigation;
+                    if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
+                        bootstrapReady = true;
+                        currentIndex = 0;
+                    }
+                    awaitingResult = false;
+                    handler.removeCallbacks(resultTimeout);
+                    cancelPendingChecks();
+                    view.stopLoading();
+                    applyRateLimitBackoff(429);
+                    scheduleNextProduct();
+                });
             }
 
             @Override
@@ -331,7 +365,7 @@ public class MonitorService extends Service {
                     return;
                 }
 
-                if (pausedForOptionLookup) return;
+                if (pausedForOptionLookup || pageHttpRateLimited) return;
                 if (mode == Mode.BOOTSTRAP && !bootstrapReady) {
                     bootstrapReady = true;
                     currentIndex = 0;
@@ -412,7 +446,8 @@ public class MonitorService extends Service {
         }
         if (SiteSupport.NAVER_SMARTSTORE.equals(siteType)) {
             long noContentBackoff = Math.max(0L, noContentBackoffUntil - System.currentTimeMillis());
-            if (noContentBackoff > 0L) {
+            long rateBackoff = Math.max(0L, backoffUntil - System.currentTimeMillis());
+            if (Math.max(noContentBackoff, rateBackoff) > 0L) {
                 updateOngoingNotification("SmartStore 일시 오류 · 잠시 후 다시 확인해요");
                 scheduleNextProduct();
                 return;
@@ -449,7 +484,8 @@ public class MonitorService extends Service {
     }
 
     private void runDiscoveryCheck() {
-        if (stopping || pausedForOptionLookup || mode != Mode.DISCOVERY || awaitingResult || currentProduct == null) return;
+        if (stopping || pausedForOptionLookup || pageHttpRateLimited
+            || mode != Mode.DISCOVERY || awaitingResult || currentProduct == null) return;
         JSONObject latest = ProductStore.find(this, currentProduct.optString("id"));
         if (latest == null || !latest.optBoolean("enabled", false)) {
             scheduleNextProduct();
@@ -529,7 +565,8 @@ public class MonitorService extends Service {
     }
 
     private void handleInventoryResult(String json) {
-        if (stopping || pausedForOptionLookup || currentProduct == null) return;
+        if (stopping || pausedForOptionLookup || currentProduct == null
+            || (pageHttpRateLimited && SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType()))) return;
 
         try {
             JSONObject result = new JSONObject(json);
@@ -1114,6 +1151,14 @@ public class MonitorService extends Service {
         return pageProbeCount >= SMARTSTORE_PAGE_PROBES_BEFORE_API
             && !noContentRecovery
             && remainingBackoffMillis <= 0L;
+    }
+
+    static boolean isSmartStoreDocumentRateLimit(
+        boolean mainFrame, int status, String productUrl, String requestUrl
+    ) {
+        return mainFrame && status == 429
+            && SiteSupport.isSameProductPage(
+                SiteSupport.NAVER_SMARTSTORE, productUrl, requestUrl);
     }
 
     static long productSpacingMillis(int intervalSeconds, int productCount) {
