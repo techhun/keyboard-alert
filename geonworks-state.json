@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-26T07:00:48.708Z",
+  "updatedAt": "2026-10-26T07:50:31.885Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -64,23 +64,13 @@
       "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly"
     },
     {
-      "product": "DCS NOTD",
-      "gbStart": "2026. 10. 1",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 15",
-      "note": "—"
-    },
-    {
       "product": "GMK CYL Rainy Day R3",
       "gbStart": "2026. 10. 6",
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
+      "update": "2026. 10. 26",
       "note": "—"
     },
     {
@@ -721,6 +711,8 @@
     "b11e9a53745d04a0dbc3ec42": "2026-10-26T01:20:32.507Z",
     "0ffbf500ae12ff3c315789e2": "2026-10-26T01:20:32.708Z",
     "fd491c307d3b8d3dd9c67fa8": "2026-10-26T07:00:48.457Z",
-    "371ceb243dca6b1976e38e09": "2026-10-26T07:00:48.707Z"
+    "371ceb243dca6b1976e38e09": "2026-10-26T07:00:48.707Z",
+    "4f39bedc1161eac8500df072": "2026-10-26T07:50:31.697Z",
+    "c8d98bfce1889c61540f93ec": "2026-10-26T07:50:31.885Z"
   }
 }
