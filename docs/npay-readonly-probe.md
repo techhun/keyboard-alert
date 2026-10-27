@@ -14,7 +14,7 @@
 - Kurly Next Mile suffix `0001` appeared across unrelated entries in a 2026-10-24 real-device report. v0.1.17 labels such results for verification rather than asserting that the number is invalid.
 - Delivery buttons are **not skipped** within an order merely because masked output repeats. The report may compact repeated displays while keeping the physical button checks.
 - In-memory resume works after a user-initiated pause within the same running app. The interrupted entry is restarted and its partial button counters are rolled back. Force-close, Android process death, explicit navigation to history, or a new scan resets this state. Cross-launch persistence is intentionally not implemented because the original probe should not automatically store user data.
-- No fixed NPay signing key is configured in CI. GitHub's generated debug APK may carry a different certificate on subsequent CI runs, so an uninstall/reinstall may be required. A permanent update-signing process needs a separately managed private NPay key before routine distribution.
+- The original private NPay PKCS12 key remains in the user's private project Library as `npay-probe-signing-2026.p12` (created 2026-10-23), with the v0.1.14 APK retained for public-certificate fingerprint comparison. The key **must not** be committed to GitHub. The workflow now supports optional stable signing **only after the four NPay Actions Secrets are configured**; until then, GitHub only publishes a transient-key debug APK. A successful debug build does not prove persistent signing.
 
 ## Regression check / completion criteria
 - CI on changes to `.github/workflows/npay-readonly-probe.yml`: Gradle `:app:lintDebug` and `:app:assembleDebug`. CI does **not** run NPay Android unit tests (the temporary project removes the inherited Restock test directory); successful CI is not a substitute for real-device verification.
@@ -47,6 +47,18 @@
 - Full-list success requires reaching every page **and** completing with the UI still in background; otherwise the report distinguishes a completed listing from fully-background verification. Page count changes or duplicate-only repeated pages stop conservatively.
 - **Device test pending:** logged-in app → 진단 → 백그라운드 전체 구매목록 검사 (1회) → immediately go home / screen lock → later reopen → 백그라운드 결과 확인. Check that all pages were read and count matches the known list (earlier 432 items; live list may have changed). Ensure original full delivery scan, one-page background probe, login and export still work.
 - This remains a list-only, read-only validation, **not** delivery detail retrieval or a production automatic sync. Persistent credentials, full order IDs, tracking numbers and DB writes are intentionally absent.
+
+## Stable NPay signing (pending GitHub Secrets)
+- Original v0.1.14 certificate SHA-256: `20fe05415645ecbc2debe2c872eff8d94efb2ac019492ba91668dfbf7da2c3d9`. This is a public certificate fingerprint, not a private key.
+- Never use the Restock signing key for NPay. Never check in the PKCS12 or credentials, print a password to logs, or send passwords through chat.
+- Configure repository **Settings → Secrets and variables → Actions** with exactly:
+  - `NPAY_RELEASE_KEYSTORE_BASE64`: base64-encoded bytes of the original `npay-probe-signing-2026.p12`.
+  - `NPAY_RELEASE_STORE_PASSWORD`: original PKCS12 password.
+  - `NPAY_RELEASE_KEY_ALIAS`: original key alias.
+  - `NPAY_RELEASE_KEY_PASSWORD`: original private-key password (normally identical to the store password for PKCS12).
+- CI restores the keystore only into a temporary file, signs a separate `npay-v0.1.19-fixed-signed.apk` artifact, runs `apksigner verify`, and **fails** if its signing-certificate SHA-256 does not match v0.1.14. Debug APK remains a separate CI-only artifact; do not distribute it as a stable build.
+- No repository-management tool in this chat has permission to set GitHub Actions Secrets. The password/alias and secret provisioning are currently unverified. Do **not** claim persistent signing is operational before a signed artifact is produced and verified.
+- APKs v0.1.15–v0.1.19 already distributed were signed using different temporary debug certificates; they cannot update one another in place. After a one-time reinstall of a correctly fixed-signed build, future versions signed with the same P12 can update it.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
