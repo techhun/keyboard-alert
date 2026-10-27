@@ -30,6 +30,7 @@ import org.json.JSONObject;
 public final class BackgroundProbeService extends Service {
     static final String ACTION_STOP = "com.techhun.npayprobe.BG_STOP";
     static final String ACTION_SCAN_ALL = "com.techhun.npayprobe.BG_SCAN_ALL";
+    static final String ACTION_SHIP_SAMPLE = "com.techhun.npayprobe.BG_SHIP_SAMPLE";
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
     private static final int NOTIFICATION_ID = 62018;
@@ -39,7 +40,11 @@ public final class BackgroundProbeService extends Service {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private WebView webView;
     private PowerManager.WakeLock wakeLock;
-    private boolean started = false, finished = false, scanAll = false, readQueued = false;
+    private boolean started = false, finished = false, scanAll = false, readQueued = false,
+        sampleShipping = false;
+    private int sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
+        sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleClicks=0, samplePoll=0;
+    private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
     private final java.util.HashSet<String> seenHashes = new java.util.HashSet<>();
 
@@ -58,8 +63,10 @@ public final class BackgroundProbeService extends Service {
         if (started) return START_NOT_STICKY;
         started = true;
         scanAll = intent != null && ACTION_SCAN_ALL.equals(intent.getAction());
+        sampleShipping = intent != null && ACTION_SHIP_SAMPLE.equals(intent.getAction());
         try {
-            Notification notification = notification(scanAll?
+            Notification notification = notification(sampleShipping?
+                "백그라운드 배송조회 최대 6건 검사 준비": scanAll?
                 "백그라운드 전체 목록 검사 준비" : "화면 전환 후 구매목록 1페이지 검사");
             if (Build.VERSION.SDK_INT >= 29) {
                 startForeground(NOTIFICATION_ID, notification,
@@ -69,12 +76,13 @@ public final class BackgroundProbeService extends Service {
             }
             PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "npay:onepage-probe");
-            wakeLock.acquire(scanAll ? 300000L : 55000L); // strictly bounded, user initiated
+            wakeLock.acquire(sampleShipping? 240000L: scanAll ? 300000L : 55000L); // bounded
             status("조회 대기 중 · 화면을 꺼도 테스트 진행");
             handler.postDelayed(this::begin, 8000L);
             handler.postDelayed(() -> finish(
+                sampleShipping? "배송조회 시범 시간 초과 · "+sampleDone+"건 완료 · 중단" :
                 scanAll ? "시간 초과 · "+Math.max(0,page-1)+"페이지 완료 · 자동 중단" :
-                "시간 초과 · 백그라운드 화면 응답 없음"), scanAll ? 280000L : 45000L);
+                "시간 초과 · 백그라운드 화면 응답 없음"), sampleShipping? 215000L : scanAll ? 280000L : 45000L);
         } catch (RuntimeException ex) {
             finish("서비스 시작 실패 · Android 백그라운드 실행 제한");
         }
@@ -87,7 +95,8 @@ public final class BackgroundProbeService extends Service {
         PendingIntent p = PendingIntent.getActivity(this, NOTIFICATION_ID, open, flags);
         return new Notification.Builder(this, CHANNEL)
             .setSmallIcon(android.R.drawable.stat_notify_sync)
-            .setContentTitle(scanAll ? "NPay 백그라운드 목록 검사" : "NPay 백그라운드 1페이지 테스트")
+            .setContentTitle(sampleShipping? "NPay 백그라운드 배송조회 시범" :
+                scanAll ? "NPay 백그라운드 목록 검사" : "NPay 백그라운드 1페이지 테스트")
             .setContentText(message).setContentIntent(p).setOngoing(true).build();
     }
 
@@ -139,6 +148,22 @@ public final class BackgroundProbeService extends Service {
             webView.setWebViewClient(new WebViewClient() {
                 @Override public void onPageFinished(WebView view, String address) {
                     if (finished) return;
+                    if (sampleShipping){
+                        if(sampleStage==0){
+                            if(!history(address)){finish("배송조회 시범 · 로그인/목록 접근 실패");return;}
+                            if(!readQueued){
+                                readQueued=true;
+                                handler.postDelayed(BackgroundProbeService.this::sampleListRead,1100L);
+                            }
+                        }else if(sampleStage==1){
+                            if(!safeDetailUrl(address)){advanceSample(2);return;}
+                            if(!readQueued){
+                                readQueued=true;
+                                handler.postDelayed(BackgroundProbeService.this::readSampleDetail,1200L);
+                            }
+                        }
+                        return;
+                    }
                     if (!history(address)) {
                         finish("로그인 필요 또는 결제내역 화면 접근 실패");
                         return;
@@ -151,7 +176,8 @@ public final class BackgroundProbeService extends Service {
                 @Override public void onReceivedError(WebView v, WebResourceRequest req,
                                                      android.webkit.WebResourceError err) {
                     if (!finished && req.isForMainFrame()) {
-                        finish("페이지 로딩 오류 · 네트워크 또는 세션 확인 필요");
+                        if(sampleShipping&&sampleStage>0)advanceSample(2);
+                        else finish("페이지 로딩 오류 · 네트워크 또는 세션 확인 필요");
                     }
                 }
                 @Override public boolean onRenderProcessGone(
@@ -162,7 +188,7 @@ public final class BackgroundProbeService extends Service {
                     return true;
                 }
             });
-            progress("백그라운드 WebView "+(scanAll?"목록 검사":"1페이지")+" 요청 중");
+            progress("백그라운드 WebView "+(sampleShipping?"배송조회 시범":scanAll?"목록 검사":"1페이지")+" 요청 중");
             openPage(1);
         } catch (RuntimeException ex) {
             finish("WebView 초기화 실패");
@@ -272,6 +298,151 @@ public final class BackgroundProbeService extends Service {
         final int next = page+1;
         handler.postDelayed(() -> openPage(next), 1500L);
     }
+
+    // Bounded pilot: the first six shopping-list entries with a safe detail URL.
+    // We inspect at most one delivery control per entry. This does not establish
+    // item-level invoice linkage and does not persist full identifiers.
+    private JSONObject decode(String ret) throws Exception {
+        if (ret == null || ret.length()>150000) throw new IllegalArgumentException();
+        Object value = new JSONArray("["+ret+"]").get(0);
+        if (!(value instanceof String)) throw new IllegalArgumentException();
+        return new JSONObject((String)value);
+    }
+    private boolean safeDetailUrl(String url) {
+        try {
+            if (url==null || url.length()>4096) return false;
+            android.net.Uri u=android.net.Uri.parse(url);
+            String h=u.getHost();
+            return "https".equals(u.getScheme()) && u.getUserInfo()==null &&
+                h!=null && ("pay.naver.com".equals(h)||h.endsWith(".pay.naver.com"));
+        } catch(Exception ignored) {return false;}
+    }
+    private void sampleListRead() {
+        if(finished||!sampleShipping||sampleStage!=0||webView==null)return;
+        try {
+            webView.evaluateJavascript(BackgroundDeliveryScripts.SAMPLE_LIST_JS, ret -> {
+                if(finished||sampleStage!=0)return;
+                try{
+                    JSONObject d=decode(ret);
+                    if(!d.optBoolean("ok")) {
+                        if("WAIT".equals(d.optString("code")) && ++attempt<12) {
+                            handler.postDelayed(this::sampleListRead,1200L);return;
+                        }
+                        finish("배송조회 시범 · 목록 준비 실패 · 상세검사 0건");return;
+                    }
+                    JSONArray a=d.getJSONArray("candidates");
+                    if(a.length()>6||a.length()==0){finish("배송조회 시범 · 유효한 상세 링크 없음");return;}
+                    for(int i=0;i<a.length();i++){
+                        JSONObject row=a.getJSONObject(i);
+                        String id=row.getString("id"),url=row.getString("url");
+                        if(!id.matches("[A-Za-z0-9_-]{1,80}")||!safeDetailUrl(url))throw new IllegalArgumentException();
+                        sampleTargets.add(new String[]{id,url});
+                    }
+                    sampleIndex=0;
+                    nextSample();
+                }catch(Exception ex){finish("배송조회 시범 · 목록 응답 검증 실패");}
+            });
+        }catch(RuntimeException ex){finish("배송조회 시범 · 목록 실행 실패");}
+    }
+    private void nextSample(){
+        if(finished||!sampleShipping)return;
+        if(sampleIndex>=sampleTargets.size()){
+            String marker=getSharedPreferences(PREFS,MODE_PRIVATE).getBoolean("ui_visible",true)?
+                " · 종료 시 화면 전면(백그라운드 지속 검증 미확정)":" · 백그라운드 실행 확인";
+            finish("배송조회 시범 종료 · "+sampleDone+"/"+sampleTargets.size()+
+                "건 · 배송정보 표시 "+sampleMatched+"건 · 버튼 없음 "+sampleNoButton+
+                "건 · 추가확인 "+sampleUnknown+"건"+marker);
+            return;
+        }
+        String url=sampleTargets.get(sampleIndex)[1];
+        sampleStage=1;attempt=0;readQueued=false;
+        final int step=++sampleStep;
+        progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
+        handler.postDelayed(()->{
+            if(!finished&&sampleShipping&&step==sampleStep&&sampleStage!=0)
+                advanceSample(2);
+        },30000L);
+        try{webView.loadUrl(url);}catch(RuntimeException ex){advanceSample(2);}
+    }
+    private void readSampleDetail(){
+        if(finished||!sampleShipping||sampleStage!=1||webView==null)return;
+        final int step=sampleStep;
+        String id=sampleTargets.get(sampleIndex)[0],link=sampleTargets.get(sampleIndex)[1];
+        if(!safeDetailUrl(webView.getUrl())||!link.equals(webView.getUrl())){
+            advanceSample(2);return;
+        }
+        try{
+            webView.evaluateJavascript(
+                BackgroundDeliveryScripts.AUTO_JS+"("+JSONObject.quote(id)+")",ret->{
+                if(finished||step!=sampleStep||sampleStage!=1)return;
+                try {
+                    JSONObject d=decode(ret);
+                    if(!d.optBoolean("ok"))throw new IllegalArgumentException();
+                    if(!d.optBoolean("targetPresent")&&++attempt<5){
+                        handler.postDelayed(this::readSampleDetail,1400L);return;
+                    }
+                    if(d.optBoolean("targetCancelled")){
+                        advanceSample(0);return;
+                    }
+                    JSONArray keys=d.getJSONArray("controlKeys");
+                    if(d.optBoolean("controlLimited")||d.optInt("blockedControls")>0||
+                        !d.optBoolean("targetPresent")){
+                        advanceSample(2);return;
+                    }
+                    if(keys.length()==0){
+                        advanceSample(1);return;
+                    }
+                    if(keys.length()>20){advanceSample(2);return;}
+                    String signature=keys.toString();
+                    sampleStage=2;sampleStep++;samplePoll=0;
+                    final int clickStep=sampleStep;
+                    String command=BackgroundDeliveryScripts.CLICK_JS+"("+
+                        JSONObject.quote(link)+","+JSONObject.quote(signature)+",0)";
+                    webView.evaluateJavascript(command,clicked->{
+                        if(finished||sampleStage!=2||sampleStep!=clickStep)return;
+                        try {
+                            if(!"CLICKED".equals(decode(clicked).optString("state"))){
+                                advanceSample(2);return;
+                            }
+                            sampleClicks++;
+                            handler.postDelayed(()->pollSampleShipping(clickStep),1400L);
+                        }catch(Exception ex){advanceSample(2);}
+                    });
+                }catch(Exception ex){advanceSample(2);}
+            });
+        }catch(RuntimeException ex){advanceSample(2);}
+    }
+    private void pollSampleShipping(int step){
+        if(finished||sampleStep!=step||sampleStage!=2||webView==null)return;
+        if(!safeDetailUrl(webView.getUrl())){advanceSample(2);return;}
+        try{
+            webView.evaluateJavascript(BackgroundDeliveryScripts.DETAIL_JS,ret->{
+                if(finished||sampleStep!=step||sampleStage!=2)return;
+                try{
+                    JSONObject d=decode(ret);
+                    if(!d.optBoolean("ok"))throw new IllegalArgumentException();
+                    if(d.getJSONArray("domPairs").length()>0){
+                        advanceSample(3);return;
+                    }
+                    if(++samplePoll<9){
+                        handler.postDelayed(()->pollSampleShipping(step),1300L);return;
+                    }
+                    advanceSample(2);
+                }catch(Exception ex){advanceSample(2);}
+            });
+        }catch(RuntimeException ex){advanceSample(2);}
+    }
+    private void advanceSample(int outcome){
+        if(finished||!sampleShipping||sampleIndex>=sampleTargets.size())return;
+        // outcome: 0 explicit cancelled, 1 no button, 2 unknown, 3 display hit.
+        if(outcome==1)sampleNoButton++;
+        else if(outcome==2)sampleUnknown++;
+        else if(outcome==3)sampleMatched++;
+        sampleDone++;sampleIndex++;sampleStep++;sampleStage=0;readQueued=false;
+        progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+
+            "건 · 표시정보 "+sampleMatched+" · 추가확인 "+sampleUnknown);
+        handler.postDelayed(this::nextSample,1400L);
+    }
     private void finish(String message) {
         if (finished) return;
         finished = true;
@@ -289,6 +460,7 @@ public final class BackgroundProbeService extends Service {
             webView = null;
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
+        sampleTargets.clear();seenHashes.clear();
         super.onDestroy();
     }
 
