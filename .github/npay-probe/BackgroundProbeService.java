@@ -34,7 +34,9 @@ public final class BackgroundProbeService extends Service {
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
     private static final int NOTIFICATION_ID = 62018;
+    private static final int NOTIFICATION_DONE = 62019;
     private static final String CHANNEL = "npay_bg_probe";
+    private static final String CHANNEL_DONE = "npay_bg_probe_result";
     private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
     private static final String PAGE_JS = "(function(){try{var path=location.pathname;if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||['/history','/history/','/pc/history','/pc/history/'].indexOf(path)<0)return JSON.stringify({ok:false,code:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,code:'WAIT'});if(el.textContent.length>5000000)return JSON.stringify({ok:false,code:'LIMIT'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,code:'WAIT'});var p=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){var pages=q[i].state&&q[i].state.data&&q[i].state.data.pages;if(Array.isArray(pages))for(var j=0;j<pages.length;j++)if(Number(pages[j].curPage)===__PAGE__){p=pages[j];break;}if(p)break;}}if(!p)return JSON.stringify({ok:false,code:'WAIT'});var count=Array.isArray(p.items)?p.items.length:-1,total=Number(p.totalPage);if(count<0||count>1000||!Number.isInteger(total)||total<0||total>500)return JSON.stringify({ok:false,code:'BAD_DATA'});var ids=[];if(__IDS__){for(var k=0;k<count;k++){var item=p.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,code:'BAD_ID'});ids.push(id);}}return JSON.stringify({ok:true,count:count,pages:total,page:__PAGE__,ids:ids});}catch(_){return JSON.stringify({ok:false,code:'PARSE'});}})()";
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -43,7 +45,8 @@ public final class BackgroundProbeService extends Service {
     private boolean started = false, finished = false, scanAll = false, readQueued = false,
         sampleShipping = false;
     private int sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
-        sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleClicks=0, samplePoll=0;
+        sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
+        sampleClicks=0, samplePoll=0;
     private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
     private final java.util.HashSet<String> seenHashes = new java.util.HashSet<>();
@@ -52,7 +55,10 @@ public final class BackgroundProbeService extends Service {
         super.onCreate();
         NotificationChannel channel = new NotificationChannel(
             CHANNEL, "NPay 일회성 조회 검증", NotificationManager.IMPORTANCE_LOW);
-        getSystemService(NotificationManager.class).createNotificationChannel(channel);
+        NotificationManager nm=getSystemService(NotificationManager.class);
+        nm.createNotificationChannel(channel);
+        nm.createNotificationChannel(new NotificationChannel(
+            CHANNEL_DONE,"NPay 조회 검사 완료",NotificationManager.IMPORTANCE_DEFAULT));
     }
 
     @Override public int onStartCommand(Intent intent, int flags, int startId) {
@@ -176,7 +182,7 @@ public final class BackgroundProbeService extends Service {
                 @Override public void onReceivedError(WebView v, WebResourceRequest req,
                                                      android.webkit.WebResourceError err) {
                     if (!finished && req.isForMainFrame()) {
-                        if(sampleShipping&&sampleStage>0)advanceSample(2);
+                        if(sampleShipping&&(sampleStage==1||sampleStage==2))advanceSample(2);
                         else finish("페이지 로딩 오류 · 네트워크 또는 세션 확인 필요");
                     }
                 }
@@ -351,7 +357,8 @@ public final class BackgroundProbeService extends Service {
                 " · 종료 시 화면 전면(백그라운드 지속 검증 미확정)":" · 백그라운드 실행 확인";
             finish("배송조회 시범 종료 · "+sampleDone+"/"+sampleTargets.size()+
                 "건 · 배송정보 표시 "+sampleMatched+"건 · 버튼 없음 "+sampleNoButton+
-                "건 · 추가확인 "+sampleUnknown+"건"+marker);
+                "건 · 취소 "+sampleCancelled+"건 · 추가확인 "+sampleUnknown+
+                "건 · 버튼검사 "+sampleClicks+"개"+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
@@ -438,7 +445,8 @@ public final class BackgroundProbeService extends Service {
         if(outcome==1)sampleNoButton++;
         else if(outcome==2)sampleUnknown++;
         else if(outcome==3)sampleMatched++;
-        sampleDone++;sampleIndex++;sampleStep++;sampleStage=0;readQueued=false;
+        if(outcome==0)sampleCancelled++;
+        sampleDone++;sampleIndex++;sampleStep++;sampleStage=3;readQueued=false;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+
             "건 · 표시정보 "+sampleMatched+" · 추가확인 "+sampleUnknown);
         handler.postDelayed(this::nextSample,1400L);
@@ -448,6 +456,18 @@ public final class BackgroundProbeService extends Service {
         finished = true;
         status(message);
         stopForeground(STOP_FOREGROUND_REMOVE);
+        try {
+            PendingIntent p=PendingIntent.getActivity(this,NOTIFICATION_DONE,
+                new Intent(this,MainActivity.class),
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+            Notification note=new Notification.Builder(this,CHANNEL_DONE)
+                .setSmallIcon(android.R.drawable.stat_notify_more)
+                .setContentTitle("NPay 검사 종료 · 앱에서 결과 확인")
+                .setContentText(message).setContentIntent(p).setAutoCancel(true).build();
+            getSystemService(NotificationManager.class).notify(NOTIFICATION_DONE,note);
+        } catch(RuntimeException ignored) {
+            // The sanitized result is still available in the app if notifications are blocked.
+        }
         stopSelf();
     }
 
