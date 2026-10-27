@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.21)
+# NPay read-only delivery probe (v0.1.22)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -75,6 +75,13 @@
 - Per-run counters include total list entries inspected, shipping display hits (entry-level and button-level), number of entries with multiple recognized buttons, direct button clicks, known control count, and buttons left **unverified**. Entries with untested controls or any inconclusive checked control are classified as **additional review**, never fully verified shipment matches. This never asserts that identical masked carrier/tail values prove identical parcels.
 - Keep the one-button six-item mode, single-page mode, all-shopping-pages mode, explicit stop and completion notification for regression.
 - **Real-device test pending**: log in; select the new multi-control button; switch to home or lock; read the completion notification / `백그라운드 결과 확인`. Check that multi-button orders and button counts are reported and no untested buttons are silently claimed as successful. This is still an inspection-only probe, not all-orders delivery sync or persistent shipping tracking.
+
+## 2026-10-28 v0.1.21 field result and v0.1.22 follow-up
+- v0.1.21 real-device background multi-button test: completed **6/6** sampled list items, **5** fully verified display hits, **1** extra-review item, **10** direct button clicks with **10** visible carrier/tracking candidates, **11** buttons discovered, **1** unverified, **3** entries with multiple buttons. No cancellation or no-button cases. The app explicitly reported **background execution confirmed**.
+- The report alone does **not** uniquely identify why that one button was unverified. Inspection of v0.1.21 code shows a deliberately conservative **3 buttons per entry** cap, which can produce this exact outcome for a four-control detail page; a changed control signature, click/poll failure, or timeout could also produce one unverified button.
+- v0.1.22 expands the per-entry bound to **five** controls (keeping the overall 6-entry sample), adds a stable **55-second per-entry watchdog** independent of button index/reload, and stores only sanitized item-position and reason strings (e.g. `3번:건당 5개 검사 한도`). The former "미검사" count is now labeled **"미확인"**, because a clicked control without matching delivery display is not fully verified.
+- Do not infer identical parcels or item-level invoice assignment from repeated carrier/tracking tails. Preserve the old one-button background mode, 1-page and 29-page list modes, explicit stop, and on-device completion notification for regression.
+- **v0.1.22 CI build/lint and actual phone validation are separate milestones.** Do not mark its user-visible behavior as complete before the next real-device observation.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
