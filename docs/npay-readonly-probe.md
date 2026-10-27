@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.20)
+# NPay read-only delivery probe (v0.1.21)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -68,6 +68,13 @@
 - Both old one-page and full-list background modes are unchanged. Completion/failure/interruption now raises a separate user notification in the NPay app (notification permission permitting) linking back to the sanitized result status.
 - Test **once**: log in; tap `진단` → `백그라운드 배송정보 시범 (최대 6건)`; immediately switch to home or lock screen. After notification, return and tap `백그라운드 결과 확인`. Confirm the exact success/partial reason, count, and whether phone stayed locked. A build/lint pass is **not** proof that shipment controls work in an offscreen WebView.
 - Next decisions after verification: whether to move all shipping controls and per-item relations into a bounded background scan; incremental updates and secure local persistence require explicit design and are **not** implemented by v0.1.20.
+
+## 2026-10-27 v0.1.21 multi-control background probe (device test pending)
+- The v0.1.20 **actual phone** report showed **6/6 sampled entries** with **6 shipping-detail display hits**, **6 direct clicks**, **0 cancelled**, **0 missing buttons**, and **0 additional-review cases**, plus "백그라운드 실행 확인". This proves the first shipping-control WebView flow works while the app is backgrounded; it does not prove item-level invoice linkage or all delivery buttons in a bundled order.
+- New opt-in **백그라운드 묶음배송 버튼 검사 (6건·건당 최대 3개)** tests up to the first **three** stable, recognized shipping controls per one of six bounded list entries. Each following button is inspected only after reopening the original detail page, rechecking the expected product order and full button signature, and independently clicking that button. Stop conservatively if keys, item state or page change.
+- Per-run counters include total list entries inspected, shipping display hits (entry-level and button-level), number of entries with multiple recognized buttons, direct button clicks, known control count, and buttons left **unverified**. Entries with untested controls or any inconclusive checked control are classified as **additional review**, never fully verified shipment matches. This never asserts that identical masked carrier/tail values prove identical parcels.
+- Keep the one-button six-item mode, single-page mode, all-shopping-pages mode, explicit stop and completion notification for regression.
+- **Real-device test pending**: log in; select the new multi-control button; switch to home or lock; read the completion notification / `백그라운드 결과 확인`. Check that multi-button orders and button counts are reported and no untested buttons are silently claimed as successful. This is still an inspection-only probe, not all-orders delivery sync or persistent shipping tracking.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
