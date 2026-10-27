@@ -32,7 +32,7 @@ public final class BackgroundProbeService extends Service {
     static final String ACTION_SCAN_ALL = "com.techhun.npayprobe.BG_SCAN_ALL";
     static final String ACTION_SHIP_SAMPLE = "com.techhun.npayprobe.BG_SHIP_SAMPLE";
     static final String ACTION_SHIP_MULTI = "com.techhun.npayprobe.BG_SHIP_MULTI";
-    private static final int MAX_BUTTONS_PER_ITEM = 3;
+    private static final int MAX_BUTTONS_PER_ITEM = 5;
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
     private static final int NOTIFICATION_ID = 62018;
@@ -51,7 +51,11 @@ public final class BackgroundProbeService extends Service {
         sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0;
-    private String sampleButtonSignature="";
+    private String sampleButtonSignature="",sampleIssue="";
+    private final java.util.ArrayList<String> sampleIssueNotes=new java.util.ArrayList<>();
+    private void markSampleIssue(String safeCode){
+        sampleIssue=safeCode;
+    }
     private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
     private final java.util.HashSet<String> seenHashes = new java.util.HashSet<>();
@@ -369,18 +373,25 @@ public final class BackgroundProbeService extends Service {
                 "건 · 직접 버튼검사 "+sampleClicks+"개"+
                 (sampleMulti?" · 복수버튼 주문 "+sampleMultiOrders+
                     "건 · 발견 "+sampleControlsObserved+"개 · 표시 "+sampleButtonsFound+
-                    "개 · 미검사 "+sampleControlsSkipped+"개":"")+marker);
+                    "개 · 미확인 "+sampleControlsSkipped+"개":"")+
+                (sampleIssueNotes.isEmpty()?"":" · 추가확인 위치 "+
+                    android.text.TextUtils.join(" / ",sampleIssueNotes))+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
         sampleStage=1;attempt=0;readQueued=false;
-        sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";
+        sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
+        final int watchedIndex=sampleIndex;
         handler.postDelayed(()->{
-            if(!finished&&sampleShipping&&step==sampleStep&&sampleStage!=0)
+            // Monotonic item index is stable across every button in the same order.
+            if(!finished&&sampleShipping&&sampleIndex==watchedIndex&&
+                (sampleStage==1||sampleStage==2)){
+                markSampleIssue("주문상세 시간 초과");
                 advanceSample(2);
-        },30000L);
+            }
+        },55000L);
         try{webView.loadUrl(url);}catch(RuntimeException ex){advanceSample(2);}
     }
     private void readSampleDetail(){
@@ -408,6 +419,7 @@ public final class BackgroundProbeService extends Service {
                     if(d.optBoolean("controlLimited")||d.optBoolean("cancelLimited")||
                         d.optBoolean("cancelAmbiguous")||d.optInt("blockedControls")>0||
                         !d.optBoolean("targetPresent")){
+                        markSampleIssue("버튼 식별 불확실");
                         advanceSample(2);return;
                     }
                     if(keys.length()==0){
@@ -424,6 +436,7 @@ public final class BackgroundProbeService extends Service {
                             !sampleButtonSignature.equals(signature)||
                             sampleButtonIndex>=keys.length()){
                         // Do not click an index from a changed button configuration.
+                        markSampleIssue("버튼 구성 변경");
                         advanceSample(2);return;
                     }
                     sampleStage=2;sampleStep++;samplePoll=0;
@@ -435,6 +448,7 @@ public final class BackgroundProbeService extends Service {
                         if(finished||sampleStage!=2||sampleStep!=clickStep)return;
                         try {
                             if(!"CLICKED".equals(decode(clicked).optString("state"))){
+                                markSampleIssue("버튼 클릭 미확인");
                                 advanceSample(2);return;
                             }
                             sampleClicks++;
@@ -469,14 +483,16 @@ public final class BackgroundProbeService extends Service {
                             return;
                         }
                         // If more controls remain, count this as unverified, not fully matched.
-                        if(sampleMulti && sampleButtonIndex<sampleButtonCount)
+                        if(sampleMulti && sampleButtonIndex<sampleButtonCount){
+                            markSampleIssue("건당 "+MAX_BUTTONS_PER_ITEM+"개 검사 한도");
                             advanceSample(2);
-                        else advanceSample(3);
+                        }else advanceSample(3);
                         return;
                     }
                     if(++samplePoll<9){
                         handler.postDelayed(()->pollSampleShipping(step),1300L);return;
                     }
+                    markSampleIssue("배송정보 미검출");
                     advanceSample(2);
                 }catch(Exception ex){advanceSample(2);}
             });
@@ -490,6 +506,9 @@ public final class BackgroundProbeService extends Service {
             sampleUnknown++;
             if(sampleMulti && sampleButtonCount>sampleButtonIndex)
                 sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
+            if(sampleIssueNotes.size()<6)
+                sampleIssueNotes.add((sampleIndex+1)+"번:"+
+                    (sampleIssue.isEmpty()?"상세 확인 실패":sampleIssue));
         }
         else if(outcome==3)sampleMatched++;
         if(outcome==0)sampleCancelled++;
@@ -527,7 +546,7 @@ public final class BackgroundProbeService extends Service {
             webView = null;
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
-        sampleTargets.clear();seenHashes.clear();
+        sampleTargets.clear();seenHashes.clear();sampleIssueNotes.clear();
         super.onDestroy();
     }
 
