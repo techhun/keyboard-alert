@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.19)
+# NPay read-only delivery probe (v0.1.20)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -59,6 +59,15 @@
 - CI restores the keystore only into a temporary file, signs a separate `npay-v0.1.19-fixed-signed.apk` artifact, runs `apksigner verify`, and **fails** if its signing-certificate SHA-256 does not match v0.1.14. Debug APK remains a separate CI-only artifact; do not distribute it as a stable build.
 - No repository-management tool in this chat has permission to set GitHub Actions Secrets. The password/alias and secret provisioning are currently unverified. Do **not** claim persistent signing is operational before a signed artifact is produced and verified.
 - APKs v0.1.15–v0.1.19 already distributed were signed using different temporary debug certificates; they cannot update one another in place. After a one-time reinstall of a correctly fixed-signed build, future versions signed with the same P12 can update it.
+
+## 2026-10-27 v0.1.20 background shipping sample (device test pending)
+- Building on the **confirmed** v0.1.19 29/29-page, 433-item, zero-duplicate background shopping-list read, the app now includes **백그라운드 배송정보 시범 (최대 6건)** in diagnostics.
+- It selects up to 6 well-formed shopping-list items with safe order-detail URLs from page 1, opens those detail pages in the service WebView, validates expected item presence, detects an explicit cancellation, and inspects **at most the first** valid delivery control per item. Existing v0.1.17 screen-probe JavaScript (`autoJs`, `clickControlJs`, `detailJs`) is reused, not reimplemented independently.
+- Result counts distinguish shipment display candidates, explicit cancellations, no-control cases, and unbound/failed inspections. Nothing here confirms **per-item invoice linkage**, physical shipment identity, or delivery completion.
+- The service keeps full keys and URLs **in process memory only** while running, with a conservative 215-second timeout, bounded 240-second partial WakeLock, and user-controlled stop. No full IDs, tracking numbers, addresses, cookies, or session credentials are written to persistent storage. Only aggregate counts/status are retained for post-run display.
+- Both old one-page and full-list background modes are unchanged. Completion/failure/interruption now raises a separate user notification in the NPay app (notification permission permitting) linking back to the sanitized result status.
+- Test **once**: log in; tap `진단` → `백그라운드 배송정보 시범 (최대 6건)`; immediately switch to home or lock screen. After notification, return and tap `백그라운드 결과 확인`. Confirm the exact success/partial reason, count, and whether phone stayed locked. A build/lint pass is **not** proof that shipment controls work in an offscreen WebView.
+- Next decisions after verification: whether to move all shipping controls and per-item relations into a bounded background scan; incremental updates and secure local persistence require explicit design and are **not** implemented by v0.1.20.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
