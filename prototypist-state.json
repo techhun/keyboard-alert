@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-27T01:51:38.705Z",
+  "updatedAt": "2026-10-27T02:01:20.334Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1408,6 +1408,16 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/MW-Norse-40504233415480dba4f4f10ffd21edd0",
+      "product": "MW Norse",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Evil-Eye-3b50423341548099b2dddb055e5a623b",
       "product": "SWG Evil Eye",
       "status": "In Manufacturing",
@@ -1430,16 +1440,6 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/PBS-BoB-3ba0423341548072bba8e271cb5af8e3",
       "product": "PBS BoB",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/MW-Virtual-3d104233415480949bd8d9b1c28cce9e",
-      "product": "MW Virtual",
       "status": "In Manufacturing",
       "expectedShipping": "Q1 2027"
     },
@@ -1784,9 +1784,5 @@
       "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "keyboard": "2026-10-27T01:51:12.201Z",
-    "gmk": "2026-10-27T01:51:24.689Z",
-    "keyset": "2026-10-27T01:51:37.136Z"
-  }
+  "fallbackSince": {}
 }
