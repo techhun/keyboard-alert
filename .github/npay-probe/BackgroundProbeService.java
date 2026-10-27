@@ -469,10 +469,9 @@ public final class BackgroundProbeService extends Service {
                             return;
                         }
                         // If more controls remain, count this as unverified, not fully matched.
-                        if(sampleMulti && sampleButtonIndex<sampleButtonCount){
-                            sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
+                        if(sampleMulti && sampleButtonIndex<sampleButtonCount)
                             advanceSample(2);
-                        }else advanceSample(3);
+                        else advanceSample(3);
                         return;
                     }
                     if(++samplePoll<9){
@@ -487,7 +486,11 @@ public final class BackgroundProbeService extends Service {
         if(finished||!sampleShipping||sampleIndex>=sampleTargets.size())return;
         // outcome: 0 explicit cancelled, 1 no button, 2 unknown, 3 display hit.
         if(outcome==1)sampleNoButton++;
-        else if(outcome==2)sampleUnknown++;
+        else if(outcome==2){
+            sampleUnknown++;
+            if(sampleMulti && sampleButtonCount>sampleButtonIndex)
+                sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
+        }
         else if(outcome==3)sampleMatched++;
         if(outcome==0)sampleCancelled++;
         sampleDone++;sampleIndex++;sampleStep++;sampleStage=3;readQueued=false;
