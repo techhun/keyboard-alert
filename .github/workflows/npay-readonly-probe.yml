@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.17 consolidated diagnostics and resume fixes
+run-name: NPay probe v0.1.18 opt-in background one-page read
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
       - test/npay-readonly-probe
     paths:
       - .github/workflows/npay-readonly-probe.yml
+      - .github/npay-probe/BackgroundProbeService.java
 
 permissions:
   contents: read
@@ -33,11 +34,15 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.17-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 117/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.18-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 118/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
             <application android:label="NPay 조회 테스트" android:usesCleartextTraffic="false" android:allowBackup="false">
               <activity android:name=".MainActivity" android:exported="true">
                 <intent-filter>
@@ -45,6 +50,10 @@ jobs:
                   <category android:name="android.intent.category.LAUNCHER" />
                 </intent-filter>
               </activity>
+              <service android:name=".BackgroundProbeService" android:exported="false" android:foregroundServiceType="specialUse">
+                <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                  android:value="User-initiated one-time background verification of the NPay shopping list." />
+              </service>
             </application>
           </manifest>
           MANIFEST
@@ -75,6 +84,35 @@ jobs:
 
           public class MainActivity extends Activity {
               private boolean loginReturnPending=false;
+              private static final int BACKGROUND_NOTIFICATION_REQUEST=7188;
+              private TextView backgroundResult;
+              private void refreshBackgroundResult(){
+                  if(backgroundResult!=null)backgroundResult.setText("백그라운드 조회: "+
+                      getSharedPreferences(BackgroundProbeService.PREFS,MODE_PRIVATE)
+                          .getString(BackgroundProbeService.STATUS,"아직 실행하지 않음"));
+              }
+              private void startBackgroundProbe(){
+                  if(autoRunning||sweeping){status.setText("진행 중인 화면 검사를 먼저 중지해줘.");return;}
+                  if(android.os.Build.VERSION.SDK_INT>=33&&
+                      checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED){
+                      requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS},BACKGROUND_NOTIFICATION_REQUEST);
+                      return;
+                  }
+                  try{
+                      Intent intent=new Intent(this,BackgroundProbeService.class);
+                      startForegroundService(intent);
+                      backgroundResult.setText("백그라운드 조회: 서비스 시작 요청 · 화면을 벗어나도 테스트");
+                  }catch(RuntimeException e){backgroundResult.setText("백그라운드 조회: 시작 불가 · Android 서비스 제한");}
+              }
+              @Override public void onRequestPermissionsResult(int code,String[] permissions,int[] grants){
+                  super.onRequestPermissionsResult(code,permissions,grants);
+                  if(code!=BACKGROUND_NOTIFICATION_REQUEST)return;
+                  if(grants.length>0&&grants[0]==android.content.pm.PackageManager.PERMISSION_GRANTED)startBackgroundProbe();
+                  else if(backgroundResult!=null)backgroundResult.setText("백그라운드 조회: 알림 권한이 필요합니다");
+              }
+              @Override protected void onResume(){
+                  super.onResume();refreshBackgroundResult();
+              }
               private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
               private final java.util.LinkedHashMap<String,String> detailIds=new java.util.LinkedHashMap<>();
               private int autoCancelled=0;
@@ -150,7 +188,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.17\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.18\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -306,7 +344,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.17");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.18");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -365,7 +403,21 @@ jobs:
                       if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
                       if(sweeping)stopSweep("사용자 중지 · 부분 결과");else{collectDetails=false;startSweep();}
                   });diagnostics.addView(sweepButton);
-                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(180)));
+                  Button bgStart=new Button(this);bgStart.setText("백그라운드 구매목록 1페이지 검증 (1회)");
+                  bgStart.setOnClickListener(v->startBackgroundProbe());diagnostics.addView(bgStart);
+                  Button bgStop=new Button(this);bgStop.setText("백그라운드 조회 중지");
+                  bgStop.setOnClickListener(v->{
+                      Intent intent=new Intent(this,BackgroundProbeService.class);
+                      intent.setAction(BackgroundProbeService.ACTION_STOP);
+                      try{startService(intent);}catch(RuntimeException e){status.setText("백그라운드 중지 요청 실패");}
+                      refreshBackgroundResult();
+                  });diagnostics.addView(bgStop);
+                  Button bgRefresh=new Button(this);bgRefresh.setText("백그라운드 결과 확인");
+                  bgRefresh.setOnClickListener(v->refreshBackgroundResult());diagnostics.addView(bgRefresh);
+                  backgroundResult=new TextView(this);backgroundResult.setTextSize(12);
+                  backgroundResult.setPadding(dp(8),dp(4),dp(8),dp(4));
+                  diagnostics.addView(backgroundResult);refreshBackgroundResult();
+                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(300)));
                   browser=new WebView(this);
                   browser.setOnTouchListener((view,event)->{
                       if(event.getActionMasked()==android.view.MotionEvent.ACTION_DOWN){
@@ -1017,6 +1069,7 @@ jobs:
               }
           }
           JAVA
+          cp .github/npay-probe/BackgroundProbeService.java android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/BackgroundProbeService.java
       - name: Setup Android SDK
         shell: bash
         run: |
@@ -1024,7 +1077,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.17 debug APK
+      - name: Lint and assemble v0.1.18 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
