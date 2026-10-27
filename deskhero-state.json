@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-21T15:41:15.584Z",
+  "updatedAt": "2026-10-27T18:31:26.539Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -204,7 +204,7 @@
     {
       "category": "Keyboard",
       "product": "Enso-E Keyboard",
-      "notes": "Estimated shipping early Q4 2026",
+      "notes": "Estimated production completion late November. Estimated shipping to customers late Dec/January",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -3832,5 +3832,7 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "ad6b269c1686bf3bb70a4dfd": "2026-10-27T18:31:26.538Z"
+  }
 }
