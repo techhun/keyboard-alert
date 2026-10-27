@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-27T02:11:16.730Z",
+  "updatedAt": "2026-10-27T06:50:33.213Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1001,6 +1001,20 @@
       "status": "Not started",
       "note": "컬러매칭 Not started",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "0a00b759392bfffc5ac06891d5820773",
+      "source": "GEONWORKS",
+      "name": "Chamber TKL",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-27T06:50:33.213Z",
+      "categoryHint": "키보드",
+      "maker": "KBDfans",
+      "saleStart": "2026-10-27",
+      "saleEnd": "2026-11-27",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]
