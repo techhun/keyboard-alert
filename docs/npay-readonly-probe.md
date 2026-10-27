@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.17)
+# NPay read-only delivery probe (v0.1.19)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -39,6 +39,14 @@
 - The service never auto-restarts, repeats, polls full order history, or accesses shipping details. It is intentionally not the final purchase synchronization or persistent background monitor.
 - Test procedure: sign into NPay in the app, expand **진단**, tap **백그라운드 구매목록 1페이지 검증 (1회)**, immediately switch to the phone home screen or lock it, let the service finish, then open the NPay app and tap **백그라운드 결과 확인**. Record the exact success or sanitized failure message. A successful CI build does not prove the cookie/session or WebView behavior with the screen off.
 - Before shipping beyond this pilot, confirm Android foreground-service use-case compliance (the specialUse subtype is subject to Google Play review) and choose appropriate scheduled/background execution constraints. The full 432-entry UI-driven scan has **not** been moved to the service.
+
+## 2026-10-27 v0.1.19 full-history background list pilot
+- User supplied an Android screenshot of the v0.1.18 **background one-page success**: 15 items on page 1; 29 total pages. It confirms a foreground service's offscreen WebView could read the authenticated listing with the app not foreground at the start and finish of that request. It does **not** verify 29 pages, shipping or a prolonged screen lock.
+- New explicit diagnostic action: **백그라운드 전체 구매목록 검사 (1회)**. The existing one-page action remains for regression. The full-list action reuses the same service, navigates each page sequentially with a 1.5-second delay, validates page number / total page count and uses in-memory SHA-256 hashes of product order IDs to reject duplicate list entries and repeated pages. The raw IDs are not written to disk or exported.
+- A bounded 300-second WakeLock and 280-second service timeout protect against unlimited background execution. The progress notification and local status include only page number, total list count, duplicate count or a sanitized failure reason. Stopping the service or exceeding safety bounds terminates the scan. No shipping-detail page is opened in this mode.
+- Full-list success requires reaching every page **and** completing with the UI still in background; otherwise the report distinguishes a completed listing from fully-background verification. Page count changes or duplicate-only repeated pages stop conservatively.
+- **Device test pending:** logged-in app → 진단 → 백그라운드 전체 구매목록 검사 (1회) → immediately go home / screen lock → later reopen → 백그라운드 결과 확인. Check that all pages were read and count matches the known list (earlier 432 items; live list may have changed). Ensure original full delivery scan, one-page background probe, login and export still work.
+- This remains a list-only, read-only validation, **not** delivery detail retrieval or a production automatic sync. Persistent credentials, full order IDs, tracking numbers and DB writes are intentionally absent.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
