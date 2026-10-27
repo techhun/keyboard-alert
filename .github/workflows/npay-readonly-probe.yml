@@ -1106,11 +1106,53 @@ jobs:
         run: |
           mkdir -p android/npay-probe-ci/signing-tools
           cp "$ANDROID_HOME/build-tools/37.0.0/lib/apksigner.jar" android/npay-probe-ci/signing-tools/apksigner.jar
+      # The PKCS12 private key must be provided from repository Actions secrets,
+      # never committed or generated on CI. Fingerprint is pinned to the
+      # verified NPay v0.1.14 signing certificate.
+      - name: Sign with retained NPay v0.1.14 certificate if configured
+        shell: bash
+        env:
+          NPAY_KEYSTORE_BASE64: ${{ secrets.NPAY_RELEASE_KEYSTORE_BASE64 }}
+          NPAY_STORE_PASSWORD: ${{ secrets.NPAY_RELEASE_STORE_PASSWORD }}
+          NPAY_KEY_ALIAS: ${{ secrets.NPAY_RELEASE_KEY_ALIAS }}
+          NPAY_KEY_PASSWORD: ${{ secrets.NPAY_RELEASE_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$NPAY_KEYSTORE_BASE64" && -z "$NPAY_STORE_PASSWORD" && -z "$NPAY_KEY_ALIAS" && -z "$NPAY_KEY_PASSWORD" ]]; then
+            echo "::notice::NPay key Secrets are not configured. Debug APK is CI-only; no update-installable signed APK will be published."
+            exit 0
+          fi
+          if [[ -z "$NPAY_KEYSTORE_BASE64" || -z "$NPAY_STORE_PASSWORD" || -z "$NPAY_KEY_ALIAS" || -z "$NPAY_KEY_PASSWORD" ]]; then
+            echo "::error::Some NPay signing Secrets are missing; refusing an inconsistent signature."
+            exit 1
+          fi
+          key_file="$RUNNER_TEMP/npay-private.p12"
+          trap 'rm -f "$key_file"' EXIT
+          umask 077
+          printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
+          apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
+          target="$apk_dir/npay-v0.1.19-fixed-signed.apk"
+          java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign \
+            --ks "$key_file" --ks-type PKCS12 \
+            --ks-key-alias "$NPAY_KEY_ALIAS" \
+            --ks-pass env:NPAY_STORE_PASSWORD \
+            --key-pass env:NPAY_KEY_PASSWORD \
+            --out "$target" "$apk_dir/app-debug.apk"
+          certificate="$(java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --print-certs "$target" |
+            sed -n 's/.*certificate SHA-256 digest: //p' | head -n 1)"
+          expected=20fe05415645ecbc2debe2c872eff8d94efb2ac019492ba91668dfbf7da2c3d9
+          if [[ "$certificate" != "$expected" ]]; then
+            rm -f "$target"
+            echo "::error::Signed APK certificate does not match the known NPay v0.1.14 key."
+            exit 1
+          fi
+          echo "Verified fixed NPay signing certificate matches v0.1.14."
       - uses: actions/upload-artifact@v7
         with:
-          name: npay-readonly-probe-debug-apk
+          name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.19-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
