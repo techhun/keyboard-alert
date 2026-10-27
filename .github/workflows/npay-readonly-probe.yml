@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.21 bounded multiple-delivery-button background probe
+run-name: NPay probe v0.1.22 multi-control coverage and safe diagnostic causes
 
 on:
   push:
@@ -35,8 +35,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.21-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 121/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.22-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 122/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -114,7 +114,7 @@ jobs:
                           BackgroundProbeService.ACTION_SHIP_MULTI:BackgroundProbeService.ACTION_SHIP_SAMPLE);
                       startForegroundService(intent);
                       backgroundResult.setText("백그라운드 조회: "+
-                          (sampleShipping?(multi?"묶음배송 버튼 최대 3개 검사":"배송정보 최대 6건 시범"):
+                          (sampleShipping?(multi?"묶음배송 버튼 최대 5개 검사":"배송정보 최대 6건 시범"):
                               allPages?"전체 구매목록 검사":"1페이지 검사")+
                           " 시작 요청 · 홈 화면/잠금 전환 후 확인");
                   }catch(RuntimeException e){backgroundResult.setText("백그라운드 조회: 시작 불가 · Android 서비스 제한");}
@@ -212,7 +212,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.21\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.22\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -368,7 +368,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.21");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.22");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -434,7 +434,7 @@ jobs:
                   Button bgShip=new Button(this);bgShip.setText("백그라운드 배송정보 시범 (최대 6건)");
                   bgShip.setOnClickListener(v->startBackgroundProbe(false,true,false));diagnostics.addView(bgShip);
                   Button bgMulti=new Button(this);
-                  bgMulti.setText("백그라운드 묶음배송 버튼 검사 (6건·건당 최대 3개)");
+                  bgMulti.setText("백그라운드 묶음배송 버튼 검사 (6건·건당 최대 5개)");
                   bgMulti.setOnClickListener(v->startBackgroundProbe(false,true,true));
                   diagnostics.addView(bgMulti);
                   Button bgStop=new Button(this);bgStop.setText("백그라운드 조회 중지");
@@ -1110,7 +1110,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.21 debug APK
+      - name: Lint and assemble v0.1.22 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
@@ -1146,7 +1146,7 @@ jobs:
           umask 077
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
-          target="$apk_dir/npay-v0.1.21-fixed-signed.apk"
+          target="$apk_dir/npay-v0.1.22-fixed-signed.apk"
           java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign \
             --ks "$key_file" --ks-type PKCS12 \
             --ks-key-alias "$NPAY_KEY_ALIAS" \
@@ -1167,7 +1167,7 @@ jobs:
           name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
-            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.21-fixed-signed.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.22-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
