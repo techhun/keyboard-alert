@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.19 bounded background full-list scan
+run-name: NPay probe v0.1.20 bounded background delivery sample and completion notification
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/npay-readonly-probe.yml
       - .github/npay-probe/BackgroundProbeService.java
+      - .github/npay-probe/BackgroundDeliveryScripts.java
 
 permissions:
   contents: read
@@ -34,8 +35,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.19-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 119/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.20-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 120/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -86,18 +87,19 @@ jobs:
               private boolean loginReturnPending=false;
               private static final int BACKGROUND_NOTIFICATION_REQUEST=7188;
               private TextView backgroundResult;
-              private boolean backgroundAllPending=false;
+              private boolean backgroundAllPending=false,backgroundSamplePending=false;
               private void refreshBackgroundResult(){
                   if(backgroundResult!=null)backgroundResult.setText("백그라운드 조회: "+
                       getSharedPreferences(BackgroundProbeService.PREFS,MODE_PRIVATE)
                           .getString(BackgroundProbeService.STATUS,"아직 실행하지 않음"));
               }
-              private void startBackgroundProbe(boolean allPages){
+              private void startBackgroundProbe(boolean allPages,boolean sampleShipping){
                   if(autoRunning||sweeping){status.setText("진행 중인 화면 검사를 먼저 중지해줘.");return;}
                   if(getSharedPreferences(BackgroundProbeService.PREFS,MODE_PRIVATE).getBoolean("running",false)){
                       refreshBackgroundResult();return;
                   }
                   backgroundAllPending=allPages;
+                  backgroundSamplePending=sampleShipping;
                   if(android.os.Build.VERSION.SDK_INT>=33&&
                       checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED){
                       requestPermissions(new String[]{android.Manifest.permission.POST_NOTIFICATIONS},BACKGROUND_NOTIFICATION_REQUEST);
@@ -106,16 +108,18 @@ jobs:
                   try{
                       Intent intent=new Intent(this,BackgroundProbeService.class);
                       if(allPages)intent.setAction(BackgroundProbeService.ACTION_SCAN_ALL);
+                      if(sampleShipping)intent.setAction(BackgroundProbeService.ACTION_SHIP_SAMPLE);
                       startForegroundService(intent);
                       backgroundResult.setText("백그라운드 조회: "+
-                          (allPages?"전체 구매목록 검사":"1페이지 검사")+" 시작 요청 · 홈 화면/잠금 전환 후 확인");
+                          (sampleShipping?"배송정보 최대 6건 시범":allPages?"전체 구매목록 검사":"1페이지 검사")+
+                          " 시작 요청 · 홈 화면/잠금 전환 후 확인");
                   }catch(RuntimeException e){backgroundResult.setText("백그라운드 조회: 시작 불가 · Android 서비스 제한");}
               }
               @Override public void onRequestPermissionsResult(int code,String[] permissions,int[] grants){
                   super.onRequestPermissionsResult(code,permissions,grants);
                   if(code!=BACKGROUND_NOTIFICATION_REQUEST)return;
                   if(grants.length>0&&grants[0]==android.content.pm.PackageManager.PERMISSION_GRANTED)
-                      startBackgroundProbe(backgroundAllPending);
+                      startBackgroundProbe(backgroundAllPending,backgroundSamplePending);
                   else if(backgroundResult!=null)backgroundResult.setText("백그라운드 조회: 알림 권한이 필요합니다");
               }
               @Override protected void onResume(){
@@ -204,7 +208,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.19\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.20\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -360,7 +364,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.19");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.20");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -420,9 +424,11 @@ jobs:
                       if(sweeping)stopSweep("사용자 중지 · 부분 결과");else{collectDetails=false;startSweep();}
                   });diagnostics.addView(sweepButton);
                   Button bgStart=new Button(this);bgStart.setText("백그라운드 구매목록 1페이지 검증 (1회)");
-                  bgStart.setOnClickListener(v->startBackgroundProbe(false));diagnostics.addView(bgStart);
+                  bgStart.setOnClickListener(v->startBackgroundProbe(false,false));diagnostics.addView(bgStart);
                   Button bgAll=new Button(this);bgAll.setText("백그라운드 전체 구매목록 검사 (1회)");
-                  bgAll.setOnClickListener(v->startBackgroundProbe(true));diagnostics.addView(bgAll);
+                  bgAll.setOnClickListener(v->startBackgroundProbe(true,false));diagnostics.addView(bgAll);
+                  Button bgShip=new Button(this);bgShip.setText("백그라운드 배송정보 시범 (최대 6건)");
+                  bgShip.setOnClickListener(v->startBackgroundProbe(false,true));diagnostics.addView(bgShip);
                   Button bgStop=new Button(this);bgStop.setText("백그라운드 조회 중지");
                   bgStop.setOnClickListener(v->{
                       Intent intent=new Intent(this,BackgroundProbeService.class);
@@ -435,7 +441,7 @@ jobs:
                   backgroundResult=new TextView(this);backgroundResult.setTextSize(12);
                   backgroundResult.setPadding(dp(8),dp(4),dp(8),dp(4));
                   diagnostics.addView(backgroundResult);refreshBackgroundResult();
-                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(340)));
+                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(380)));
                   browser=new WebView(this);
                   browser.setOnTouchListener((view,event)->{
                       if(event.getActionMasked()==android.view.MotionEvent.ACTION_DOWN){
@@ -1088,6 +1094,7 @@ jobs:
           }
           JAVA
           cp .github/npay-probe/BackgroundProbeService.java android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/BackgroundProbeService.java
+          cp .github/npay-probe/BackgroundDeliveryScripts.java android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/BackgroundDeliveryScripts.java
       - name: Setup Android SDK
         shell: bash
         run: |
@@ -1095,7 +1102,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.19 debug APK
+      - name: Lint and assemble v0.1.20 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
@@ -1131,7 +1138,7 @@ jobs:
           umask 077
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
-          target="$apk_dir/npay-v0.1.19-fixed-signed.apk"
+          target="$apk_dir/npay-v0.1.20-fixed-signed.apk"
           java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign \
             --ks "$key_file" --ks-type PKCS12 \
             --ks-key-alias "$NPAY_KEY_ALIAS" \
@@ -1152,7 +1159,7 @@ jobs:
           name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
-            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.19-fixed-signed.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.20-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
