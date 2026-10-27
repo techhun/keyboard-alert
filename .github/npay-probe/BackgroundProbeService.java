@@ -31,6 +31,8 @@ public final class BackgroundProbeService extends Service {
     static final String ACTION_STOP = "com.techhun.npayprobe.BG_STOP";
     static final String ACTION_SCAN_ALL = "com.techhun.npayprobe.BG_SCAN_ALL";
     static final String ACTION_SHIP_SAMPLE = "com.techhun.npayprobe.BG_SHIP_SAMPLE";
+    static final String ACTION_SHIP_MULTI = "com.techhun.npayprobe.BG_SHIP_MULTI";
+    private static final int MAX_BUTTONS_PER_ITEM = 3;
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
     private static final int NOTIFICATION_ID = 62018;
@@ -43,10 +45,13 @@ public final class BackgroundProbeService extends Service {
     private WebView webView;
     private PowerManager.WakeLock wakeLock;
     private boolean started = false, finished = false, scanAll = false, readQueued = false,
-        sampleShipping = false;
+        sampleShipping = false, sampleMulti = false;
     private int sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
         sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
-        sampleClicks=0, samplePoll=0;
+        sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
+        sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
+        sampleMultiOrders=0;
+    private String sampleButtonSignature="";
     private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
     private final java.util.HashSet<String> seenHashes = new java.util.HashSet<>();
@@ -69,10 +74,13 @@ public final class BackgroundProbeService extends Service {
         if (started) return START_NOT_STICKY;
         started = true;
         scanAll = intent != null && ACTION_SCAN_ALL.equals(intent.getAction());
-        sampleShipping = intent != null && ACTION_SHIP_SAMPLE.equals(intent.getAction());
+        sampleShipping = intent != null &&
+            (ACTION_SHIP_SAMPLE.equals(intent.getAction())||
+             ACTION_SHIP_MULTI.equals(intent.getAction()));
+        sampleMulti = intent != null && ACTION_SHIP_MULTI.equals(intent.getAction());
         try {
             Notification notification = notification(sampleShipping?
-                "백그라운드 배송조회 최대 6건 검사 준비": scanAll?
+                (sampleMulti?"백그라운드 복수 배송조회 최대 6건":"백그라운드 배송조회 최대 6건")+" 검사 준비": scanAll?
                 "백그라운드 전체 목록 검사 준비" : "화면 전환 후 구매목록 1페이지 검사");
             if (Build.VERSION.SDK_INT >= 29) {
                 startForeground(NOTIFICATION_ID, notification,
@@ -358,11 +366,15 @@ public final class BackgroundProbeService extends Service {
             finish("배송조회 시범 종료 · "+sampleDone+"/"+sampleTargets.size()+
                 "건 · 배송정보 표시 "+sampleMatched+"건 · 버튼 없음 "+sampleNoButton+
                 "건 · 취소 "+sampleCancelled+"건 · 추가확인 "+sampleUnknown+
-                "건 · 버튼검사 "+sampleClicks+"개"+marker);
+                "건 · 직접 버튼검사 "+sampleClicks+"개"+
+                (sampleMulti?" · 복수버튼 주문 "+sampleMultiOrders+
+                    "건 · 발견 "+sampleControlsObserved+"개 · 표시 "+sampleButtonsFound+
+                    "개 · 미검사 "+sampleControlsSkipped+"개":"")+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
         sampleStage=1;attempt=0;readQueued=false;
+        sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
         handler.postDelayed(()->{
@@ -389,22 +401,36 @@ public final class BackgroundProbeService extends Service {
                         handler.postDelayed(this::readSampleDetail,1400L);return;
                     }
                     if(d.optBoolean("targetCancelled")){
-                        advanceSample(0);return;
+                        // A cancellation after a prior button is an inconsistent detail page.
+                        advanceSample(sampleButtonIndex==0?0:2);return;
                     }
                     JSONArray keys=d.getJSONArray("controlKeys");
-                    if(d.optBoolean("controlLimited")||d.optInt("blockedControls")>0||
+                    if(d.optBoolean("controlLimited")||d.optBoolean("cancelLimited")||
+                        d.optBoolean("cancelAmbiguous")||d.optInt("blockedControls")>0||
                         !d.optBoolean("targetPresent")){
                         advanceSample(2);return;
                     }
                     if(keys.length()==0){
-                        advanceSample(1);return;
+                        advanceSample(sampleButtonIndex==0?1:2);return;
                     }
                     if(keys.length()>20){advanceSample(2);return;}
                     String signature=keys.toString();
+                    if(sampleButtonIndex==0){
+                        sampleButtonCount=keys.length();
+                        sampleButtonSignature=signature;
+                        sampleControlsObserved+=keys.length();
+                        if(keys.length()>1)sampleMultiOrders++;
+                    }else if(sampleButtonCount!=keys.length()||
+                            !sampleButtonSignature.equals(signature)||
+                            sampleButtonIndex>=keys.length()){
+                        // Do not click an index from a changed button configuration.
+                        advanceSample(2);return;
+                    }
                     sampleStage=2;sampleStep++;samplePoll=0;
                     final int clickStep=sampleStep;
                     String command=BackgroundDeliveryScripts.CLICK_JS+"("+
-                        JSONObject.quote(link)+","+JSONObject.quote(signature)+",0)";
+                        JSONObject.quote(link)+","+JSONObject.quote(signature)+","+
+                        sampleButtonIndex+")";
                     webView.evaluateJavascript(command,clicked->{
                         if(finished||sampleStage!=2||sampleStep!=clickStep)return;
                         try {
@@ -429,7 +455,25 @@ public final class BackgroundProbeService extends Service {
                     JSONObject d=decode(ret);
                     if(!d.optBoolean("ok"))throw new IllegalArgumentException();
                     if(d.getJSONArray("domPairs").length()>0){
-                        advanceSample(3);return;
+                        sampleButtonsFound++;
+                        sampleButtonIndex++;
+                        if(sampleMulti && sampleButtonIndex<sampleButtonCount &&
+                            sampleButtonIndex<MAX_BUTTONS_PER_ITEM){
+                            // Reopen original detail before testing the next distinct control.
+                            sampleStage=1;sampleStep++;readQueued=false;attempt=0;
+                            final int nextStep=sampleStep;
+                            handler.postDelayed(()->{
+                                if(!finished&&sampleStep==nextStep&&sampleStage==1)
+                                    webView.loadUrl(sampleTargets.get(sampleIndex)[1]);
+                            },700L);
+                            return;
+                        }
+                        // If more controls remain, count this as unverified, not fully matched.
+                        if(sampleMulti && sampleButtonIndex<sampleButtonCount){
+                            sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
+                            advanceSample(2);
+                        }else advanceSample(3);
+                        return;
                     }
                     if(++samplePoll<9){
                         handler.postDelayed(()->pollSampleShipping(step),1300L);return;
