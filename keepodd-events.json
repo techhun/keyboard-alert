@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-26T07:00:48.708Z",
+  "updatedAt": "2026-10-27T02:11:16.730Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -943,6 +943,64 @@
       "status": "검수 중 / Inspecting",
       "note": "일부 제품 미입고되어 대기 중. / Some products are currently on back order.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2eb59b83c8621424fd377cd09043ac3a",
+      "source": "SWAGKEYS",
+      "name": "SWG Space Cadet",
+      "eventType": "status_changed",
+      "before": "Not started",
+      "after": "예약판매 진행중 (in GB)",
+      "occurredAt": "2026-10-27T02:11:16.730Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "status": "예약판매 진행중 (in GB)",
+      "note": "컬러매칭 Not started",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-space-cadet",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "4630ad27eca4ad43210a2ac5430803d8",
+      "source": "SWAGKEYS",
+      "name": "SWG Forest Cadet",
+      "eventType": "status_changed",
+      "before": "Not started",
+      "after": "예약판매 진행중 (in GB)",
+      "occurredAt": "2026-10-27T02:11:16.730Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "status": "예약판매 진행중 (in GB)",
+      "note": "컬러매칭 Not started",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-forest-cadet",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "6f5566d7ec406a1a04705a5178523051",
+      "source": "SWAGKEYS",
+      "name": "SWG Crimson Cadet",
+      "eventType": "status_changed",
+      "before": "Not started",
+      "after": "예약판매 진행중 (in GB)",
+      "occurredAt": "2026-10-27T02:11:16.730Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "status": "예약판매 진행중 (in GB)",
+      "note": "컬러매칭 Not started",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-crimson-cadet",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "8dc8e18aec5d5af7b37ce41fd7fc43c8",
+      "source": "SWAGKEYS",
+      "name": "SWG Nightshift",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-27T02:11:16.730Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "status": "Not started",
+      "note": "컬러매칭 Not started",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
     }
   ]

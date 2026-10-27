@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-26T14:03:09.518Z",
+  "updatedAt": "2026-10-27T02:11:16.730Z",
   "announcement": {
     "heading": "업데이트(26.10.14)",
     "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
@@ -364,7 +364,7 @@
     },
     {
       "product": "Space Cadet",
-      "groupBuy": 0,
+      "groupBuy": 50,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -372,11 +372,11 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "Not started"
+      "currentStatus": "예약판매 진행중 (in GB)"
     },
     {
       "product": "Crimson Cadet",
-      "groupBuy": 0,
+      "groupBuy": 50,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -384,10 +384,22 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "Not started"
+      "currentStatus": "예약판매 진행중 (in GB)"
     },
     {
       "product": "Forest Cadet",
+      "groupBuy": 50,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Not started",
+      "eta": "",
+      "currentStatus": "예약판매 진행중 (in GB)"
+    },
+    {
+      "product": "Nightshift",
       "groupBuy": 0,
       "waitingProduction": 0,
       "inProduction": 0,
@@ -399,8 +411,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-10-26T13:22:29.441Z",
-    "status": "2026-10-26T14:03:09.447Z"
-  }
+  "fallbackSince": {}
 }
