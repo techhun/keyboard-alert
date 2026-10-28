@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-27T07:12:27.157Z",
+  "updatedAt": "2026-10-28T00:21:08.416Z",
   "rows": [
     {
       "category": "GMK",
@@ -731,17 +731,6 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "Aepex 60",
-      "status": "In production",
-      "eta": "End of October",
-      "progress": 75,
-      "summary": "Graphite Project Progress",
-      "latestUpdateDate": "2026-09-07",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 In the successive delivery of the factory, some parts have been received"
-    },
-    {
-      "category": "KEYBOARDS",
       "product": "TOFU40",
       "status": "In progress",
       "eta": "TBD",
@@ -1006,9 +995,9 @@
     }
   ],
   "sentChanges": {
-    "795600390432ce5b91079df6": "2026-10-21T00:20:59.267Z",
     "97ef9a4e7c62e7d1a3a80bd2": "2026-10-21T01:01:22.986Z",
     "07556a63a99a2b7d771e8c50": "2026-10-21T06:51:04.251Z",
-    "1a62d9163e6b0b846db9f25d": "2026-10-26T01:51:11.062Z"
+    "1a62d9163e6b0b846db9f25d": "2026-10-26T01:51:11.062Z",
+    "b468b794f331b15d6a22d500": "2026-10-28T00:21:08.415Z"
   }
 }
