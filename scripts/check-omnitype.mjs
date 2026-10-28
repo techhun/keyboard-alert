@@ -10,7 +10,7 @@ import {
 } from './omnitype-safety.mjs';
 
 const STATE_PATH = 'omnitype-state.json';
-const DISCORD_WEBHOOK_URL = (process.env.OMNITYPE_DISCORD_WEBHOOK_URL || '').trim();
+const DISCORD_WEBHOOK_URL = (process.env.OMNITYPE_WEBHOOK_URL || '').trim();
 
 function truncate(value, maxLength = 1000) {
   const text = String(value ?? '')
@@ -226,7 +226,7 @@ if (pendingChanges.length !== changes.length) {
 }
 
 if (!DISCORD_WEBHOOK_URL) {
-  console.log('[discord] OMNITYPE_DISCORD_WEBHOOK_URL is not configured. Changes remain pending; state was not updated.');
+  console.log('[discord] OMNITYPE_WEBHOOK_URL is not configured. Changes remain pending; state was not updated.');
   process.exit(0);
 }
 
