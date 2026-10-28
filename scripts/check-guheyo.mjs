@@ -7,7 +7,7 @@ const NTFY_TOPIC = (process.env.GUHEYO_NTFY_TOPIC || process.env.NTFY_TOPIC || '
 const DISCORD_WEBHOOK_URL = (process.env.GUHEYO_DISCORD_WEBHOOK_URL || process.env.DISCORD_WEBHOOK_URL || '').trim();
 const STATE_PATH = 'guheyo-state.json';
 const MAX_SEEN = 300;
-const MAX_NEW_LISTINGS = 30;
+const MAX_NEW_LISTINGS = 15;
 const NTFY_CHUNK_BYTES = 2800;
 const DISCORD_DETAIL_CHARS = 3600;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
