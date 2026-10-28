@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 
 import {
   OMNITYPE_PAGE_URL,
@@ -84,4 +85,17 @@ test('change IDs differ for distinct component updates', () => {
   const b = structuredClone(a);
   b.fields[0].after = 'PCB - shipped';
   assert.notEqual(omnitypeChangeId(a), omnitypeChangeId(b));
+});
+
+
+test('Omnitype alert delivery falls back to the shared Discord webhook', () => {
+  const script = fs.readFileSync(new URL('../scripts/check-omnitype.mjs', import.meta.url), 'utf8');
+  const workflow = fs.readFileSync(new URL('../.github/workflows/keyboard-alert-slow.yml', import.meta.url), 'utf8');
+
+  assert.match(
+    script,
+    /process\.env\.OMNITYPE_DISCORD_WEBHOOK_URL \|\| process\.env\.DISCORD_WEBHOOK_URL/
+  );
+  assert.match(workflow, /OMNITYPE_DISCORD_WEBHOOK_URL:/);
+  assert.match(workflow, /DISCORD_WEBHOOK_URL: \$\{\{ secrets\.DISCORD_WEBHOOK_URL \}\}/);
 });
