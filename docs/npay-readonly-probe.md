@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.23)
+# NPay read-only delivery probe (v0.1.24)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -97,6 +97,14 @@
 - At publication the GitHub API verified an uploaded asset of **984,848 bytes** with SHA-256 digest `6db3611b8f8f86cecc12a1fbe95d513b9e8177059e3cd38bf12a9dcb1039b779`. CI execution: `https://github.com/techhun/keyboard-alert/actions/runs/40610967334`.
 - The prerelease APK is **publicly downloadable** (the source repository is public) and remains a test-only build with an ephemeral debug signing certificate. This is **not** a fix for the persistent NPay P12 signing key. The dedicated fixed-signing workflow still requires Actions Secrets; do not promise APK in-place update before verifying the certificate.
 - Future NPay versions derive their own versioned tag and filename from the generated Android `versionName`, and the CI workflow publishes a corresponding GitHub prerelease asset after passing lint/build.
+
+## 2026-10-28 v0.1.23 phone result and v0.1.24 first-page scale probe
+- v0.1.23 real-phone report: **6/6** inspected, **6/6** with visible delivery information, **11/11** shipping controls clicked and displayed, **3** multi-control entries, **0** missing controls, **0** extra-review entries, **0** unverified controls, **0** delayed-control recoveries. User screenshot explicitly reports `백그라운드 실행 확인`. This improves on v0.1.21 and v0.1.22 sample reports but does not establish per-item invoice association across bundled orders.
+- v0.1.24 adds a **separate explicit opt-in** diagnostic `백그라운드 첫 페이지 배송검사 (최대 15건)`, reusing the exact validated detail-page scanner and conservative per-item limit of **five** controls. It is intended to reveal scaling, slow pages, ambiguous groupings and count gaps without embarking on all **433** known list entries. The original 6-item, 1-page list, 29-page full-list and on-screen modes remain.
+- A bounded **12-minute** end-to-end timeout and **12m40s** capped wake lock protect the handset; an existing 55-second per-item timeout, stop button and status/notification apply. The full-sample service does not persist raw product order keys, tracking numbers or URLs, and does not send data automatically. Note: this test may consume more battery and network traffic than the six-item trial.
+- Status now includes only aggregate counts, shared order-detail URL count, elapsed seconds and **non-sensitive** list position/reason codes. A shared detail URL is diagnostic only; it does **not** prove a shared physical shipment. More than five recognized controls for one entry still yields additional-review status rather than a false success.
+- **Test pending**: install from a verified GitHub v0.1.24 prerelease asset, login, `진단 → 백그라운드 첫 페이지 배송검사 (최대 15건)`, immediately go home/lock, and check the final notification and in-app status. Compare completed entries, found/clicked/displayed/unknown counts and actual elapsed time. Only after this stage consider bounded subsequent pages/incremental persistence. Do not claim the 433-item shipment scan works.
+- No operational Restock, Keepodd, external database or notification service code changed.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
