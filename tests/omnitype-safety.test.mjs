@@ -92,9 +92,9 @@ test('Omnitype alert delivery requires its dedicated Discord webhook', () => {
   const script = fs.readFileSync(new URL('../scripts/check-omnitype.mjs', import.meta.url), 'utf8');
   const workflow = fs.readFileSync(new URL('../.github/workflows/keyboard-alert-slow.yml', import.meta.url), 'utf8');
 
-  assert.match(script, /process\.env\.OMNITYPE_DISCORD_WEBHOOK_URL \|\| ''/);
-  assert.doesNotMatch(script, /process\.env\.OMNITYPE_DISCORD_WEBHOOK_URL \|\| process\.env\.DISCORD_WEBHOOK_URL/);
+  assert.match(script, /process\.env\.OMNITYPE_WEBHOOK_URL \|\| ''/);
+  assert.doesNotMatch(script, /process\.env\.OMNITYPE_WEBHOOK_URL \|\| process\.env\.DISCORD_WEBHOOK_URL/);
   const block = workflow.slice(workflow.indexOf('name: Check Omnitype Product Updates'), workflow.indexOf('name: Persist slow watcher state'));
-  assert.match(block, /OMNITYPE_DISCORD_WEBHOOK_URL:/);
+  assert.match(block, /OMNITYPE_WEBHOOK_URL:/);
   assert.doesNotMatch(block, /DISCORD_WEBHOOK_URL: \$\{\{ secrets\.DISCORD_WEBHOOK_URL \}\}/);
 });

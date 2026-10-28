@@ -245,7 +245,7 @@ jobs:
       - name: Check Omnitype Product Updates
         if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
-          OMNITYPE_DISCORD_WEBHOOK_URL: ${{ secrets.OMNITYPE_DISCORD_WEBHOOK_URL }}
+          OMNITYPE_WEBHOOK_URL: ${{ secrets.OMNITYPE_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
         shell: bash
         run: |

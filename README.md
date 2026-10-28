@@ -140,7 +140,7 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 | `KBDFANS_DISCORD_WEBHOOK_URL` | KBDfans Product Updates 알림 |
 | `CANNONKEYS_DISCORD_WEBHOOK_URL` | CannonKeys Project Updates 알림 |
 | `DESKHERO_DISCORD_WEBHOOK_URL` | Deskhero Group Buy/Preorder Updates 알림 |
-| `OMNITYPE_DISCORD_WEBHOOK_URL` | Omnitype Product Updates 알림. 미설정 시 기존 `DISCORD_WEBHOOK_URL`을 fallback으로 사용 |
+| `OMNITYPE_WEBHOOK_URL` | Omnitype Product Updates 알림. 미설정 시 기존 `DISCORD_WEBHOOK_URL`을 fallback으로 사용 |
 | `SYSTEM_DISCORD_WEBHOOK_URL` | `알림-시스템` 채널의 장애/복구/워크플로 오류/실행 감시 알림 |
 | `HEALTHCHECKS_FAST_URL` | Fast workflow용 Healthchecks.io 기본 Ping URL |
 | `HEALTHCHECKS_SLOW_URL` | Slow workflow용 Healthchecks.io 기본 Ping URL |
