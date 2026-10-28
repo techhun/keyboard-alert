@@ -121,3 +121,39 @@ test('fresh ok clears degraded metadata without touching normal status', () => {
   });
   assert.match(stdout, /degraded -> ok/);
 });
+
+
+test('persistent failure becomes reminder-due after 12 hours without changing source status', () => {
+  const old = new Date(Date.now() - 13 * 60 * 60 * 1000).toISOString();
+  const initial = {
+    status: 'fail',
+    changedAt: old,
+    consecutiveFailures: 3,
+    lastFailureRunId: '12222',
+    lastFailureAt: old,
+    failureAlertedAt: old
+  };
+
+  const { source, stdout } = runTransition(initial, 'fail', {});
+  assert.equal(source.status, 'fail');
+  assert.equal(source.consecutiveFailures, 3);
+  assert.equal(source.failureReminderAt, undefined);
+  assert.match(stdout, /persistent failure reminder remains pending/);
+});
+
+test('recent persistent failure stays quiet before the 12 hour reminder window', () => {
+  const recent = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const initial = {
+    status: 'fail',
+    changedAt: recent,
+    consecutiveFailures: 3,
+    lastFailureRunId: '12222',
+    lastFailureAt: recent,
+    failureAlertedAt: recent
+  };
+
+  const { source, stdout } = runTransition(initial, 'fail', {});
+  assert.equal(source.status, 'fail');
+  assert.match(stdout, /unchanged \(fail\)/);
+  assert.doesNotMatch(stdout, /persistent failure reminder/);
+});
