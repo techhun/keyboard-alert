@@ -54,6 +54,7 @@ public class MonitorService extends Service {
     private static final long MIN_PRODUCT_SPACING_MS = 5_000L;
     private static final long INITIAL_RATE_LIMIT_BACKOFF_MS = 30_000L;
     private static final long MAX_RATE_LIMIT_BACKOFF_MS = 30 * 60_000L;
+    private static final long RATE_LIMIT_RECOVERY_WINDOW_MS = 10 * 60_000L;
     private static final int MAX_TRANSIENT_RETRIES = 2;
     private static final long TRANSIENT_RETRY_DELAY_MS = 5_000L;
     private static final long SMARTSTORE_INITIAL_SETTLE_MS = 1_200L;
@@ -65,6 +66,7 @@ public class MonitorService extends Service {
     private static final int NO_CONTENT_STORM_FAILURES = 3;
     private static final String KEY_BACKOFF_UNTIL = "smartstore_backoff_until";
     private static final String KEY_BACKOFF_MS = "smartstore_backoff_ms";
+    private static final String KEY_BACKOFF_LAST_RATE_LIMIT_AT = "smartstore_backoff_last_rate_limit_at";
     private static final String KEY_BACKOFF_DEFER_FIX_MIGRATED = "smartstore_backoff_defer_fix_migrated_v1";
 
     private static void migrateSmartStoreRateLimitState(Context context) {
@@ -85,15 +87,30 @@ public class MonitorService extends Service {
         if (until > now) return until;
 
         long previous = prefs.getLong(KEY_BACKOFF_MS, 0L);
-        long next = previous <= 0L
-            ? (status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS)
-            : Math.min(MAX_RATE_LIMIT_BACKOFF_MS, previous * 2L);
+        long lastRateLimit = prefs.getLong(KEY_BACKOFF_LAST_RATE_LIMIT_AT, 0L);
+        long next = rateLimitDelayMillis(previous, lastRateLimit, now, status);
         until = now + next;
         prefs.edit()
             .putLong(KEY_BACKOFF_UNTIL, until)
             .putLong(KEY_BACKOFF_MS, next)
+            .putLong(KEY_BACKOFF_LAST_RATE_LIMIT_AT, now)
             .apply();
         return until;
+    }
+
+    static long rateLimitDelayMillis(long previous, long lastRateLimit, long now, int status) {
+        if (previous <= 0L || lastRateLimit <= 0L || now < lastRateLimit
+            || now - lastRateLimit > RATE_LIMIT_RECOVERY_WINDOW_MS) {
+            return status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS;
+        }
+        return Math.min(MAX_RATE_LIMIT_BACKOFF_MS, previous * 2L);
+    }
+
+    static void clearRateLimitCooldownOnSuccess(Context context) {
+        // One successful snapshot confirms recovery for this request, not that
+        // SmartStore has stopped rate limiting the session. Keep the recent 429
+        // history so another 429 within ten minutes increases the cooldown.
+        MonitorPrefs.prefs(context).edit().remove(KEY_BACKOFF_UNTIL).apply();
     }
 
     static long remainingSmartStoreRateLimitMillis(Context context) {
@@ -1050,12 +1067,8 @@ public class MonitorService extends Service {
     }
 
     private void clearRateLimitBackoff() {
-        rateLimitBackoffMs = 0L;
         backoffUntil = 0L;
-        MonitorPrefs.prefs(this).edit()
-            .remove(KEY_BACKOFF_UNTIL)
-            .remove(KEY_BACKOFF_MS)
-            .apply();
+        clearRateLimitCooldownOnSuccess(this);
     }
 
     private void invalidateSessionAndStop() {

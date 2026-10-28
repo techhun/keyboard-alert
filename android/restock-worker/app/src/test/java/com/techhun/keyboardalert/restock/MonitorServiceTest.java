@@ -4,11 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 @RunWith(RobolectricTestRunner.class)
@@ -34,6 +37,33 @@ public class MonitorServiceTest {
             "https://m.smartstore.naver.com/example/products/456"));
         assertFalse(MonitorService.isSmartStoreDocumentRateLimit(true, 429, monitored,
             "https://nid.naver.com/nidlogin.login"));
+    }
+
+    @Test
+    public void repeated429RetainsPenaltyAcrossSuccessButResetsAfterTenMinutes() {
+        long now = 1_800_000_000_000L;
+        assertEquals(30_000L, MonitorService.rateLimitDelayMillis(0L, 0L, now, 429));
+        assertEquals(60_000L, MonitorService.rateLimitDelayMillis(30_000L, now - 60_000L, now, 429));
+        assertEquals(120_000L, MonitorService.rateLimitDelayMillis(60_000L, now - 120_000L, now, 429));
+        assertEquals(30_000L, MonitorService.rateLimitDelayMillis(120_000L, now - 600_001L, now, 429));
+        assertEquals(30_000L, MonitorService.rateLimitDelayMillis(120_000L, now + 1L, now, 429));
+        assertEquals(5 * 60_000L, MonitorService.rateLimitDelayMillis(0L, 0L, now, 204));
+        assertEquals(30 * 60_000L, MonitorService.rateLimitDelayMillis(30 * 60_000L,
+            now - 60_000L, now, 429));
+    }
+
+    @Test
+    public void successfulSnapshotClearsActiveCooldownButKeepsRecent429History() {
+        Context context = RuntimeEnvironment.getApplication();
+        MonitorPrefs.prefs(context).edit()
+            .putLong("smartstore_backoff_until", 12345L)
+            .putLong("smartstore_backoff_ms", 120_000L)
+            .putLong("smartstore_backoff_last_rate_limit_at", 1234L)
+            .commit();
+        MonitorService.clearRateLimitCooldownOnSuccess(context);
+        assertEquals(0L, MonitorPrefs.prefs(context).getLong("smartstore_backoff_until", 0L));
+        assertEquals(120_000L, MonitorPrefs.prefs(context).getLong("smartstore_backoff_ms", 0L));
+        assertEquals(1234L, MonitorPrefs.prefs(context).getLong("smartstore_backoff_last_rate_limit_at", 0L));
     }
 
     @Test
