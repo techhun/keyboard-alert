@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.22)
+# NPay read-only delivery probe (v0.1.23)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -82,6 +82,13 @@
 - v0.1.22 expands the per-entry bound to **five** controls (keeping the overall 6-entry sample), adds a stable **55-second per-entry watchdog** independent of button index/reload, and stores only sanitized item-position and reason strings (e.g. `3번:건당 5개 검사 한도`). The former "미검사" count is now labeled **"미확인"**, because a clicked control without matching delivery display is not fully verified.
 - Do not infer identical parcels or item-level invoice assignment from repeated carrier/tracking tails. Preserve the old one-button background mode, 1-page and 29-page list modes, explicit stop, and on-device completion notification for regression.
 - **v0.1.22 CI build/lint and actual phone validation are separate milestones.** Do not mark its user-visible behavior as complete before the next real-device observation.
+
+## 2026-10-28 v0.1.22 phone result and v0.1.23 follow-up
+- v0.1.22 phone screenshot: **6/6** entries inspected, **5** entry-level delivery display candidates, **1** entry with no visible shipping button, **0** ambiguous/unknown entries, **9** controls found/clicked with **9** delivery displays, **0** unverified controls, **2** entries with multiple buttons. UI reported `백그라운드 실행 확인`.
+- Compared with v0.1.21's **11** controls across **3** multi-button entries, v0.1.22 discovered **9** across **2**. This may reflect changing order-list composition, loading differences or real order state, not necessarily a fixed regression. Both tests only sample the current first six items. Do not assume they are exactly the same orders without the full IDs (which are intentionally not exported).
+- Code review showed the v0.1.22 sample immediately classified `controlKeys.length==0` as "no shipping button" on the **first** detail DOM snapshot. In v0.1.23 it checks the same scoped product order **four times** (1.3 seconds apart) before classifying no visible button. If a control appears late, scanning continues and a non-sensitive delayed-control counter is recorded. If it stays absent, the aggregate report records just the **list position**, not product/order identifiers.
+- v0.1.23 also adds progress metadata for number of empty-control retries, protects against a stale persistent `running` flag when Android kills the foreground service, and preserves the original read-only / offscreen / bounded run behavior.
+- Validation is required before marking reliable zero-control classification complete. If a specific order legitimately has no shipping button, a stable zero result is expected, but is **not** evidence of no physical shipment or missing tracking information.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
