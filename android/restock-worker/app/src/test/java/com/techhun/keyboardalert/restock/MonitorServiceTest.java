@@ -45,7 +45,10 @@ public class MonitorServiceTest {
         assertEquals(30_000L, MonitorService.rateLimitDelayMillis(0L, 0L, now, 429));
         assertEquals(60_000L, MonitorService.rateLimitDelayMillis(30_000L, now - 60_000L, now, 429));
         assertEquals(120_000L, MonitorService.rateLimitDelayMillis(60_000L, now - 120_000L, now, 429));
-        assertEquals(30_000L, MonitorService.rateLimitDelayMillis(120_000L, now - 600_001L, now, 429));
+        assertEquals(240_000L, MonitorService.rateLimitDelayMillis(120_000L, now - 600_001L, now, 429));
+        assertEquals(30_000L, MonitorService.rateLimitDelayMillis(120_000L, now - 720_001L, now, 429));
+        assertEquals(30 * 60_000L, MonitorService.rateLimitDelayMillis(16 * 60_000L,
+            now - 16 * 60_000L, now, 429));
         assertEquals(30_000L, MonitorService.rateLimitDelayMillis(120_000L, now + 1L, now, 429));
         assertEquals(5 * 60_000L, MonitorService.rateLimitDelayMillis(0L, 0L, now, 204));
         assertEquals(30 * 60_000L, MonitorService.rateLimitDelayMillis(30 * 60_000L,
