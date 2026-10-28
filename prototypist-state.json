@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-28T15:51:31.331Z",
+  "updatedAt": "2026-10-28T16:21:04.894Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -98,16 +98,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Kafka-30d042334154807e8728c846d9ce8d67",
-      "product": "Kafka",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Enso-E-36404233415480ec8614f69293a7ec7a",
       "product": "Enso-E",
       "status": "In Manufacturing",
@@ -150,26 +140,6 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Artifact-Stratum-80-36404233415480bcbc27c97d317650c4",
       "product": "Artifact Stratum 80",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Katina-TKL-3640423341548024996ec17de0ef8e7c",
-      "product": "Katina TKL",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Slate-Zero-36404233415480a58dd1fc3706404ab1",
-      "product": "Slate Zero",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -250,6 +220,36 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Keyboy-Advance-50-39d04233415480499de3c0419f86c1bd",
       "product": "Keyboy Advance 50%",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/The-Wing-60-39d04233415480fa9f5cf0d712076afb",
+      "product": "The Wing 60%",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Agar-Micro-40-Alice-39d0423341548022a14fc375c757d794",
+      "product": "Agar Micro 40% Alice",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/SF-60-HE-39d0423341548022ac7ee1a5bf6de3cd",
+      "product": "SF 60 HE",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -370,6 +370,36 @@
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Sonic-170-V2-36404233415480deacdac07c492a97b0",
       "product": "Sonic 170 V2",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Kafka-30d042334154807e8728c846d9ce8d67",
+      "product": "Kafka",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Katina-TKL-3640423341548024996ec17de0ef8e7c",
+      "product": "Katina TKL",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Slate-Zero-36404233415480a58dd1fc3706404ab1",
+      "product": "Slate Zero",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q4 2026"
     },
