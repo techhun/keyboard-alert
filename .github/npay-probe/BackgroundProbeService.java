@@ -32,6 +32,7 @@ public final class BackgroundProbeService extends Service {
     static final String ACTION_SCAN_ALL = "com.techhun.npayprobe.BG_SCAN_ALL";
     static final String ACTION_SHIP_SAMPLE = "com.techhun.npayprobe.BG_SHIP_SAMPLE";
     static final String ACTION_SHIP_MULTI = "com.techhun.npayprobe.BG_SHIP_MULTI";
+    static final String ACTION_SHIP_PAGE = "com.techhun.npayprobe.BG_SHIP_PAGE";
     private static final int MAX_BUTTONS_PER_ITEM = 5;
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
@@ -45,14 +46,17 @@ public final class BackgroundProbeService extends Service {
     private WebView webView;
     private PowerManager.WakeLock wakeLock;
     private boolean started = false, finished = false, scanAll = false, readQueued = false,
-        sampleShipping = false, sampleMulti = false;
-    private int sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
+        sampleShipping = false, sampleMulti = false, samplePage = false;
+    private int sampleLimit=6, sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
         sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
         sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
         sampleEmptyReads=0, sampleEmptyRetries=0, sampleLateControls=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0;
     private String sampleButtonSignature="",sampleIssue="";
+    private long sampleStartedAt=0L;
+    private int sampleSharedDetail=0;
+    private final java.util.HashSet<String> sampleDetailUrls=new java.util.HashSet<>();
     private final java.util.ArrayList<String> sampleIssueNotes=new java.util.ArrayList<>();
     private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
@@ -82,11 +86,16 @@ public final class BackgroundProbeService extends Service {
         scanAll = intent != null && ACTION_SCAN_ALL.equals(intent.getAction());
         sampleShipping = intent != null &&
             (ACTION_SHIP_SAMPLE.equals(intent.getAction())||
-             ACTION_SHIP_MULTI.equals(intent.getAction()));
-        sampleMulti = intent != null && ACTION_SHIP_MULTI.equals(intent.getAction());
+             ACTION_SHIP_MULTI.equals(intent.getAction())||
+             ACTION_SHIP_PAGE.equals(intent.getAction()));
+        samplePage = intent != null && ACTION_SHIP_PAGE.equals(intent.getAction());
+        sampleMulti = samplePage || (intent != null && ACTION_SHIP_MULTI.equals(intent.getAction()));
+        sampleLimit=samplePage?15:6;
+        sampleStartedAt=System.currentTimeMillis();
         try {
             Notification notification = notification(sampleShipping?
-                (sampleMulti?"백그라운드 복수 배송조회 최대 6건":"백그라운드 배송조회 최대 6건")+" 검사 준비": scanAll?
+                (samplePage?"백그라운드 첫 페이지 최대 15건 배송조회":
+                    sampleMulti?"백그라운드 복수 배송조회 최대 6건":"백그라운드 배송조회 최대 6건")+" 검사 준비": scanAll?
                 "백그라운드 전체 목록 검사 준비" : "화면 전환 후 구매목록 1페이지 검사");
             if (Build.VERSION.SDK_INT >= 29) {
                 startForeground(NOTIFICATION_ID, notification,
@@ -96,13 +105,15 @@ public final class BackgroundProbeService extends Service {
             }
             PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "npay:onepage-probe");
-            wakeLock.acquire(sampleShipping? 240000L: scanAll ? 300000L : 55000L); // bounded
+            wakeLock.acquire(samplePage? 760000L : sampleShipping? 240000L: scanAll ? 300000L : 55000L); // bounded, user initiated
             status("조회 대기 중 · 화면을 꺼도 테스트 진행");
             handler.postDelayed(this::begin, 8000L);
             handler.postDelayed(() -> finish(
-                sampleShipping? "배송조회 시범 시간 초과 · "+sampleDone+"건 완료 · 중단" :
+                sampleShipping? "배송조회 시범 시간 초과 · "+sampleDone+"/"+sampleTargets.size()+
+                    "건 완료 · 자동 중단 · 상세 미수집" :
                 scanAll ? "시간 초과 · "+Math.max(0,page-1)+"페이지 완료 · 자동 중단" :
-                "시간 초과 · 백그라운드 화면 응답 없음"), sampleShipping? 215000L : scanAll ? 280000L : 45000L);
+                "시간 초과 · 백그라운드 화면 응답 없음"),
+                samplePage? 720000L : sampleShipping? 215000L : scanAll ? 280000L : 45000L);
         } catch (RuntimeException ex) {
             finish("서비스 시작 실패 · Android 백그라운드 실행 제한");
         }
@@ -115,7 +126,8 @@ public final class BackgroundProbeService extends Service {
         PendingIntent p = PendingIntent.getActivity(this, NOTIFICATION_ID, open, flags);
         return new Notification.Builder(this, CHANNEL)
             .setSmallIcon(android.R.drawable.stat_notify_sync)
-            .setContentTitle(sampleShipping? "NPay 백그라운드 배송조회 시범" :
+            .setContentTitle(samplePage? "NPay 첫 페이지 배송조회 검사" :
+                sampleShipping? "NPay 백그라운드 배송조회 시범" :
                 scanAll ? "NPay 백그라운드 목록 검사" : "NPay 백그라운드 1페이지 테스트")
             .setContentText(message).setContentIntent(p).setOngoing(true).build();
     }
@@ -341,7 +353,9 @@ public final class BackgroundProbeService extends Service {
     private void sampleListRead() {
         if(finished||!sampleShipping||sampleStage!=0||webView==null)return;
         try {
-            webView.evaluateJavascript(BackgroundDeliveryScripts.SAMPLE_LIST_JS, ret -> {
+            String script=BackgroundDeliveryScripts.SAMPLE_LIST_JS.replace(
+                "__SAMPLE_LIMIT__",String.valueOf(sampleLimit));
+            webView.evaluateJavascript(script, ret -> {
                 if(finished||sampleStage!=0)return;
                 try{
                     JSONObject d=decode(ret);
@@ -352,12 +366,13 @@ public final class BackgroundProbeService extends Service {
                         finish("배송조회 시범 · 목록 준비 실패 · 상세검사 0건");return;
                     }
                     JSONArray a=d.getJSONArray("candidates");
-                    if(a.length()>6||a.length()==0){finish("배송조회 시범 · 유효한 상세 링크 없음");return;}
+                    if(a.length()>sampleLimit||a.length()==0){finish("배송조회 시범 · 유효한 상세 링크 없음");return;}
                     for(int i=0;i<a.length();i++){
                         JSONObject row=a.getJSONObject(i);
                         String id=row.getString("id"),url=row.getString("url");
                         if(!id.matches("[A-Za-z0-9_-]{1,80}")||!safeDetailUrl(url))throw new IllegalArgumentException();
                         sampleTargets.add(new String[]{id,url});
+                        if(!sampleDetailUrls.add(url))sampleSharedDetail++;
                     }
                     sampleIndex=0;
                     nextSample();
@@ -382,7 +397,9 @@ public final class BackgroundProbeService extends Service {
                 (sampleNoButtonNotes.isEmpty()?"":" · 버튼없음 위치 "+
                     android.text.TextUtils.join(" / ",sampleNoButtonNotes))+
                 (sampleMulti?" · 버튼 재확인 "+sampleEmptyRetries+"회"+
-                    " · 지연 발견 "+sampleLateControls+"건":"")+marker);
+                    " · 지연 발견 "+sampleLateControls+"건":"")+
+                (samplePage?" · 같은 상세 URL "+sampleSharedDetail+"건"+
+                    " · 소요 "+((System.currentTimeMillis()-sampleStartedAt)/1000L)+"초":"")+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
@@ -572,7 +589,8 @@ public final class BackgroundProbeService extends Service {
             webView = null;
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
-        sampleTargets.clear();seenHashes.clear();sampleIssueNotes.clear();sampleNoButtonNotes.clear();
+        sampleTargets.clear();sampleDetailUrls.clear();seenHashes.clear();
+        sampleIssueNotes.clear();sampleNoButtonNotes.clear();
         super.onDestroy();
     }
 
