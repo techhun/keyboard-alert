@@ -1186,7 +1186,7 @@ jobs:
           # Public GitHub Release assets avoid expiring Actions artifact URLs and
           # ChatGPT Library/sandbox file-link failures on Android.
           project=android/npay-probe-ci
-          version="$(sed -n 's/.*versionName = "\\([0-9.]*\\)-probe".*/\\1/p' "$project/app/build.gradle.kts" | head -n 1)"
+          version="$(grep -Eo 'versionName = "[0-9]+[.][0-9]+[.][0-9]+-probe"' "$project/app/build.gradle.kts" | head -n 1 | cut -d'"' -f2 | cut -d'-' -f1)"
           if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::Cannot derive safe NPay test version"
             exit 1
