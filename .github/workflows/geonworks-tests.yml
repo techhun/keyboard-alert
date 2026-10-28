@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'scripts/check-guheyo.mjs'
+      - 'tests/guheyo-safety.test.mjs'
       - 'scripts/healthchecks-ping.mjs'
       - 'tests/healthchecks-heartbeat.test.mjs'
       - '.github/workflows/keyboard-alert-fast.yml'
@@ -48,6 +50,8 @@ on:
       - '.github/workflows/geonworks-tests.yml'
   pull_request:
     paths:
+      - 'scripts/check-guheyo.mjs'
+      - 'tests/guheyo-safety.test.mjs'
       - 'scripts/healthchecks-ping.mjs'
       - 'tests/healthchecks-heartbeat.test.mjs'
       - '.github/workflows/keyboard-alert-fast.yml'
