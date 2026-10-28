@@ -28,6 +28,7 @@ jobs:
           node-version: '24'
 
       - name: Install dependencies
+        id: install
         run: npm ci --no-audit --no-fund
 
       - name: Signal slow heartbeat start
@@ -36,16 +37,27 @@ jobs:
         run: node scripts/healthchecks-ping.mjs start
 
       - name: Restore watcher state
+        id: restore_state
         shell: bash
         run: |
+          set -euo pipefail
+          baseline_dir="$RUNNER_TEMP/keyboard-alert-slow-baseline"
+          rm -rf "$baseline_dir"
+          mkdir -p "$baseline_dir"
+
           git fetch origin watcher-state
           for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json kbdfans-state.json cannonkeys-state.json deskhero-state.json omnitype-state.json keepodd-events.json system-health-slow.json; do
             if git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
               git show "origin/watcher-state:$file" > "$file"
+              cp "$file" "$baseline_dir/$file"
+            else
+              rm -f "$file"
+              touch "$baseline_dir/$file.missing"
             fi
           done
 
       - name: Run regression tests
+        id: regression
         run: npm test
 
       - name: Check GEONWORKS GB schedule
@@ -69,7 +81,7 @@ jobs:
           npm run system:health -- transition slow geonworks-gb "$status" 'GEONWORKS GB' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check GEONWORKS Release schedule
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           GEONWORKS_DISCORD_WEBHOOK_URL: ${{ secrets.GEONWORKS_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -90,7 +102,7 @@ jobs:
           npm run system:health -- transition slow geonworks-release "$status" 'GEONWORKS Release' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check ProtoTypist updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           PROTOTYPIST_DISCORD_WEBHOOK_URL: ${{ secrets.PROTOTYPIST_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -106,7 +118,7 @@ jobs:
           npm run system:health -- transition slow prototypist "$status" 'ProtoTypist' '내부 재시도 후에도 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check SWAGKEYS roadmap
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           SWAGKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.SWAGKEYS_DISCORD_WEBHOOK_URL }}
           SWG_DISCORD_WEBHOOK_URL: ${{ secrets.SWG_DISCORD_WEBHOOK_URL }}
@@ -126,7 +138,7 @@ jobs:
           npm run system:health -- transition slow swagkeys "$status" 'SWAGKEYS' '내부 재시도 후에도 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check Oblotzky schedule
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           OBLOTZKY_DISCORD_WEBHOOK_URL: ${{ secrets.OBLOTZKY_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -147,7 +159,7 @@ jobs:
           npm run system:health -- transition slow oblotzky "$status" 'Oblotzky' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check NovelKeys product updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           NOVELKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.NOVELKEYS_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -168,7 +180,7 @@ jobs:
           npm run system:health -- transition slow novelkeys "$status" 'NovelKeys' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check KBDfans product updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           KBDFANS_DISCORD_WEBHOOK_URL: ${{ secrets.KBDFANS_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -189,7 +201,7 @@ jobs:
           npm run system:health -- transition slow kbdfans "$status" 'KBDfans' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check CannonKeys project updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           CANNONKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.CANNONKEYS_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -210,7 +222,7 @@ jobs:
           npm run system:health -- transition slow cannonkeys "$status" 'CannonKeys' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check Deskhero Group Buy/Preorder updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           DESKHERO_DISCORD_WEBHOOK_URL: ${{ secrets.DESKHERO_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -231,7 +243,7 @@ jobs:
           npm run system:health -- transition slow deskhero "$status" 'Deskhero' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Check Omnitype Product Updates
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         env:
           OMNITYPE_DISCORD_WEBHOOK_URL: ${{ secrets.OMNITYPE_DISCORD_WEBHOOK_URL }}
           SYSTEM_DISCORD_WEBHOOK_URL: ${{ secrets.SYSTEM_DISCORD_WEBHOOK_URL }}
@@ -252,29 +264,57 @@ jobs:
           npm run system:health -- transition slow omnitype "$status" 'Omnitype' '2회 시도 후 수집에 실패했습니다. 기존 검증된 state를 유지합니다.'
 
       - name: Persist slow watcher state
-        if: always()
+        if: ${{ always() && steps.install.outcome == 'success' && steps.restore_state.outcome == 'success' && steps.regression.outcome == 'success' }}
         shell: bash
         run: |
+          set -euo pipefail
+          baseline_dir="$RUNNER_TEMP/keyboard-alert-slow-baseline"
+          if [ ! -d "$baseline_dir" ]; then
+            echo 'Slow watcher baseline is missing; refusing to persist state.'
+            exit 1
+          fi
+
           git fetch origin watcher-state
           changed_files=()
           for file in geonworks-state.json geonworks-release-state.json prototypist-state.json swagkeys-state.json oblotzky-state.json novelkeys-state.json kbdfans-state.json cannonkeys-state.json deskhero-state.json omnitype-state.json keepodd-events.json system-health-slow.json; do
             if [ ! -f "$file" ]; then
               continue
             fi
-            if git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
-              if ! cmp -s "$file" <(git show "origin/watcher-state:$file"); then
-                changed_files+=("$file")
+
+            baseline="$baseline_dir/$file"
+            missing_marker="$baseline_dir/$file.missing"
+
+            if [ -f "$baseline" ]; then
+              if cmp -s "$file" "$baseline"; then
+                continue
+              fi
+              if ! git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
+                echo "Remote watcher state removed $file after restore; refusing stale overwrite."
+                exit 1
+              fi
+              if ! cmp -s "$baseline" <(git show "origin/watcher-state:$file"); then
+                echo "Remote watcher state changed $file after restore; refusing stale overwrite."
+                exit 1
+              fi
+            elif [ -f "$missing_marker" ]; then
+              if git cat-file -e "origin/watcher-state:$file" 2>/dev/null; then
+                echo "Remote watcher state created $file after restore; refusing stale overwrite."
+                exit 1
               fi
             else
-              changed_files+=("$file")
+              echo "No restore baseline found for $file; refusing to persist."
+              exit 1
             fi
+
+            changed_files+=("$file")
           done
+
           if [ ${#changed_files[@]} -eq 0 ]; then
             echo 'Slow watcher state unchanged.'
             exit 0
           fi
 
-          state_dir="/tmp/keyboard-alert-watcher-state-slow"
+          state_dir="$RUNNER_TEMP/keyboard-alert-watcher-state-slow"
           rm -rf "$state_dir"
           git worktree add -B watcher-state "$state_dir" origin/watcher-state
 
@@ -285,6 +325,10 @@ jobs:
           git -C "$state_dir" config user.name 'github-actions[bot]'
           git -C "$state_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C "$state_dir" add "${changed_files[@]}"
+          if git -C "$state_dir" diff --cached --quiet -- "${changed_files[@]}"; then
+            echo 'Slow watcher state unchanged after staging.'
+            exit 0
+          fi
           git -C "$state_dir" commit -m 'Update slow watcher state'
 
           for attempt in 1 2 3; do
