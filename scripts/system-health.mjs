@@ -2,6 +2,7 @@ import fs from 'node:fs';
 
 const DISCORD_WEBHOOK_URL = (process.env.SYSTEM_DISCORD_WEBHOOK_URL || '').trim();
 const FAILURE_THRESHOLD = 3;
+const FAILURE_REMINDER_AFTER_MS = 12 * 60 * 60 * 1000;
 const DEGRADED_ALERT_AFTER_MS = 60 * 60 * 1000;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -102,6 +103,8 @@ function clearPendingFailure(source) {
   delete next.consecutiveFailures;
   delete next.lastFailureRunId;
   delete next.lastFailureAt;
+  delete next.failureAlertedAt;
+  delete next.failureReminderAt;
   return next;
 }
 
@@ -195,7 +198,40 @@ async function transition(group, sourceKey, status, label, detail = '') {
     const consecutiveFailures = sameRun ? previousFailures : previousFailures + 1;
 
     if (previousStatus === 'fail') {
-      console.log(`[system] ${label}: unchanged (fail)`);
+      const reminderBase = previous.failureReminderAt
+        || previous.failureAlertedAt
+        || previous.changedAt
+        || previous.lastFailureAt
+        || now;
+      const reminderAgeMs = Math.max(0, Date.parse(now) - Date.parse(reminderBase));
+
+      if (reminderAgeMs >= FAILURE_REMINDER_AFTER_MS) {
+        if (DISCORD_WEBHOOK_URL) {
+          const failureSince = previous.changedAt || previous.lastFailureAt || reminderBase;
+          const durationHours = Math.max(1, Math.floor((Date.parse(now) - Date.parse(failureSince)) / (60 * 60 * 1000)));
+          await postDiscord({
+            ...baseEmbed(`🚨 수집 오류 지속 · ${label}`),
+            description: truncate(detail || '수집 오류가 장시간 계속되고 있습니다. 기존 검증된 state를 유지합니다.'),
+            fields: [
+              { name: '그룹', value: group.toUpperCase(), inline: true },
+              { name: '상태', value: '오류 지속', inline: true },
+              { name: '지속', value: `${durationHours}시간+`, inline: true }
+            ]
+          });
+          state.sources[sourceKey] = {
+            ...previous,
+            failureReminderAt: now,
+            lastFailureRunId: runId || previous.lastFailureRunId || null,
+            lastFailureAt: now
+          };
+          saveState(group, state);
+          console.log(`[system] ${label}: persistent failure reminder sent after ${durationHours}h`);
+        } else {
+          console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} persistent failure reminder remains pending.`);
+        }
+      } else {
+        console.log(`[system] ${label}: unchanged (fail)`);
+      }
       return;
     }
 
@@ -233,14 +269,17 @@ async function transition(group, sourceKey, status, label, detail = '') {
       ]
     });
 
-    state.sources[sourceKey] = {
+    const failedSource = {
       ...clearDegraded(previous),
       status: 'fail',
       changedAt: now,
       consecutiveFailures,
       lastFailureRunId: runId || previous.lastFailureRunId || null,
-      lastFailureAt: now
+      lastFailureAt: now,
+      failureAlertedAt: now
     };
+    delete failedSource.failureReminderAt;
+    state.sources[sourceKey] = failedSource;
     saveState(group, state);
     console.log(`[system] ${label}: ${previousStatus || 'unknown'} -> fail after ${consecutiveFailures} consecutive runs`);
     return;
