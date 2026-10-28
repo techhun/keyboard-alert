@@ -1,11 +1,17 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-01T00:03:18.768Z",
+  "updatedAt": "2026-10-28T04:41:14.772Z",
   "rows": [
     {
+      "product": "PBTfans G3",
+      "overview": "These are estimated to arrive to us Q4 2026. | Production completion estimate is November.",
+      "components": [],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
       "product": "Enso-E",
-      "overview": "Updated delivery time - November 2026",
+      "overview": "Updated shipping time to vendors is November 2026 and to customers is November/December 2026.",
       "components": [
         "Magnets - ready",
         "Feet - ready",
@@ -21,13 +27,13 @@
     },
     {
       "product": "Float 65",
-      "overview": "Now estimated to deliver in November 2026.",
+      "overview": "New housing samples arrived but they were heavily damaged from shipping without sufficient protection. This prevents us from evaluating or testing the housings from the new manu so we have to get another round. We are pushing to try to get the new round made before the end of the month (Oct). We'll update here when they're headed our way.",
       "components": [
         "PCBs - ready",
         "Plates - ready",
         "Magnets - ready",
         "Feet - ready",
-        "Housings - delayed, manufacturing issue. Resolution in progress.",
+        "Housings - delayed (original manu backed out, new manu sourced)",
         "Carrying case - ready"
       ],
       "sourceUrl": "https://omnitype.com/pages/product-updates"
@@ -36,14 +42,14 @@
       "product": "Bauer 65",
       "overview": "These are estimated to arrive to us Q4 2026 which spans October - December.",
       "components": [
-        "Housings - production queue",
-        "Plates - production queue",
-        "Bumpers - in production",
-        "Poron strips - in production",
-        "DynaPaks - ready",
+        "Housings - in production",
+        "Plates - in production",
+        "Bumpers - complete",
+        "Poron strips - complete",
+        "DynaPaks - complete",
         "HE PCBs - on order with Geon",
         "Hybrid PCBs - preproduction sample in testing",
-        "Carrying case - awaiting final sample to give final production green light"
+        "Carrying case - production queue"
       ],
       "sourceUrl": "https://omnitype.com/pages/product-updates"
     },
@@ -58,7 +64,19 @@
       "overview": "These are estimated to arrive to us Q1 2027 which spans January - March.",
       "components": [],
       "sourceUrl": "https://omnitype.com/pages/product-updates"
+    },
+    {
+      "product": "GMK Red Devils (CYL)",
+      "overview": "These are estimated to arrive to us Q1 2027 which spans January - March.",
+      "components": [],
+      "sourceUrl": "https://omnitype.com/pages/product-updates"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "b98330b6658483f9906b639d": "2026-10-28T04:41:13.855Z",
+    "d3a6591e8db358bc2e97534e": "2026-10-28T04:41:14.052Z",
+    "6b9b0c1a13e6a315993b9f47": "2026-10-28T04:41:14.235Z",
+    "55a53a281bf46e20b4b2c284": "2026-10-28T04:41:14.491Z",
+    "9ac930b64c3f788dbf878f4f": "2026-10-28T04:41:14.772Z"
+  }
 }
