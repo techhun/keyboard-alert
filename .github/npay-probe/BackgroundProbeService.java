@@ -49,10 +49,12 @@ public final class BackgroundProbeService extends Service {
     private int sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
         sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
         sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
+        sampleEmptyReads=0, sampleEmptyRetries=0, sampleLateControls=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0;
     private String sampleButtonSignature="",sampleIssue="";
     private final java.util.ArrayList<String> sampleIssueNotes=new java.util.ArrayList<>();
+    private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
         sampleIssue=safeCode;
     }
@@ -375,12 +377,17 @@ public final class BackgroundProbeService extends Service {
                     "건 · 발견 "+sampleControlsObserved+"개 · 표시 "+sampleButtonsFound+
                     "개 · 미확인 "+sampleControlsSkipped+"개":"")+
                 (sampleIssueNotes.isEmpty()?"":" · 추가확인 위치 "+
-                    android.text.TextUtils.join(" / ",sampleIssueNotes))+marker);
+                    android.text.TextUtils.join(" / ",sampleIssueNotes))+
+                (sampleNoButtonNotes.isEmpty()?"":" · 버튼없음 위치 "+
+                    android.text.TextUtils.join(" / ",sampleNoButtonNotes))+
+                (sampleMulti?" · 버튼 재확인 "+sampleEmptyRetries+"회"+
+                    " · 지연 발견 "+sampleLateControls+"건":"")+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
         sampleStage=1;attempt=0;readQueued=false;
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
+        sampleEmptyReads=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
         final int watchedIndex=sampleIndex;
@@ -423,9 +430,27 @@ public final class BackgroundProbeService extends Service {
                         advanceSample(2);return;
                     }
                     if(keys.length()==0){
-                        advanceSample(sampleButtonIndex==0?1:2);return;
+                        if(sampleButtonIndex>0){
+                            markSampleIssue("다음 버튼 검사 시 구성 변경");
+                            advanceSample(2);return;
+                        }
+                        // React can render shipping controls after the item label appears.
+                        // A single empty DOM snapshot must not certify an absent button.
+                        if(++sampleEmptyReads<4){
+                            sampleEmptyRetries++;
+                            handler.postDelayed(this::readSampleDetail,1300L);
+                            return;
+                        }
+                        if(sampleNoButtonNotes.size()<6)
+                            sampleNoButtonNotes.add((sampleIndex+1)+"번(4회 재확인)");
+                        advanceSample(1);return;
                     }
-                    if(keys.length()>20){advanceSample(2);return;}
+                    if(sampleEmptyReads>0)sampleLateControls++;
+                    sampleEmptyReads=0;
+                    if(keys.length()>20){
+                        markSampleIssue("버튼 수 초과");
+                        advanceSample(2);return;
+                    }
                     String signature=keys.toString();
                     if(sampleButtonIndex==0){
                         sampleButtonCount=keys.length();
@@ -546,7 +571,7 @@ public final class BackgroundProbeService extends Service {
             webView = null;
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
-        sampleTargets.clear();seenHashes.clear();sampleIssueNotes.clear();
+        sampleTargets.clear();seenHashes.clear();sampleIssueNotes.clear();sampleNoButtonNotes.clear();
         super.onDestroy();
     }
 
