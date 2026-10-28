@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-28T17:51:12.918Z",
+  "updatedAt": "2026-10-28T18:01:13.695Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1814,7 +1814,5 @@
       "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "keyset": "2026-10-28T17:51:11.351Z"
-  }
+  "fallbackSince": {}
 }
