@@ -99,8 +99,11 @@ public class MonitorService extends Service {
     }
 
     static long rateLimitDelayMillis(long previous, long lastRateLimit, long now, int status) {
+        // The recovery window starts only after the last cooldown has elapsed.
+        // A 16-minute cooldown must not reset the penalty just because the
+        // previous 429 happened more than ten minutes ago.
         if (previous <= 0L || lastRateLimit <= 0L || now < lastRateLimit
-            || now - lastRateLimit > RATE_LIMIT_RECOVERY_WINDOW_MS) {
+            || now - lastRateLimit - previous > RATE_LIMIT_RECOVERY_WINDOW_MS) {
             return status == 204 ? 5 * 60_000L : INITIAL_RATE_LIMIT_BACKOFF_MS;
         }
         return Math.min(MAX_RATE_LIMIT_BACKOFF_MS, previous * 2L);
