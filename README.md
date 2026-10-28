@@ -158,7 +158,10 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 - SWAGKEYS는 Notion의 `Loading`, `No results`, 오류 placeholder 등을 정상 제품으로 저장하지 않으며, 상태표를 일시적으로 읽지 못하면 마지막 검증된 상태를 재사용합니다.
 - system health는 정상→오류, 오류→정상처럼 상태가 바뀔 때만 Discord 알림을 보내 중복 장애 알림을 막습니다.
 - workflow watchdog도 정상→정체, 정체→정상 전환 때만 Discord 알림을 보내 반복 알림을 막습니다.
-- workflow의 state push는 `git pull --rebase` + `git push`를 재시도해 fast/slow/watchdog 동시 실행 시 충돌 가능성을 줄입니다.
+- runtime state의 기준은 `watcher-state` 브랜치이며, workflow 시작 시 해당 브랜치의 state를 복원한 뒤 그 복원본을 실행별 baseline으로 보관합니다.
+- dependency 설치나 state 복원이 실패하면 뒤쪽 수집·state 저장 단계가 오래된 checkout 파일로 계속 진행되지 않도록 차단합니다.
+- state 저장 시 이번 실행에서 baseline 대비 실제로 변경된 파일만 대상으로 하며, restore 이후 원격 `watcher-state`가 달라졌으면 stale overwrite를 거부합니다.
+- workflow의 state push는 `git pull --rebase` + `git push`를 재시도하고, stage 후 변경이 없으면 빈 commit 없이 정상 종료합니다.
 
 ## 주요 스크립트
 
