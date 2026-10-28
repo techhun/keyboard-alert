@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-28T20:52:38.733Z",
+  "updatedAt": "2026-10-28T21:41:10.497Z",
   "announcement": {
     "heading": "업데이트(26.10.14)",
     "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
@@ -411,8 +411,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-10-28T20:51:59.081Z",
-    "status": "2026-10-28T20:52:38.652Z"
-  }
+  "fallbackSince": {}
 }
