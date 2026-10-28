@@ -11,7 +11,7 @@ on:
       - .github/npay-probe/BackgroundDeliveryScripts.java
 
 permissions:
-  contents: read
+  contents: write # Required only to attach CI-built test APKs to GitHub prereleases
 
 jobs:
   build:
@@ -1176,3 +1176,33 @@ jobs:
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
+      - name: Publish versioned APK to GitHub pre-release for direct downloads
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # The isolated NPay APK is a debug-signed read-only test, never a production app.
+          # Public GitHub Release assets avoid expiring Actions artifact URLs and
+          # ChatGPT Library/sandbox file-link failures on Android.
+          project=android/npay-probe-ci
+          version="$(sed -n 's/.*versionName = "\\([0-9.]*\\)-probe".*/\\1/p' "$project/app/build.gradle.kts" | head -n 1)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Cannot derive safe NPay test version"
+            exit 1
+          fi
+          tag="npay-probe-v$version"
+          asset="NPay-Probe-v$version-debug.apk"
+          source="$project/app/build/outputs/apk/debug/app-debug.apk"
+          test -s "$source"
+          cp "$source" "$RUNNER_TEMP/$asset"
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "$RUNNER_TEMP/$asset" --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$tag" "$RUNNER_TEMP/$asset" --repo "$GITHUB_REPOSITORY" \
+              --target "$GITHUB_SHA" --title "NPay probe v$version (test APK)" \
+              --notes "Read-only NPay Android test application, NOT a production release. Built in the isolated test branch, signed by a temporary CI debug key. When switching builds, uninstall may be required due to signature mismatch. No NPay credentials or private signing keys are included. Restock production app is not changed." \
+              --prerelease --latest=false
+          fi
+          echo "Direct APK download:"
+          echo "https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$asset"
