@@ -122,7 +122,8 @@ public final class BackgroundProbeService extends Service {
 
     private void status(String message) {
         getSharedPreferences(PREFS, MODE_PRIVATE).edit()
-            .putString(STATUS, message).putBoolean("running", !finished).apply();
+            .putString(STATUS, message).putBoolean("running", !finished)
+            .putLong("updated_at",System.currentTimeMillis()).apply();
     }
     private void progress(String message) {
         status(message);
