@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-29T00:00:51.088Z",
+  "updatedAt": "2026-10-29T00:10:38.081Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -130,7 +130,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 8",
+      "update": "2026. 10. 29",
       "note": "컬러매칭 완료. 생산 일정 확인 중 / Color matching complete. Checking the production schedule."
     },
     {
@@ -140,7 +140,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 26",
+      "update": "2026. 10. 29",
       "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
     },
     {
@@ -370,7 +370,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
+      "update": "2026. 10. 29",
       "note": "—"
     },
     {
@@ -440,7 +440,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
+      "update": "2026. 10. 29",
       "note": "—"
     },
     {
@@ -710,6 +710,10 @@
     "b429b4173384191eda8f7223": "2026-10-29T00:00:50.382Z",
     "05566fa07db4b382a9e05cc1": "2026-10-29T00:00:50.653Z",
     "96bd8ecc2387a7e91ebd003c": "2026-10-29T00:00:50.896Z",
-    "decc68afc8f9401de6eb2289": "2026-10-29T00:00:51.087Z"
+    "decc68afc8f9401de6eb2289": "2026-10-29T00:00:51.087Z",
+    "03e95714798383414adc9264": "2026-10-29T00:10:37.421Z",
+    "a2190029f98a7459700c7056": "2026-10-29T00:10:37.651Z",
+    "4861bdef08a0b25d65c3b601": "2026-10-29T00:10:37.902Z",
+    "5bb2a3de3ef3eb0a63bbac6c": "2026-10-29T00:10:38.080Z"
   }
 }
