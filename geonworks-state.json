@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-28T00:10:36.276Z",
+  "updatedAt": "2026-10-29T00:00:51.088Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -20,7 +20,7 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 26",
+      "update": "2026. 10. 29",
       "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October."
     },
     {
@@ -50,7 +50,7 @@
       "type": "Keyboard",
       "manufacturer": "KBDfans",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 26",
+      "update": "2026. 10. 29",
       "note": "일부 제품 미입고되어 대기 중. / Some products are currently on back order."
     },
     {
@@ -114,16 +114,6 @@
       "note": "—"
     },
     {
-      "product": "GMK CYL Tokyo & Miami Nights R2",
-      "gbStart": "2026. 10. 13",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 13",
-      "note": "—"
-    },
-    {
       "product": "GMK Salamander",
       "gbStart": "2026. 10. 13",
       "eta": "2027. 3. 31",
@@ -131,16 +121,6 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 15",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Blanks",
-      "gbStart": "2026. 10. 20",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 20",
       "note": "—"
     },
     {
@@ -692,6 +672,26 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 8",
       "note": "—"
+    },
+    {
+      "product": "GMK CYL Tokyo & Miami Nights R2",
+      "gbStart": "2026. 10. 13",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 29",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Blanks",
+      "gbStart": "2026. 10. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 10. 29",
+      "note": "—"
     }
   ],
   "sentChanges": {
@@ -706,6 +706,10 @@
     "fd491c307d3b8d3dd9c67fa8": "2026-10-26T07:00:48.457Z",
     "371ceb243dca6b1976e38e09": "2026-10-26T07:00:48.707Z",
     "4f39bedc1161eac8500df072": "2026-10-26T07:50:31.697Z",
-    "c8d98bfce1889c61540f93ec": "2026-10-26T07:50:31.885Z"
+    "c8d98bfce1889c61540f93ec": "2026-10-26T07:50:31.885Z",
+    "b429b4173384191eda8f7223": "2026-10-29T00:00:50.382Z",
+    "05566fa07db4b382a9e05cc1": "2026-10-29T00:00:50.653Z",
+    "96bd8ecc2387a7e91ebd003c": "2026-10-29T00:00:50.896Z",
+    "decc68afc8f9401de6eb2289": "2026-10-29T00:00:51.087Z"
   }
 }

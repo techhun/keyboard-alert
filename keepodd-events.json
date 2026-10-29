@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-27T06:50:33.213Z",
+  "updatedAt": "2026-10-29T00:00:51.088Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1015,6 +1015,38 @@
       "saleEnd": "2026-11-27",
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "020bbd53101ff4297b9ff66b36f4f1a7",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Blanks",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-10-29T00:00:51.088Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-20",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-blanks-%ED%82%A4%EC%BA%A1/742/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "4e2941b8f030144ff798b1d0ba863ae2",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Tokyo & Miami Nights R2",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-10-29T00:00:51.088Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-13",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]
