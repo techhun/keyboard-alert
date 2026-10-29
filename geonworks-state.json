@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-29T00:40:32.509Z",
+  "updatedAt": "2026-10-29T01:20:34.026Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -121,6 +121,36 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 15",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Blanks",
+      "gbStart": "2026. 10. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 29",
+      "note": "—"
+    },
+    {
+      "product": "Lilith Original Remake",
+      "gbStart": "2026. 10. 23",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "Nuxroskb",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 29",
+      "note": "—"
+    },
+    {
+      "product": "Chamber TKL",
+      "gbStart": "2026. 10. 27",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "KBDfans",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 10. 29",
       "note": "—"
     },
     {
@@ -682,16 +712,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 29",
       "note": "—"
-    },
-    {
-      "product": "GMK CYL Blanks",
-      "gbStart": "2026. 10. 20",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
-      "note": "—"
     }
   ],
   "sentChanges": {
@@ -719,6 +739,9 @@
     "e6b3658932a84578bde38b89": "2026-10-29T00:30:43.181Z",
     "e0473cb9fa6fc66dd1a619aa": "2026-10-29T00:40:31.458Z",
     "a63d142227fcc191544ce2ed": "2026-10-29T00:40:31.861Z",
-    "58382ba3819dc405c29f412e": "2026-10-29T00:40:32.508Z"
+    "58382ba3819dc405c29f412e": "2026-10-29T00:40:32.508Z",
+    "47bba2b75dd2e497a5f80d97": "2026-10-29T01:20:33.534Z",
+    "d7077a930519f61b178ca0af": "2026-10-29T01:20:33.786Z",
+    "4d2f4acf99fb25e2ad814c21": "2026-10-29T01:20:34.026Z"
   }
 }

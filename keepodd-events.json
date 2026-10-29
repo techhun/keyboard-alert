@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-29T00:40:32.509Z",
+  "updatedAt": "2026-10-29T01:20:34.026Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1131,6 +1131,36 @@
       "eta": "2026-05-31",
       "status": "제작 중 / In progress",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "5d23bcde2a6021ba714823458b11a9c3",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Blanks",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "판매 중 / GB on sale",
+      "occurredAt": "2026-10-29T01:20:34.026Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-20",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-blanks-%ED%82%A4%EC%BA%A1/742/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "cdadbaaf40bcd13badd372aef5be28a8",
+      "source": "GEONWORKS",
+      "name": "Lilith Original Remake",
+      "eventType": "new_gb",
+      "occurredAt": "2026-10-29T01:20:34.026Z",
+      "categoryHint": "키캡",
+      "maker": "Nuxroskb",
+      "saleStart": "2026-10-23",
+      "eta": "2026-12-31",
+      "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
