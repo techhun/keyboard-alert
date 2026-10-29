@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-29T00:30:43.181Z",
+  "updatedAt": "2026-10-29T00:40:32.509Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -151,7 +151,7 @@
       "manufacturer": "TypePlus",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 29",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre"
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
       "product": "Keycult No. 3 TKL",
@@ -251,7 +251,7 @@
       "manufacturer": "MACHINA",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 20",
-      "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Zionworks around the end of October."
+      "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Geonworks around the end of October."
     },
     {
       "product": "PBS-Retro S.M AG",
@@ -271,7 +271,7 @@
       "manufacturer": "Atelier Magnus",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 29",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre"
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
       "product": "Grit Jahre 65",
@@ -716,6 +716,9 @@
     "4861bdef08a0b25d65c3b601": "2026-10-29T00:10:37.902Z",
     "5bb2a3de3ef3eb0a63bbac6c": "2026-10-29T00:10:38.080Z",
     "0c8a5f346099dc0a2c72ebb0": "2026-10-29T00:20:35.258Z",
-    "e6b3658932a84578bde38b89": "2026-10-29T00:30:43.181Z"
+    "e6b3658932a84578bde38b89": "2026-10-29T00:30:43.181Z",
+    "e0473cb9fa6fc66dd1a619aa": "2026-10-29T00:40:31.458Z",
+    "a63d142227fcc191544ce2ed": "2026-10-29T00:40:31.861Z",
+    "58382ba3819dc405c29f412e": "2026-10-29T00:40:32.508Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-29T00:30:43.181Z",
+  "updatedAt": "2026-10-29T00:40:32.509Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1080,6 +1080,57 @@
       "eta": "2026-05-31",
       "status": "제작 중 / In progress",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "0af9a34ae7d91ebffe17a26a3c3b2e75",
+      "source": "GEONWORKS",
+      "name": "Overture 2",
+      "eventType": "note_changed",
+      "before": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Zionworks around the end of October.",
+      "after": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Geonworks around the end of October.",
+      "occurredAt": "2026-10-29T00:40:32.509Z",
+      "categoryHint": "키보드",
+      "maker": "MACHINA",
+      "saleStart": "2026-04-09",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Geonworks around the end of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "996882982d25197136cf59a2d58a25a9",
+      "source": "GEONWORKS",
+      "name": "Atelier Magnus Slate Zero",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
+      "after": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "occurredAt": "2026-10-29T00:40:32.509Z",
+      "categoryHint": "키보드",
+      "maker": "Atelier Magnus",
+      "saleStart": "2026-04-27",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "b8045190828b8b1888ad871d66199e45",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
+      "after": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "occurredAt": "2026-10-29T00:40:32.509Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
