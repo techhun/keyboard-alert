@@ -1,8 +1,15 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-29T18:01:18.227Z",
+  "updatedAt": "2026-10-29T22:51:08.979Z",
   "rows": [
+    {
+      "category": "Keyboard",
+      "product": "Smurve80 R2",
+      "status": "Open for orders",
+      "eta": "Q1 2027",
+      "url": "https://novelkeys.com/products/smurve80-r2"
+    },
     {
       "category": "Keyboard",
       "product": "KeyBoy Advance",
@@ -344,6 +351,7 @@
     "328505f551055b3c88f939eb": "2026-10-23T14:31:23.752Z",
     "726a50e3c03e88a13e6e9c9a": "2026-10-23T14:31:23.979Z",
     "bfa494fbd46925b540d99825": "2026-10-23T14:50:57.060Z",
-    "1870be829193a3b8ae9e2669": "2026-10-23T14:50:57.307Z"
+    "1870be829193a3b8ae9e2669": "2026-10-23T14:50:57.307Z",
+    "ea094fda12aa38d298dcc1ab": "2026-10-29T22:51:08.979Z"
   }
 }
