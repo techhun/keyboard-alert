@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-29T00:20:35.259Z",
+  "updatedAt": "2026-10-29T00:30:43.181Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1061,6 +1061,23 @@
       "maker": "Atelier Magnus",
       "saleStart": "2026-04-27",
       "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8c15d0c9aed5eddb98083f651e37dc33",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "note_changed",
+      "before": "10월 4주 제조사에서 EC킷 발송 예정 / The manufacturer is scheduled to ship the EC kits during the fourth week of October.",
+      "after": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
+      "occurredAt": "2026-10-29T00:30:43.181Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
       "status": "제작 중 / In progress",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Zionworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
