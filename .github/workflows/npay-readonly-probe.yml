@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.24 background first-page delivery scaling test
+run-name: NPay probe v0.1.25 dedicated permanent signing key migration
 
 on:
   push:
@@ -35,8 +35,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.24-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 124/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.25-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 125/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -221,7 +221,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.24\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.25\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -377,7 +377,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.24");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.25");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -1123,7 +1123,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.24 debug APK
+      - name: Lint and assemble v0.1.25 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
@@ -1136,8 +1136,8 @@ jobs:
           cp "$ANDROID_HOME/build-tools/37.0.0/lib/apksigner.jar" android/npay-probe-ci/signing-tools/apksigner.jar
       # The PKCS12 private key must be provided from repository Actions secrets,
       # never committed or generated on CI. Fingerprint is pinned to the
-      # verified NPay v0.1.14 signing certificate.
-      - name: Sign with retained NPay certificate if configured
+      # newly issued dedicated NPay v2 signing certificate (2026-10-30).
+      - name: Sign with dedicated NPay v2 certificate if configured
         id: npay_sign
         shell: bash
         env:
@@ -1161,7 +1161,7 @@ jobs:
           trap 'rm -f "$key_file"' EXIT
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
-          target="$apk_dir/npay-v0.1.24-fixed-signed.apk"
+          target="$apk_dir/npay-v0.1.25-fixed-signed.apk"
           signer=(java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign
             --ks "$key_file" --ks-type PKCS12 --ks-pass env:NPAY_STORE_PASSWORD)
           # apksigner infers the alias if the PKCS12 contains only one key;
@@ -1173,20 +1173,20 @@ jobs:
           java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --verbose "$target"
           certificate="$(java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --print-certs "$target" |
             sed -n 's/.*certificate SHA-256 digest: //p' | head -n 1)"
-          expected=20fe05415645ecbc2debe2c872eff8d94efb2ac019492ba91668dfbf7da2c3d9
+          expected=dff596e4398bd155b883e92e1e72d0e3cd357feb81e66ffcb38edbb935c0e4c4
           if [[ "$certificate" != "$expected" ]]; then
             rm -f "$target"
-            echo "::error::Signed APK certificate does not match the recorded NPay v0.1.14 key."
+            echo "::error::Signed APK certificate does not match the dedicated NPay v2 key."
             exit 1
           fi
           echo "signed=true" >> "$GITHUB_OUTPUT"
-          echo "Verified NPay fixed signing certificate."
+          echo "Verified NPay v2 fixed signing certificate."
       - uses: actions/upload-artifact@v7
         with:
           name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
-            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.24-fixed-signed.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.25-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
@@ -1213,7 +1213,7 @@ jobs:
           else
             gh release create "$tag" "$RUNNER_TEMP/$asset" --repo "$GITHUB_REPOSITORY" \
               --target "$GITHUB_SHA" --title "NPay probe v$version (fixed-key signed)" \
-              --notes "Read-only NPay test APK signed using the retained dedicated NPay certificate. Certificate SHA-256 pinned to verified v0.1.14. This is NOT the Restock app. First migration from an earlier CI debug APK requires one uninstall; future same-certificate APKs with increasing version codes can be installed as updates. No NPay credentials or private signing keys are included." \
+              --notes "Read-only NPay test APK signed using the retained dedicated NPay certificate. Certificate SHA-256 pinned to the new NPay v2 key issued 2026-10-30. This is NOT the Restock app. First migration from an earlier CI debug APK requires one uninstall; future same-certificate APKs with increasing version codes can be installed as updates. No NPay credentials or private signing keys are included." \
               --prerelease --latest=false
           fi
           echo "Verified fixed-signed APK published in release: $tag"
