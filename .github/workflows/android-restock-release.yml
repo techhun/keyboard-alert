@@ -98,3 +98,40 @@ jobs:
           path: android/restock-worker/app/build/reports/lint-results-release.*
           if-no-files-found: warn
           retention-days: 30
+
+  # One-time direct APK publication; subsequent source pushes keep building
+  # artifacts and do not automatically publish a release.
+  publish_v01443:
+    needs: release
+    if: github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'ci(restock): publish signed v0.14.43 APK to GitHub Releases'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download the verified signed Release APK
+        uses: actions/download-artifact@v7
+        with:
+          name: restock-worker-release-apk
+          path: dist
+
+      - name: Publish an APK directly to GitHub Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s dist/app-release.apk
+          sha256sum dist/app-release.apk
+          tag=restock-v0.14.43
+          asset=Restock-v0.14.43.apk
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets >/dev/null 2>&1; then
+            gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "$asset"
+            echo "Release and APK asset already exist."
+            exit 0
+          fi
+          gh release create "$tag" "dist/app-release.apk#$asset" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Restock v0.14.43" \
+            --notes "Signed Android APK for Restock v0.14.43 (versionCode 77). SmartStore static-resource cache optimization and page resource diagnostics; monitoring interval unchanged. Existing app data is preserved on update when the signing key matches." \
+            --latest=false
