@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-27T06:50:33.213Z",
+  "updatedAt": "2026-10-30T05:10:39.099Z",
   "rows": [
     {
       "product": "GMK CYL Rainy Day R3",
@@ -46,17 +46,6 @@
       "fixed": "확정 / Fixed",
       "start": "2026-10-08",
       "end": "2026-11-02"
-    },
-    {
-      "product": "Keyreative PBS Kids Typewriter",
-      "manufacturer": "Keyreative",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-10-09",
-      "end": "2026-11-09"
     },
     {
       "product": "GMK Salamander",
@@ -108,6 +97,7 @@
     "f62a9626a7eaa5e4a271c803": "2026-10-25T23:30:47.076Z",
     "e51f7d7f62c09add751732ad": "2026-10-26T07:50:38.702Z",
     "133024e8e75f9780a828ae0b": "2026-10-27T06:50:33.013Z",
-    "1a8ffba99b425a125fc33e94": "2026-10-27T06:50:33.213Z"
+    "1a8ffba99b425a125fc33e94": "2026-10-27T06:50:33.213Z",
+    "67342f7c77ce03a34ee88bcf": "2026-10-30T05:10:39.099Z"
   }
 }
