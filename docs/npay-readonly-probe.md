@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.24)
+# NPay read-only delivery probe (v0.1.25)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -113,6 +113,20 @@
 - Release tag for an authenticated package is `npay-probe-v<version>-fixed` with an asset ending `fixed-signed.apk`. Never distribute the `app-debug.apk` as an update-installable APK. Previously published `npay-probe-v0.1.24` was a debug-signed test release and remains historical, **not** an updatable fixed-key release.
 - Exactly once, the user must configure GitHub Actions Secrets for the original PKCS12 bytes (base64) and its store password **without sharing credentials in ChatGPT**. The alias and separate key password are optional when the file contains only one private key and its key password equals the store password. If the original password cannot be recovered, generating a **new dedicated fixed signing key** is a separate procedure requiring a deliberate fingerprint baseline update, safe off-repository backup, and a one-time migration install; no new key has been generated in this change.
 - As the latest v0.1.24 installed build carries a temporary debug certificate, it cannot be upgraded in place to a fixed-signing APK. Following the one-time uninstall/install, future releases with the same signing certificate and incrementing Android versionCode are eligible for in-place updates.
+
+## 2026-10-30 NPay dedicated signing key v2 (CURRENT)
+- The user confirmed the previous October 23 PKCS12 password is lost and requested creation of a **new** dedicated, permanent NPay signing key. Do not try to recover the old key by guessing passwords.
+- A new private RSA-3072 PKCS12 keystore was generated locally, then tested by **signing and independently verifying an Android APK** (APK Signature Schemes v2/v3). Alias-free signing was also verified. New public signing-certificate SHA-256 fingerprint: `dff596e4398bd155b883e92e1e72d0e3cd357feb81e66ffcb38edbb935c0e4c4`. Alias: `npay-release-v2`.
+- Private key `NPay-signing-2026-v2.p12`, base64 encoded key `NPay-signing-2026-v2-base64.txt`, separately generated random credential `NPay-signing-2026-v2-credentials.txt`, and setup guide `NPay-signing-2026-v2-setup.txt` were backed up in **the user's private ChatGPT personal Library folder `/개발`**, not the GitHub repository. **Never put any contents of these files into GitHub commits, issues, PRs or public Releases.** The password should also be saved in a password manager; avoid keeping unprotected copies on shared devices.
+- GitHub workflow was changed to `v0.1.25` / `versionCode = 125` and pins **only the new v2 certificate**. All older v0.1.14 certificate references in earlier document sections below are retained as *historical* context, not the active expected fingerprint.
+- Manual owner action required at **GitHub repository → Settings → Secrets and variables → Actions**:
+  - Required `NPAY_RELEASE_KEYSTORE_BASE64`: entire single-line contents of `NPay-signing-2026-v2-base64.txt`.
+  - Required `NPAY_RELEASE_STORE_PASSWORD`: password from the private `NPay-signing-2026-v2-credentials.txt` backup.
+  - Optional `NPAY_RELEASE_KEY_ALIAS` and `NPAY_RELEASE_KEY_PASSWORD`: unnecessary for this single-key PKCS12 (verified via no-alias/no-key-pass signing).
+- CI **does not automatically upload the private key to GitHub Secrets**. Until those Secrets are configured, it runs lint/assemble but skips publishing the fixed-signed GitHub prerelease. When configured, CI must verify APK certificate hash matches the v2 fingerprint and publish `npay-probe-v0.1.25-fixed` release with `NPay-Probe-v0.1.25-fixed-signed.apk` asset.
+- Android package ID remains `com.techhun.npayprobe`. Upgrading an already installed v0.1.24 **temporary-debug-signed** app in place with a different v2 fixed key is impossible: do a **one-time uninstall/reinstall** to migrate to the new certificate. All *subsequent higher versionCode* builds signed with this same v2 keystore should install as updates.
+- Never touch or repurpose the operational Restock app's signing certificate or deployment pipeline. No user purchase/order data was changed.
+- Rollback: restore the previous test-workflow GitHub commit if this configuration fails. An APK signing-key change cannot be undone by code rollback once installed; the original v0.1.14 PKCS12 and all previous APKs are preserved independently.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
