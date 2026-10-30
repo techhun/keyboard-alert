@@ -51,6 +51,7 @@ public final class BackgroundProbeService extends Service {
         sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
         sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
         sampleEmptyReads=0, sampleEmptyRetries=0, sampleLateControls=0,
+        sampleAmbiguousReads=0, sampleAmbiguousRetries=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0;
     private String sampleButtonSignature="",sampleIssue="";
@@ -61,6 +62,16 @@ public final class BackgroundProbeService extends Service {
     private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
         sampleIssue=safeCode;
+    }
+    /** Diagnostic categories only: never include page contents, order IDs or URLs. */
+    private String ambiguityReason(JSONObject d){
+        if(!d.optBoolean("targetPresent"))return "대상 상품 영역 미확인";
+        if(d.optBoolean("cancelAmbiguous"))return "취소 상태 중복 판정";
+        if(d.optBoolean("cancelLimited"))return "취소 상태 탐색 한도";
+        if(d.optBoolean("controlLimited"))return "배송조회 버튼 탐색 한도";
+        int blocked=Math.max(0,Math.min(1000,d.optInt("blockedControls",0)));
+        if(blocked>0)return "배송조회 버튼 식별 제외 "+blocked+"개";
+        return "배송조회 상태 미확인";
     }
     private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
@@ -397,7 +408,8 @@ public final class BackgroundProbeService extends Service {
                 (sampleNoButtonNotes.isEmpty()?"":" · 버튼없음 위치 "+
                     android.text.TextUtils.join(" / ",sampleNoButtonNotes))+
                 (sampleMulti?" · 버튼 재확인 "+sampleEmptyRetries+"회"+
-                    " · 지연 발견 "+sampleLateControls+"건":"")+
+                    " · 지연 발견 "+sampleLateControls+"건"+
+                    " · 식별 재확인 "+sampleAmbiguousRetries+"회":"")+
                 (samplePage?" · 같은 상세 URL "+sampleSharedDetail+"건"+
                     " · 소요 "+((System.currentTimeMillis()-sampleStartedAt)/1000L)+"초":"")+marker);
             return;
@@ -405,7 +417,7 @@ public final class BackgroundProbeService extends Service {
         String url=sampleTargets.get(sampleIndex)[1];
         sampleStage=1;attempt=0;readQueued=false;
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
-        sampleEmptyReads=0;
+        sampleEmptyReads=0;sampleAmbiguousReads=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
         final int watchedIndex=sampleIndex;
@@ -432,7 +444,9 @@ public final class BackgroundProbeService extends Service {
                 if(finished||step!=sampleStep||sampleStage!=1)return;
                 try {
                     JSONObject d=decode(ret);
-                    if(!d.optBoolean("ok"))throw new IllegalArgumentException();
+                    if(!d.optBoolean("ok")){
+                        markSampleIssue("주문상세 구조 분석 실패");advanceSample(2);return;
+                    }
                     if(!d.optBoolean("targetPresent")&&++attempt<5){
                         handler.postDelayed(this::readSampleDetail,1400L);return;
                     }
@@ -444,9 +458,17 @@ public final class BackgroundProbeService extends Service {
                     if(d.optBoolean("controlLimited")||d.optBoolean("cancelLimited")||
                         d.optBoolean("cancelAmbiguous")||d.optInt("blockedControls")>0||
                         !d.optBoolean("targetPresent")){
-                        markSampleIssue("버튼 식별 불확실");
+                        // Recheck only before clicking the first control; never click
+                        // an index on an ambiguous or changed detail-page structure.
+                        if(sampleButtonIndex==0&&++sampleAmbiguousReads<3){
+                            sampleAmbiguousRetries++;
+                            handler.postDelayed(this::readSampleDetail,1400L);
+                            return;
+                        }
+                        markSampleIssue(ambiguityReason(d));
                         advanceSample(2);return;
                     }
+                    sampleAmbiguousReads=0;
                     if(keys.length()==0){
                         if(sampleButtonIndex>0){
                             markSampleIssue("다음 버튼 검사 시 구성 변경");
@@ -459,7 +481,7 @@ public final class BackgroundProbeService extends Service {
                             handler.postDelayed(this::readSampleDetail,1300L);
                             return;
                         }
-                        if(sampleNoButtonNotes.size()<6)
+                        if(sampleNoButtonNotes.size()<sampleLimit)
                             sampleNoButtonNotes.add((sampleIndex+1)+"번(4회 재확인)");
                         advanceSample(1);return;
                     }
@@ -549,7 +571,7 @@ public final class BackgroundProbeService extends Service {
             sampleUnknown++;
             if(sampleMulti && sampleButtonCount>sampleButtonIndex)
                 sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
-            if(sampleIssueNotes.size()<6)
+            if(sampleIssueNotes.size()<sampleLimit)
                 sampleIssueNotes.add((sampleIndex+1)+"번:"+
                     (sampleIssue.isEmpty()?"상세 확인 실패":sampleIssue));
         }
