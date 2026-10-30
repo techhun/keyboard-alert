@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.25)
+# NPay read-only delivery probe (v0.1.26)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -127,6 +127,14 @@
 - Android package ID remains `com.techhun.npayprobe`. Upgrading an already installed v0.1.24 **temporary-debug-signed** app in place with a different v2 fixed key is impossible: do a **one-time uninstall/reinstall** to migrate to the new certificate. All *subsequent higher versionCode* builds signed with this same v2 keystore should install as updates.
 - Never touch or repurpose the operational Restock app's signing certificate or deployment pipeline. No user purchase/order data was changed.
 - Rollback: restore the previous test-workflow GitHub commit if this configuration fails. An APK signing-key change cannot be undone by code rollback once installed; the original v0.1.14 PKCS12 and all previous APKs are preserved independently.
+
+## 2026-10-30 v0.1.25 phone smoke test and v0.1.26 update trial
+- The user installed the new fixed-key signed v0.1.25 app and confirmed **normal NPay login on the handset**. This confirms v0.1.25 installation, launch and login, but **does not yet prove that v0.1.26 updates it in place**.
+- v0.1.26 increases `versionCode` from 125 to 126, keeps the package ID `com.techhun.npayprobe` and pinned v2 SHA-256 certificate `dff596e4398bd155b883e92e1e72d0e3cd357feb81e66ffcb38edbb935c0e4c4`. The release must be signed by the same private key and verified before posting a GitHub prerelease.
+- In the existing 15-entry background shipping probe, the earlier `버튼 식별 불확실` message masked several causes. v0.1.26 distinguishes product section missing, duplicate cancellation labels, cancelled-status scanning limit, delivery button scanning limit, and unbound shipping controls. During the *first* control discovery only, ambiguous conditions are checked at most 3 times with 1.4s spacing; no control is clicked until validation passes. Later button configurations are still checked against the original full key signature and never clicked when ambiguous.
+- The sanitized report includes the number of ambiguity rechecks and can describe all 15 entry positions. Neither full order IDs nor tracking numbers are newly persisted or exported. Existing delivery control cap, no-button checks, explicit cancellation detection, timed service, and completion notification remain unchanged.
+- **Required phone smoke test after verified v0.1.26 release:** from v0.1.25 use GitHub Releases → Assets → fixed-signed v0.1.26 APK and install **without uninstalling**. Verify installed version 0.1.26 and NPay login state. As a targeted additional check, run the first-page background shipping probe only if needed to exercise the new ambiguous-control classification. Preserve the operational Restock app.
+- Rollback note: because downgrade to lower `versionCode` can require uninstall and wipe app-local WebView login/session, retain the last known-good v0.1.25 release and use a new, higher `versionCode` for any corrective rollout.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
