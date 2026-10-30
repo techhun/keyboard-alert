@@ -298,6 +298,22 @@ final class InventoryScript {
               );
             }
 
+            function pageResourceProfile() {
+              // Counts and byte sizes only: never log URLs, cookies or payloads.
+              const navigation = performance.getEntriesByType('navigation')[0];
+              const resources = performance.getEntriesByType('resource');
+              const trace = window.__RESTOCK_CAPTURE_TRACE__;
+              return {
+                resourceEntries: resources.length,
+                staticResources: resources.filter((entry) =>
+                  ['script', 'link', 'css', 'img'].includes(entry.initiatorType)).length,
+                productApiRequests: (trace?.requests || []).length,
+                navTransferBytes: Math.round(navigation?.transferSize ?? -1),
+                navDecodedBytes: Math.round(navigation?.decodedBodySize ?? -1),
+                navResponseStatus: Number(navigation?.responseStatus ?? -1)
+              };
+            }
+
             function snapshot(data, productNo, channelUid, apiUrl, source, exactProductMatch, allowSyntheticDefault) {
               const product = data.originProduct && typeof data.originProduct === 'object'
                 ? data.originProduct
@@ -366,6 +382,7 @@ final class InventoryScript {
                 statusType: product?.statusType || data?.statusType || data?.productStatusType || null,
                 stockQuantity: product?.stockQuantity ?? data?.stockQuantity ?? null,
                 optionCombinationCount: options.length,
+                pageProfile: pageResourceProfile(),
                 options
               };
             }

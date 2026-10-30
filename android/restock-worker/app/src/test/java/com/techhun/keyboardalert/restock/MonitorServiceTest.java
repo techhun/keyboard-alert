@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
+import android.webkit.WebSettings;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,6 +18,24 @@ import org.robolectric.annotation.Config;
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 35)
 public class MonitorServiceTest {
+    @Test
+    public void cacheIsNormalForSmartStoreButSwagkeyKeepsExistingNoCache() {
+        assertEquals(WebSettings.LOAD_DEFAULT,
+            MonitorService.cacheModeForSite(SiteSupport.NAVER_SMARTSTORE));
+        assertEquals(WebSettings.LOAD_NO_CACHE,
+            MonitorService.cacheModeForSite(SiteSupport.SWAGKEY_IMWEB));
+        assertEquals(WebSettings.LOAD_NO_CACHE,
+            MonitorService.cacheModeForSite(SiteSupport.UNKNOWN));
+    }
+
+    @Test
+    public void requestProfileIsThrottledPerProduct() {
+        assertTrue(MonitorService.shouldLogPageResourceProfile(1000L, 0L));
+        assertFalse(MonitorService.shouldLogPageResourceProfile(599_999L, 1000L));
+        assertTrue(MonitorService.shouldLogPageResourceProfile(601_000L, 1000L));
+        assertTrue(MonitorService.shouldLogPageResourceProfile(1000L, 2000L));
+    }
+
     @Test
     public void productSpacingKeepsFiveSecondSafetyFloor() {
         assertEquals(5_000L, MonitorService.productSpacingMillis(10, 2));

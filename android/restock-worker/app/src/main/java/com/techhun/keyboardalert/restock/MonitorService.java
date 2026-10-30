@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +60,7 @@ public class MonitorService extends Service {
     private static final long TRANSIENT_RETRY_DELAY_MS = 5_000L;
     private static final long SMARTSTORE_INITIAL_SETTLE_MS = 1_200L;
     private static final long SMARTSTORE_PAGE_RECHECK_MS = 1_500L;
+    private static final long PAGE_RESOURCE_PROFILE_INTERVAL_MS = 10 * 60_000L;
     private static final int SMARTSTORE_PAGE_PROBES_BEFORE_API = 2;
     private static final long NO_CONTENT_STORM_WINDOW_MS = 2 * 60_000L;
     private static final long NO_CONTENT_STORM_BACKOFF_MS = 5 * 60_000L;
@@ -151,6 +153,7 @@ public class MonitorService extends Service {
     private int pageNavigationSerial;
     private int handledRateLimitNavigation = -1;
     private final Set<String> noContentStormProducts = new HashSet<>();
+    private final Map<String, Long> lastPageResourceProfileAt = new HashMap<>();
     private int noContentStormFailures;
     private long noContentStormWindowStartedAt;
     private long noContentBackoffUntil;
@@ -264,8 +267,9 @@ public class MonitorService extends Service {
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setJavaScriptCanOpenWindowsAutomatically(false);
-        // Background monitoring intentionally bypasses cached product pages so
-        // stock checks are based on fresh SmartStore page data.
+        // SWAGKEY keeps its existing no-cache policy. SmartStore uses the
+        // browser's normal HTTP cache rules for reusable static assets; each
+        // inventory cycle still navigates and verifies a new page snapshot.
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) settings.setSafeBrowsingEnabled(true);
         settings.setUserAgentString(settings.getUserAgentString()
@@ -420,6 +424,7 @@ public class MonitorService extends Service {
         currentProduct = first;
         mode = Mode.BOOTSTRAP;
         bootstrapReady = false;
+        applySiteCacheMode();
         webView.loadUrl(first.optString("url"));
     }
 
@@ -479,6 +484,7 @@ public class MonitorService extends Service {
             return;
         }
 
+        applySiteCacheMode();
         if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)) {
             mode = Mode.SWAGKEY;
             webView.loadUrl(currentProduct.optString("url"));
@@ -749,6 +755,7 @@ public class MonitorService extends Service {
                 return;
             }
             if (SiteSupport.NAVER_SMARTSTORE.equals(currentSiteType())) {
+                recordPageResourceProfile(result);
                 clearRateLimitBackoff();
                 clearNoContentStorm();
                 getSystemService(NotificationManager.class).cancel(NOTIFICATION_STATUS);
@@ -1157,6 +1164,44 @@ public class MonitorService extends Service {
             SiteSupport.detect(next.optString("url", "")));
         cancelModeCallbacks();
         scheduleNextCheck(smartStoreNext ? Math.max(spacing, backoff) : spacing);
+    }
+
+    static int cacheModeForSite(String siteType) {
+        return SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+            ? WebSettings.LOAD_DEFAULT
+            : WebSettings.LOAD_NO_CACHE;
+    }
+
+    private void applySiteCacheMode() {
+        if (webView == null) return;
+        webView.getSettings().setCacheMode(cacheModeForSite(currentSiteType()));
+    }
+
+    static boolean shouldLogPageResourceProfile(long now, long lastLogged) {
+        return now >= 0L && (lastLogged <= 0L || now < lastLogged
+            || now - lastLogged >= PAGE_RESOURCE_PROFILE_INTERVAL_MS);
+    }
+
+    private void recordPageResourceProfile(JSONObject result) {
+        JSONObject profile = result.optJSONObject("pageProfile");
+        if (profile == null || currentProduct == null) return;
+        String productId = currentProduct.optString("id", "");
+        if (productId.isBlank()) return;
+        long now = System.currentTimeMillis();
+        long last = lastPageResourceProfileAt.getOrDefault(productId, 0L);
+        if (!shouldLogPageResourceProfile(now, last)) return;
+        lastPageResourceProfileAt.put(productId, now);
+        // Performance ResourceTiming entries are resource observations, not a
+        // precise count of server requests. Navigation transfer size can be
+        // zero when served from cache or when timing data is unavailable.
+        DiagnosticLog.add(this, "PAGE_RESOURCE_PROFILE", currentProduct,
+            "source=" + result.optString("source", "unknown")
+                + "; entries=" + profile.optInt("resourceEntries", -1)
+                + "; static=" + profile.optInt("staticResources", -1)
+                + "; apiSeen=" + profile.optInt("productApiRequests", -1)
+                + "; navTransfer=" + profile.optInt("navTransferBytes", -1)
+                + "; navDecoded=" + profile.optInt("navDecodedBytes", -1)
+                + "; navStatus=" + profile.optInt("navResponseStatus", -1));
     }
 
     static boolean allowSmartStoreApiFallback(
