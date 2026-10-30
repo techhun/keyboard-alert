@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-30T02:40:33.612Z",
+  "updatedAt": "2026-10-30T06:20:34.386Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -231,7 +231,7 @@
       "manufacturer": "INN Studio",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 30",
-      "note": "—"
+      "note": "배대지 입고 / Receipt at the distribution centre"
     },
     {
       "product": "Stratum 80",
@@ -734,6 +734,7 @@
     "4d2f4acf99fb25e2ad814c21": "2026-10-29T01:20:34.026Z",
     "4835c2054804f1e628d10577": "2026-10-30T02:30:40.812Z",
     "6780cee40b9567156ab55610": "2026-10-30T02:30:40.970Z",
-    "d02285593493363719f17f35": "2026-10-30T02:40:33.612Z"
+    "d02285593493363719f17f35": "2026-10-30T02:40:33.612Z",
+    "bfc5d5462689e091127cfa2f": "2026-10-30T06:20:34.385Z"
   }
 }
