@@ -1137,7 +1137,8 @@ jobs:
       # The PKCS12 private key must be provided from repository Actions secrets,
       # never committed or generated on CI. Fingerprint is pinned to the
       # verified NPay v0.1.14 signing certificate.
-      - name: Sign with retained NPay v0.1.14 certificate if configured
+      - name: Sign with retained NPay certificate if configured
+        id: npay_sign
         shell: bash
         env:
           NPAY_KEYSTORE_BASE64: ${{ secrets.NPAY_RELEASE_KEYSTORE_BASE64 }}
@@ -1147,16 +1148,17 @@ jobs:
         run: |
           set -euo pipefail
           if [[ -z "$NPAY_KEYSTORE_BASE64" && -z "$NPAY_STORE_PASSWORD" && -z "$NPAY_KEY_ALIAS" && -z "$NPAY_KEY_PASSWORD" ]]; then
-            echo "::notice::NPay key Secrets are not configured. Debug APK is CI-only; no update-installable signed APK will be published."
+            echo "::notice::NPay signing secrets are absent; no public APK will be released. CI debug builds remain internal artifacts only."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           if [[ -z "$NPAY_KEYSTORE_BASE64" || -z "$NPAY_STORE_PASSWORD" || -z "$NPAY_KEY_ALIAS" || -z "$NPAY_KEY_PASSWORD" ]]; then
-            echo "::error::Some NPay signing Secrets are missing; refusing an inconsistent signature."
+            echo "::error::NPay signing secret set is incomplete. Refusing to publish an APK."
             exit 1
           fi
+          umask 077
           key_file="$RUNNER_TEMP/npay-private.p12"
           trap 'rm -f "$key_file"' EXIT
-          umask 077
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
           target="$apk_dir/npay-v0.1.24-fixed-signed.apk"
@@ -1166,15 +1168,17 @@ jobs:
             --ks-pass env:NPAY_STORE_PASSWORD \
             --key-pass env:NPAY_KEY_PASSWORD \
             --out "$target" "$apk_dir/app-debug.apk"
+          java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --verbose "$target"
           certificate="$(java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --print-certs "$target" |
             sed -n 's/.*certificate SHA-256 digest: //p' | head -n 1)"
           expected=20fe05415645ecbc2debe2c872eff8d94efb2ac019492ba91668dfbf7da2c3d9
           if [[ "$certificate" != "$expected" ]]; then
             rm -f "$target"
-            echo "::error::Signed APK certificate does not match the known NPay v0.1.14 key."
+            echo "::error::Signed APK certificate does not match the recorded NPay v0.1.14 key."
             exit 1
           fi
-          echo "Verified fixed NPay signing certificate matches v0.1.14."
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+          echo "Verified NPay fixed signing certificate."
       - uses: actions/upload-artifact@v7
         with:
           name: npay-readonly-probe-ci-apks
@@ -1184,33 +1188,30 @@ jobs:
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
-      - name: Publish versioned APK to GitHub pre-release for direct downloads
+      - name: Publish only verified fixed-signed APK to GitHub pre-release
+        if: steps.npay_sign.outputs.signed == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          # The isolated NPay APK is a debug-signed read-only test, never a production app.
-          # Public GitHub Release assets avoid expiring Actions artifact URLs and
-          # ChatGPT Library/sandbox file-link failures on Android.
           project=android/npay-probe-ci
           version="$(grep -Eo 'versionName = "[0-9]+[.][0-9]+[.][0-9]+-probe"' "$project/app/build.gradle.kts" | head -n 1 | cut -d'"' -f2 | cut -d'-' -f1)"
           if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "::error::Cannot derive safe NPay test version"
             exit 1
           fi
-          tag="npay-probe-v$version"
-          asset="NPay-Probe-v$version-debug.apk"
-          source="$project/app/build/outputs/apk/debug/app-debug.apk"
+          tag="npay-probe-v$version-fixed"
+          asset="NPay-Probe-v$version-fixed-signed.apk"
+          source="$project/app/build/outputs/apk/debug/npay-v$version-fixed-signed.apk"
           test -s "$source"
           cp "$source" "$RUNNER_TEMP/$asset"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release upload "$tag" "$RUNNER_TEMP/$asset" --clobber --repo "$GITHUB_REPOSITORY"
           else
             gh release create "$tag" "$RUNNER_TEMP/$asset" --repo "$GITHUB_REPOSITORY" \
-              --target "$GITHUB_SHA" --title "NPay probe v$version (test APK)" \
-              --notes "Read-only NPay Android test application, NOT a production release. Built in the isolated test branch, signed by a temporary CI debug key. When switching builds, uninstall may be required due to signature mismatch. No NPay credentials or private signing keys are included. Restock production app is not changed." \
+              --target "$GITHUB_SHA" --title "NPay probe v$version (fixed-key signed)" \
+              --notes "Read-only NPay test APK signed using the retained dedicated NPay certificate. Certificate SHA-256 pinned to verified v0.1.14. This is NOT the Restock app. First migration from an earlier CI debug APK requires one uninstall; future same-certificate APKs with increasing version codes can be installed as updates. No NPay credentials or private signing keys are included." \
               --prerelease --latest=false
           fi
-          echo "Direct APK download:"
-          echo "https://github.com/$GITHUB_REPOSITORY/releases/download/$tag/$asset"
+          echo "Verified fixed-signed APK published in release: $tag"
