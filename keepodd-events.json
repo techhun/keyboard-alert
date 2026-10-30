@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-29T01:20:34.026Z",
+  "updatedAt": "2026-10-30T02:30:40.971Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1161,6 +1161,23 @@
       "saleStart": "2026-10-23",
       "eta": "2026-12-31",
       "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d5dff136892e80adc71a8b523625bc69",
+      "source": "GEONWORKS",
+      "name": "GEHIRN60 Barebone Kit",
+      "eventType": "note_changed",
+      "before": "완료 항목: 아노다이징, MX PCB, 보강판 전량, 패키징 상자, RAW 무게추, 포장재 전량 / 진행 중 항목: 코팅, 무게추 / 대기/지연 항목: HE 및 EC 키트용 구성품/일부 부품 입고 대기 중 / Completed Items: Anodizing, MX PCB, all reinforcement plates, packaging boxes, RAW weights, all packaging materials / 제작 중 / In progress: Coating, weights / Pending/Delayed: Components for HE and EC kits / Awaiting arrival of some parts",
+      "after": "일부 품목 배대지 입고 / Receipt of certain items at the distribution centre",
+      "occurredAt": "2026-10-30T02:30:40.971Z",
+      "categoryHint": "키보드",
+      "maker": "BAIONLENJA",
+      "saleStart": "2026-01-19",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "일부 품목 배대지 입고 / Receipt of certain items at the distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
