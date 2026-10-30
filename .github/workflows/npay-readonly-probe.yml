@@ -1147,13 +1147,13 @@ jobs:
           NPAY_KEY_PASSWORD: ${{ secrets.NPAY_RELEASE_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          if [[ -z "$NPAY_KEYSTORE_BASE64" && -z "$NPAY_STORE_PASSWORD" && -z "$NPAY_KEY_ALIAS" && -z "$NPAY_KEY_PASSWORD" ]]; then
+          if [[ -z "$NPAY_KEYSTORE_BASE64" && -z "$NPAY_STORE_PASSWORD" ]]; then
             echo "::notice::NPay signing secrets are absent; no public APK will be released. CI debug builds remain internal artifacts only."
             echo "signed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          if [[ -z "$NPAY_KEYSTORE_BASE64" || -z "$NPAY_STORE_PASSWORD" || -z "$NPAY_KEY_ALIAS" || -z "$NPAY_KEY_PASSWORD" ]]; then
-            echo "::error::NPay signing secret set is incomplete. Refusing to publish an APK."
+          if [[ -z "$NPAY_KEYSTORE_BASE64" || -z "$NPAY_STORE_PASSWORD" ]]; then
+            echo "::error::Both NPay PKCS12 base64 and store password are required. Refusing to publish an APK."
             exit 1
           fi
           umask 077
@@ -1162,12 +1162,14 @@ jobs:
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
           target="$apk_dir/npay-v0.1.24-fixed-signed.apk"
-          java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign \
-            --ks "$key_file" --ks-type PKCS12 \
-            --ks-key-alias "$NPAY_KEY_ALIAS" \
-            --ks-pass env:NPAY_STORE_PASSWORD \
-            --key-pass env:NPAY_KEY_PASSWORD \
-            --out "$target" "$apk_dir/app-debug.apk"
+          signer=(java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign
+            --ks "$key_file" --ks-type PKCS12 --ks-pass env:NPAY_STORE_PASSWORD)
+          # apksigner infers the alias if the PKCS12 contains only one key;
+          # by default it also uses the PKCS12 store password for that key.
+          if [[ -n "$NPAY_KEY_ALIAS" ]]; then signer+=(--ks-key-alias "$NPAY_KEY_ALIAS"); fi
+          if [[ -n "$NPAY_KEY_PASSWORD" ]]; then signer+=(--key-pass env:NPAY_KEY_PASSWORD); fi
+          signer+=(--out "$target" "$apk_dir/app-debug.apk")
+          "${signer[@]}"
           java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --verbose "$target"
           certificate="$(java -jar android/npay-probe-ci/signing-tools/apksigner.jar verify --print-certs "$target" |
             sed -n 's/.*certificate SHA-256 digest: //p' | head -n 1)"
