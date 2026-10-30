@@ -6,6 +6,8 @@ on:
     branches:
       - fix/restock-option-query
       - fix/restock-recovery-observability
+    tags:
+      - 'restock-v*'
     paths:
       - 'android/restock-worker/**'
       - 'tests/restock-inventory-status.test.mjs'
@@ -99,39 +101,46 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
-  # One-time direct APK publication; subsequent source pushes keep building
-  # artifacts and do not automatically publish a release.
-  publish_v01443:
+  # Publishing is opt-in: only a pushed version tag creates public Assets.
+  # Routine pushes to the development branch still build private CI artifacts.
+  publish_release:
     needs: release
-    if: "${{ github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'ci(restock): fix release workflow YAML and publish v0.14.43' }}"
+    if: startsWith(github.ref, 'refs/tags/restock-v')
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Download the verified signed Release APK
+      - uses: actions/checkout@v7
+
+      - name: Download verified signed APK
         uses: actions/download-artifact@v7
         with:
           name: restock-worker-release-apk
           path: dist
 
-      - name: Publish an APK directly to GitHub Releases
+      - name: Publish versioned APK to GitHub Releases
+        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
           set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          version="${tag#restock-v}"
+          grep -Fq "versionName = \"$version\"" android/restock-worker/app/build.gradle.kts || {
+            echo "::error::Tag version and application versionName differ"
+            exit 1
+          }
           test -s dist/app-release.apk
-          sha256sum dist/app-release.apk
-          tag=restock-v0.14.43
-          asset=Restock-v0.14.43.apk
+          asset="Restock-v$version.apk"
+          cp dist/app-release.apk "dist/$asset"
+          sha256sum "dist/$asset"
           if gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets >/dev/null 2>&1; then
             gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' | grep -Fx "$asset"
-            echo "Release and APK asset already exist."
-            exit 0
+          else
+            gh release create "$tag" "dist/$asset" \
+              --repo "$GITHUB_REPOSITORY" \
+              --verify-tag \
+              --title "Restock v$version" \
+              --notes "Signed Android APK for Restock v$version. Install as an update over the existing app." \
+              --latest=false
           fi
-          gh release create "$tag" "dist/app-release.apk#$asset" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
-            --title "Restock v0.14.43" \
-            --notes "Signed Android APK for Restock v0.14.43 (versionCode 77). SmartStore static-resource cache optimization and page resource diagnostics; monitoring interval unchanged. Existing app data is preserved on update when the signing key matches." \
-            --latest=false
