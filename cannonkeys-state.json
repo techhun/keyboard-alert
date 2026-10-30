@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-30T19:21:13.700Z",
+  "updatedAt": "2026-10-30T21:41:04.467Z",
   "rows": [
     {
       "id": 350,
@@ -31,25 +31,25 @@
       "id": 347,
       "displayName": "Chocolate Bar Deskmats",
       "category": "deskmat",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-07-17",
       "endDate": "2026-08-17",
       "eta": "October 2026",
-      "latestUpdateId": 1850,
-      "latestUpdateDate": "2026-09-09",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1911,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "Chocolate Bar Deskmats are nearing completion and production should be wrapping up in 1-2 weeks!"
     },
     {
       "id": 348,
       "displayName": "MW Norse",
       "category": "keyset",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-07-14",
       "endDate": "2026-08-14",
       "eta": "Dec '26/Jan '27",
-      "latestUpdateId": 1858,
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1913,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "MW Norse is currently in production! Sets are planned to be shipped to our freight forwarder in China in December. From there, they will be shipped to us via sea shipping."
     },
     {
       "id": 345,
@@ -79,25 +79,25 @@
       "id": 339,
       "displayName": "Railway Map Deskmats",
       "category": "deskmat",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-06-08",
       "endDate": "2026-07-08",
       "eta": "October 2026",
-      "latestUpdateId": 1886,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "The current status for the Railway Map Deskmats has not changed since our last update. For reference, the order has been placed."
+      "latestUpdateId": 1912,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "Railway Map Deskmats are nearing completion and production should be wrapping up in 1-2 weeks!"
     },
     {
       "id": 346,
       "displayName": "GMK Finer Things R2",
       "category": "keyset",
-      "status": "ordered",
+      "status": "en_route",
       "startDate": "2026-07-07",
       "endDate": "2026-07-07",
       "eta": "Dec 2026/Jan 2027",
-      "latestUpdateId": 1861,
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateDescription": "GMK Finer Things R2 has been ordered and is currently waiting in the factory's production queue."
+      "latestUpdateId": 1914,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "GMK Finer Things R2 has completed and sets are being shipped to us! We expect to receive the shipment in the next 1-2 weeks!"
     },
     {
       "id": 340,
@@ -107,9 +107,9 @@
       "startDate": "2026-06-01",
       "endDate": "2026-07-01",
       "eta": "October 2026",
-      "latestUpdateId": 1908,
+      "latestUpdateId": 1909,
       "latestUpdateDate": "2026-10-30",
-      "latestUpdateDescription": "Tamagotchi Paradise Deskmats are currently in production."
+      "latestUpdateDescription": "CannonKeys x Tamagotchi Paradise Deskmats are nearing completion and production should be wrapping up in 1-2 weeks!"
     },
     {
       "id": 344,
@@ -131,9 +131,9 @@
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1901,
-      "latestUpdateDate": "2026-10-20",
-      "latestUpdateDescription": "10/20 Update: It was brought to our attention that the mold used for the BAE in the Extension kit was incorrect. GMK has been informed, and has already begun steps to make the correct enter keys. They expect the keys to be completed in the coming week, and then they will be shipped directly to CannonKeys. We expect shipping to take 1-2 weeks. This delay will only affect those who purchased the Extension Kit of GMK Spark. If you only purchased a Base Kit and/or Artisans, your order will be packed this week."
+      "latestUpdateId": 1910,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "10/30 Update: Spark Deskmat are nearing completion and production should be wrapping up in 1-2 weeks!"
     },
     {
       "id": 336,
@@ -199,13 +199,13 @@
       "id": 270,
       "displayName": "PBS Retro S.M AG",
       "category": "keyset",
-      "status": "ordered",
+      "status": "en_route",
       "startDate": "2026-04-17",
       "endDate": "2026-05-17",
       "eta": "",
-      "latestUpdateId": 1884,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "PBS Retro S.M AG has not changed since our last update. For reference, it is currently waiting in the factory's production queue."
+      "latestUpdateId": 1915,
+      "latestUpdateDate": "2026-10-30",
+      "latestUpdateDescription": "PBS Retro S.M AG has completed and sets are being shipped to us via sea shipping! We expect to receive the shipment in the next 6-8 weeks!"
     },
     {
       "id": 268,
@@ -3415,6 +3415,13 @@
   "sentChanges": {
     "4f32ad3eb9f86207c9620784": "2026-10-26T21:13:01.977Z",
     "e62efd28b386c24b757a3d28": "2026-10-28T17:21:12.221Z",
-    "2d0bc90f8f64c661b7e61ce4": "2026-10-30T15:21:10.492Z"
+    "2d0bc90f8f64c661b7e61ce4": "2026-10-30T15:21:10.492Z",
+    "c5b3868a5708ea5392783d3d": "2026-10-30T21:41:03.192Z",
+    "9c41ec66f13198907afadec5": "2026-10-30T21:41:03.428Z",
+    "994edf88708ed19fefa61b59": "2026-10-30T21:41:03.671Z",
+    "f3987916203cb61fb4be82da": "2026-10-30T21:41:03.848Z",
+    "9afba4b48913f38c0d6e9818": "2026-10-30T21:41:04.007Z",
+    "142afe81f217f6948a508a60": "2026-10-30T21:41:04.291Z",
+    "bd31049f696a288dc2277e1b": "2026-10-30T21:41:04.466Z"
   }
 }
