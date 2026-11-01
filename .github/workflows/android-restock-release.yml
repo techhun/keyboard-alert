@@ -105,7 +105,7 @@ jobs:
   # Routine pushes to the development branch still build private CI artifacts.
   publish_release:
     needs: release
-    if: ${{ startsWith(github.ref, 'refs/tags/restock-v') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'release(restock): v0.14.44 diagnostics visibility') }}
+    if: "${{ startsWith(github.ref, 'refs/tags/restock-v') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'ci(restock): publish verified v0.14.44 diagnostics APK') }}"
     runs-on: ubuntu-latest
     permissions:
       contents: write
