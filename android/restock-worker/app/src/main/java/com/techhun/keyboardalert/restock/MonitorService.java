@@ -137,6 +137,7 @@ public class MonitorService extends Service {
     private int currentIndex;
     private boolean awaitingResult;
     private boolean stopping;
+    private String stopReason = "unknown";
     private boolean bootstrapReady;
     private Mode mode = Mode.BOOTSTRAP;
     private JSONObject currentProduct;
@@ -178,6 +179,7 @@ public class MonitorService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent == null ? null : intent.getAction();
         if (ACTION_STOP.equals(action)) {
+            stopReason = "user_stop";
             stopSelf();
             return START_NOT_STICKY;
         }
@@ -192,6 +194,7 @@ public class MonitorService extends Service {
         if (ACTION_RESUME_OPTION_LOOKUP.equals(action)) {
             pausedForOptionLookup = false;
             if (ProductStore.enabledCount(this) <= 0) {
+                stopReason = "no_enabled_products_after_option_lookup";
                 stopSelf();
                 return START_NOT_STICKY;
             }
@@ -214,11 +217,13 @@ public class MonitorService extends Service {
         stopping = false;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
+            stopReason = "no_enabled_products";
             MonitorPrefs.setRunning(this, false);
             stopSelf();
             return START_NOT_STICKY;
         }
         if (!NotificationAccess.isAllowed(this)) {
+            stopReason = "notification_permission_required";
             MonitorPrefs.updateStatus(this, "알림 권한 필요");
             MonitorPrefs.setRunning(this, false);
             stopSelf();
@@ -411,6 +416,7 @@ public class MonitorService extends Service {
         boolean usableNaverSession = SessionState.hasUsableNaverSession(this);
         JSONObject first = firstBootstrapProduct(products, usableNaverSession);
         if (first == null) {
+            stopReason = !usableNaverSession ? "no_usable_naver_session" : "no_bootstrap_product";
             if (!usableNaverSession && !SessionState.isGuestMode(this)) {
                 SessionState.markNaverAuthRequired(this);
                 setStatus("로그인 필요");
@@ -432,10 +438,12 @@ public class MonitorService extends Service {
         if (stopping || pausedForOptionLookup || !bootstrapReady || awaitingResult) return;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
+            stopReason = "no_enabled_products_during_monitor";
             stopSelf();
             return;
         }
         if (!NotificationAccess.isAllowed(this)) {
+            stopReason = "notification_permission_revoked";
             setStatus("알림 권한 필요");
             stopSelf();
             return;
@@ -1198,6 +1206,7 @@ public class MonitorService extends Service {
             "source=" + result.optString("source", "unknown")
                 + "; entries=" + profile.optInt("resourceEntries", -1)
                 + "; static=" + profile.optInt("staticResources", -1)
+                + "; staticBytes=" + profile.optInt("staticTransferBytes", -1)
                 + "; apiSeen=" + profile.optInt("productApiRequests", -1)
                 + "; navTransfer=" + profile.optInt("navTransferBytes", -1)
                 + "; navDecoded=" + profile.optInt("navDecodedBytes", -1)
@@ -1453,7 +1462,7 @@ public class MonitorService extends Service {
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
         stopForeground(STOP_FOREGROUND_REMOVE);
-        DiagnosticLog.add(this, "SERVICE_STOP", currentProduct, null);
+        DiagnosticLog.add(this, "SERVICE_STOP", currentProduct, stopReason);
         super.onDestroy();
     }
 

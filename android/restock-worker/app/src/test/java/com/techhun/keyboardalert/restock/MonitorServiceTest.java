@@ -19,6 +19,29 @@ import org.robolectric.annotation.Config;
 @Config(sdk = 35)
 public class MonitorServiceTest {
     @Test
+    public void resourceProfilesCannotHideRealErrorsInBoundedDiagnostics() throws Exception {
+        JSONArray raw = new JSONArray();
+        for (int i = 0; i < 60; i++) {
+            raw.put(new JSONObject().put("event", "PAGE_RESOURCE_PROFILE")
+                .put("productId", "ramune").put("detail", "sample=" + i));
+            if (i == 10) raw.put(new JSONObject().put("event", "RATE_LIMIT")
+                .put("productId", "ramune"));
+            if (i == 20) raw.put(new JSONObject().put("event", "SERVICE_STOP")
+                .put("detail", "no_usable_naver_session"));
+            raw.put(new JSONObject().put("event", "PAGE_RESOURCE_PROFILE")
+                .put("productId", "keycult").put("detail", "sample=" + i));
+        }
+        JSONArray reduced = DiagnosticLog.retainRecentEvents(raw, 500);
+        assertEquals(6, reduced.length());
+        assertEquals("RATE_LIMIT", reduced.optJSONObject(0).optString("event"));
+        assertEquals("SERVICE_STOP", reduced.optJSONObject(1).optString("event"));
+        assertEquals("sample=58", reduced.optJSONObject(2).optString("detail"));
+        assertEquals("sample=58", reduced.optJSONObject(3).optString("detail"));
+        assertEquals("sample=59", reduced.optJSONObject(4).optString("detail"));
+        assertEquals("sample=59", reduced.optJSONObject(5).optString("detail"));
+    }
+
+    @Test
     public void cacheIsNormalForSmartStoreButSwagkeyKeepsExistingNoCache() {
         assertEquals(WebSettings.LOAD_DEFAULT,
             MonitorService.cacheModeForSite(SiteSupport.NAVER_SMARTSTORE));

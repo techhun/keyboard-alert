@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 
 final class DiagnosticLog {
     private static final String NAME = "restock_diagnostics";
@@ -22,6 +24,7 @@ final class DiagnosticLog {
     private static final String KEY_SINCE = "since";
     private static final String KEY_LAST_SUCCESS = "last_success";
     private static final int MAX_ENTRIES = 500;
+    private static final int MAX_RESOURCE_PROFILES_PER_PRODUCT = 2;
     private static final long RETENTION_MS = 7L * 24L * 60L * 60L * 1000L;
 
     private DiagnosticLog() {}
@@ -100,11 +103,33 @@ final class DiagnosticLog {
             if (detail != null && !detail.isBlank()) item.put("detail", safe(detail, 180));
             next.put(item);
 
-            int start = Math.max(0, next.length() - MAX_ENTRIES);
-            JSONArray trimmed = new JSONArray();
-            for (int i = start; i < next.length(); i++) trimmed.put(next.optJSONObject(i));
+            JSONArray trimmed = retainRecentEvents(next, MAX_ENTRIES);
             prefs(context).edit().putString(KEY_ENTRIES, trimmed.toString()).apply();
         } catch (Exception ignored) {}
+    }
+
+    static JSONArray retainRecentEvents(JSONArray events, int limit) {
+        // Keep errors, lifecycle events and stock notifications visible even
+        // when there are many monitored products. Retain at most the latest
+        // two resource profiles per product; do not discard real incidents.
+        JSONArray newestFirst = new JSONArray();
+        Map<String, Integer> profilesByProduct = new HashMap<>();
+        for (int i = events.length() - 1; i >= 0 && newestFirst.length() < limit; i--) {
+            JSONObject event = events.optJSONObject(i);
+            if (event == null) continue;
+            if ("PAGE_RESOURCE_PROFILE".equals(event.optString("event"))) {
+                String id = event.optString("productId", "");
+                int kept = profilesByProduct.getOrDefault(id, 0);
+                if (kept >= MAX_RESOURCE_PROFILES_PER_PRODUCT) continue;
+                profilesByProduct.put(id, kept + 1);
+            }
+            newestFirst.put(event);
+        }
+        JSONArray chronological = new JSONArray();
+        for (int i = newestFirst.length() - 1; i >= 0; i--) {
+            chronological.put(newestFirst.optJSONObject(i));
+        }
+        return chronological;
     }
 
     static synchronized JSONArray read(Context context) {

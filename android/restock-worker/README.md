@@ -209,3 +209,11 @@ OUTOFSTOCK 회귀 검증: 저장소 루트에서 `node --test tests/restock-inve
 - 429·204 처리, 선택 옵션 검증 및 RESTOCK/LOW_STOCK/SOLD_OUT 판정, 서비스 재시작 로직, 데이터 저장/백업은 변경하지 않습니다.
 - 이것은 근본 해결을 검증하기 위한 1단계이며 내부 상품 API 직접 재조회가 정상 동작한다고 입증하기 전에는 상품 페이지 전체 재로드를 제거하지 않습니다.
 - 롤백: v0.14.42 소스로 새 versionCode 빌드. DB/백업 마이그레이션 없음.
+
+### v0.14.44 — 진단 로그 손실 방지 및 종료 원인 확인
+
+- `PAGE_RESOURCE_PROFILE`는 상품별 최근 2개만 남겨, 6개 상품에서 10분마다 쌓이는 일반 진단 로그가 500건을 소진하지 않도록 수정했습니다. 기존 RATE_LIMIT, 재고 이벤트, SERVICE_START/STOP 등은 계속 보존합니다.
+- WebView Static Resource Timing 전송량 합계(`staticBytes`)를 프로파일에 추가했습니다. Cross-origin 및 타이밍 제한으로 실제 전송량과 다를 수 있습니다.
+- 명시적 종료 원인(user_stop, no_usable_naver_session, notification_permission_required 등)을 `SERVICE_STOP` 로그에 기록합니다. Android가 프로세스를 강제 종료해 onDestroy가 호출되지 않으면 사유를 기록할 수 없는 한계가 있습니다.
+- 실제 조회 주기, 재고·옵션 판정, 알림 발생, 429 보호 대기 정책, 사용자 상품/설정 데이터에는 변경이 없습니다.
+- 이 작업은 원인 추적 개선이며 429 차단 자체 또는 6개 상품의 순차 감시 속도를 해결한 것은 아닙니다. 롤백: v0.14.43 원본 재빌드 (versionCode 상향 필요).

@@ -302,11 +302,14 @@ final class InventoryScript {
               // Counts and byte sizes only: never log URLs, cookies or payloads.
               const navigation = performance.getEntriesByType('navigation')[0];
               const resources = performance.getEntriesByType('resource');
+              const staticResources = resources.filter((entry) =>
+                ['script', 'link', 'css', 'img'].includes(entry.initiatorType));
               const trace = window.__RESTOCK_CAPTURE_TRACE__;
               return {
                 resourceEntries: resources.length,
-                staticResources: resources.filter((entry) =>
-                  ['script', 'link', 'css', 'img'].includes(entry.initiatorType)).length,
+                staticResources: staticResources.length,
+                staticTransferBytes: Math.round(staticResources.reduce((sum, entry) =>
+                  sum + Number(entry.transferSize || 0), 0)),
                 productApiRequests: (trace?.requests || []).length,
                 navTransferBytes: Math.round(navigation?.transferSize ?? -1),
                 navDecodedBytes: Math.round(navigation?.decodedBodySize ?? -1),
