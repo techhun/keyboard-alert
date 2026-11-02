@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-01T23:40:36.135Z",
+  "updatedAt": "2026-11-02T07:50:45.440Z",
   "rows": [
     {
       "product": "GMK CYL Rainy Day R3",
@@ -82,7 +82,6 @@
     }
   ],
   "sentChanges": {
-    "e51f7d7f62c09add751732ad": "2026-10-26T07:50:38.702Z",
     "133024e8e75f9780a828ae0b": "2026-10-27T06:50:33.013Z",
     "1a8ffba99b425a125fc33e94": "2026-10-27T06:50:33.213Z",
     "67342f7c77ce03a34ee88bcf": "2026-10-30T05:10:39.099Z",
