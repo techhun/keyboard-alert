@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-02T12:31:11.172Z",
+  "updatedAt": "2026-11-02T13:51:01.283Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -778,16 +778,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
-      "product": "GMK CYL Gurokawa",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Motif-19804233415480ab8d9accb56bf9309e",
       "product": "GMK CYL Motif",
       "status": "In Manufacturing",
@@ -942,6 +932,16 @@
       "product": "GMK CYL Boho (Small Batch)",
       "status": "In Manufacturing",
       "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
+      "product": "GMK CYL Gurokawa",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "gmk",
