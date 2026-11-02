@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-10-28T06:51:13.530Z",
+  "updatedAt": "2026-11-02T01:51:07.519Z",
   "rows": [
     {
       "category": "GMK",
@@ -688,9 +688,9 @@
     {
       "category": "KEYCAPS",
       "product": "DCS Chladni",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
+      "status": "In production",
+      "eta": "Q1 2027",
+      "progress": 75,
       "summary": "Oct 9 -30",
       "latestUpdateDate": "2026-09-11",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -996,6 +996,7 @@
   ],
   "sentChanges": {
     "1a62d9163e6b0b846db9f25d": "2026-10-26T01:51:11.062Z",
-    "b468b794f331b15d6a22d500": "2026-10-28T00:21:08.415Z"
+    "b468b794f331b15d6a22d500": "2026-10-28T00:21:08.415Z",
+    "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z"
   }
 }
