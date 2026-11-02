@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-30T06:20:34.386Z",
+  "updatedAt": "2026-11-02T03:31:13.858Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1195,6 +1195,22 @@
       "status": "제작 중 / In progress",
       "note": "배대지 입고 / Receipt at the distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2e0296c5a23d98572bff8165e378cddf",
+      "source": "SWAGKEYS",
+      "name": "SWG Salmon",
+      "eventType": "eta_changed",
+      "before": "2026-11-13",
+      "after": "2026-11-24",
+      "occurredAt": "2026-11-02T03:31:13.858Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "eta": "2026-11-24",
+      "status": "생산 대기중 (Awaiting Production)",
+      "note": "컬러매칭 Complete",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
     }
   ]
