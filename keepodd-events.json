@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-02T03:31:13.858Z",
+  "updatedAt": "2026-11-02T03:40:58.871Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1212,6 +1212,60 @@
       "note": "컬러매칭 Complete",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "0df770d3e83b18851f8c5cd96f34f51b",
+      "source": "SWAGKEYS",
+      "name": "SWG Bolch",
+      "eventType": "status_changed",
+      "before": "인스탁 판매중 (In-Stock)",
+      "after": "Sold Out",
+      "occurredAt": "2026-11-02T03:40:58.871Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "eta": "2026-09-18",
+      "status": "Sold Out",
+      "note": "컬러매칭 Complete",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "ba26c0ae8ff2788fa2caa1512020263b",
+      "source": "SWAGKEYS",
+      "name": "SWG Classic Blue",
+      "eventType": "status_changed",
+      "before": "생산중 (In Production)",
+      "after": "예판분 발송 완료 (GB Fulfilled)",
+      "occurredAt": "2026-11-02T03:40:58.871Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-05-04",
+      "saleEnd": "2026-05-18",
+      "eta": "2026-10-30",
+      "status": "예판분 발송 완료 (GB Fulfilled)",
+      "note": "컬러매칭 Complete",
+      "quarter": "Q2",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-classic-blue-사본",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "db789e5d07d05f779de88a754bc8de9f",
+      "source": "SWAGKEYS",
+      "name": "SWG Ferrofluid",
+      "eventType": "status_changed",
+      "before": "인스탁 판매중 (In-Stock)",
+      "after": "Sold Out",
+      "occurredAt": "2026-11-02T03:40:58.871Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-04-07",
+      "saleEnd": "2026-04-28",
+      "eta": "2026-08-28",
+      "status": "Sold Out",
+      "note": "컬러매칭 Complete",
+      "quarter": "Q2",
+      "sourceUrl": "https://swagkeys.com/products/swg-ferrofluid",
+      "sourceUrlType": "product"
     }
   ]
 }
