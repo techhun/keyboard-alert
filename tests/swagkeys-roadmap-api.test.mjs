@@ -25,19 +25,22 @@ test('parses SWAGKEYS roadmap announcement and quarter collection sources from N
         q1: wrapped({ type: 'collection_view', collection_id: 'c1', view_ids: ['v1'] }),
         q2: wrapped({ type: 'collection_view', collection_id: 'c2', view_ids: ['v2'] }),
         q3: wrapped({ type: 'collection_view', collection_id: 'c3', view_ids: ['v3'] }),
-        q4: wrapped({ type: 'collection_view', collection_id: 'c4', view_ids: ['v4'] })
+        q4: wrapped({ type: 'collection_view', collection_id: 'c4', view_ids: ['v4'] }),
+        q4sws: wrapped({ type: 'collection_view', collection_id: 'c5', view_ids: ['v5'] })
       },
       collection: {
         c1: wrapped({ name: text('1분기 (Q1)') }),
         c2: wrapped({ name: text('2분기 (Q2)') }),
         c3: wrapped({ name: text('3분기 (Q3)') }),
-        c4: wrapped({ name: text('4분기 (Q4)') })
+        c4: wrapped({ name: text('4분기 (Q4)') }),
+        c5: wrapped({ name: text('4분기 (Q4)') })
       },
       collection_view: {
         v1: wrapped({ query2: { sort: [{ property: 'title', direction: 'ascending' }] } }),
         v2: wrapped({ query2: {} }),
         v3: wrapped({ query2: {} }),
-        v4: wrapped({ query2: {} })
+        v4: wrapped({ query2: {} }),
+        v5: wrapped({ query2: {} })
       }
     }
   };
@@ -48,9 +51,10 @@ test('parses SWAGKEYS roadmap announcement and quarter collection sources from N
     content: '진행 상황이 변경되었습니다.\n두 번째 줄'
   });
   assert.deepEqual(Object.keys(parsed.sources), ['Q1', 'Q2', 'Q3', 'Q4']);
-  assert.equal(parsed.sources.Q1.collectionId, 'c1');
-  assert.equal(parsed.sources.Q1.viewId, 'v1');
-  assert.equal(parsed.sources.Q1.query.sort[0].property, 'title');
+  assert.equal(parsed.sources.Q1[0].collectionId, 'c1');
+  assert.equal(parsed.sources.Q1[0].viewId, 'v1');
+  assert.equal(parsed.sources.Q1[0].query.sort[0].property, 'title');
+  assert.deepEqual(parsed.sources.Q4.map(source => source.collectionId), ['c4', 'c5']);
 });
 
 test('parses and de-duplicates roadmap products with GB date ranges from Notion collection data', () => {

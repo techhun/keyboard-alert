@@ -170,13 +170,13 @@ async function extractRoadmap(page) {
         }
 
         const products = [...new Set(bodyLines.filter((line) => line && !invalid.test(line)))];
-        if (products.length > 0) result[`Q${match[1]}`] = products;
+        if (products.length > 0) result[`Q${match[1]}`] = [...new Set([...(result[`Q${match[1]}`] || []), ...products])];
       }
       return result;
     });
 
     for (const [quarter, products] of Object.entries(found)) {
-      if (quarters[quarter] === null || products.length > quarters[quarter].length) quarters[quarter] = products;
+      quarters[quarter] = [...new Set([...(quarters[quarter] || []), ...products])];
     }
 
     const currentTotal = Object.values(quarters)
@@ -406,19 +406,23 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
 
     const quarter = `Q${match[2]}`;
     const view = unwrapNotionRecord(views[viewId]);
-    sources[quarter] = {
-      collectionId,
-      viewId,
-      query: view?.query2 || {},
-      schema: collection?.schema || {}
-    };
+    // SWG and SWS use the same quarter headings. Preserve *both* collection views.
+    sources[quarter] ||= [];
+    if (!sources[quarter].some((source) => source.collectionId === collectionId && source.viewId === viewId)) {
+      sources[quarter].push({
+        collectionId,
+        viewId,
+        query: view?.query2 || {},
+        schema: collection?.schema || {}
+      });
+    }
   }
 
   if (!announcement?.heading || !announcement?.content) {
     throw new Error('SWAGKEYS roadmap announcement was missing from Notion page data');
   }
 
-  const missing = QUARTERS.filter((quarter) => !sources[quarter]);
+  const missing = QUARTERS.filter((quarter) => !sources[quarter]?.length);
   if (missing.length) {
     throw new Error(`SWAGKEYS roadmap collection/view ids were missing for: ${missing.join(', ')}`);
   }
@@ -539,34 +543,37 @@ async function fetchRoadmapFromNotionApi() {
   const roadmapDates = {};
 
   for (const quarter of QUARTERS) {
-    const source = sources[quarter];
-    const collectionData = await queryNotionCollection(
-      source.collectionId,
-      source.viewId,
-      source.query,
-      spaceId
-    );
-    const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData, source.schema);
-    const products = roadmapRows.map((row) => row.product);
-    if (!products.length) {
-      throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
+    const products = new Map();
+    for (const source of sources[quarter]) {
+      const collectionData = await queryNotionCollection(
+        source.collectionId,
+        source.viewId,
+        source.query,
+        spaceId
+      );
+      const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData, source.schema);
+      if (!roadmapRows.length) throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter} collection ${source.collectionId}`);
+      for (const row of roadmapRows) {
+        products.set(clean(row.product).toLocaleLowerCase('en-US'), row.product);
+        const canonicalKey = canonicalProductKey('SWAGKEYS', row.product);
+        if (!canonicalKey) continue;
+        // "SWG Beige" and "SWS Beige" are different products, not interchangeable dates.
+        const key = /^SWS\s+/i.test(row.product) ? `sws:${canonicalKey}` : canonicalKey;
+        roadmapDates[key] = {
+          product: row.product,
+          saleStart: row.saleStart || '',
+          saleEnd: row.saleEnd || ''
+        };
+      }
     }
-    quarters[quarter] = products;
-    for (const row of roadmapRows) {
-      const key = canonicalProductKey('SWAGKEYS', row.product);
-      if (!key) continue;
-      roadmapDates[key] = {
-        product: row.product,
-        saleStart: row.saleStart || '',
-        saleEnd: row.saleEnd || ''
-      };
-    }
+    if (!products.size) throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
+    quarters[quarter] = [...products.values()];
   }
 
   if (!quarterSnapshotIsValid(quarters)) {
     throw new Error('Notion public API returned an invalid SWAGKEYS roadmap snapshot');
   }
-  return { announcement, quarters, roadmapDates };
+  return { announcement, quarters, roadmapDates, roadmapLayoutVersion: 2 };
 }
 
 async function fetchStatusRowsFromNotionApi() {
@@ -711,6 +718,7 @@ async function fetchSnapshot(fallback = {}) {
       rows,
       roadmapFresh,
       statusFresh,
+      roadmapLayoutVersion: roadmapFresh ? (roadmap.roadmapLayoutVersion || 2) : (fallback.roadmapLayoutVersion || 1),
       fallbackSince,
       fallbackMetadataChanged
     };
@@ -734,6 +742,8 @@ function statePayload(snapshot, updatedAt = new Date().toISOString()) {
     version: 1,
     initialized: true,
     updatedAt,
+    roadmapLayoutVersion: snapshot.roadmapLayoutVersion || 1,
+    gbStartsNotified: snapshot.gbStartsNotified || {},
     announcement: snapshot.announcement,
     quarters: snapshot.quarters,
     ...(snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {}),
@@ -746,9 +756,9 @@ function saveState(snapshot) {
   fs.writeFileSync(STATE_PATH, JSON.stringify(statePayload(snapshot), null, 2) + '\n');
 }
 
-async function advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes) {
+async function advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts = []) {
   const occurredAt = new Date().toISOString();
-  const candidates = buildSwagkeysKeepoddEvents({ changes, quarterChanges, snapshot, occurredAt });
+  const candidates = buildSwagkeysKeepoddEvents({ changes, quarterChanges, starts, snapshot, occurredAt });
   const events = await enrichKeepoddEventSourceUrls(candidates);
   const merged = commitStateAndKeepoddEvents({
     statePath: STATE_PATH,
@@ -810,8 +820,42 @@ export function preserveIndependentFreshChanges({
       ? (state.roadmapDates ? { roadmapDates: state.roadmapDates } : {})
       : (snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {})),
     rows: removalNeedsStatusFresh ? previousRows : snapshot.rows,
+    roadmapLayoutVersion: removalNeedsRoadmapFresh ? (state.roadmapLayoutVersion || 1) : snapshot.roadmapLayoutVersion,
     fallbackSince: verificationSnapshot.fallbackSince,
     fallbackMetadataChanged: true
+  };
+}
+
+// KST calendar date, not GitHub runner UTC, determines whether a scheduled GB has started.
+export function dueSwagkeysGbStarts({ roadmapDates = {}, notified = {}, now = new Date().toISOString(), maxCatchupDays = 7 } = {}) {
+  const dateParts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).formatToParts(new Date(now));
+  const dateValues = Object.fromEntries(dateParts.map(({ type, value }) => [type, value]));
+  const today = `${dateValues.year}-${dateValues.month}-${dateValues.day}`;
+  const todayMs = Date.parse(`${today}T00:00:00Z`);
+  const result = [];
+  for (const [key, row] of Object.entries(roadmapDates)) {
+    const saleStart = normalizeEta(row?.saleStart);
+    const saleEnd = normalizeEta(row?.saleEnd);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(saleStart) || (saleEnd && !/^\d{4}-\d{2}-\d{2}$/.test(saleEnd))) continue;
+    const ageDays = (todayMs - Date.parse(`${saleStart}T00:00:00Z`)) / 86400000;
+    if (!Number.isInteger(ageDays) || ageDays < 0 || ageDays > maxCatchupDays || (saleEnd && saleEnd < today)) continue;
+    if (notified[key] === saleStart) continue;
+    const product = clean(row?.product);
+    if (product) result.push({ key, product, saleStart, saleEnd });
+  }
+  return result;
+}
+
+export function suppressLegacySwgQ4Additions(state, candidateSnapshot, quarterChanges) {
+  if ((state?.roadmapLayoutVersion || 1) >= 2 || candidateSnapshot?.roadmapLayoutVersion !== 2) return quarterChanges;
+  // The old collector dropped SWG Q4 while retaining SWS Q4. Existing SWG Q4
+  // products are not new launches: suppress them during this one-time upgrade.
+  return {
+    ...quarterChanges,
+    added: (quarterChanges.added || []).filter(item =>
+      !(item.quarter === 'Q4' && /^SWG\s+/i.test(item.product)))
   };
 }
 
@@ -884,6 +928,16 @@ function auxiliaryFields(url, detectedAt) {
 }
 function baseEmbed(title, url, detectedAt) {
   return { title: truncate(title, 250), url, footer: { text: 'SWAGKEYS · Keycap Roadmap' }, timestamp: detectedAt };
+}
+
+export function gbStartEmbed(row, detectedAt = new Date().toISOString()) {
+  return {
+    ...baseEmbed(`🟢 SWAGKEYS GB 시작 · ${row.product}`, ROADMAP_URL, detectedAt),
+    fields: [
+      { name: 'GB 기간', value: `${row.saleStart} ~ ${row.saleEnd || '종료일 미정'}`, inline: false },
+      ...auxiliaryFields(ROADMAP_URL, detectedAt)
+    ]
+  };
 }
 
 export function announcementEmbed(announcement, detectedAt = new Date().toISOString()) {
@@ -975,6 +1029,8 @@ async function main() {
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
+    roadmapLayoutVersion: state?.roadmapLayoutVersion || 1,
+    gbStartsNotified: state?.gbStartsNotified || {},
     announcement: state?.announcement,
     quarters: state?.quarters,
     ...(state?.roadmapDates ? { roadmapDates: state.roadmapDates } : {}),
@@ -1012,12 +1068,17 @@ async function main() {
   const calculateChanges = (candidateSnapshot) => {
     const announcementChanged = clean(state.announcement?.heading) !== clean(candidateSnapshot.announcement.heading)
       || clean(state.announcement?.content) !== clean(candidateSnapshot.announcement.content);
-    const quarterChanges = diffQuarters(state.quarters, candidateSnapshot.quarters);
+    const quarterChanges = suppressLegacySwgQ4Additions(
+      state, candidateSnapshot, diffQuarters(state.quarters, candidateSnapshot.quarters)
+    );
     quarterChanges.datesChanged = state.roadmapDates && candidateSnapshot.roadmapDates
       ? diffRoadmapDates(state.roadmapDates, candidateSnapshot.roadmapDates)
       : [];
     const changes = diffRows(previousRows, candidateSnapshot.rows);
-    return { announcementChanged, quarterChanges, quartersChanged: hasQuarterChanges(quarterChanges), changes };
+    const starts = candidateSnapshot.roadmapFresh
+      ? dueSwagkeysGbStarts({ roadmapDates: candidateSnapshot.roadmapDates, notified: state.gbStartsNotified, now: new Date().toISOString() })
+      : [];
+    return { announcementChanged, quarterChanges, quartersChanged: hasQuarterChanges(quarterChanges), changes, starts };
   };
 
   validateRows(snapshot);
@@ -1066,15 +1127,17 @@ async function main() {
     }
   }
 
-  let { announcementChanged, quarterChanges, quartersChanged, changes } = calculated;
+  let { announcementChanged, quarterChanges, quartersChanged, changes, starts } = calculated;
   console.log(`SWAGKEYS announcement changed: ${announcementChanged}`);
   console.log(`SWAGKEYS quarter roadmap changed: ${quartersChanged}`);
   console.log(`SWAGKEYS product changes: ${changes.length}`);
+  console.log(`SWAGKEYS GB starts due: ${starts.length}`);
 
-  if (!announcementChanged && !quartersChanged && changes.length === 0) {
-    if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized) {
+  snapshot.gbStartsNotified = { ...(state.gbStartsNotified || {}), ...Object.fromEntries(starts.map(row => [row.key, row.saleStart])) };
+  if (!announcementChanged && !quartersChanged && changes.length === 0 && starts.length === 0) {
+    if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized || snapshot.roadmapLayoutVersion !== (state.roadmapLayoutVersion || 1)) {
       saveState(snapshot);
-      console.log(roadmapDatesInitialized ? 'SWAGKEYS roadmap sale-date metadata initialized.' : 'SWAGKEYS fallback metadata updated.');
+      console.log('SWAGKEYS verified roadmap metadata updated without backfilling historical events.');
     } else {
       console.log('No SWAGKEYS state update needed.');
     }
@@ -1088,13 +1151,14 @@ async function main() {
 
   if (announcementChanged) await postDiscord(announcementEmbed(snapshot.announcement));
   if (quartersChanged) await postDiscord(quartersEmbed(quarterChanges));
+  for (const start of starts) await postDiscord(gbStartEmbed(start));
   for (const change of changes) {
     if (change.kind === 'added') await postDiscord(addedEmbed(change.row));
     else if (change.kind === 'changed') await postDiscord(changedEmbed(change));
     else await postDiscord(removedEmbed(change.row));
   }
-  await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes);
-  console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged)} SWAGKEYS notification(s) and updated state.`);
+  await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts);
+  console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} SWAGKEYS notification(s) and updated state.`);
   if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
 }
 

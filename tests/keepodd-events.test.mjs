@@ -260,6 +260,54 @@ test('SWAGKEYS new GB carries roadmap sale start/end dates', () => {
   assert.equal(events[0].saleEnd, '2026-11-02');
 });
 
+test('SWAGKEYS GB start is its own dated update, not a duplicate new_gb', () => {
+  const snapshot = {
+    rows: [{ product: 'Nightshift', currentStatus: 'Not started', colorMatching: 'Not started' }],
+    quarters: { Q4: ['SWG Nightshift', 'SWS Soware'] },
+    roadmapDates: { nightshift: { product: 'SWG Nightshift', saleStart: '2026-10-30', saleEnd: '2026-11-13' } },
+    roadmapFresh: true, statusFresh: true
+  };
+  const input = { snapshot, occurredAt: '2026-11-03T09:00:00.000Z',
+    starts: [{ key: 'nightshift', product: 'SWG Nightshift', saleStart: '2026-10-30', saleEnd: '2026-11-13' }] };
+  const events = buildSwagkeysKeepoddEvents(input);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'note_changed');
+  assert.equal(events[0].name, 'SWG Nightshift');
+  assert.equal(events[0].saleStart, '2026-10-30');
+  assert.equal(events[0].saleEnd, '2026-11-13');
+  assert.match(events[0].after, /GB 시작 2026-10-30 ~ 2026-11-13/);
+  const one = mergeKeepoddEvents({ version: 1, events: [] }, events, { now: input.occurredAt });
+  const two = mergeKeepoddEvents(one.feed, buildSwagkeysKeepoddEvents({ ...input, occurredAt: '2026-11-03T10:00:00.000Z' }),
+    { now: '2026-11-03T10:00:00.000Z' });
+  assert.equal(one.added, 1);
+  assert.equal(two.added, 0);
+  assert.equal(two.feed.events.filter(event => event.name === 'SWG Nightshift').length, 1);
+  assert.deepEqual(buildSwagkeysKeepoddEvents({ ...input, snapshot: { ...snapshot, roadmapFresh: false } }), []);
+});
+
+test('SWG and SWS Beige retain distinct Q1/Q4 and sale-date references', () => {
+  const snapshot = {
+    rows: [],
+    quarters: { Q1: ['SWG Beige'], Q4: ['SWS Beige'] },
+    roadmapDates: {
+      beige: { product: 'SWG Beige', saleStart: '2026-11-01', saleEnd: '2026-11-15' },
+      'sws:beige': { product: 'SWS Beige', saleStart: '2026-11-10', saleEnd: '2026-11-24' }
+    },
+    roadmapFresh: true, statusFresh: true
+  };
+  const events = buildSwagkeysKeepoddEvents({
+    quarterChanges: { added: [{ product: 'SWG Beige', quarter: 'Q1' }, { product: 'SWS Beige', quarter: 'Q4' }] },
+    snapshot, occurredAt: '2026-11-03T09:00:00.000Z'
+  });
+  assert.equal(events.length, 2);
+  const swg = events.find(event => event.name === 'SWG Beige');
+  const sws = events.find(event => event.name === 'SWS Beige');
+  assert.equal(swg.saleStart, '2026-11-01');
+  assert.equal(sws.saleStart, '2026-11-10');
+  assert.equal(swg.quarter, 'Q1');
+  assert.equal(sws.quarter, 'Q4');
+});
+
 test('SWAGKEYS roadmap sale date change creates a note_changed event with current sale range', () => {
   const row = swagRow({ product: 'Crimson Cadet', eta: '', currentStatus: 'Not started' });
   const events = buildSwagkeysKeepoddEvents({

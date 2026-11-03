@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  diffQuarters,
   diffRoadmapDates,
+  dueSwagkeysGbStarts,
+  suppressLegacySwgQ4Additions,
   diffRows,
   parseSwagkeysStatusApi,
   preserveIndependentFreshChanges
@@ -219,4 +222,34 @@ test('parses current SWAGKEYS Notion collection rows without browser rendering',
       currentStatus: '예약판매 진행중 (in GB)'
     }
   ]);
+});
+
+test('SWAGKEYS Q4 migration restores old SWG entries without mass new-GB alerts', () => {
+  const previous = { roadmapLayoutVersion: 1, quarters: { Q4: ['SWS Beige', 'SWS Soware'] } };
+  const next = { roadmapLayoutVersion: 2, quarters: { Q4: ['SWG Nightshift', 'SWG Moomin', 'SWS Beige', 'SWS Soware'] } };
+  const diff = diffQuarters(previous.quarters, next.quarters);
+  assert.deepEqual(diff.added.map(item => item.product), ['SWG Nightshift', 'SWG Moomin']);
+  const migrated = suppressLegacySwgQ4Additions(previous, next, diff);
+  assert.deepEqual(migrated.added, []);
+  assert.deepEqual(migrated.removed, []);
+  assert.deepEqual(suppressLegacySwgQ4Additions({ roadmapLayoutVersion: 2 }, next, diff).added, diff.added);
+});
+
+test('GB start detection uses KST, seven-day catch-up, and a persisted per-product start marker', () => {
+  const roadmapDates = {
+    nightshift: { product: 'SWG Nightshift', saleStart: '2026-10-30', saleEnd: '2026-11-13' },
+    expired: { product: 'SWG Old', saleStart: '2026-10-15', saleEnd: '2026-10-30' },
+    scheduled: { product: 'SWG Soon', saleStart: '2026-11-05', saleEnd: '2026-11-19' },
+    missing: { product: 'SWG Unknown', saleStart: '', saleEnd: '' }
+  };
+  const args = { roadmapDates, now: '2026-11-03T06:00:00.000Z' };
+  assert.deepEqual(dueSwagkeysGbStarts(args), [{
+    key: 'nightshift', product: 'SWG Nightshift', saleStart: '2026-10-30', saleEnd: '2026-11-13'
+  }]);
+  assert.deepEqual(dueSwagkeysGbStarts({ ...args, notified: { nightshift: '2026-10-30' } }), []);
+  assert.deepEqual(dueSwagkeysGbStarts({ ...args, now: '2026-10-29T14:59:00.000Z' }), []);
+  assert.equal(dueSwagkeysGbStarts({ ...args, now: '2026-10-29T15:00:00.000Z' }).length, 1);
+  assert.deepEqual(dueSwagkeysGbStarts({ ...args, now: '2026-11-09T06:00:00.000Z' }), [{
+    key: 'scheduled', product: 'SWG Soon', saleStart: '2026-11-05', saleEnd: '2026-11-19'
+  }]);
 });
