@@ -201,7 +201,7 @@ function swagQuarterFor(name, quarters = {}) {
 
 function swagRoadmapDate(name, dates = {}) {
   const key = canonicalProductKey('SWAGKEYS', name);
-  return (/^sws\\s/i.test(name) ? dates[`sws:${key}`] : dates[key]) || dates[key] || dates[`sws:${key}`] || {};
+  return (/^sws\s/i.test(name) ? dates[`sws:${key}`] : dates[key]) || dates[key] || dates[`sws:${key}`] || {};
 }
 
 function swagRowMap(rows = []) {
