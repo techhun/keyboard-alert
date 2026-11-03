@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T18:33:06.564Z",
+  "updatedAt": "2026-11-03T18:40:58.163Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30"
@@ -480,8 +480,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-11-03T18:32:26.828Z",
-    "status": "2026-11-03T18:33:06.471Z"
-  }
+  "fallbackSince": {}
 }
