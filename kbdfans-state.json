@@ -1,8 +1,19 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-02T02:01:13.382Z",
+  "updatedAt": "2026-11-03T07:02:50.923Z",
   "rows": [
+    {
+      "category": "GMK",
+      "product": "GMK CYL Beige Boogaloo",
+      "status": "Prototyping",
+      "eta": "Q2 2027",
+      "progress": 25,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
     {
       "category": "GMK",
       "product": "GMK Red Devils",
@@ -996,6 +1007,7 @@
   ],
   "sentChanges": {
     "b468b794f331b15d6a22d500": "2026-10-28T00:21:08.415Z",
-    "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z"
+    "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z",
+    "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z"
   }
 }
