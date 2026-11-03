@@ -187,11 +187,21 @@ function swagDisplayName(rawName, quarters = {}) {
 }
 
 function swagQuarterFor(name, quarters = {}) {
+  const raw = cleanKeepoddValue(name);
+  // Prefer the exact qualified name: SWG Beige (Q1) and SWS Beige (Q4) coexist.
+  for (const [quarter, products] of Object.entries(quarters || {})) {
+    if ((products || []).some(product => cleanKeepoddValue(product).toLocaleLowerCase('en-US') === raw.toLocaleLowerCase('en-US'))) return quarter;
+  }
   const key = canonicalProductKey('SWAGKEYS', name);
   for (const [quarter, products] of Object.entries(quarters || {})) {
-    if ((products || []).some((product) => canonicalProductKey('SWAGKEYS', product) === key)) return quarter;
+    if ((products || []).some(product => canonicalProductKey('SWAGKEYS', product) === key)) return quarter;
   }
   return '';
+}
+
+function swagRoadmapDate(name, dates = {}) {
+  const key = canonicalProductKey('SWAGKEYS', name);
+  return (/^sws\\s/i.test(name) ? dates[`sws:${key}`] : dates[key]) || dates[key] || dates[`sws:${key}`] || {};
 }
 
 function swagRowMap(rows = []) {
@@ -229,6 +239,7 @@ function saleRangeLabel(value = {}) {
 export function buildSwagkeysKeepoddEvents({
   changes = [],
   quarterChanges = {},
+  starts = [],
   snapshot = {},
   occurredAt = new Date().toISOString(),
   roadmapFallbackUrl = SWAGKEYS_UPDATE_URL,
@@ -248,7 +259,7 @@ export function buildSwagkeysKeepoddEvents({
       const row = rowByKey.get(canonicalKey) || {};
       const event = eventFrom({
         source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt,
-        row: swagEventRow(row, roadmapDates[canonicalKey]), quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey,
+        row: swagEventRow(row, swagRoadmapDate(name, roadmapDates)), quarter: item.quarter, fallbackUrl: roadmapFallbackUrl, canonicalKey,
         idAfter: item.quarter || 'present'
       });
       events.set(event.id, event);
@@ -261,8 +272,9 @@ export function buildSwagkeysKeepoddEvents({
       const canonicalKey = canonicalProductKey('SWAGKEYS', name);
       if (!canonicalKey) continue;
       const row = rowByKey.get(canonicalKey) || {};
-      const currentDates = roadmapDates[canonicalKey] || item.after || {};
-      const current = swagEventRow(row, currentDates);
+      const currentDates = swagRoadmapDate(name, roadmapDates);
+      const verifiedDates = currentDates.saleStart || currentDates.saleEnd ? currentDates : (item.after || {});
+      const current = swagEventRow(row, verifiedDates);
       const before = saleRangeLabel(item.before);
       const after = saleRangeLabel(item.after);
       const quarter = swagQuarterFor(name, quarters);
@@ -275,6 +287,25 @@ export function buildSwagkeysKeepoddEvents({
     }
   }
 
+  if (snapshot.roadmapFresh !== false) {
+    for (const start of starts || []) {
+      const name = cleanKeepoddValue(start?.product);
+      const canonicalKey = canonicalProductKey('SWAGKEYS', name);
+      if (!name || !canonicalKey || !start?.saleStart) continue;
+      const row = rowByKey.get(canonicalKey) || {};
+      const dates = { saleStart: start.saleStart, saleEnd: start.saleEnd };
+      const after = `GB 시작 ${saleRangeLabel(dates)}`;
+      const event = eventFrom({
+        source: 'SWAGKEYS', name, eventType: 'note_changed',
+        after, occurredAt, row: swagEventRow(row, dates),
+        quarter: swagQuarterFor(name, quarters), fallbackUrl: roadmapFallbackUrl,
+        canonicalKey, idAfter: `gb-start:${start.saleStart}`
+      });
+      event.note = after;
+      events.set(event.id, event);
+    }
+  }
+
   if (snapshot.statusFresh !== false) {
     for (const change of changes || []) {
       const row = change?.row || {};
@@ -282,7 +313,7 @@ export function buildSwagkeysKeepoddEvents({
       const canonicalKey = canonicalProductKey('SWAGKEYS', row.product);
       const name = swagDisplayName(row.product, quarters);
       const quarter = swagQuarterFor(name, quarters);
-      const current = swagEventRow(row, roadmapDates[canonicalKey]);
+      const current = swagEventRow(row, swagRoadmapDate(name, roadmapDates));
 
       if (change.kind === 'added') {
         const event = eventFrom({
