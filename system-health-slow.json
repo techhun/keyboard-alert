@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T22:01:21.324Z",
+  "updatedAt": "2026-11-03T22:11:12.292Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -25,10 +25,7 @@
     },
     "novelkeys": {
       "status": "ok",
-      "changedAt": "2026-09-27T23:11:41.525Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "41726914390",
-      "lastFailureAt": "2026-11-03T22:01:21.323Z"
+      "changedAt": "2026-09-27T23:11:41.525Z"
     },
     "kbdfans": {
       "status": "ok",
