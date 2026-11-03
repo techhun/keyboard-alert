@@ -170,13 +170,13 @@ async function extractRoadmap(page) {
         }
 
         const products = [...new Set(bodyLines.filter((line) => line && !invalid.test(line)))];
-        if (products.length > 0) result[`Q${match[1]}`] = products;
+        if (products.length > 0) result[`Q${match[1]}`] = [...new Set([...(result[`Q${match[1]}`] || []), ...products])];
       }
       return result;
     });
 
     for (const [quarter, products] of Object.entries(found)) {
-      if (quarters[quarter] === null || products.length > quarters[quarter].length) quarters[quarter] = products;
+      quarters[quarter] = [...new Set([...(quarters[quarter] || []), ...products])];
     }
 
     const currentTotal = Object.values(quarters)
@@ -406,19 +406,23 @@ export function parseSwagkeysRoadmapPageApi(pageData) {
 
     const quarter = `Q${match[2]}`;
     const view = unwrapNotionRecord(views[viewId]);
-    sources[quarter] = {
-      collectionId,
-      viewId,
-      query: view?.query2 || {},
-      schema: collection?.schema || {}
-    };
+    // SWG and SWS use the same quarter headings. Preserve *both* collection views.
+    sources[quarter] ||= [];
+    if (!sources[quarter].some((source) => source.collectionId === collectionId && source.viewId === viewId)) {
+      sources[quarter].push({
+        collectionId,
+        viewId,
+        query: view?.query2 || {},
+        schema: collection?.schema || {}
+      });
+    }
   }
 
   if (!announcement?.heading || !announcement?.content) {
     throw new Error('SWAGKEYS roadmap announcement was missing from Notion page data');
   }
 
-  const missing = QUARTERS.filter((quarter) => !sources[quarter]);
+  const missing = QUARTERS.filter((quarter) => !sources[quarter]?.length);
   if (missing.length) {
     throw new Error(`SWAGKEYS roadmap collection/view ids were missing for: ${missing.join(', ')}`);
   }
@@ -539,34 +543,37 @@ async function fetchRoadmapFromNotionApi() {
   const roadmapDates = {};
 
   for (const quarter of QUARTERS) {
-    const source = sources[quarter];
-    const collectionData = await queryNotionCollection(
-      source.collectionId,
-      source.viewId,
-      source.query,
-      spaceId
-    );
-    const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData, source.schema);
-    const products = roadmapRows.map((row) => row.product);
-    if (!products.length) {
-      throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
+    const products = new Map();
+    for (const source of sources[quarter]) {
+      const collectionData = await queryNotionCollection(
+        source.collectionId,
+        source.viewId,
+        source.query,
+        spaceId
+      );
+      const roadmapRows = parseSwagkeysRoadmapCollectionRowsApi(collectionData, source.schema);
+      if (!roadmapRows.length) throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter} collection ${source.collectionId}`);
+      for (const row of roadmapRows) {
+        products.set(clean(row.product).toLocaleLowerCase('en-US'), row.product);
+        const canonicalKey = canonicalProductKey('SWAGKEYS', row.product);
+        if (!canonicalKey) continue;
+        // "SWG Beige" and "SWS Beige" are different products, not interchangeable dates.
+        const key = /^SWS\\s+/i.test(row.product) ? `sws:${canonicalKey}` : canonicalKey;
+        roadmapDates[key] = {
+          product: row.product,
+          saleStart: row.saleStart || '',
+          saleEnd: row.saleEnd || ''
+        };
+      }
     }
-    quarters[quarter] = products;
-    for (const row of roadmapRows) {
-      const key = canonicalProductKey('SWAGKEYS', row.product);
-      if (!key) continue;
-      roadmapDates[key] = {
-        product: row.product,
-        saleStart: row.saleStart || '',
-        saleEnd: row.saleEnd || ''
-      };
-    }
+    if (!products.size) throw new Error(`Notion public API returned no SWAGKEYS roadmap products for ${quarter}`);
+    quarters[quarter] = [...products.values()];
   }
 
   if (!quarterSnapshotIsValid(quarters)) {
     throw new Error('Notion public API returned an invalid SWAGKEYS roadmap snapshot');
   }
-  return { announcement, quarters, roadmapDates };
+  return { announcement, quarters, roadmapDates, roadmapLayoutVersion: 2 };
 }
 
 async function fetchStatusRowsFromNotionApi() {
@@ -711,6 +718,7 @@ async function fetchSnapshot(fallback = {}) {
       rows,
       roadmapFresh,
       statusFresh,
+      roadmapLayoutVersion: roadmapFresh ? (roadmap.roadmapLayoutVersion || 2) : (fallback.roadmapLayoutVersion || 1),
       fallbackSince,
       fallbackMetadataChanged
     };
@@ -975,6 +983,7 @@ async function main() {
   const state = loadState();
   const previousRows = Array.isArray(state?.rows) ? state.rows : [];
   const fallback = {
+    roadmapLayoutVersion: state?.roadmapLayoutVersion || 1,
     announcement: state?.announcement,
     quarters: state?.quarters,
     ...(state?.roadmapDates ? { roadmapDates: state.roadmapDates } : {}),
