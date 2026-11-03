@@ -865,6 +865,11 @@ export function diffRoadmapDates(previousDates = {}, currentDates = {}) {
   for (const key of keys) {
     const before = previousDates?.[key] || {};
     const after = currentDates?.[key] || {};
+    // Prior to the Q4 collector fix, the key "beige" could mean SWS Beige.
+    // Never report a false date change by comparing it with SWG Beige.
+    const oldFamily = clean(before.product).match(/^(SWG|SWS)\\b/i)?.[1]?.toUpperCase();
+    const newFamily = clean(after.product).match(/^(SWG|SWS)\\b/i)?.[1]?.toUpperCase();
+    if (oldFamily && newFamily && oldFamily !== newFamily) continue;
     const beforeStart = normalizeEta(before.saleStart);
     const beforeEnd = normalizeEta(before.saleEnd);
     const afterStart = normalizeEta(after.saleStart);
