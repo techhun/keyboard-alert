@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T05:50:32.254Z",
+  "updatedAt": "2026-11-03T06:10:32.366Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -10,7 +10,7 @@
       "type": "Keyboard",
       "manufacturer": "Nuxroskb",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 15",
+      "update": "2026. 11. 3",
       "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
     },
     {
@@ -20,7 +20,7 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 29",
+      "update": "2026. 11. 3",
       "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October."
     },
     {
@@ -40,7 +40,7 @@
       "type": "Keyboard",
       "manufacturer": "SENSY",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 26",
+      "update": "2026. 11. 3",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
     },
     {
@@ -50,7 +50,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 26",
+      "update": "2026. 11. 3",
       "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly"
     },
     {
@@ -530,7 +530,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 31",
+      "update": "2026. 11. 3",
       "note": "—"
     },
     {
@@ -727,6 +727,11 @@
     "bfc5d5462689e091127cfa2f": "2026-10-30T06:20:34.385Z",
     "62b32fef83e654e4163cf23c": "2026-11-03T05:50:31.635Z",
     "3e1885486ba746df589d93ad": "2026-11-03T05:50:32.090Z",
-    "89fcb2131aa3776a5ccac850": "2026-11-03T05:50:32.253Z"
+    "89fcb2131aa3776a5ccac850": "2026-11-03T05:50:32.253Z",
+    "7b222f6a9229b1b45ee06aa4": "2026-11-03T06:10:31.532Z",
+    "6107044c28d04a9b5e46160b": "2026-11-03T06:10:31.859Z",
+    "114af32603efb71c4a4a0c25": "2026-11-03T06:10:32.004Z",
+    "4dc3b83e287d6d13442a9b1f": "2026-11-03T06:10:32.242Z",
+    "02151873e6332bf5b589cad9": "2026-11-03T06:10:32.365Z"
   }
 }
