@@ -58,6 +58,17 @@ test('roadmap sale date diff reports only existing products whose dates changed'
   }]);
 });
 
+test('migration never confuses old SWS Beige date with SWG Beige', () => {
+  const before = { beige: { product: 'SWS Beige', saleStart: '', saleEnd: '' } };
+  const after = { beige: { product: 'SWG Beige', saleStart: '2026-01-09', saleEnd: '2026-01-09' } };
+  assert.deepEqual(diffRoadmapDates(before, after), []);
+  const legitimate = { beige: { product: 'SWG Beige', saleStart: '2026-01-10', saleEnd: '2026-01-20' } };
+  assert.deepEqual(diffRoadmapDates(after, legitimate), [{
+    product: 'SWG Beige', quarter: '', before: { saleStart: '2026-01-09', saleEnd: '2026-01-09' },
+    after: { saleStart: '2026-01-10', saleEnd: '2026-01-20' }
+  }]);
+});
+
 test('roadmap removal verification failure does not discard fresh status progress changes', () => {
   const snapshot = {
     announcement: { heading: '업데이트(26.09.28)', content: 'new' },
