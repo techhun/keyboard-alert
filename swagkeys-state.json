@@ -1,7 +1,11 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T07:51:09.686Z",
+  "updatedAt": "2026-11-03T09:51:18.665Z",
+  "roadmapLayoutVersion": 2,
+  "gbStartsNotified": {
+    "nightshift": "2026-10-30"
+  },
   "announcement": {
     "heading": "업데이트(26.10.14)",
     "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
@@ -34,6 +38,16 @@
       "SWG Feralis"
     ],
     "Q4": [
+      "SWG Space Cadet",
+      "SWG Crimson Cadet",
+      "SWG Forest Cadet",
+      "SWG Moomin",
+      "SWG Nightshift",
+      "SWG Retroguardia",
+      "SWG Koyo",
+      "SWG 9o_o9",
+      "SWG Meadow",
+      "SWG Retro Red Light",
       "SWS Soware",
       "SWS Beige",
       "SWS WoB",
@@ -42,9 +56,9 @@
   },
   "roadmapDates": {
     "beige": {
-      "product": "SWS Beige",
-      "saleStart": "",
-      "saleEnd": ""
+      "product": "SWG Beige",
+      "saleStart": "2026-01-09",
+      "saleEnd": "2026-01-09"
     },
     "rubber": {
       "product": "SWG Rubber",
@@ -141,17 +155,72 @@
       "saleStart": "2026-08-31",
       "saleEnd": "2026-09-28"
     },
-    "soware": {
+    "spacecadet": {
+      "product": "SWG Space Cadet",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12"
+    },
+    "crimsoncadet": {
+      "product": "SWG Crimson Cadet",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12"
+    },
+    "forestcadet": {
+      "product": "SWG Forest Cadet",
+      "saleStart": "2026-10-15",
+      "saleEnd": "2026-11-12"
+    },
+    "moomin": {
+      "product": "SWG Moomin",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "nightshift": {
+      "product": "SWG Nightshift",
+      "saleStart": "2026-10-30",
+      "saleEnd": "2026-11-13"
+    },
+    "retroguardia": {
+      "product": "SWG Retroguardia",
+      "saleStart": "2026-11-09",
+      "saleEnd": "2026-11-23"
+    },
+    "koyo": {
+      "product": "SWG Koyo",
+      "saleStart": "2026-11-16",
+      "saleEnd": "2026-12-07"
+    },
+    "9oo9": {
+      "product": "SWG 9o_o9",
+      "saleStart": "2026-12-07",
+      "saleEnd": "2026-12-28"
+    },
+    "meadow": {
+      "product": "SWG Meadow",
+      "saleStart": "2026-12-28",
+      "saleEnd": "2027-01-25"
+    },
+    "retroredlight": {
+      "product": "SWG Retro Red Light",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "sws:soware": {
       "product": "SWS Soware",
       "saleStart": "",
       "saleEnd": ""
     },
-    "wob": {
+    "sws:beige": {
+      "product": "SWS Beige",
+      "saleStart": "",
+      "saleEnd": ""
+    },
+    "sws:wob": {
       "product": "SWS WoB",
       "saleStart": "",
       "saleEnd": ""
     },
-    "fanuc": {
+    "sws:fanuc": {
       "product": "SWS FAN U.C",
       "saleStart": "",
       "saleEnd": ""
