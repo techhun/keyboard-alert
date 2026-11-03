@@ -249,5 +249,7 @@ test('GB start detection uses KST, seven-day catch-up, and a persisted per-produ
   assert.deepEqual(dueSwagkeysGbStarts({ ...args, notified: { nightshift: '2026-10-30' } }), []);
   assert.deepEqual(dueSwagkeysGbStarts({ ...args, now: '2026-10-29T14:59:00.000Z' }), []);
   assert.equal(dueSwagkeysGbStarts({ ...args, now: '2026-10-29T15:00:00.000Z' }).length, 1);
-  assert.deepEqual(dueSwagkeysGbStarts({ ...args, now: '2026-11-09T06:00:00.000Z' }), []);
+  assert.deepEqual(dueSwagkeysGbStarts({ ...args, now: '2026-11-09T06:00:00.000Z' }), [{
+    key: 'scheduled', product: 'SWG Soon', saleStart: '2026-11-05', saleEnd: '2026-11-19'
+  }]);
 });
