@@ -820,6 +820,7 @@ export function preserveIndependentFreshChanges({
       ? (state.roadmapDates ? { roadmapDates: state.roadmapDates } : {})
       : (snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {})),
     rows: removalNeedsStatusFresh ? previousRows : snapshot.rows,
+    roadmapLayoutVersion: removalNeedsRoadmapFresh ? (state.roadmapLayoutVersion || 1) : snapshot.roadmapLayoutVersion,
     fallbackSince: verificationSnapshot.fallbackSince,
     fallbackMetadataChanged: true
   };
@@ -845,6 +846,17 @@ export function dueSwagkeysGbStarts({ roadmapDates = {}, notified = {}, now = ne
     if (product) result.push({ key, product, saleStart, saleEnd });
   }
   return result;
+}
+
+export function suppressLegacySwgQ4Additions(state, candidateSnapshot, quarterChanges) {
+  if ((state?.roadmapLayoutVersion || 1) >= 2 || candidateSnapshot?.roadmapLayoutVersion !== 2) return quarterChanges;
+  // The old collector dropped SWG Q4 while retaining SWS Q4. Existing SWG Q4
+  // products are not new launches: suppress them during this one-time upgrade.
+  return {
+    ...quarterChanges,
+    added: (quarterChanges.added || []).filter(item =>
+      !(item.quarter === 'Q4' && /^SWG\s+/i.test(item.product)))
+  };
 }
 
 export function diffRoadmapDates(previousDates = {}, currentDates = {}) {
@@ -1056,12 +1068,9 @@ async function main() {
   const calculateChanges = (candidateSnapshot) => {
     const announcementChanged = clean(state.announcement?.heading) !== clean(candidateSnapshot.announcement.heading)
       || clean(state.announcement?.content) !== clean(candidateSnapshot.announcement.content);
-    const quarterChanges = diffQuarters(state.quarters, candidateSnapshot.quarters);
-    // One-time migration: SWG Q4 existed on the public roadmap, but the old parser
-    // overwrote it with SWS Q4. Do not flood Discord/Keepodd with historical new_gb.
-    if ((state.roadmapLayoutVersion || 1) < 2 && candidateSnapshot.roadmapLayoutVersion === 2) {
-      quarterChanges.added = quarterChanges.added.filter(item => !(item.quarter === 'Q4' && /^SWG\s+/i.test(item.product)));
-    }
+    const quarterChanges = suppressLegacySwgQ4Additions(
+      state, candidateSnapshot, diffQuarters(state.quarters, candidateSnapshot.quarters)
+    );
     quarterChanges.datesChanged = state.roadmapDates && candidateSnapshot.roadmapDates
       ? diffRoadmapDates(state.roadmapDates, candidateSnapshot.roadmapDates)
       : [];
