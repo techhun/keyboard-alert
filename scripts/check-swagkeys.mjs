@@ -837,7 +837,7 @@ export function dueSwagkeysGbStarts({ roadmapDates = {}, notified = {}, now = ne
   for (const [key, row] of Object.entries(roadmapDates)) {
     const saleStart = normalizeEta(row?.saleStart);
     const saleEnd = normalizeEta(row?.saleEnd);
-    if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(saleStart) || (saleEnd && !/^\\d{4}-\\d{2}-\\d{2}$/.test(saleEnd))) continue;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(saleStart) || (saleEnd && !/^\d{4}-\d{2}-\d{2}$/.test(saleEnd))) continue;
     const ageDays = (todayMs - Date.parse(`${saleStart}T00:00:00Z`)) / 86400000;
     if (!Number.isInteger(ageDays) || ageDays < 0 || ageDays > maxCatchupDays || (saleEnd && saleEnd < today)) continue;
     if (notified[key] === saleStart) continue;
@@ -1060,7 +1060,7 @@ async function main() {
     // One-time migration: SWG Q4 existed on the public roadmap, but the old parser
     // overwrote it with SWS Q4. Do not flood Discord/Keepodd with historical new_gb.
     if ((state.roadmapLayoutVersion || 1) < 2 && candidateSnapshot.roadmapLayoutVersion === 2) {
-      quarterChanges.added = quarterChanges.added.filter(item => !(item.quarter === 'Q4' && /^SWG\\s+/i.test(item.product)));
+      quarterChanges.added = quarterChanges.added.filter(item => !(item.quarter === 'Q4' && /^SWG\s+/i.test(item.product)));
     }
     quarterChanges.datesChanged = state.roadmapDates && candidateSnapshot.roadmapDates
       ? diffRoadmapDates(state.roadmapDates, candidateSnapshot.roadmapDates)
