@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-02T21:21:15.197Z",
+  "updatedAt": "2026-11-03T21:52:57.414Z",
   "rows": [
     {
       "id": 350,
@@ -91,13 +91,13 @@
       "id": 346,
       "displayName": "GMK Finer Things R2",
       "category": "keyset",
-      "status": "en_route",
+      "status": "shipping",
       "startDate": "2026-07-07",
       "endDate": "2026-07-07",
       "eta": "Dec 2026/Jan 2027",
-      "latestUpdateId": 1914,
-      "latestUpdateDate": "2026-10-30",
-      "latestUpdateDescription": "GMK Finer Things R2 has completed and sets are being shipped to us! We expect to receive the shipment in the next 1-2 weeks!"
+      "latestUpdateId": 1945,
+      "latestUpdateDate": "2026-11-03",
+      "latestUpdateDescription": "GMK Finer Things R2 keycaps & deskmats have arrived at our facilities! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. Please note, if your order contained an artisan, we will wait until those have arrived to ship everything together."
     },
     {
       "id": 340,
@@ -3421,6 +3421,7 @@
     "f3987916203cb61fb4be82da": "2026-10-30T21:41:03.848Z",
     "9afba4b48913f38c0d6e9818": "2026-10-30T21:41:04.007Z",
     "142afe81f217f6948a508a60": "2026-10-30T21:41:04.291Z",
-    "bd31049f696a288dc2277e1b": "2026-10-30T21:41:04.466Z"
+    "bd31049f696a288dc2277e1b": "2026-10-30T21:41:04.466Z",
+    "f5b69c7337d2119aeb79b6ba": "2026-11-03T21:52:57.413Z"
   }
 }
