@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-02T07:50:42.101Z",
+  "updatedAt": "2026-11-03T05:50:32.254Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -54,41 +54,11 @@
       "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly"
     },
     {
-      "product": "GMK CYL Rainy Day R3",
-      "gbStart": "2026. 10. 6",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 26",
-      "note": "—"
-    },
-    {
       "product": "DCS CHLADNI",
       "gbStart": "2026. 10. 6",
       "eta": "2027. 3. 31",
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL ZOMBIE",
-      "gbStart": "2026. 10. 7",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
-      "note": "—"
-    },
-    {
-      "product": "GMK Evil Dolch - The Split",
-      "gbStart": "2026. 10. 8",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 10. 8",
       "note": "—"
@@ -694,6 +664,36 @@
       "note": "—"
     },
     {
+      "product": "GMK CYL Rainy Day R3",
+      "gbStart": "2026. 10. 6",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 3",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL ZOMBIE",
+      "gbStart": "2026. 10. 7",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 3",
+      "note": "—"
+    },
+    {
+      "product": "GMK Evil Dolch - The Split",
+      "gbStart": "2026. 10. 8",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 3",
+      "note": "—"
+    },
+    {
       "product": "GMK CYL Tokyo & Miami Nights R2",
       "gbStart": "2026. 10. 13",
       "eta": "2027. 3. 31",
@@ -724,6 +724,9 @@
     "4835c2054804f1e628d10577": "2026-10-30T02:30:40.812Z",
     "6780cee40b9567156ab55610": "2026-10-30T02:30:40.970Z",
     "d02285593493363719f17f35": "2026-10-30T02:40:33.612Z",
-    "bfc5d5462689e091127cfa2f": "2026-10-30T06:20:34.385Z"
+    "bfc5d5462689e091127cfa2f": "2026-10-30T06:20:34.385Z",
+    "62b32fef83e654e4163cf23c": "2026-11-03T05:50:31.635Z",
+    "3e1885486ba746df589d93ad": "2026-11-03T05:50:32.090Z",
+    "89fcb2131aa3776a5ccac850": "2026-11-03T05:50:32.253Z"
   }
 }

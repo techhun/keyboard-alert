@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-02T03:40:58.871Z",
+  "updatedAt": "2026-11-03T05:50:32.254Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1266,6 +1266,54 @@
       "quarter": "Q2",
       "sourceUrl": "https://swagkeys.com/products/swg-ferrofluid",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "1b8305e8cc752049a87b79256cb0943b",
+      "source": "GEONWORKS",
+      "name": "GMK CYL ZOMBIE",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-11-03T05:50:32.254Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-07",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "1bd98ad66f86f9a8bddc2bc74a1c2625",
+      "source": "GEONWORKS",
+      "name": "GMK Evil Dolch - The Split",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-11-03T05:50:32.254Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-08",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "504e88a6e64e2860bbf6f128013c5166",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Rainy Day R3",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-11-03T05:50:32.254Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-06",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }
