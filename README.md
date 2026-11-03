@@ -202,3 +202,12 @@ GitHub의 **Actions** 탭에서 다음 workflow를 직접 실행할 수 있습�
 - Slow: `keyboard-alert-slow.yml` → 10분 간격
 
 두 cron job 모두 `POST`로 GitHub `workflow_dispatch` endpoint를 호출하고 request body는 `{"ref":"main"}`을 사용합니다. Watchdog은 cron-job.org와 독립성을 유지하기 위해 GitHub Actions의 15분 `schedule:`로 실행합니다.
+
+### SWAGKEYS SWG/SWS 분기 · GB 시작 알림 보호 (2026-11-03)
+
+- SWG와 SWS는 로드맵에서 같은 `1분기(Q1)`~`4분기(Q4)` 명칭을 재사용한다. 각 분기의 **모든 Notion collection view**를 읽어 통합하며 SWG/SWS 제품이 서로 덮어써지지 않아야 한다. 브라우저 fallback도 같은 분기의 항목을 합친다.
+- 현재 상태/이벤트 포맷은 `quarters.Q1~Q4`를 유지해 Keepodd 연동을 변경하지 않는다. 날짜 매핑은 기존 SWG canonical key를 보존하고 SWS는 `sws:<key>`로 구분하여 `SWG Beige` / `SWS Beige`의 날짜가 섞이지 않도록 한다.
+- 기존 `watcher-state/swagkeys-state.json`에서 SWG Q4가 누락된 것은 과거 파서 오류다. **최초 v2 레이아웃 적용 시 과거 SWG Q4 10개를 신규 GB로 역생성하지 않는다.** 정상 수집된 검증 상태만 `roadmapLayoutVersion: 2`로 저장한다.
+- 로드맵 날짜가 실제 확인된 제품은 한국시간 시작일 당일~최대 7일 이내, 종료일 미경과일 때 **GB 시작**을 독립 알림으로 생성한다. `gbStartsNotified`에 제품별 알림을 보낸 시작일을 저장하고 재실행해도 재전송하지 않는다. 저장 실패/웹훅 오류 시 기존 원장/상태를 잘못 완료 처리하지 않는다.
+- GB 시작은 **별도 note_changed 이벤트**로 Keepodd에 누적한다(`new_gb` 중복 방지). 실제 Notion 생산상태가 `Not started`여도 일정 도래 알림을 생성할 수 있으며 생산상태 자체를 임의 변경하지 않는다.
+- 기존 다른 수집기/상태/웹훅 워크플로를 변경하지 않는다. 검증: `npm test` 및 PR CI, 최초 상태 변경 건수, 야간 스케줄/중복 알림, Nightshift 10/30~11/13 수집 확인. 운영 데이터 복구: 이 변경 전 main `58725bf4b12334199b3e3921a91bb76d3ca5e889` 재배포. `watcher-state` JSON은 코드 롤백만으로 복원되지 않으므로 백업/비교 후 대응.
