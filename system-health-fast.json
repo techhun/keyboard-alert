@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T09:14:50.122Z",
+  "updatedAt": "2026-11-03T09:15:50.669Z",
   "sources": {
     "guheyo": {
       "status": "ok",
@@ -9,10 +9,7 @@
     },
     "dcinside": {
       "status": "ok",
-      "changedAt": "2026-10-28T04:34:37.146Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "41609363421",
-      "lastFailureAt": "2026-11-03T09:14:50.122Z"
+      "changedAt": "2026-10-28T04:34:37.146Z"
     }
   }
 }
