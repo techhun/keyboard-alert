@@ -1331,23 +1331,6 @@
       "quarter": "Q4",
       "sourceUrl": "https://swagkeys.com/products/group-buy-swg-nightshift",
       "sourceUrlType": "product"
-    },
-    {
-      "id": "e79d2827eafde137c2bdd4460789df59",
-      "source": "SWAGKEYS",
-      "name": "SWG Beige",
-      "eventType": "note_changed",
-      "before": "미정",
-      "after": "2026-01-09 ~ 2026-01-09",
-      "occurredAt": "2026-11-03T09:51:18.665Z",
-      "categoryHint": "키캡",
-      "maker": "Swagkeys",
-      "saleStart": "2026-01-09",
-      "saleEnd": "2026-01-09",
-      "quarter": "Q1",
-      "sourceUrl": "https://swagkeys.com/products/swg-beige",
-      "sourceUrlType": "product",
-      "note": "판매 일정 2026-01-09 ~ 2026-01-09"
     }
   ]
 }
