@@ -1,8 +1,18 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T07:00:49.992Z",
+  "updatedAt": "2026-11-04T23:50:30.493Z",
   "rows": [
+    {
+      "product": "TYPFACE KAFKA Barebones Kit",
+      "gbStart": "2026. 1. 29",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "TYPFACE",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 3",
+      "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October."
+    },
     {
       "product": "DCS Cream Cheese and Green R3",
       "gbStart": "2026. 2. 20",
@@ -24,36 +34,6 @@
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
     },
     {
-      "product": "GMK CYL Combobreaker",
-      "gbStart": "2026. 4. 3",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 4",
-      "note": "11/5 발송 예정 / Scheduled for dispatch on 5 November"
-    },
-    {
-      "product": "GMK CYL GREG R2",
-      "gbStart": "2026. 5. 4",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 4",
-      "note": "11/5 발송 예정 / Scheduled for dispatch on 5 November"
-    },
-    {
-      "product": "GMK MASTERPIECE R2",
-      "gbStart": "2026. 6. 5",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 4",
-      "note": "11/5 발송 예정 / Scheduled for dispatch on 5 November"
-    },
-    {
       "product": "GMK Salamander",
       "gbStart": "2026. 10. 13",
       "eta": "2027. 3. 31",
@@ -64,23 +44,13 @@
       "note": "—"
     },
     {
-      "product": "GMK CYL Blanks",
-      "gbStart": "2026. 10. 20",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 29",
-      "note": "—"
-    },
-    {
       "product": "Chamber TKL",
       "gbStart": "2026. 10. 27",
       "eta": "2027. 3. 31",
       "type": "Keyboard",
       "manufacturer": "KBDfans",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 29",
+      "update": "2026. 11. 5",
       "note": "—"
     },
     {
@@ -664,32 +634,22 @@
       "note": "—"
     },
     {
+      "product": "GMK CYL Blanks",
+      "gbStart": "2026. 10. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 5",
+      "note": "—"
+    },
+    {
       "product": "Lilith Original Remake",
       "gbStart": "2026. 10. 23",
       "eta": "2026. 12. 31",
       "type": "Keycap",
       "manufacturer": "Nuxroskb",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 4",
-      "note": "—"
-    },
-    {
-      "product": "+84 TKL",
-      "gbStart": "2025. 12. 5",
-      "eta": "2026. 7. 31",
-      "type": "Keyboard",
-      "manufacturer": "Nuxroskb",
-      "status": "완료 / DONE",
-      "update": "2026. 11. 4",
-      "note": "일부 미입고 되어 순차 발송 / Some items have not yet arrived and will be shipped in order."
-    },
-    {
-      "product": "Keyreative PBS Kids Typewriter",
-      "gbStart": "2026. 10. 9",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "Keyreative",
-      "status": "완료 / DONE",
       "update": "2026. 11. 4",
       "note": "—"
     }
@@ -733,6 +693,14 @@
     "ecc400ced4b0086621e85659": "2026-11-04T07:00:49.443Z",
     "8859801cb1b98e092801f511": "2026-11-04T07:00:49.623Z",
     "057db36b4106bcd9315a9e49": "2026-11-04T07:00:49.809Z",
-    "7aeddd81bdb68b6c0a25d7de": "2026-11-04T07:00:49.991Z"
+    "7aeddd81bdb68b6c0a25d7de": "2026-11-04T07:00:49.991Z",
+    "beb969e3021b5e9558ae65c7": "2026-11-04T23:50:29.132Z",
+    "1b8ccb2e584336398b9350f9": "2026-11-04T23:50:29.357Z",
+    "92f5fcd0d3ab97d5e0823931": "2026-11-04T23:50:29.535Z",
+    "ca3db7cd19439bb13c276fbf": "2026-11-04T23:50:29.707Z",
+    "b8e97c743ec45ab3750014f1": "2026-11-04T23:50:29.880Z",
+    "513f08031d3a450d50a46689": "2026-11-04T23:50:30.106Z",
+    "c9d062539dd82eb1ea7a3e3c": "2026-11-04T23:50:30.307Z",
+    "37cae8328b04026e14f27d64": "2026-11-04T23:50:30.492Z"
   }
 }
