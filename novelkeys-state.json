@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T01:01:26.093Z",
+  "updatedAt": "2026-11-04T11:43:18.772Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -139,7 +139,7 @@
     {
       "category": "Keycap",
       "product": "CYL Evil Dolch The Split R2",
-      "status": "Open for orders",
+      "status": "Order placed.",
       "eta": "Q1 2027",
       "url": "https://novelkeys.com/products/cyl-evil-dolch-the-split-keycaps"
     },
@@ -350,6 +350,7 @@
   "sentChanges": {
     "ea094fda12aa38d298dcc1ab": "2026-10-29T22:51:08.979Z",
     "aa17f204d459bc2522beed77": "2026-11-02T15:01:18.828Z",
-    "cec54ad45964628b0750c435": "2026-11-03T01:01:26.092Z"
+    "cec54ad45964628b0750c435": "2026-11-03T01:01:26.092Z",
+    "39843ffeae43e181f98e0ba8": "2026-11-04T11:43:18.772Z"
   }
 }
