@@ -1,8 +1,38 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T13:43:37.470Z",
+  "updatedAt": "2026-11-04T13:51:42.449Z",
   "rows": [
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Hexapoda-40e042334154809f9579dbfdf1c6db2f",
+      "product": "Hexapoda",
+      "status": "In Group Buy",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Smurve80-R2-Lume-Edition-40e0423341548061bf1be71407366a8a",
+      "product": "Smurve80 R2 Lume Edition",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Code-002-TKL-40e042334154801298d3cd2dc5cb7300",
+      "product": "Code:002 TKL",
+      "status": "In Group Buy",
+      "expectedShipping": "Q2 2027"
+    },
     {
       "sourceId": "keyboard",
       "sourceLabel": "Keyboard",
@@ -68,30 +98,10 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Synovia-2ca042334154801ba78cd47ebed6abcf",
-      "product": "Synovia",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Matrix-Lab-Carnival-TKL-30d042334154802da104c94b66f0578a",
       "product": "Matrix Lab Carnival TKL",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Gehirn60-31704233415480d29cd3fe5488a557ce",
-      "product": "Gehirn60",
-      "status": "In Manufacturing",
-      "expectedShipping": "Late Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -258,6 +268,26 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Sonoma-65-39d04233415480cda887d98e096b833d",
+      "product": "Sonoma 65",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Schema-M60-39d042334154807d8638e584f84568de",
+      "product": "Schema M60",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Nuxros-84-TKL-2ca042334154803f89b7e11d3b716cdc",
       "product": "Nuxros +84 TKL",
       "status": "Shipping to Prototypist",
@@ -402,6 +432,26 @@
       "product": "Slate Zero",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Synovia-2ca042334154801ba78cd47ebed6abcf",
+      "product": "Synovia",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Gehirn60-31704233415480d29cd3fe5488a557ce",
+      "product": "Gehirn60",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Late Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -1815,8 +1865,7 @@
     }
   ],
   "fallbackSince": {
-    "keyboard": "2026-11-04T13:43:10.024Z",
-    "gmk": "2026-11-04T13:43:23.034Z",
-    "keyset": "2026-11-04T13:43:35.898Z"
+    "gmk": "2026-11-04T13:51:18.950Z",
+    "keyset": "2026-11-04T13:51:31.839Z"
   }
 }
