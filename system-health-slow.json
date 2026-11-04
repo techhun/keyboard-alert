@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T16:33:32.680Z",
+  "updatedAt": "2026-11-04T16:43:08.807Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -21,7 +21,8 @@
       "mode": "degraded",
       "degradedSince": "2026-11-04T11:12:32.816Z",
       "fallbackSources": [
-        "roadmap"
+        "roadmap",
+        "status"
       ],
       "degradedAlertedAt": "2026-11-04T12:13:15.661Z"
     },
