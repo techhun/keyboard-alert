@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T12:23:21.713Z",
+  "updatedAt": "2026-11-04T14:23:16.445Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -230,7 +230,7 @@
     {
       "category": "Keycap",
       "product": "CYL Gurokawa",
-      "status": "In queue for production.",
+      "status": "In production.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-gurokawa-keycaps"
     },
@@ -339,6 +339,7 @@
     "cec54ad45964628b0750c435": "2026-11-03T01:01:26.092Z",
     "39843ffeae43e181f98e0ba8": "2026-11-04T11:43:18.772Z",
     "0904f61976aa278266dc3071": "2026-11-04T12:23:21.486Z",
-    "399caab07239c21da0d36624": "2026-11-04T12:23:21.713Z"
+    "399caab07239c21da0d36624": "2026-11-04T12:23:21.713Z",
+    "63d7aebf448ca1ab1c05d94d": "2026-11-04T14:23:16.445Z"
   }
 }
