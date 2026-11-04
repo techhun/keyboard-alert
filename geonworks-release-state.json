@@ -1,19 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T06:50:36.060Z",
+  "updatedAt": "2026-11-04T00:20:43.185Z",
   "rows": [
-    {
-      "product": "DCS CHLADNI",
-      "manufacturer": "Signature Plastics",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-10-06",
-      "end": "2026-11-03"
-    },
     {
       "product": "GMK Salamander",
       "manufacturer": "GMK",
@@ -53,6 +42,7 @@
     "d185a794d694c4c1bbcc8b57": "2026-11-01T23:30:45.630Z",
     "2b9ece1528f1d6f0077eb54e": "2026-11-02T23:40:39.675Z",
     "09d9d11bed6f3b17a41f33e5": "2026-11-02T23:40:40.340Z",
-    "4c0f7a4dcdb91637f7c5a43d": "2026-11-02T23:40:41.129Z"
+    "4c0f7a4dcdb91637f7c5a43d": "2026-11-02T23:40:41.129Z",
+    "2f059c76a14ed80ef1c99e00": "2026-11-04T00:20:43.185Z"
   }
 }
