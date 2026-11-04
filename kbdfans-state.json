@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T00:21:16.101Z",
+  "updatedAt": "2026-11-04T07:51:08.180Z",
   "rows": [
     {
       "category": "GMK",
@@ -326,7 +326,7 @@
       "category": "KEYCAPS",
       "product": "GMK CYL Draco",
       "status": "Prototyping",
-      "eta": "TBD",
+      "eta": "Q2 2027",
       "progress": 25,
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-09-07",
@@ -1007,6 +1007,7 @@
   ],
   "sentChanges": {
     "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z",
-    "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z"
+    "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z",
+    "edc0868b5e0702272420ffe3": "2026-11-04T07:51:08.179Z"
   }
 }
