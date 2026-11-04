@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T06:10:32.366Z",
+  "updatedAt": "2026-11-04T01:00:52.671Z",
   "rows": [
     {
       "product": "+84 TKL",
@@ -52,16 +52,6 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 3",
       "note": "키캡 입고 완료, 데스크매트 입고 대기 중 / Keycaps have arrived; the desk mat is due to arrive shortly"
-    },
-    {
-      "product": "DCS CHLADNI",
-      "gbStart": "2026. 10. 6",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "판매 중 / GB on sale",
-      "update": "2026. 10. 8",
-      "note": "—"
     },
     {
       "product": "Keyreative PBS Kids Typewriter",
@@ -350,8 +340,8 @@
       "type": "Keyboard",
       "manufacturer": "Nuxroskb",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 22",
-      "note": "50% 포장 완료, 10월 말 경 포장 완료 예정 / 50 percent of the packaging has been completed; packaging is expected to be completed by the end of October"
+      "update": "2026. 11. 4",
+      "note": "케이스 아노다이징 진행 중. 부자재 생산 중 / Case anodising in progress. Production of ancillary materials in progress."
     },
     {
       "product": "GMK TA NEO",
@@ -664,6 +654,16 @@
       "note": "—"
     },
     {
+      "product": "DCS CHLADNI",
+      "gbStart": "2026. 10. 6",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 4",
+      "note": "—"
+    },
+    {
       "product": "GMK CYL Rainy Day R3",
       "gbStart": "2026. 10. 6",
       "eta": "2027. 3. 31",
@@ -732,6 +732,8 @@
     "6107044c28d04a9b5e46160b": "2026-11-03T06:10:31.859Z",
     "114af32603efb71c4a4a0c25": "2026-11-03T06:10:32.004Z",
     "4dc3b83e287d6d13442a9b1f": "2026-11-03T06:10:32.242Z",
-    "02151873e6332bf5b589cad9": "2026-11-03T06:10:32.365Z"
+    "02151873e6332bf5b589cad9": "2026-11-03T06:10:32.365Z",
+    "bd2389d5f62b4fe983294f43": "2026-11-04T01:00:51.620Z",
+    "7929d6607239563ca3d9dc86": "2026-11-04T01:00:52.670Z"
   }
 }
