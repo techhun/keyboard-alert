@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-05T21:01:34.443Z",
+  "updatedAt": "2026-11-05T21:11:00.097Z",
   "rows": [
     {
       "id": 350,
@@ -131,9 +131,9 @@
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1910,
-      "latestUpdateDate": "2026-10-30",
-      "latestUpdateDescription": "10/30 Update: Spark Deskmat are nearing completion and production should be wrapping up in 1-2 weeks!"
+      "latestUpdateId": 1947,
+      "latestUpdateDate": "2026-11-05",
+      "latestUpdateDescription": "Replacement keycaps for the GMK Spark Extension Kits have arrived at our facilities; so all orders containing GMK keycaps and artisans will be shipping soon! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. Please note, if your order contained a deskmat, we will wait until those have arrived to ship everything together. The manufacturer has informed us that they are currently wrapping up production."
     },
     {
       "id": 336,
@@ -143,9 +143,9 @@
       "startDate": "2026-05-15",
       "endDate": "2026-06-16",
       "eta": "Q4 2026",
-      "latestUpdateId": 1906,
-      "latestUpdateDate": "2026-10-26",
-      "latestUpdateDescription": "GMK MTNU Welles has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1946,
+      "latestUpdateDate": "2026-11-05",
+      "latestUpdateDescription": "All group buy orders for GMK MTNU Welles have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 342,
@@ -3422,6 +3422,8 @@
     "142afe81f217f6948a508a60": "2026-10-30T21:41:04.291Z",
     "bd31049f696a288dc2277e1b": "2026-10-30T21:41:04.466Z",
     "f5b69c7337d2119aeb79b6ba": "2026-11-03T21:52:57.413Z",
-    "9601fa4bcebcd7f72947cf7f": "2026-11-05T21:01:34.441Z"
+    "9601fa4bcebcd7f72947cf7f": "2026-11-05T21:01:34.441Z",
+    "4526c815b6ff9f1a075f921e": "2026-11-05T21:10:59.945Z",
+    "3a3326249b98f48a42ebd456": "2026-11-05T21:11:00.095Z"
   }
 }
