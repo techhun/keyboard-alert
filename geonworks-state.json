@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-05T00:40:31.522Z",
+  "updatedAt": "2026-11-05T00:50:27.520Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -655,8 +655,6 @@
     }
   ],
   "sentChanges": {
-    "a63d142227fcc191544ce2ed": "2026-10-29T00:40:31.861Z",
-    "58382ba3819dc405c29f412e": "2026-10-29T00:40:32.508Z",
     "47bba2b75dd2e497a5f80d97": "2026-10-29T01:20:33.534Z",
     "d7077a930519f61b178ca0af": "2026-10-29T01:20:33.786Z",
     "4d2f4acf99fb25e2ad814c21": "2026-10-29T01:20:34.026Z",
