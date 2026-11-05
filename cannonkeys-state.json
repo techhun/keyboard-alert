@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T17:22:42.112Z",
+  "updatedAt": "2026-11-05T21:01:34.443Z",
   "rows": [
     {
       "id": 350,
@@ -139,7 +139,7 @@
       "id": 336,
       "displayName": "GMK MTNU Welles",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-05-15",
       "endDate": "2026-06-16",
       "eta": "Q4 2026",
@@ -3421,6 +3421,7 @@
     "9afba4b48913f38c0d6e9818": "2026-10-30T21:41:04.007Z",
     "142afe81f217f6948a508a60": "2026-10-30T21:41:04.291Z",
     "bd31049f696a288dc2277e1b": "2026-10-30T21:41:04.466Z",
-    "f5b69c7337d2119aeb79b6ba": "2026-11-03T21:52:57.413Z"
+    "f5b69c7337d2119aeb79b6ba": "2026-11-03T21:52:57.413Z",
+    "9601fa4bcebcd7f72947cf7f": "2026-11-05T21:01:34.441Z"
   }
 }
