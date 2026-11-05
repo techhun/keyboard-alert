@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T23:50:30.493Z",
+  "updatedAt": "2026-11-05T00:00:43.646Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -80,8 +80,8 @@
       "type": "Keyboard",
       "manufacturer": "TypePlus",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
+      "update": "2026. 11. 5",
+      "note": "EC 킷 배대지 입고 / EC Kit received at the distribution centre"
     },
     {
       "product": "Keycult No. 3 TKL",
@@ -90,8 +90,8 @@
       "type": "Keyboard",
       "manufacturer": "Novelkeys",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 10",
-      "note": "9월 3주 최종 검수 예정 / Final review scheduled for the third week of September"
+      "update": "2026. 11. 5",
+      "note": "배대지 입고 / Receipt at the distribution centre"
     },
     {
       "product": "HAVEN 60",
@@ -140,7 +140,7 @@
       "type": "Keyboard",
       "manufacturer": "INN Studio",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 30",
+      "update": "2026. 11. 5",
       "note": "배대지 입고 / Receipt at the distribution centre"
     },
     {
@@ -701,6 +701,9 @@
     "b8e97c743ec45ab3750014f1": "2026-11-04T23:50:29.880Z",
     "513f08031d3a450d50a46689": "2026-11-04T23:50:30.106Z",
     "c9d062539dd82eb1ea7a3e3c": "2026-11-04T23:50:30.307Z",
-    "37cae8328b04026e14f27d64": "2026-11-04T23:50:30.492Z"
+    "37cae8328b04026e14f27d64": "2026-11-04T23:50:30.492Z",
+    "c5854941c6005e7485cc3ca4": "2026-11-05T00:00:43.106Z",
+    "753d3676b16c7c5809a90ed3": "2026-11-05T00:00:43.415Z",
+    "140941a62f6201581f8cdc76": "2026-11-05T00:00:43.645Z"
   }
 }

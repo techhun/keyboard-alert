@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-04T23:50:30.493Z",
+  "updatedAt": "2026-11-05T00:00:43.646Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1527,6 +1527,40 @@
       "eta": "2026-09-30",
       "status": "검수 중 / Inspecting",
       "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8595a77b431ca4261ad7a6e82900d895",
+      "source": "GEONWORKS",
+      "name": "Keycult No. 3 TKL",
+      "eventType": "note_changed",
+      "before": "9월 3주 최종 검수 예정 / Final review scheduled for the third week of September",
+      "after": "배대지 입고 / Receipt at the distribution centre",
+      "occurredAt": "2026-11-05T00:00:43.646Z",
+      "categoryHint": "키보드",
+      "maker": "Novelkeys",
+      "saleStart": "2025-09-19",
+      "eta": "2026-06-30",
+      "status": "제작 중 / In progress",
+      "note": "배대지 입고 / Receipt at the distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d463be64a19b223f759a8e93191d186c",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "after": "EC 킷 배대지 입고 / EC Kit received at the distribution centre",
+      "occurredAt": "2026-11-05T00:00:43.646Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
+      "status": "제작 중 / In progress",
+      "note": "EC 킷 배대지 입고 / EC Kit received at the distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
