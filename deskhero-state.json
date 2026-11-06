@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T16:53:35.435Z",
+  "updatedAt": "2026-11-06T17:03:37.909Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -3329,6 +3329,12 @@
     },
     {
       "category": "Deskmat",
+      "product": "GMK Spark Deskmats",
+      "notes": "Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
       "product": "GMK Stargaze Deskmats",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
@@ -3839,6 +3845,7 @@
     }
   ],
   "sentChanges": {
-    "bf452fdae53861b65f1a5c41": "2026-11-06T16:53:35.434Z"
+    "bf452fdae53861b65f1a5c41": "2026-11-06T16:53:35.434Z",
+    "50f67b50d77f8c0da57a5f76": "2026-11-06T17:03:37.908Z"
   }
 }
