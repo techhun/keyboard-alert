@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-05T01:30:41.225Z",
+  "updatedAt": "2026-11-06T00:20:29.288Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -200,8 +200,8 @@
       "type": "Keyboard",
       "manufacturer": "Grit",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 9",
-      "note": "PCB 생산 마무리 단계. 자재 준비 완료. 9월 중 품질 검사, 조립 및 포장 작업 예정. / PCB production is in its final stages. Materials have been prepared. Quality inspection, assembly, and packaging are scheduled for September."
+      "update": "2026. 11. 6",
+      "note": "조립 완료. 11월 2주 제조사에서 발송 예정. /Assembly complete. Scheduled for dispatch by the manufacturer in the second week of November."
     },
     {
       "product": "DCS Grass Valley",
@@ -354,23 +354,13 @@
       "note": "데스크매트 입고 완료. 금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. /The desk mats have been received. The Metal Artisan is due to be dispatched from the manufacturer to Zionworks at the end of November."
     },
     {
-      "product": "Wing",
-      "gbStart": "2026. 7. 9",
-      "eta": "2027. 3. 31",
-      "type": "Keyboard",
-      "manufacturer": "",
-      "status": "제작 중 / In progress",
-      "update": "2026. 7. 22",
-      "note": "—"
-    },
-    {
       "product": "Tofu TKL R2",
       "gbStart": "2026. 7. 16",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
       "manufacturer": "KBDfans",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 19",
+      "update": "2026. 11. 6",
       "note": "—"
     },
     {
@@ -688,6 +678,9 @@
     "37cae8328b04026e14f27d64": "2026-11-04T23:50:30.492Z",
     "c5854941c6005e7485cc3ca4": "2026-11-05T00:00:43.106Z",
     "753d3676b16c7c5809a90ed3": "2026-11-05T00:00:43.415Z",
-    "140941a62f6201581f8cdc76": "2026-11-05T00:00:43.645Z"
+    "140941a62f6201581f8cdc76": "2026-11-05T00:00:43.645Z",
+    "65033f4473d658d3260bc4ce": "2026-11-06T00:20:28.672Z",
+    "496cf271937aebda850b28dc": "2026-11-06T00:20:28.888Z",
+    "ab6493704ab1100cf59cca70": "2026-11-06T00:20:29.288Z"
   }
 }

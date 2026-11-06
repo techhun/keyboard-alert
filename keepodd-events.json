@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-05T00:00:43.646Z",
+  "updatedAt": "2026-11-06T00:20:29.288Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1561,6 +1561,23 @@
       "eta": "2026-05-31",
       "status": "제작 중 / In progress",
       "note": "EC 킷 배대지 입고 / EC Kit received at the distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "3895ebcb3722611568d4eb2d2d3a4260",
+      "source": "GEONWORKS",
+      "name": "Grit Jahre 65",
+      "eventType": "note_changed",
+      "before": "PCB 생산 마무리 단계. 자재 준비 완료. 9월 중 품질 검사, 조립 및 포장 작업 예정. / PCB production is in its final stages. Materials have been prepared. Quality inspection, assembly, and packaging are scheduled for September.",
+      "after": "조립 완료. 11월 2주 제조사에서 발송 예정. /Assembly complete. Scheduled for dispatch by the manufacturer in the second week of November.",
+      "occurredAt": "2026-11-06T00:20:29.288Z",
+      "categoryHint": "키보드",
+      "maker": "Grit",
+      "saleStart": "2026-05-01",
+      "eta": "2026-12-30",
+      "status": "제작 중 / In progress",
+      "note": "조립 완료. 11월 2주 제조사에서 발송 예정. /Assembly complete. Scheduled for dispatch by the manufacturer in the second week of November.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }

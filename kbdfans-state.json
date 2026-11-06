@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T07:51:08.180Z",
+  "updatedAt": "2026-11-06T00:23:18.361Z",
   "rows": [
     {
       "category": "GMK",
@@ -75,17 +75,6 @@
       "status": "Group buy",
       "eta": "Q1 2027",
       "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Solch",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 75,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -1008,6 +997,7 @@
   "sentChanges": {
     "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z",
     "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z",
-    "edc0868b5e0702272420ffe3": "2026-11-04T07:51:08.179Z"
+    "edc0868b5e0702272420ffe3": "2026-11-04T07:51:08.179Z",
+    "38777db289d40b85785b6584": "2026-11-06T00:23:18.361Z"
   }
 }
