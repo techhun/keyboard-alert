@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-03T18:33:12.107Z",
+  "updatedAt": "2026-11-06T16:53:35.435Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -3167,6 +3167,12 @@
     },
     {
       "category": "Deskmat",
+      "product": "GMK Masterpiece R2 Deskmats",
+      "notes": "Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
       "product": "GMK Mercury Deskmats",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
@@ -3832,5 +3838,7 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "bf452fdae53861b65f1a5c41": "2026-11-06T16:53:35.434Z"
+  }
 }
