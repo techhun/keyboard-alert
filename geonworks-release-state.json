@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T00:20:43.185Z",
+  "updatedAt": "2026-11-06T05:20:29.892Z",
   "rows": [
     {
       "product": "GMK Salamander",
@@ -38,7 +38,6 @@
     }
   ],
   "sentChanges": {
-    "67342f7c77ce03a34ee88bcf": "2026-10-30T05:10:39.099Z",
     "d185a794d694c4c1bbcc8b57": "2026-11-01T23:30:45.630Z",
     "2b9ece1528f1d6f0077eb54e": "2026-11-02T23:40:39.675Z",
     "09d9d11bed6f3b17a41f33e5": "2026-11-02T23:40:40.340Z",
