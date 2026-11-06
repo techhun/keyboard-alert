@@ -1,14 +1,14 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T00:23:18.361Z",
+  "updatedAt": "2026-11-06T00:41:06.850Z",
   "rows": [
     {
       "category": "GMK",
       "product": "GMK CYL Beige Boogaloo",
-      "status": "Prototyping",
+      "status": "Group buy",
       "eta": "Q2 2027",
-      "progress": 25,
+      "progress": 50,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -998,6 +998,7 @@
     "fb380468bc80f47ff699b69b": "2026-11-02T01:51:07.518Z",
     "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z",
     "edc0868b5e0702272420ffe3": "2026-11-04T07:51:08.179Z",
-    "38777db289d40b85785b6584": "2026-11-06T00:23:18.361Z"
+    "38777db289d40b85785b6584": "2026-11-06T00:23:18.361Z",
+    "d54060273ebd679299ea12df": "2026-11-06T00:41:06.850Z"
   }
 }
