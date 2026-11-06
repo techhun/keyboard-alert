@@ -1,18 +1,19 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T13:58:43.411Z",
+  "updatedAt": "2026-11-06T14:00:03.603Z",
   "sources": {
     "guheyo": {
       "status": "ok",
       "changedAt": "2026-11-03T00:43:39.166Z"
     },
     "dcinside": {
-      "status": "ok",
-      "changedAt": "2026-10-28T04:34:37.146Z",
-      "consecutiveFailures": 2,
-      "lastFailureRunId": "42229788991",
-      "lastFailureAt": "2026-11-06T13:58:43.410Z"
+      "status": "fail",
+      "changedAt": "2026-11-06T14:00:03.215Z",
+      "consecutiveFailures": 3,
+      "lastFailureRunId": "42229919084",
+      "lastFailureAt": "2026-11-06T14:00:03.215Z",
+      "failureAlertedAt": "2026-11-06T14:00:03.215Z"
     }
   }
 }
