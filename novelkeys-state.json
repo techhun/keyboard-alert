@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-05T22:52:27.163Z",
+  "updatedAt": "2026-11-06T14:32:34.358Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -223,7 +223,7 @@
     {
       "category": "Keycap",
       "product": "GMK CYL Masterpiece R2",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-keycaps"
     },
@@ -347,6 +347,7 @@
     "0904f61976aa278266dc3071": "2026-11-04T12:23:21.486Z",
     "399caab07239c21da0d36624": "2026-11-04T12:23:21.713Z",
     "63d7aebf448ca1ab1c05d94d": "2026-11-04T14:23:16.445Z",
-    "b79c1a2b643756b8d4fe4082": "2026-11-04T15:03:50.999Z"
+    "b79c1a2b643756b8d4fe4082": "2026-11-04T15:03:50.999Z",
+    "84fa0abe6d12e8c7b03f0b44": "2026-11-06T14:32:34.357Z"
   }
 }
