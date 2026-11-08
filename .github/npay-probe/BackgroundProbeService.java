@@ -64,7 +64,8 @@ public final class BackgroundProbeService extends Service {
         sampleAmbiguousReads=0, sampleAmbiguousRetries=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0, sampleCachedEntries=0, sampleCachedButtons=0,
-        sampleCacheChanged=0;
+        sampleCacheChanged=0, sampleControlNoDisplay=0, sampleControlsNotTested=0,
+        sampleItemDisplayCount=0, sampleItemCheckedCount=0, sampleItemNoDisplay=0;
     private String sampleButtonSignature="",sampleIssue="",sampleDetailObservation="";
     private int sampleShippingNavigations=0, samplePopupRequests=0, samplePopupUserGestureRequests=0;
     private int sampleHttpClientErrors=0, sampleHttpServerErrors=0, sampleHttpMainErrors=0;
@@ -85,7 +86,10 @@ public final class BackgroundProbeService extends Service {
     private final java.util.ArrayList<String> sampleIssueNotes=new java.util.ArrayList<>();
     private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
-        sampleIssue=safeCode;
+        if(sampleFocus&&sampleItemNoDisplay>0&&!sampleIssue.isEmpty()&&
+           sampleIssue.length()<1800&&!sampleIssue.equals(safeCode))
+            sampleIssue+=" / "+safeCode;
+        else sampleIssue=safeCode;
     }
     /** Report schema presence only; never copy an invoice, parcel ID, or DOM text. */
     private String detailObservation(JSONObject d){
@@ -509,6 +513,8 @@ public final class BackgroundProbeService extends Service {
                 (sampleMulti?" · 복수버튼 주문 "+sampleMultiOrders+
                     "건 · 발견 "+sampleControlsObserved+"개 · 표시 "+sampleButtonsFound+
                     "개 · 미확인 "+sampleControlsSkipped+"개":"")+
+                (sampleFocus?" · 검사했으나 미검출 "+sampleControlNoDisplay+"개"+
+                    " · 미검사 "+sampleControlsNotTested+"개":"")+
                 (sampleIssueNotes.isEmpty()?"":" · 추가확인 위치 "+
                     android.text.TextUtils.join(" / ",sampleIssueNotes))+
                 (sampleNoButtonNotes.isEmpty()?"":" · 버튼없음 위치 "+
@@ -534,6 +540,7 @@ public final class BackgroundProbeService extends Service {
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
         sampleDetailObservation="";
         sampleEmptyReads=0;sampleAmbiguousReads=0;
+        sampleItemDisplayCount=0;sampleItemCheckedCount=0;sampleItemNoDisplay=0;
         sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
@@ -682,6 +689,7 @@ public final class BackgroundProbeService extends Service {
                     }
                     sampleDetailObservation=detailObservation(d);
                     if(d.getJSONArray("domPairs").length()>0){
+                        sampleItemDisplayCount++;sampleItemCheckedCount++;
                         sampleButtonsFound++;
                         sampleButtonIndex++;
                         if(sampleMulti && sampleButtonIndex<sampleButtonCount &&
@@ -700,13 +708,13 @@ public final class BackgroundProbeService extends Service {
                             markSampleIssue("건당 "+buttonLimit()+"개 검사 한도");
                             advanceSample(2);
                         }else {
-                            if(samplePage&&sampleButtonCount>0&&
+                            if(samplePage&&sampleButtonCount>0&&sampleItemNoDisplay==0&&
                                 sampleButtonIndex==sampleButtonCount){
                                 String detailUrl=sampleTargets.get(sampleIndex)[1];
                                 verifiedDetails.put(detailUrl,new VerifiedDetail(
                                     sampleButtonSignature,sampleButtonCount,samplePosition()));
                             }
-                            advanceSample(3);
+                            advanceSample(sampleItemNoDisplay>0?2:3);
                         }
                         return;
                     }
@@ -767,7 +775,7 @@ public final class BackgroundProbeService extends Service {
                             " · Fetch/XHR "+Math.max(0,Math.min(999,d.optInt("ajaxCount",0)));
                     }
                 }catch(Exception ignored){ /* Record only sanitized fallback. */ }
-                markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+
+                finishMissingControl(step,"배송정보 미검출 ("+sampleDetailObservation+
                     " · "+navigation+" · 로드완료 "+navigations+"회"+
                     " · 새창요청 "+Math.min(99,samplePopupRequests)+"회"+
                     " · 사용자제스처 새창 "+Math.min(99,samplePopupUserGestureRequests)+"회"+
@@ -779,13 +787,36 @@ public final class BackgroundProbeService extends Service {
                     " · 리소스 네트워크오류 "+sampleNetworkSubresourceErrors+
                     " · 주화면 HTTP오류 "+sampleHttpMainErrors+
                     " · "+context+")");
-                advanceSample(2);
             });
         }catch(RuntimeException ex){
-            markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+
+            finishMissingControl(step,"배송정보 미검출 ("+sampleDetailObservation+
                 " · "+navigation+" · 화면 진단 실행 실패)");
-            advanceSample(2);
         }
+    }
+    private void finishMissingControl(int step,String safeReason){
+        if(finished||sampleStep!=step||sampleStage!=2)return;
+        if(sampleFocus){
+            // A dispatched click is not a confirmed shipment. Try the next
+            // *distinct* button only after reloading the original order detail
+            // and revalidating the exact full control signature.
+            sampleItemCheckedCount++;sampleItemNoDisplay++;
+            markSampleIssue("버튼 "+(sampleButtonIndex+1)+"/"+sampleButtonCount+
+                ": "+safeReason);
+            if(sampleButtonIndex+1<sampleButtonCount&&sampleButtonIndex+1<buttonLimit()){
+                sampleButtonIndex++;
+                sampleStage=1;sampleStep++;readQueued=false;attempt=0;
+                final int nextStep=sampleStep;
+                handler.postDelayed(()->{
+                    if(!finished&&sampleStep==nextStep&&sampleStage==1&&webView!=null)
+                        webView.loadUrl(sampleTargets.get(sampleIndex)[1]);
+                },700L);
+                return;
+            }
+            sampleButtonIndex++;
+        }else{
+            markSampleIssue(safeReason);
+        }
+        advanceSample(2);
     }
     private void advanceSample(int outcome){
         if(finished||!sampleShipping||sampleIndex>=sampleTargets.size())return;
@@ -793,8 +824,13 @@ public final class BackgroundProbeService extends Service {
         if(outcome==1)sampleNoButton++;
         else if(outcome==2){
             sampleUnknown++;
-            if(sampleMulti && sampleButtonCount>sampleButtonIndex)
-                sampleControlsSkipped+=sampleButtonCount-sampleButtonIndex;
+            if(sampleMulti&&sampleButtonCount>0){
+                sampleControlsSkipped+=Math.max(0,sampleButtonCount-sampleItemDisplayCount);
+                if(sampleFocus){
+                    sampleControlNoDisplay+=sampleItemNoDisplay;
+                    sampleControlsNotTested+=Math.max(0,sampleButtonCount-sampleItemCheckedCount);
+                }
+            }
             if(sampleIssueNotes.size()<sampleLimit)
                 sampleIssueNotes.add(samplePosition()+"번:"+
                     (sampleIssue.isEmpty()?"상세 확인 실패":sampleIssue));
