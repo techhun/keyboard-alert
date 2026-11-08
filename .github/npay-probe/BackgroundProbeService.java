@@ -49,7 +49,7 @@ public final class BackgroundProbeService extends Service {
     private static final String CHANNEL = "npay_bg_probe";
     private static final String CHANNEL_DONE = "npay_bg_probe_result";
     private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
-    private static final String SHIPMENT_CONTEXT_JS = "(function(){try{var body=document.body,txt=body?body.innerText:'';var items=document.querySelectorAll('[role=dialog],dialog,[aria-modal=true]');var dialogs=0;for(var i=0;i<items.length&&i<60;i++)if(items[i].getClientRects().length)dialogs++;var controls=document.querySelectorAll('button,a,[role=button]');var clicks=0;for(var j=0;j<controls.length&&j<1200;j++){var z=controls[j];if(z.getClientRects().length&&['배송조회','배송 조회'].indexOf((z.innerText||'').trim())>=0)clicks++;}var frames=document.querySelectorAll('iframe'),readable=0,unreadable=0,payFrames=0,otherFrames=0,blankFrames=0,frameLabels=0,frameCarrier=0,frameBoth=0;var known=['CJ대한통운','한진택배','로젠택배','우체국택배','롯데택배','컬리넥스트마일','경동택배','대신택배'];for(var q=0;q<frames.length&&q<20;q++){var f=frames[q],raw=f.getAttribute('src')||'';if(!raw||raw==='about:blank')blankFrames++;else{try{var u=new URL(raw,location.href);if(u.origin===location.origin)payFrames++;else otherFrames++;}catch(_){otherFrames++;}}try{var d=f.contentDocument;if(!d||!d.body){unreadable++;continue;}readable++;var t=(d.body.innerText||'').slice(0,25000),label=t.indexOf('운송장')>=0||t.indexOf('송장번호')>=0,car=known.some(function(x){return t.indexOf(x)>=0;});if(label)frameLabels++;if(car)frameCarrier++;if(label&&car)frameBoth++;}catch(_){unreadable++;}}var path=location.pathname||'';var routeKind=/tracking|delivery|shipping|parcel/i.test(path)?'배송경로':/order|detail/i.test(path)?'주문상세':/history/i.test(path)?'결제목록':/payment|pay/i.test(path)?'결제화면':'기타Pay';var hasProductLabel=txt.indexOf('상품주문번호')>=0,hasLogin=txt.indexOf('로그인')>=0||txt.indexOf('본인인증')>=0,hasError=txt.indexOf('페이지를 찾을 수 없')>=0||txt.indexOf('오류가 발생')>=0||txt.indexOf('접근할 수 없')>=0;return JSON.stringify({ok:true,routeKind:routeKind,hasProductLabel:hasProductLabel,hasLogin:hasLogin,hasError:hasError,ready:document.readyState,bodyLength:Math.min(99999,txt.length),dialogs:Math.min(60,dialogs),frames:Math.min(99,frames.length),controls:Math.min(999,clicks),hasShipping:txt.indexOf('배송조회')>=0||txt.indexOf('배송 조회')>=0,hasParcel:txt.indexOf('운송장')>=0||txt.indexOf('송장번호')>=0,frameReadable:readable,frameUnreadable:unreadable,framePay:payFrames,frameOther:otherFrames,frameBlank:blankFrames,frameLabel:frameLabels,frameCarrier:frameCarrier,frameBoth:frameBoth});}catch(_){return JSON.stringify({ok:false});}})()";
+    private static final String SHIPMENT_CONTEXT_JS = "(function(){try{var body=document.body,txt=body?body.innerText:'';var items=document.querySelectorAll('[role=dialog],dialog,[aria-modal=true]');var dialogs=0;for(var i=0;i<items.length&&i<60;i++)if(items[i].getClientRects().length)dialogs++;var controls=document.querySelectorAll('button,a,[role=button]');var clicks=0;for(var j=0;j<controls.length&&j<1200;j++){var z=controls[j];if(z.getClientRects().length&&['배송조회','배송 조회'].indexOf((z.innerText||'').trim())>=0)clicks++;}var frames=document.querySelectorAll('iframe'),readable=0,unreadable=0,payFrames=0,otherFrames=0,blankFrames=0,frameLabels=0,frameCarrier=0,frameBoth=0;var known=['CJ대한통운','한진택배','로젠택배','우체국택배','롯데택배','컬리넥스트마일','경동택배','대신택배'];for(var q=0;q<frames.length&&q<20;q++){var f=frames[q],raw=f.getAttribute('src')||'';if(!raw||raw==='about:blank')blankFrames++;else{try{var u=new URL(raw,location.href);if(u.origin===location.origin)payFrames++;else otherFrames++;}catch(_){otherFrames++;}}try{var d=f.contentDocument;if(!d||!d.body){unreadable++;continue;}readable++;var t=(d.body.innerText||'').slice(0,25000),label=t.indexOf('운송장')>=0||t.indexOf('송장번호')>=0,car=known.some(function(x){return t.indexOf(x)>=0;});if(label)frameLabels++;if(car)frameCarrier++;if(label&&car)frameBoth++;}catch(_){unreadable++;}}var path=location.pathname||'';var routeKind=/tracking|delivery|shipping|parcel/i.test(path)?'배송경로':/order|detail/i.test(path)?'주문상세':/history/i.test(path)?'결제목록':/payment|pay/i.test(path)?'결제화면':'기타Pay';var hasProductLabel=txt.indexOf('상품주문번호')>=0,hasLogin=txt.indexOf('로그인')>=0||txt.indexOf('본인인증')>=0,hasError=txt.indexOf('페이지를 찾을 수 없')>=0||txt.indexOf('오류가 발생')>=0||txt.indexOf('접근할 수 없')>=0;var next=document.getElementById('__NEXT_DATA__');var resourceCount=0,ajaxCount=0;try{var entries=performance.getEntriesByType('resource');resourceCount=Math.min(999,entries.length);for(var e=0;e<entries.length&&e<1200;e++){var t=entries[e].initiatorType;if(t==='fetch'||t==='xmlhttprequest')ajaxCount++;}}catch(_){}return JSON.stringify({ok:true,hasNextData:!!next,resourceCount:resourceCount,ajaxCount:Math.min(999,ajaxCount),routeKind:routeKind,hasProductLabel:hasProductLabel,hasLogin:hasLogin,hasError:hasError,ready:document.readyState,bodyLength:Math.min(99999,txt.length),dialogs:Math.min(60,dialogs),frames:Math.min(99,frames.length),controls:Math.min(999,clicks),hasShipping:txt.indexOf('배송조회')>=0||txt.indexOf('배송 조회')>=0,hasParcel:txt.indexOf('운송장')>=0||txt.indexOf('송장번호')>=0,frameReadable:readable,frameUnreadable:unreadable,framePay:payFrames,frameOther:otherFrames,frameBlank:blankFrames,frameLabel:frameLabels,frameCarrier:frameCarrier,frameBoth:frameBoth});}catch(_){return JSON.stringify({ok:false});}})()";
     private static final String PAGE_JS = "(function(){try{var path=location.pathname;if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||['/history','/history/','/pc/history','/pc/history/'].indexOf(path)<0)return JSON.stringify({ok:false,code:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,code:'WAIT'});if(el.textContent.length>5000000)return JSON.stringify({ok:false,code:'LIMIT'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,code:'WAIT'});var p=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){var pages=q[i].state&&q[i].state.data&&q[i].state.data.pages;if(Array.isArray(pages))for(var j=0;j<pages.length;j++)if(Number(pages[j].curPage)===__PAGE__){p=pages[j];break;}if(p)break;}}if(!p)return JSON.stringify({ok:false,code:'WAIT'});var count=Array.isArray(p.items)?p.items.length:-1,total=Number(p.totalPage);if(count<0||count>1000||!Number.isInteger(total)||total<0||total>500)return JSON.stringify({ok:false,code:'BAD_DATA'});var ids=[];if(__IDS__){for(var k=0;k<count;k++){var item=p.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,code:'BAD_ID'});ids.push(id);}}return JSON.stringify({ok:true,count:count,pages:total,page:__PAGE__,ids:ids});}catch(_){return JSON.stringify({ok:false,code:'PARSE'});}})()";
     private final Handler handler = new Handler(Looper.getMainLooper());
     private WebView webView;
@@ -294,24 +294,34 @@ public final class BackgroundProbeService extends Service {
                     try{
                         android.net.Uri u=req.getUrl();
                         String host=u==null?null:u.getHost();
-                        if(u==null||!"https".equals(u.getScheme())||host==null||
-                            !("pay.naver.com".equals(host)||host.endsWith(".pay.naver.com")))return;
+                        if(u==null||!"https".equals(u.getScheme())||host==null)return;
                         int code=response.getStatusCode();
-                        if(code>=400&&code<500)sampleHttpClientErrors=Math.min(99,sampleHttpClientErrors+1);
-                        else if(code>=500&&code<600)sampleHttpServerErrors=Math.min(99,sampleHttpServerErrors+1);
-                        else return;
+                        if(code<400||code>=600)return;
+                        boolean pay="pay.naver.com".equals(host)||host.endsWith(".pay.naver.com");
+                        if(pay){
+                            if(code<500)sampleHttpClientErrors=Math.min(99,sampleHttpClientErrors+1);
+                            else sampleHttpServerErrors=Math.min(99,sampleHttpServerErrors+1);
+                        }else{
+                            if(code<500)sampleExternalHttp4xx=Math.min(99,sampleExternalHttp4xx+1);
+                            else sampleExternalHttp5xx=Math.min(99,sampleExternalHttp5xx+1);
+                        }
                         if(req.isForMainFrame())sampleHttpMainErrors=Math.min(99,sampleHttpMainErrors+1);
-                        // Only status counts for the allowed Pay origin; never the URL or response.
+                        // Aggregate HTTPS status categories only, never URLs or response bodies.
                     }catch(RuntimeException ignored){}
                 }
                 @Override public void onReceivedError(WebView v, WebResourceRequest req,
                                                      android.webkit.WebResourceError err) {
-                    if (!finished && req.isForMainFrame()) {
+                    if(finished||req==null)return;
+                    if(sampleShipping&&sampleStage==2&&!req.isForMainFrame()){
+                        // A resource loading failure may be on a third-party carrier service.
+                        // Count it, but never record the failed resource URL or reason text.
+                        sampleNetworkSubresourceErrors=Math.min(99,sampleNetworkSubresourceErrors+1);
+                    }
+                    if(req.isForMainFrame()){
                         if(sampleShipping&&(sampleStage==1||sampleStage==2)){
                             markSampleIssue("배송조회 페이지 네트워크 오류");
                             advanceSample(2);
-                        }
-                        else finish("페이지 로딩 오류 · 네트워크 또는 세션 확인 필요");
+                        }else finish("페이지 로딩 오류 · 네트워크 또는 세션 확인 필요");
                     }
                 }
                 @Override public boolean onRenderProcessGone(
@@ -751,7 +761,10 @@ public final class BackgroundProbeService extends Service {
                             " · 화면종류 "+d.optString("routeKind","기타Pay")+
                             " · 상품주문표시 "+(d.optBoolean("hasProductLabel")?"있음":"없음")+
                             " · 로그인문구 "+(d.optBoolean("hasLogin")?"있음":"없음")+
-                            " · 오류문구 "+(d.optBoolean("hasError")?"있음":"없음");
+                            " · 오류문구 "+(d.optBoolean("hasError")?"있음":"없음")+
+                            " · Next데이터 "+(d.optBoolean("hasNextData")?"있음":"없음")+
+                            " · 리소스 "+Math.max(0,Math.min(999,d.optInt("resourceCount",0)))+
+                            " · Fetch/XHR "+Math.max(0,Math.min(999,d.optInt("ajaxCount",0)));
                     }
                 }catch(Exception ignored){ /* Record only sanitized fallback. */ }
                 markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+
