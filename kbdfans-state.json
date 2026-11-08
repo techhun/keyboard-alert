@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T00:41:06.850Z",
+  "updatedAt": "2026-11-08T00:32:57.970Z",
   "rows": [
     {
       "category": "GMK",
@@ -152,17 +152,6 @@
       "status": "In Production",
       "eta": "Nov 2026",
       "progress": 50,
-      "summary": "Awaiting Injection Molding",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Astraeus",
-      "status": "In production",
-      "eta": "September 20",
-      "progress": 70,
       "summary": "Awaiting Injection Molding",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -999,6 +988,7 @@
     "f50099077fc7b89037abaf7f": "2026-11-03T07:02:50.922Z",
     "edc0868b5e0702272420ffe3": "2026-11-04T07:51:08.179Z",
     "38777db289d40b85785b6584": "2026-11-06T00:23:18.361Z",
-    "d54060273ebd679299ea12df": "2026-11-06T00:41:06.850Z"
+    "d54060273ebd679299ea12df": "2026-11-06T00:41:06.850Z",
+    "5745ef3f023040af28da8e33": "2026-11-08T00:32:57.969Z"
   }
 }
