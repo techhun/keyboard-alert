@@ -12,12 +12,14 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.webkit.CookieManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,7 +47,7 @@ public final class BackgroundProbeService extends Service {
     private static final String CHANNEL = "npay_bg_probe";
     private static final String CHANNEL_DONE = "npay_bg_probe_result";
     private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
-    private static final String SHIPMENT_CONTEXT_JS = "(function(){try{var body=document.body,txt=body?body.innerText:'';var items=document.querySelectorAll('[role=dialog],dialog,[aria-modal=true]');var dialogs=0;for(var i=0;i<items.length&&i<60;i++)if(items[i].getClientRects().length)dialogs++;var controls=document.querySelectorAll('button,a,[role=button]');var clicks=0;for(var j=0;j<controls.length&&j<1200;j++){var z=controls[j];if(z.getClientRects().length&&['배송조회','배송 조회'].indexOf((z.innerText||'').trim())>=0)clicks++;}var frames=document.querySelectorAll('iframe'),readable=0,unreadable=0,payFrames=0,otherFrames=0,blankFrames=0,frameLabels=0,frameCarrier=0,frameBoth=0;var known=['CJ대한통운','한진택배','로젠택배','우체국택배','롯데택배','컬리넥스트마일','경동택배','대신택배'];for(var q=0;q<frames.length&&q<20;q++){var f=frames[q],raw=f.getAttribute('src')||'';if(!raw||raw==='about:blank')blankFrames++;else{try{var u=new URL(raw,location.href);if(u.origin===location.origin)payFrames++;else otherFrames++;}catch(_){otherFrames++;}}try{var d=f.contentDocument;if(!d||!d.body){unreadable++;continue;}readable++;var t=(d.body.innerText||'').slice(0,25000),label=t.indexOf('운송장')>=0||t.indexOf('송장번호')>=0,car=known.some(function(x){return t.indexOf(x)>=0;});if(label)frameLabels++;if(car)frameCarrier++;if(label&&car)frameBoth++;}catch(_){unreadable++;}}return JSON.stringify({ok:true,ready:document.readyState,bodyLength:Math.min(99999,txt.length),dialogs:Math.min(60,dialogs),frames:Math.min(99,frames.length),controls:Math.min(999,clicks),hasShipping:txt.indexOf('배송조회')>=0||txt.indexOf('배송 조회')>=0,hasParcel:txt.indexOf('운송장')>=0||txt.indexOf('송장번호')>=0,frameReadable:readable,frameUnreadable:unreadable,framePay:payFrames,frameOther:otherFrames,frameBlank:blankFrames,frameLabel:frameLabels,frameCarrier:frameCarrier,frameBoth:frameBoth});}catch(_){return JSON.stringify({ok:false});}})()";
+    private static final String SHIPMENT_CONTEXT_JS = "(function(){try{var body=document.body,txt=body?body.innerText:'';var items=document.querySelectorAll('[role=dialog],dialog,[aria-modal=true]');var dialogs=0;for(var i=0;i<items.length&&i<60;i++)if(items[i].getClientRects().length)dialogs++;var controls=document.querySelectorAll('button,a,[role=button]');var clicks=0;for(var j=0;j<controls.length&&j<1200;j++){var z=controls[j];if(z.getClientRects().length&&['배송조회','배송 조회'].indexOf((z.innerText||'').trim())>=0)clicks++;}var frames=document.querySelectorAll('iframe'),readable=0,unreadable=0,payFrames=0,otherFrames=0,blankFrames=0,frameLabels=0,frameCarrier=0,frameBoth=0;var known=['CJ대한통운','한진택배','로젠택배','우체국택배','롯데택배','컬리넥스트마일','경동택배','대신택배'];for(var q=0;q<frames.length&&q<20;q++){var f=frames[q],raw=f.getAttribute('src')||'';if(!raw||raw==='about:blank')blankFrames++;else{try{var u=new URL(raw,location.href);if(u.origin===location.origin)payFrames++;else otherFrames++;}catch(_){otherFrames++;}}try{var d=f.contentDocument;if(!d||!d.body){unreadable++;continue;}readable++;var t=(d.body.innerText||'').slice(0,25000),label=t.indexOf('운송장')>=0||t.indexOf('송장번호')>=0,car=known.some(function(x){return t.indexOf(x)>=0;});if(label)frameLabels++;if(car)frameCarrier++;if(label&&car)frameBoth++;}catch(_){unreadable++;}}var path=location.pathname||'';var routeKind=/tracking|delivery|shipping|parcel/i.test(path)?'배송경로':/order|detail/i.test(path)?'주문상세':/history/i.test(path)?'결제목록':/payment|pay/i.test(path)?'결제화면':'기타Pay';var hasProductLabel=txt.indexOf('상품주문번호')>=0,hasLogin=txt.indexOf('로그인')>=0||txt.indexOf('본인인증')>=0,hasError=txt.indexOf('페이지를 찾을 수 없')>=0||txt.indexOf('오류가 발생')>=0||txt.indexOf('접근할 수 없')>=0;return JSON.stringify({ok:true,routeKind:routeKind,hasProductLabel:hasProductLabel,hasLogin:hasLogin,hasError:hasError,ready:document.readyState,bodyLength:Math.min(99999,txt.length),dialogs:Math.min(60,dialogs),frames:Math.min(99,frames.length),controls:Math.min(999,clicks),hasShipping:txt.indexOf('배송조회')>=0||txt.indexOf('배송 조회')>=0,hasParcel:txt.indexOf('운송장')>=0||txt.indexOf('송장번호')>=0,frameReadable:readable,frameUnreadable:unreadable,framePay:payFrames,frameOther:otherFrames,frameBlank:blankFrames,frameLabel:frameLabels,frameCarrier:frameCarrier,frameBoth:frameBoth});}catch(_){return JSON.stringify({ok:false});}})()";
     private static final String PAGE_JS = "(function(){try{var path=location.pathname;if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||['/history','/history/','/pc/history','/pc/history/'].indexOf(path)<0)return JSON.stringify({ok:false,code:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,code:'WAIT'});if(el.textContent.length>5000000)return JSON.stringify({ok:false,code:'LIMIT'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,code:'WAIT'});var p=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){var pages=q[i].state&&q[i].state.data&&q[i].state.data.pages;if(Array.isArray(pages))for(var j=0;j<pages.length;j++)if(Number(pages[j].curPage)===__PAGE__){p=pages[j];break;}if(p)break;}}if(!p)return JSON.stringify({ok:false,code:'WAIT'});var count=Array.isArray(p.items)?p.items.length:-1,total=Number(p.totalPage);if(count<0||count>1000||!Number.isInteger(total)||total<0||total>500)return JSON.stringify({ok:false,code:'BAD_DATA'});var ids=[];if(__IDS__){for(var k=0;k<count;k++){var item=p.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,code:'BAD_ID'});ids.push(id);}}return JSON.stringify({ok:true,count:count,pages:total,page:__PAGE__,ids:ids});}catch(_){return JSON.stringify({ok:false,code:'PARSE'});}})()";
     private final Handler handler = new Handler(Looper.getMainLooper());
     private WebView webView;
@@ -61,7 +63,7 @@ public final class BackgroundProbeService extends Service {
         sampleMultiOrders=0, sampleCachedEntries=0, sampleCachedButtons=0,
         sampleCacheChanged=0;
     private String sampleButtonSignature="",sampleIssue="",sampleDetailObservation="";
-    private int sampleShippingNavigations=0;
+    private int sampleShippingNavigations=0, samplePopupRequests=0, samplePopupUserGestureRequests=0;
     private long sampleStartedAt=0L;
     private int sampleSharedDetail=0;
     private final java.util.HashSet<String> sampleDetailUrls=new java.util.HashSet<>();
@@ -217,13 +219,29 @@ public final class BackgroundProbeService extends Service {
             st.setAllowContentAccess(false);
             st.setAllowFileAccessFromFileURLs(false);
             st.setAllowUniversalAccessFromFileURLs(false);
-            st.setJavaScriptCanOpenWindowsAutomatically(false);
+            // Only instrument user-initiated shipping probes. New windows remain
+            // blocked until their destination can be verified; no popup is followed.
+            st.setJavaScriptCanOpenWindowsAutomatically(sampleShipping);
+            st.setSupportMultipleWindows(sampleShipping);
             st.setLoadsImagesAutomatically(false);
             st.setCacheMode(WebSettings.LOAD_NO_CACHE);
             String agent = st.getUserAgentString();
             st.setUserAgentString(agent.replace("; wv)", ")").replace("Version/4.0 ", ""));
             CookieManager.getInstance().setAcceptCookie(true);
             CookieManager.getInstance().setAcceptThirdPartyCookies(webView, false);
+            if(sampleShipping){
+                webView.setWebChromeClient(new WebChromeClient(){
+                    @Override public boolean onCreateWindow(WebView view,boolean dialog,
+                            boolean userGesture,Message message){
+                        if(!finished&&sampleStage==2){
+                            samplePopupRequests++;
+                            if(userGesture)samplePopupUserGestureRequests++;
+                        }
+                        // Never open an unverified popup or external courier service.
+                        return false;
+                    }
+                });
+            }
             webView.setWebViewClient(new WebViewClient() {
                 @Override public void onPageFinished(WebView view, String address) {
                     if (finished) return;
@@ -469,7 +487,7 @@ public final class BackgroundProbeService extends Service {
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
         sampleDetailObservation="";
         sampleEmptyReads=0;sampleAmbiguousReads=0;
-        sampleShippingNavigations=0;
+        sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
         final int watchedIndex=sampleIndex;
@@ -577,7 +595,7 @@ public final class BackgroundProbeService extends Service {
                         advanceSample(2);return;
                     }
                     sampleStage=2;sampleStep++;samplePoll=0;
-                    sampleShippingNavigations=0;
+                    sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
                     sampleDetailObservation="배송정보 응답 없음";
                     final int clickStep=sampleStep;
                     String command=BackgroundDeliveryScripts.CLICK_JS+"("+
@@ -688,11 +706,17 @@ public final class BackgroundProbeService extends Service {
                             " · 빈프레임 "+Math.max(0,Math.min(20,d.optInt("frameBlank",0)))+
                             " · 프레임운송장표시 "+Math.max(0,Math.min(20,d.optInt("frameLabel",0)))+
                             " · 프레임택배사표시 "+Math.max(0,Math.min(20,d.optInt("frameCarrier",0)))+
-                            " · 프레임동시표시 "+Math.max(0,Math.min(20,d.optInt("frameBoth",0)));
+                            " · 프레임동시표시 "+Math.max(0,Math.min(20,d.optInt("frameBoth",0)))+
+                            " · 화면종류 "+d.optString("routeKind","기타Pay")+
+                            " · 상품주문표시 "+(d.optBoolean("hasProductLabel")?"있음":"없음")+
+                            " · 로그인문구 "+(d.optBoolean("hasLogin")?"있음":"없음")+
+                            " · 오류문구 "+(d.optBoolean("hasError")?"있음":"없음");
                     }
                 }catch(Exception ignored){ /* Record only sanitized fallback. */ }
                 markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+
-                    " · "+navigation+" · 이동 "+navigations+"회 · "+context+")");
+                    " · "+navigation+" · 로드완료 "+navigations+"회"+
+                    " · 새창요청 "+Math.min(99,samplePopupRequests)+"회"+
+                    " · 사용자제스처 새창 "+Math.min(99,samplePopupUserGestureRequests)+"회 · "+context+")");
                 advanceSample(2);
             });
         }catch(RuntimeException ex){
