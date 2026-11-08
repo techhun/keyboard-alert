@@ -33,7 +33,11 @@ public final class BackgroundProbeService extends Service {
     static final String ACTION_SHIP_SAMPLE = "com.techhun.npayprobe.BG_SHIP_SAMPLE";
     static final String ACTION_SHIP_MULTI = "com.techhun.npayprobe.BG_SHIP_MULTI";
     static final String ACTION_SHIP_PAGE = "com.techhun.npayprobe.BG_SHIP_PAGE";
+    // Keep the previously tested small-sample bound. Allow more only in
+    // the opt-in first-page scan, with the existing per-order / run timeouts.
     private static final int MAX_BUTTONS_PER_ITEM = 5;
+    private static final int MAX_PAGE_BUTTONS_PER_ITEM = 10;
+    private int buttonLimit(){return samplePage?MAX_PAGE_BUTTONS_PER_ITEM:MAX_BUTTONS_PER_ITEM;}
     static final String PREFS = "npay_bg_probe";
     static final String STATUS = "status";
     private static final int NOTIFICATION_ID = 62018;
@@ -53,11 +57,22 @@ public final class BackgroundProbeService extends Service {
         sampleEmptyReads=0, sampleEmptyRetries=0, sampleLateControls=0,
         sampleAmbiguousReads=0, sampleAmbiguousRetries=0,
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
-        sampleMultiOrders=0;
+        sampleMultiOrders=0, sampleCachedEntries=0, sampleCachedButtons=0,
+        sampleCacheChanged=0;
     private String sampleButtonSignature="",sampleIssue="";
     private long sampleStartedAt=0L;
     private int sampleSharedDetail=0;
     private final java.util.HashSet<String> sampleDetailUrls=new java.util.HashSet<>();
+    // Session-only order-detail cache. Never save order URLs or keys to disk.
+    private static final class VerifiedDetail {
+        final String signature;
+        final int count, sourceItem;
+        VerifiedDetail(String signature,int count,int sourceItem){
+            this.signature=signature;this.count=count;this.sourceItem=sourceItem;
+        }
+    }
+    private final java.util.HashMap<String,VerifiedDetail> verifiedDetails=new java.util.HashMap<>();
+    private final java.util.ArrayList<String> reusedDetailNotes=new java.util.ArrayList<>();
     private final java.util.ArrayList<String> sampleIssueNotes=new java.util.ArrayList<>();
     private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
@@ -411,7 +426,13 @@ public final class BackgroundProbeService extends Service {
                     " · 지연 발견 "+sampleLateControls+"건"+
                     " · 식별 재확인 "+sampleAmbiguousRetries+"회":"")+
                 (samplePage?" · 같은 상세 URL "+sampleSharedDetail+"건"+
-                    " · 소요 "+((System.currentTimeMillis()-sampleStartedAt)/1000L)+"초":"")+marker);
+                    " · 검증 결과 재사용 "+sampleCachedEntries+"건/"+sampleCachedButtons+"개"+
+                    " · 상세 구성 변경 "+sampleCacheChanged+"건"+
+                    " · 검사 한도 "+buttonLimit()+"개/항목"+
+                    " · 소요 "+((System.currentTimeMillis()-sampleStartedAt)/1000L)+"초":"")+
+                (reusedDetailNotes.isEmpty()?"":" · 재사용 위치 "+
+                    android.text.TextUtils.join(" / ",reusedDetailNotes)+
+                    " (동일 주문상세만 확인 · 상품별 송장 연결 미확정)")+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
@@ -492,6 +513,26 @@ public final class BackgroundProbeService extends Service {
                         advanceSample(2);return;
                     }
                     String signature=keys.toString();
+                    // Only reuse after all controls on this exact detail URL were
+                    // independently clicked and showed a delivery candidate.
+                    // The target product is validated separately above. Same
+                    // detail is NOT evidence of per-product invoice association.
+                    if(samplePage&&sampleButtonIndex==0){
+                        VerifiedDetail prior=verifiedDetails.get(link);
+                        if(prior!=null){
+                            if(prior.count==keys.length()&&prior.signature.equals(signature)){
+                                sampleCachedEntries++;
+                                sampleCachedButtons+=keys.length();
+                                sampleControlsObserved+=keys.length();
+                                if(keys.length()>1)sampleMultiOrders++;
+                                if(reusedDetailNotes.size()<sampleLimit)
+                                    reusedDetailNotes.add((sampleIndex+1)+"번←"+prior.sourceItem+"번");
+                                advanceSample(3);
+                                return;
+                            }
+                            sampleCacheChanged++;
+                        }
+                    }
                     if(sampleButtonIndex==0){
                         sampleButtonCount=keys.length();
                         sampleButtonSignature=signature;
@@ -537,7 +578,7 @@ public final class BackgroundProbeService extends Service {
                         sampleButtonsFound++;
                         sampleButtonIndex++;
                         if(sampleMulti && sampleButtonIndex<sampleButtonCount &&
-                            sampleButtonIndex<MAX_BUTTONS_PER_ITEM){
+                            sampleButtonIndex<buttonLimit()){
                             // Reopen original detail before testing the next distinct control.
                             sampleStage=1;sampleStep++;readQueued=false;attempt=0;
                             final int nextStep=sampleStep;
@@ -549,9 +590,17 @@ public final class BackgroundProbeService extends Service {
                         }
                         // If more controls remain, count this as unverified, not fully matched.
                         if(sampleMulti && sampleButtonIndex<sampleButtonCount){
-                            markSampleIssue("건당 "+MAX_BUTTONS_PER_ITEM+"개 검사 한도");
+                            markSampleIssue("건당 "+buttonLimit()+"개 검사 한도");
                             advanceSample(2);
-                        }else advanceSample(3);
+                        }else {
+                            if(samplePage&&sampleButtonCount>0&&
+                                sampleButtonIndex==sampleButtonCount){
+                                String detailUrl=sampleTargets.get(sampleIndex)[1];
+                                verifiedDetails.put(detailUrl,new VerifiedDetail(
+                                    sampleButtonSignature,sampleButtonCount,sampleIndex+1));
+                            }
+                            advanceSample(3);
+                        }
                         return;
                     }
                     if(++samplePoll<9){
@@ -611,7 +660,8 @@ public final class BackgroundProbeService extends Service {
             webView = null;
         }
         if (wakeLock != null && wakeLock.isHeld()) wakeLock.release();
-        sampleTargets.clear();sampleDetailUrls.clear();seenHashes.clear();
+        sampleTargets.clear();sampleDetailUrls.clear();verifiedDetails.clear();
+        reusedDetailNotes.clear();seenHashes.clear();
         sampleIssueNotes.clear();sampleNoButtonNotes.clear();
         super.onDestroy();
     }
