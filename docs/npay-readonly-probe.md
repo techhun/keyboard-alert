@@ -1,4 +1,4 @@
-# NPay read-only delivery probe (v0.1.26)
+# NPay read-only delivery probe (v0.1.27)
 
 ## Scope and isolation
 - Prototype only; not a production courier-tracking or purchase-sync service.
@@ -136,6 +136,16 @@
 - **Build/release verified 2026-10-30:** GitHub Actions [run 41043804757](https://github.com/techhun/keyboard-alert/actions/runs/41043804757) passed Android lint/assemble, fixed-key signing, APK Signature Schemes v2/v3 and pinned certificate-fingerprint verification. The prerelease [npay-probe-v0.1.26-fixed](https://github.com/techhun/keyboard-alert/releases/tag/npay-probe-v0.1.26-fixed) includes `NPay-Probe-v0.1.26-fixed-signed.apk` (998,124 bytes; SHA-256 `f2af590de26c5df574b5cc77dae2eec7be1491c7a6ecbe27a97548d297443235`). **Phone in-place update is not yet verified.**
 - **Required phone smoke test:** from v0.1.25 use GitHub Releases → Assets → fixed-signed v0.1.26 APK and install **without uninstalling**. Verify installed version 0.1.26 and NPay login state. As a targeted additional check, run the first-page background shipping probe only if needed to exercise the new ambiguous-control classification. Preserve the operational Restock app.
 - Rollback note: because downgrade to lower `versionCode` can require uninstall and wipe app-local WebView login/session, retain the last known-good v0.1.25 release and use a new, higher `versionCode` for any corrective rollout.
+
+## 2026-11-08 v0.1.27 verified shared-detail reuse and wider bounded scan
+- The user confirmed v0.1.26 **installed** after v0.1.25. An in-place update is consistent with identical package ID/certificate and increasing versionCode; the user did not separately confirm login persisted in v0.1.26.
+- Changes are isolated to the NPay probe service and its workflow; no Restock, Keepodd, GitHub production alert system, or user order records are changed.
+- In the opt-in **first-page, 15-entry** background shipping scan only, allow at most **10 shipping controls per list entry**, up from 5. The original 6-entry single/multi-button regression modes keep the 5-control limit. The existing 55-second per-entry watchdog and bounded 12-minute run timeout still apply, so entries beyond those limits remain **additional review**.
+- New in-memory verified-detail reuse is deliberately conservative. It caches an exact order-detail URL **only after every discovered button on that page was clicked and returned delivery display information**. A subsequent list entry pointing to exactly the same URL is still reopened and independently checked for its own target product presence, explicit cancellation, absence of ambiguous/blocked controls and an identical entire button signature. Only then is the *order-detail inspection result* reused, with separate counters for reused entries/buttons. If the signature differs, the full detail is inspected again and an aggregate mismatch counter increases. The session-only map is deleted when the service ends; raw URLs, order IDs and tracking numbers are never written to disk or auto-exported.
+- **Never interpret a reused shared order-detail result as proof that each product has that tracking number.** A shared detail page can contain unrelated items and multiple shipments. Keep direct-button count, reused-button count, recognized count and unverified count distinct, with explicit ambiguity wording in the report.
+- Continue to distinguish missing target, cancellation ambiguity, control enumeration limit, excluded/unbound buttons, missing displays, intentional button cap and genuine no-button outcomes. Do not force an uncertain item to a successful shipment state.
+- Required validation: `lintDebug`, `assembleDebug`, APK Signature Scheme v2/v3, fixed NPay v2 certificate SHA-256 `dff596e4398bd155b883e92e1e72d0e3cd357feb81e66ffcb38edbb935c0e4c4`, published GitHub Releases page, and phone regression with a direct **v0.1.26 → v0.1.27 update install**. In the same phone session use `진단 → 백그라운드 첫 페이지 배송검사 (15건·건당 최대 10개)` and report all aggregate results. Avoid separate repeated APK installations or 433-entry full shipping runs until this step passes.
+- Known remaining work: product-order-key-to-invoice reliable association, inventory/shipping incremental synchronization, secure and deliberate local persistence, multi-page shipping scale and timer/Android OS long-running execution suitability. Do not claim they are implemented.
 
 ## Rollback
 - Last v0.1.16 source: commit `e67bf7f2541c4e1e40c772f9befae3a275d44bd8`.
