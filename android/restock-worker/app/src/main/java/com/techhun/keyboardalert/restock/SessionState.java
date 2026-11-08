@@ -57,6 +57,17 @@ final class SessionState {
             .apply();
     }
 
+    // HTTP 429 is rate limiting, not an authentication response. A missing
+    // session must not reclassify explicit throttling into a login failure.
+    static boolean isInventoryAuthenticationFailure(
+        String error, int status, boolean redirectedToLogin, boolean sessionPresent
+    ) {
+        if ("RATE_LIMITED".equals(error) || status == 429) return false;
+        return "AUTH_REQUIRED".equals(error)
+            || status == 401 || status == 403
+            || redirectedToLogin || !sessionPresent;
+    }
+
     static boolean shouldShowGate(Context context) {
         return shouldShowGate(hasNaverSession(), isNaverAuthRequired(context), isGuestMode(context));
     }

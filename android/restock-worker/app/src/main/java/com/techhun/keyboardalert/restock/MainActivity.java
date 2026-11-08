@@ -556,11 +556,9 @@ public class MainActivity extends Activity {
                 String error = result.optString("error", "UNKNOWN");
                 String siteType = SiteSupport.detect(pendingUrl);
                 boolean authFailure = SiteSupport.NAVER_SMARTSTORE.equals(siteType)
-                    && ("AUTH_REQUIRED".equals(error)
-                        || status == 401
-                        || status == 403
-                        || SiteSupport.isNaverLoginUrl(webView.getUrl())
-                        || !hasNaverSession());
+                    && SessionState.isInventoryAuthenticationFailure(
+                        error, status, SiteSupport.isNaverLoginUrl(webView.getUrl()),
+                        hasNaverSession());
                 if (authFailure && !pendingUrl.isBlank()) {
                     DiagnosticLog.add(this, "OPTION_LOGIN_REQUIRED", pendingLookupProduct, error);
                     directLookupAttempt = false;

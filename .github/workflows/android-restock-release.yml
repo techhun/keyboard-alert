@@ -105,7 +105,7 @@ jobs:
   # Routine pushes to the development branch still build private CI artifacts.
   publish_release:
     needs: release
-    if: "${{ startsWith(github.ref, 'refs/tags/restock-v') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'ci(restock): publish verified v0.14.44 diagnostics APK') }}"
+    if: "${{ startsWith(github.ref, 'refs/tags/restock-v') || (github.event_name == 'push' && github.ref == 'refs/heads/fix/restock-recovery-observability' && github.event.head_commit.message == 'ci(restock): publish verified v0.14.45 auth classification APK') }}"
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -127,7 +127,7 @@ jobs:
           if [[ "$GITHUB_REF" == refs/tags/restock-v* ]]; then
             tag="$GITHUB_REF_NAME"
           else
-            tag="restock-v0.14.44"
+            tag="restock-v0.14.45"
           fi
           version="${tag#restock-v}"
           grep -Fq "versionName = \"$version\"" android/restock-worker/app/build.gradle.kts || {
