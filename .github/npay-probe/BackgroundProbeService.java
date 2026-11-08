@@ -59,7 +59,7 @@ public final class BackgroundProbeService extends Service {
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0, sampleCachedEntries=0, sampleCachedButtons=0,
         sampleCacheChanged=0;
-    private String sampleButtonSignature="",sampleIssue="";
+    private String sampleButtonSignature="",sampleIssue="",sampleDetailObservation="";
     private long sampleStartedAt=0L;
     private int sampleSharedDetail=0;
     private final java.util.HashSet<String> sampleDetailUrls=new java.util.HashSet<>();
@@ -77,6 +77,17 @@ public final class BackgroundProbeService extends Service {
     private final java.util.ArrayList<String> sampleNoButtonNotes=new java.util.ArrayList<>();
     private void markSampleIssue(String safeCode){
         sampleIssue=safeCode;
+    }
+    /** Report schema presence only; never copy an invoice, parcel ID, or DOM text. */
+    private String detailObservation(JSONObject d){
+        int pairs=Math.max(0,Math.min(999,d.optInt("structuredPairs",0)));
+        int invoices=Math.max(0,Math.min(999,d.optInt("structuredInvoices",0)));
+        int carriers=Math.max(0,Math.min(999,d.optInt("structuredCarriers",0)));
+        int domInvoices=Math.max(0,Math.min(999,d.optInt("domInvoices",0)));
+        return "구조화쌍 "+pairs+" · 번호후보 "+invoices+
+            " · 택배사후보 "+carriers+" · 화면번호 "+domInvoices+
+            " · 라벨 "+(d.optBoolean("hasLabel")?"있음":"없음")+
+            " · 탐색제한 "+(d.optBoolean("limited")?"있음":"없음");
     }
     /** Diagnostic categories only: never include page contents, order IDs or URLs. */
     private String ambiguityReason(JSONObject d){
@@ -162,6 +173,13 @@ public final class BackgroundProbeService extends Service {
         getSharedPreferences(PREFS, MODE_PRIVATE).edit()
             .putString(STATUS, message).putBoolean("running", !finished)
             .putLong("updated_at",System.currentTimeMillis()).apply();
+    }
+    private String modeName(){
+        if(samplePage)return "백그라운드 첫 페이지 배송검사";
+        if(sampleShipping)return sampleMulti?
+            "백그라운드 묶음배송 시범":"백그라운드 배송정보 시범";
+        if(scanAll)return "백그라운드 전체 구매목록";
+        return "백그라운드 구매목록 1페이지";
     }
     private void progress(String message) {
         status(message);
@@ -438,6 +456,7 @@ public final class BackgroundProbeService extends Service {
         String url=sampleTargets.get(sampleIndex)[1];
         sampleStage=1;attempt=0;readQueued=false;
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
+        sampleDetailObservation="";
         sampleEmptyReads=0;sampleAmbiguousReads=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
@@ -546,6 +565,7 @@ public final class BackgroundProbeService extends Service {
                         advanceSample(2);return;
                     }
                     sampleStage=2;sampleStep++;samplePoll=0;
+                    sampleDetailObservation="배송정보 응답 없음";
                     final int clickStep=sampleStep;
                     String command=BackgroundDeliveryScripts.CLICK_JS+"("+
                         JSONObject.quote(link)+","+JSONObject.quote(signature)+","+
@@ -573,7 +593,11 @@ public final class BackgroundProbeService extends Service {
                 if(finished||sampleStep!=step||sampleStage!=2)return;
                 try{
                     JSONObject d=decode(ret);
-                    if(!d.optBoolean("ok"))throw new IllegalArgumentException();
+                    if(!d.optBoolean("ok")){
+                        markSampleIssue("배송화면 분석 실패");
+                        advanceSample(2);return;
+                    }
+                    sampleDetailObservation=detailObservation(d);
                     if(d.getJSONArray("domPairs").length()>0){
                         sampleButtonsFound++;
                         sampleButtonIndex++;
@@ -606,11 +630,17 @@ public final class BackgroundProbeService extends Service {
                     if(++samplePoll<9){
                         handler.postDelayed(()->pollSampleShipping(step),1300L);return;
                     }
-                    markSampleIssue("배송정보 미검출");
+                    markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+")");
                     advanceSample(2);
-                }catch(Exception ex){advanceSample(2);}
+                }catch(Exception ex){
+                    markSampleIssue("배송화면 응답 형식 오류");
+                    advanceSample(2);
+                }
             });
-        }catch(RuntimeException ex){advanceSample(2);}
+        }catch(RuntimeException ex){
+            markSampleIssue("배송화면 검사 실행 실패");
+            advanceSample(2);
+        }
     }
     private void advanceSample(int outcome){
         if(finished||!sampleShipping||sampleIndex>=sampleTargets.size())return;
@@ -635,6 +665,11 @@ public final class BackgroundProbeService extends Service {
         if (finished) return;
         finished = true;
         status(message);
+        // Persist only sanitized aggregate/position diagnostics for copying.
+        getSharedPreferences(PREFS,MODE_PRIVATE).edit()
+            .putString("last_result",message)
+            .putString("last_mode",modeName())
+            .putLong("last_finished_at",System.currentTimeMillis()).apply();
         stopForeground(STOP_FOREGROUND_REMOVE);
         try {
             PendingIntent p=PendingIntent.getActivity(this,NOTIFICATION_DONE,
