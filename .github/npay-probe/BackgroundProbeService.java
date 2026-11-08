@@ -16,6 +16,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.webkit.CookieManager;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -64,6 +65,9 @@ public final class BackgroundProbeService extends Service {
         sampleCacheChanged=0;
     private String sampleButtonSignature="",sampleIssue="",sampleDetailObservation="";
     private int sampleShippingNavigations=0, samplePopupRequests=0, samplePopupUserGestureRequests=0;
+    private int sampleHttpClientErrors=0, sampleHttpServerErrors=0, sampleHttpMainErrors=0;
+    private boolean sampleShippingReloaded=false;
+    private int sampleShippingReloadAttempts=0, sampleShippingReloadRecovered=0;
     private long sampleStartedAt=0L;
     private int sampleSharedDetail=0;
     private final java.util.HashSet<String> sampleDetailUrls=new java.util.HashSet<>();
@@ -276,6 +280,22 @@ public final class BackgroundProbeService extends Service {
                         handler.postDelayed(BackgroundProbeService.this::read, 1100L);
                     }
                 }
+                @Override public void onReceivedHttpError(WebView v, WebResourceRequest req,
+                                                         WebResourceResponse response) {
+                    if(finished||!sampleShipping||sampleStage!=2||req==null||response==null)return;
+                    try{
+                        android.net.Uri u=req.getUrl();
+                        String host=u==null?null:u.getHost();
+                        if(u==null||!"https".equals(u.getScheme())||host==null||
+                            !("pay.naver.com".equals(host)||host.endsWith(".pay.naver.com")))return;
+                        int code=response.getStatusCode();
+                        if(code>=400&&code<500)sampleHttpClientErrors=Math.min(99,sampleHttpClientErrors+1);
+                        else if(code>=500&&code<600)sampleHttpServerErrors=Math.min(99,sampleHttpServerErrors+1);
+                        else return;
+                        if(req.isForMainFrame())sampleHttpMainErrors=Math.min(99,sampleHttpMainErrors+1);
+                        // Only status counts for the allowed Pay origin; never the URL or response.
+                    }catch(RuntimeException ignored){}
+                }
                 @Override public void onReceivedError(WebView v, WebResourceRequest req,
                                                      android.webkit.WebResourceError err) {
                     if (!finished && req.isForMainFrame()) {
@@ -472,6 +492,8 @@ public final class BackgroundProbeService extends Service {
                 (sampleMulti?" · 버튼 재확인 "+sampleEmptyRetries+"회"+
                     " · 지연 발견 "+sampleLateControls+"건"+
                     " · 식별 재확인 "+sampleAmbiguousRetries+"회":"")+
+                (samplePage?" · 배송화면 재로드 "+sampleShippingReloadAttempts+"회"+
+                    " · 재로드 후 표시 "+sampleShippingReloadRecovered+"개":"")+
                 (samplePage?" · 같은 상세 URL "+sampleSharedDetail+"건"+
                     " · 검증 결과 재사용 "+sampleCachedEntries+"건/"+sampleCachedButtons+"개"+
                     " · 상세 구성 변경 "+sampleCacheChanged+"건"+
@@ -488,6 +510,7 @@ public final class BackgroundProbeService extends Service {
         sampleDetailObservation="";
         sampleEmptyReads=0;sampleAmbiguousReads=0;
         sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
+        sampleShippingReloaded=false;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
         final int watchedIndex=sampleIndex;
@@ -596,6 +619,8 @@ public final class BackgroundProbeService extends Service {
                     }
                     sampleStage=2;sampleStep++;samplePoll=0;
                     sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
+                    sampleHttpClientErrors=0;sampleHttpServerErrors=0;sampleHttpMainErrors=0;
+                    sampleShippingReloaded=false;
                     sampleDetailObservation="배송정보 응답 없음";
                     final int clickStep=sampleStep;
                     String command=BackgroundDeliveryScripts.CLICK_JS+"("+
@@ -633,6 +658,7 @@ public final class BackgroundProbeService extends Service {
                     }
                     sampleDetailObservation=detailObservation(d);
                     if(d.getJSONArray("domPairs").length()>0){
+                        if(sampleShippingReloaded)sampleShippingReloadRecovered++;
                         sampleButtonsFound++;
                         sampleButtonIndex++;
                         if(sampleMulti && sampleButtonIndex<sampleButtonCount &&
@@ -663,6 +689,25 @@ public final class BackgroundProbeService extends Service {
                     }
                     if(++samplePoll<9){
                         handler.postDelayed(()->pollSampleShipping(step),1300L);return;
+                    }
+                    // Once per button, retry only the already-opened allowlisted
+                    // shipping page. Re-clicking a product control could open an
+                    // unexpected page or duplicate actions, so never re-click here.
+                    String current=webView.getUrl();
+                    String original=sampleTargets.get(sampleIndex)[1];
+                    if(!sampleShippingReloaded&&current!=null&&
+                        safeDetailUrl(current)&&!original.equals(current)){
+                        sampleShippingReloaded=true;
+                        sampleShippingReloadAttempts++;
+                        samplePoll=0;
+                        try{
+                            webView.reload();
+                            handler.postDelayed(()->pollSampleShipping(step),2500L);
+                        }catch(RuntimeException ignored){
+                            markSampleIssue("배송화면 재로드 실패");
+                            collectMissingShipmentContext(step);
+                        }
+                        return;
                     }
                     collectMissingShipmentContext(step);
                 }catch(Exception ex){
@@ -716,7 +761,12 @@ public final class BackgroundProbeService extends Service {
                 markSampleIssue("배송정보 미검출 ("+sampleDetailObservation+
                     " · "+navigation+" · 로드완료 "+navigations+"회"+
                     " · 새창요청 "+Math.min(99,samplePopupRequests)+"회"+
-                    " · 사용자제스처 새창 "+Math.min(99,samplePopupUserGestureRequests)+"회 · "+context+")");
+                    " · 사용자제스처 새창 "+Math.min(99,samplePopupUserGestureRequests)+"회"+
+                    " · 재로드 "+(sampleShippingReloaded?"실행":"미실행")+
+                    " · Pay HTTP4xx "+sampleHttpClientErrors+
+                    " · Pay HTTP5xx "+sampleHttpServerErrors+
+                    " · 주화면 HTTP오류 "+sampleHttpMainErrors+
+                    " · "+context+")");
                 advanceSample(2);
             });
         }catch(RuntimeException ex){
