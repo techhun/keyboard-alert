@@ -19,6 +19,37 @@ import org.robolectric.annotation.Config;
 @Config(sdk = 35)
 public class MonitorServiceTest {
     @Test
+    public void chromiumErrorPageTerminatesOnlyCurrentSmartStoreDiscovery() {
+        assertTrue(MonitorService.shouldFailBrokenSmartStorePage(
+            SiteSupport.NAVER_SMARTSTORE, true, true,
+            "chrome-error://chromewebdata/", "chrome-error://chromewebdata/"));
+        assertFalse(MonitorService.shouldFailBrokenSmartStorePage(
+            SiteSupport.NAVER_SMARTSTORE, true, true,
+            "chrome-error://chromewebdata/", "https://m.smartstore.naver.com/test/products/123"));
+        assertFalse(MonitorService.shouldFailBrokenSmartStorePage(
+            SiteSupport.NAVER_SMARTSTORE, false, true,
+            "chrome-error://chromewebdata/", "chrome-error://chromewebdata/"));
+        assertFalse(MonitorService.shouldFailBrokenSmartStorePage(
+            SiteSupport.NAVER_SMARTSTORE, true, false,
+            "chrome-error://chromewebdata/", "chrome-error://chromewebdata/"));
+        assertFalse(MonitorService.shouldFailBrokenSmartStorePage(
+            SiteSupport.SWAGKEY_IMWEB, true, true,
+            "chrome-error://chromewebdata/", "chrome-error://chromewebdata/"));
+    }
+
+    @Test
+    public void pendingSmartStoreRequestRechecksSamePageOnceOnly() {
+        assertTrue(MonitorService.shouldRecheckPendingPage(
+            SiteSupport.NAVER_SMARTSTORE, true, 0));
+        assertFalse(MonitorService.shouldRecheckPendingPage(
+            SiteSupport.NAVER_SMARTSTORE, true, 1));
+        assertFalse(MonitorService.shouldRecheckPendingPage(
+            SiteSupport.NAVER_SMARTSTORE, false, 0));
+        assertFalse(MonitorService.shouldRecheckPendingPage(
+            SiteSupport.SWAGKEY_IMWEB, true, 0));
+    }
+
+    @Test
     public void resourceProfilesCannotHideRealErrorsInBoundedDiagnostics() throws Exception {
         JSONArray raw = new JSONArray();
         for (int i = 0; i < 60; i++) {

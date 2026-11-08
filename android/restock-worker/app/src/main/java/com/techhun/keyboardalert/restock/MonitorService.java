@@ -60,6 +60,8 @@ public class MonitorService extends Service {
     private static final long TRANSIENT_RETRY_DELAY_MS = 5_000L;
     private static final long SMARTSTORE_INITIAL_SETTLE_MS = 1_200L;
     private static final long SMARTSTORE_PAGE_RECHECK_MS = 1_500L;
+    // Recheck the same in-flight page request once, without another HTTP request.
+    private static final int MAX_PENDING_PAGE_RECHECKS = 1;
     private static final long PAGE_RESOURCE_PROFILE_INTERVAL_MS = 10 * 60_000L;
     private static final int SMARTSTORE_PAGE_PROBES_BEFORE_API = 2;
     private static final long NO_CONTENT_STORM_WINDOW_MS = 2 * 60_000L;
@@ -149,6 +151,7 @@ public class MonitorService extends Service {
     private int transientRetryCount;
     private int noContentReloadCount;
     private int smartStorePageProbeCount;
+    private int pendingPageRecheckCount;
     private boolean noContentRecovery;
     private boolean pageHttpRateLimited;
     private int pageNavigationSerial;
@@ -605,6 +608,19 @@ public class MonitorService extends Service {
         try {
             JSONObject result = new JSONObject(json);
             if (!isResultForCurrentProduct(result)) {
+                if (shouldFailBrokenSmartStorePage(
+                    currentSiteType(), mode == Mode.DISCOVERY, awaitingResult,
+                    result.optString("pageUrl", ""),
+                    webView == null ? "" : webView.getUrl()
+                )) {
+                    // An internal Chromium error document cannot contain a valid
+                    // inventory snapshot. Do not spend 20 seconds awaiting it.
+                    awaitingResult = false;
+                    handler.removeCallbacks(resultTimeout);
+                    markCurrentFailure("상품 페이지 로드 실패 · 이전 재고 보존", "PAGE_LOAD_FAILED");
+                    scheduleNextProduct();
+                    return;
+                }
                 DiagnosticLog.add(
                     this,
                     "STALE_RESULT",
@@ -642,6 +658,17 @@ public class MonitorService extends Service {
                 }
 
                 if ("PAGE_REQUEST_PENDING".equals(error)) {
+                    // Wait briefly for the site's own request to complete.
+                    // The capture hook will provide the response. We must not
+                    // duplicate an in-flight request or reuse a stale snapshot.
+                    if (shouldRecheckPendingPage(
+                        currentSiteType(), mode == Mode.DISCOVERY, pendingPageRecheckCount
+                    )) {
+                        pendingPageRecheckCount++;
+                        handler.removeCallbacks(discoveryCheck);
+                        handler.postDelayed(discoveryCheck, SMARTSTORE_PAGE_RECHECK_MS);
+                        return;
+                    }
                     markCurrentFailure("페이지 상품 요청 진행 중 · 이전 재고 유지", "PAGE_REQUEST_PENDING");
                     scheduleNextProduct();
                     return;
@@ -1146,6 +1173,7 @@ public class MonitorService extends Service {
         transientRetryCount = 0;
         noContentReloadCount = 0;
         smartStorePageProbeCount = 0;
+        pendingPageRecheckCount = 0;
         noContentRecovery = false;
         products = ProductStore.enabledList(this);
         if (products.length() == 0) {
@@ -1172,6 +1200,19 @@ public class MonitorService extends Service {
             SiteSupport.detect(next.optString("url", "")));
         cancelModeCallbacks();
         scheduleNextCheck(smartStoreNext ? Math.max(spacing, backoff) : spacing);
+    }
+
+    static boolean shouldFailBrokenSmartStorePage(
+        String siteType, boolean discovery, boolean awaiting, String resultUrl, String webViewUrl
+    ) {
+        return SiteSupport.NAVER_SMARTSTORE.equals(siteType) && discovery && awaiting
+            && resultUrl != null && resultUrl.startsWith("chrome-error://")
+            && webViewUrl != null && webViewUrl.startsWith("chrome-error://");
+    }
+
+    static boolean shouldRecheckPendingPage(String siteType, boolean discovery, int count) {
+        return SiteSupport.NAVER_SMARTSTORE.equals(siteType)
+            && discovery && count < MAX_PENDING_PAGE_RECHECKS;
     }
 
     static int cacheModeForSite(String siteType) {
