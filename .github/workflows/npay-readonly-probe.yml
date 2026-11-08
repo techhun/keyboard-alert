@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.27 verified shared-detail reuse and bounded 10-button first-page scan
+run-name: NPay probe v0.1.28 background result copy and extraction diagnostics
 
 on:
   push:
@@ -35,8 +35,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.27-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 127/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.28-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 128/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -93,6 +93,34 @@ jobs:
                   if(backgroundResult!=null)backgroundResult.setText("백그라운드 조회: "+
                       getSharedPreferences(BackgroundProbeService.PREFS,MODE_PRIVATE)
                           .getString(BackgroundProbeService.STATUS,"아직 실행하지 않음"));
+              }
+              private void copyBackgroundResult(){
+                  android.content.SharedPreferences prefs=
+                      getSharedPreferences(BackgroundProbeService.PREFS,MODE_PRIVATE);
+                  String result=prefs.getString("last_result","");
+                  if(result==null||result.isEmpty()){
+                      Toast.makeText(this,"복사할 완료 결과가 없습니다.",Toast.LENGTH_SHORT).show();
+                      return;
+                  }
+                  long at=prefs.getLong("last_finished_at",0L);
+                  String ended=at>0?new java.text.SimpleDateFormat(
+                      "yyyy-MM-dd HH:mm:ss Z",java.util.Locale.KOREA).format(new java.util.Date(at)):"시각 미확인";
+                  String body="NPay 백그라운드 조회 테스트 · v0.1.28\n"+
+                      "검사 유형: "+prefs.getString("last_mode","미확인")+"\n"+
+                      "검사 종료: "+ended+"\n"+
+                      "결과: "+result+"\n"+
+                      "집계는 구매목록/주문상세 기준이며 상품별 운송장 연결은 미확정.\n"+
+                      "주문번호·운송장·주소·인증정보 미포함.";
+                  try{
+                      android.content.ClipboardManager clipboard=
+                          (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                      if(clipboard==null)throw new IllegalStateException("Clipboard unavailable");
+                      clipboard.setPrimaryClip(android.content.ClipData.newPlainText(
+                          "NPay 백그라운드 검사 결과",body));
+                      Toast.makeText(this,"백그라운드 결과 복사 완료",Toast.LENGTH_SHORT).show();
+                  }catch(RuntimeException ex){
+                      Toast.makeText(this,"복사 실패 · 클립보드 접근을 확인해 주세요.",Toast.LENGTH_LONG).show();
+                  }
               }
               private void startBackgroundProbe(boolean allPages,boolean sampleShipping,boolean multi,boolean page){
                   if(autoRunning||sweeping){status.setText("진행 중인 화면 검사를 먼저 중지해줘.");return;}
@@ -221,7 +249,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.27\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.28\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -377,7 +405,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.27");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.28");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -459,10 +487,12 @@ jobs:
                   });diagnostics.addView(bgStop);
                   Button bgRefresh=new Button(this);bgRefresh.setText("백그라운드 결과 확인");
                   bgRefresh.setOnClickListener(v->refreshBackgroundResult());diagnostics.addView(bgRefresh);
+                  Button bgCopy=new Button(this);bgCopy.setText("백그라운드 결과 텍스트 복사");
+                  bgCopy.setOnClickListener(v->copyBackgroundResult());diagnostics.addView(bgCopy);
                   backgroundResult=new TextView(this);backgroundResult.setTextSize(12);
                   backgroundResult.setPadding(dp(8),dp(4),dp(8),dp(4));
                   diagnostics.addView(backgroundResult);refreshBackgroundResult();
-                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(450)));
+                  root.addView(diagnosticScroll,new LinearLayout.LayoutParams(-1,dp(490)));
                   browser=new WebView(this);
                   browser.setOnTouchListener((view,event)->{
                       if(event.getActionMasked()==android.view.MotionEvent.ACTION_DOWN){
@@ -1123,7 +1153,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.27 debug APK
+      - name: Lint and assemble v0.1.28 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
@@ -1161,7 +1191,7 @@ jobs:
           trap 'rm -f "$key_file"' EXIT
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
-          target="$apk_dir/npay-v0.1.27-fixed-signed.apk"
+          target="$apk_dir/npay-v0.1.28-fixed-signed.apk"
           signer=(java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign
             --ks "$key_file" --ks-type PKCS12 --ks-pass env:NPAY_STORE_PASSWORD)
           # apksigner infers the alias if the PKCS12 contains only one key;
@@ -1186,7 +1216,7 @@ jobs:
           name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
-            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.27-fixed-signed.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.28-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
