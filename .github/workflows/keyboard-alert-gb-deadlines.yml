@@ -1,0 +1,60 @@
+name: Keyboard Alert · Keepodd GB closing reminders
+
+on:
+  schedule:
+    # Separate from 1-minute/10-minute collectors. 09:15 KST every day.
+    - cron: '15 0 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only count eligible GB deadlines (no Discord messages or state writes)"
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keyboard-alert-gb-closing-reminders
+  cancel-in-progress: false
+
+jobs:
+  gb-closing:
+    # Sending is off until the Notion read-only token and a dry-run have been verified.
+    if: ${{ github.event_name == 'workflow_dispatch' || vars.KEEPODD_GB_REMINDERS_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Snapshot verified GB events from watcher-state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin +refs/heads/watcher-state:refs/remotes/origin/watcher-state
+          git show origin/watcher-state:keepodd-events.json > "$RUNNER_TEMP/keepodd-events.json"
+          node -e "const x=require(process.env.RUNNER_TEMP+'/keepodd-events.json'); if(x.version!==1||!Array.isArray(x.events)) process.exit(1); console.log('Verified GB event records:',x.events.length)"
+
+      - name: Calculate Keepodd GB closing reminders
+        env:
+          KEEPODD_GB_NOTION_TOKEN: ${{ secrets.KEEPODD_GB_NOTION_TOKEN }}
+          GEONWORKS_DISCORD_WEBHOOK_URL: ${{ secrets.GEONWORKS_DISCORD_WEBHOOK_URL }}
+          SWAGKEYS_DISCORD_WEBHOOK_URL: ${{ secrets.SWAGKEYS_DISCORD_WEBHOOK_URL }}
+          SWG_DISCORD_WEBHOOK_URL: ${{ secrets.SWG_DISCORD_WEBHOOK_URL }}
+          KEEPODD_GB_EVENTS_PATH: ${{ runner.temp }}/keepodd-events.json
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          KEEPODD_GB_REMINDERS_ENABLED: ${{ vars.KEEPODD_GB_REMINDERS_ENABLED }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && 'true' || 'false' }}
+        run: node scripts/check-gb-deadlines.mjs
