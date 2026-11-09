@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T06:30:36.481Z",
+  "updatedAt": "2026-11-09T00:40:28.498Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -12,16 +12,6 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 3",
       "note": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October."
-    },
-    {
-      "product": "DCS Cream Cheese and Green R3",
-      "gbStart": "2026. 2. 20",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 10. 26",
-      "note": "베이스킷 일부 키캡 측각 누락되어 확인 중 / Some keycaps in the Basekit are missing their side grooves; we are currently investigating."
     },
     {
       "product": "Seal80",
@@ -677,6 +667,7 @@
     "140941a62f6201581f8cdc76": "2026-11-05T00:00:43.645Z",
     "65033f4473d658d3260bc4ce": "2026-11-06T00:20:28.672Z",
     "496cf271937aebda850b28dc": "2026-11-06T00:20:28.888Z",
-    "ab6493704ab1100cf59cca70": "2026-11-06T00:20:29.288Z"
+    "ab6493704ab1100cf59cca70": "2026-11-06T00:20:29.288Z",
+    "2ed9c926ccd15c85ec349109": "2026-11-09T00:40:28.498Z"
   }
 }
