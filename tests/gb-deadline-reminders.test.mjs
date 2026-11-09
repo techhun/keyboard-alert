@@ -176,7 +176,7 @@ test("Discord payload has no mention parsing, and sends direct verified links", 
 test("scheduled workflow is gated, dry-run on manual invocation, and does not mutate Notion", () => {
   const workflow = read(".github/workflows/keyboard-alert-gb-deadlines.yml");
   const runner = read("scripts/check-gb-deadlines.mjs");
-  assert.match(workflow, /cron:\s*"15 0 \* \* \*"/);
+  assert.match(workflow, /cron:\s*["']15 0 \* \* \*["']/);
   assert.match(workflow, /vars\.KEEPODD_GB_REMINDERS_ENABLED == 'true'/);
   assert.match(workflow, /dry_run:[\s\S]*?default:\s*true/);
   assert.match(workflow, /KEEPODD_GB_NOTION_TOKEN:\s*\$\{\{ secrets\.KEEPODD_GB_NOTION_TOKEN \}\}/);
