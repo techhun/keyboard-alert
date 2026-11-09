@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T00:40:28.498Z",
+  "updatedAt": "2026-11-09T01:00:47.323Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -111,6 +111,16 @@
       "manufacturer": "Novelkeys",
       "status": "제작 중 / In progress",
       "update": "2026. 10. 16",
+      "note": "PCB 완성, 알루 파츠 제작 중 / PCB completed; aluminum parts currently being manufactured"
+    },
+    {
+      "product": "Keycult No. 2 TKL",
+      "gbStart": "2025. 12. 19",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "제작 중 / In progress",
+      "update": "2026. 11. 9",
       "note": "PCB 완성, 알루 파츠 제작 중 / PCB completed; aluminum parts currently being manufactured"
     },
     {
@@ -240,7 +250,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "제작 중 / In progress",
-      "update": "2026. 7. 2",
+      "update": "2026. 11. 9",
       "note": "—"
     },
     {
@@ -622,16 +632,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 11. 5",
       "note": "—"
-    },
-    {
-      "product": "Lilith Original Remake",
-      "gbStart": "2026. 10. 23",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Nuxroskb",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 4",
-      "note": "—"
     }
   ],
   "sentChanges": {
@@ -668,6 +668,10 @@
     "65033f4473d658d3260bc4ce": "2026-11-06T00:20:28.672Z",
     "496cf271937aebda850b28dc": "2026-11-06T00:20:28.888Z",
     "ab6493704ab1100cf59cca70": "2026-11-06T00:20:29.288Z",
-    "2ed9c926ccd15c85ec349109": "2026-11-09T00:40:28.498Z"
+    "2ed9c926ccd15c85ec349109": "2026-11-09T00:40:28.498Z",
+    "512c6b3f91cd774c0db6b500": "2026-11-09T01:00:46.227Z",
+    "67a55c408a87d171ea189c54": "2026-11-09T01:00:46.511Z",
+    "4a7a22f20968dcec33b68e6b": "2026-11-09T01:00:47.038Z",
+    "7cf8f9a017cb4319b2f9a207": "2026-11-09T01:00:47.323Z"
   }
 }
