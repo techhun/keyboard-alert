@@ -1,19 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-08T23:40:31.604Z",
+  "updatedAt": "2026-11-09T23:40:37.107Z",
   "rows": [
-    {
-      "product": "GMK Salamander",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-10-14",
-      "end": "2026-11-09"
-    },
     {
       "product": "GMK CYL Blanks",
       "manufacturer": "GMK",
@@ -41,6 +30,7 @@
     "2b9ece1528f1d6f0077eb54e": "2026-11-02T23:40:39.675Z",
     "09d9d11bed6f3b17a41f33e5": "2026-11-02T23:40:40.340Z",
     "4c0f7a4dcdb91637f7c5a43d": "2026-11-02T23:40:41.129Z",
-    "2f059c76a14ed80ef1c99e00": "2026-11-04T00:20:43.185Z"
+    "2f059c76a14ed80ef1c99e00": "2026-11-04T00:20:43.185Z",
+    "716cad7bcfd67d3744569c2a": "2026-11-09T23:40:37.107Z"
   }
 }
