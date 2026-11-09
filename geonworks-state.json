@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T01:10:31.202Z",
+  "updatedAt": "2026-11-09T01:40:37.442Z",
   "rows": [
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -140,7 +140,7 @@
       "type": "Keyboard",
       "manufacturer": "Artifact Inderstry",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 28",
+      "update": "2026. 11. 9",
       "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
     },
     {
@@ -180,7 +180,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
+      "update": "2026. 11. 9",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
@@ -667,6 +667,8 @@
     "ce465be43b8cc9adf1d3e984": "2026-11-09T01:10:30.630Z",
     "0a94ba14365dac96f226c65e": "2026-11-09T01:10:30.820Z",
     "f1beb6212ea405bad94c53a1": "2026-11-09T01:10:31.017Z",
-    "a1285564d1c634f89280c511": "2026-11-09T01:10:31.202Z"
+    "a1285564d1c634f89280c511": "2026-11-09T01:10:31.202Z",
+    "cfbfaa6a658c8ef6f891f605": "2026-11-09T01:40:37.165Z",
+    "411c8b735fc6d8deaa279fbe": "2026-11-09T01:40:37.442Z"
   }
 }
