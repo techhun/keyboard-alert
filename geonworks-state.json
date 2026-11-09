@@ -1,8 +1,28 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T01:40:37.442Z",
+  "updatedAt": "2026-11-09T10:30:41.809Z",
   "rows": [
+    {
+      "product": "GMK CYL GUROKAWA",
+      "gbStart": "2025. 7. 18",
+      "eta": "2026. 10. 26",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 9",
+      "note": "—"
+    },
+    {
+      "product": "Keycult No. 3 TKL",
+      "gbStart": "2025. 9. 19",
+      "eta": "2026. 6. 30",
+      "type": "Keyboard",
+      "manufacturer": "Novelkeys",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 5",
+      "note": "—"
+    },
     {
       "product": "TYPFACE KAFKA Barebones Kit",
       "gbStart": "2026. 1. 29",
@@ -50,18 +70,8 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
+      "update": "2026. 11. 9",
       "note": "컬러매칭 완료. 생산 일정 확인 중 / Color matching complete. Checking the production schedule."
-    },
-    {
-      "product": "GMK CYL GUROKAWA",
-      "gbStart": "2025. 7. 18",
-      "eta": "2026. 10. 26",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
-      "note": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November"
     },
     {
       "product": "LILY R2 HHKB Barebone Kit",
@@ -70,18 +80,8 @@
       "type": "Keyboard",
       "manufacturer": "TypePlus",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 5",
+      "update": "2026. 11. 9",
       "note": "EC 킷 배대지 입고 / EC Kit received at the distribution centre"
-    },
-    {
-      "product": "Keycult No. 3 TKL",
-      "gbStart": "2025. 9. 19",
-      "eta": "2026. 6. 30",
-      "type": "Keyboard",
-      "manufacturer": "Novelkeys",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 5",
-      "note": "배대지 입고 / Receipt at the distribution centre"
     },
     {
       "product": "HAVEN 60",
@@ -669,6 +669,10 @@
     "f1beb6212ea405bad94c53a1": "2026-11-09T01:10:31.017Z",
     "a1285564d1c634f89280c511": "2026-11-09T01:10:31.202Z",
     "cfbfaa6a658c8ef6f891f605": "2026-11-09T01:40:37.165Z",
-    "411c8b735fc6d8deaa279fbe": "2026-11-09T01:40:37.442Z"
+    "411c8b735fc6d8deaa279fbe": "2026-11-09T01:40:37.442Z",
+    "868642254bf9105524e25d92": "2026-11-09T10:30:40.733Z",
+    "c3a4f73b7c0bd347f51c55a1": "2026-11-09T10:30:41.262Z",
+    "9bfa1561c2dbc092e36b5d0b": "2026-11-09T10:30:41.491Z",
+    "6c513ed1a83a08cbc136e567": "2026-11-09T10:30:41.808Z"
   }
 }

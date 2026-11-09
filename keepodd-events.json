@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T01:52:28.654Z",
+  "updatedAt": "2026-11-09T10:30:41.809Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1628,6 +1628,68 @@
       "sourceUrl": "https://swagkeys.com/products/group-buy-swg-retroguardia",
       "sourceUrlType": "product",
       "note": "GB 시작 2026-11-09 ~ 2026-11-23"
+    },
+    {
+      "id": "1107d20abeff92f596c13b3189850f2c",
+      "source": "GEONWORKS",
+      "name": "Keycult No. 3 TKL",
+      "eventType": "note_changed",
+      "before": "배대지 입고 / Receipt at the distribution centre",
+      "occurredAt": "2026-11-09T10:30:41.809Z",
+      "categoryHint": "키보드",
+      "maker": "Novelkeys",
+      "saleStart": "2025-09-19",
+      "eta": "2026-06-30",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8115e2e3e6c95bfce16d3891dedfc217",
+      "source": "GEONWORKS",
+      "name": "GMK CYL GUROKAWA",
+      "eventType": "note_changed",
+      "before": "장패드 입고 완료, 키캡 11월 말 입고 예정 / Mouse pads have arrived; keycaps are scheduled to arrive in late November",
+      "occurredAt": "2026-11-09T10:30:41.809Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2025-07-18",
+      "eta": "2026-10-26",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "8c4a211562c962ccd6eb3f4760d16561",
+      "source": "GEONWORKS",
+      "name": "GMK CYL GUROKAWA",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-09T10:30:41.809Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2025-07-18",
+      "eta": "2026-10-26",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d944d6dff592e3b56357d70f94f35460",
+      "source": "GEONWORKS",
+      "name": "Keycult No. 3 TKL",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-09T10:30:41.809Z",
+      "categoryHint": "키보드",
+      "maker": "Novelkeys",
+      "saleStart": "2025-09-19",
+      "eta": "2026-06-30",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }
