@@ -1,10 +1,11 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-06T14:32:32.133Z",
+  "updatedAt": "2026-11-09T01:52:28.654Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
-    "nightshift": "2026-10-30"
+    "nightshift": "2026-10-30",
+    "retroguardia": "2026-11-09"
   },
   "announcement": {
     "heading": "업데이트(26.10.14)",
@@ -41,9 +42,9 @@
       "SWG Space Cadet",
       "SWG Crimson Cadet",
       "SWG Forest Cadet",
-      "SWG Moomin",
       "SWG Nightshift",
       "SWG Retroguardia",
+      "SWG Moomin",
       "SWG Koyo",
       "SWG 9o_o9",
       "SWG Meadow",
@@ -480,8 +481,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-11-06T14:31:52.354Z",
-    "status": "2026-11-06T14:32:32.029Z"
-  }
+  "fallbackSince": {}
 }

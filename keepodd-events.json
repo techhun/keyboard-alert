@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T01:10:31.202Z",
+  "updatedAt": "2026-11-09T01:52:28.654Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1612,6 +1612,22 @@
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "b92531ee4bda5ed6f49c909c20c07d05",
+      "source": "SWAGKEYS",
+      "name": "SWG Retroguardia",
+      "eventType": "note_changed",
+      "after": "GB 시작 2026-11-09 ~ 2026-11-23",
+      "occurredAt": "2026-11-09T01:52:28.654Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-09",
+      "saleEnd": "2026-11-23",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-retroguardia",
+      "sourceUrlType": "product",
+      "note": "GB 시작 2026-11-09 ~ 2026-11-23"
     }
   ]
 }
