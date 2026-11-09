@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T10:30:41.809Z",
+  "updatedAt": "2026-11-09T15:31:17.640Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1689,6 +1689,59 @@
       "eta": "2026-06-30",
       "status": "검수 중 / Inspecting",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "1c31af8463c02c09fb325305ddbb3ec4",
+      "source": "SWAGKEYS",
+      "name": "SWG Retroguardia",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-09T15:31:17.640Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-09",
+      "saleEnd": "2026-11-23",
+      "status": "Not started",
+      "note": "컬러매칭 Not started",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-retroguardia",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "81c41a787c46d4578a5d748d6dcc0706",
+      "source": "SWAGKEYS",
+      "name": "SWG Classic Blue",
+      "eventType": "status_changed",
+      "before": "예판분 발송 완료 (GB Fulfilled)",
+      "after": "인스탁 판매중 (In-Stock)",
+      "occurredAt": "2026-11-09T15:31:17.640Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-05-04",
+      "saleEnd": "2026-05-18",
+      "eta": "2026-10-30",
+      "status": "인스탁 판매중 (In-Stock)",
+      "note": "컬러매칭 Complete",
+      "quarter": "Q2",
+      "sourceUrl": "https://swagkeys.com/products/group-buy-swg-classic-blue-사본",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "84c88ec7983f21de1712a26115714f00",
+      "source": "SWAGKEYS",
+      "name": "SWG Heartbreaker",
+      "eventType": "note_changed",
+      "before": "컬러매칭 Not started",
+      "after": "컬러매칭 In Progress",
+      "occurredAt": "2026-11-09T15:31:17.640Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-07-20",
+      "saleEnd": "2026-08-03",
+      "status": "생산 대기중 (Awaiting Production)",
+      "note": "컬러매칭 In Progress",
+      "quarter": "Q3",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
     }
   ]

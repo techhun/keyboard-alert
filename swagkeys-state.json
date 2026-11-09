@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T02:03:10.122Z",
+  "updatedAt": "2026-11-09T15:31:17.640Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -171,11 +171,6 @@
       "saleStart": "2026-10-15",
       "saleEnd": "2026-11-12"
     },
-    "moomin": {
-      "product": "SWG Moomin",
-      "saleStart": "",
-      "saleEnd": ""
-    },
     "nightshift": {
       "product": "SWG Nightshift",
       "saleStart": "2026-10-30",
@@ -185,6 +180,11 @@
       "product": "SWG Retroguardia",
       "saleStart": "2026-11-09",
       "saleEnd": "2026-11-23"
+    },
+    "moomin": {
+      "product": "SWG Moomin",
+      "saleStart": "",
+      "saleEnd": ""
     },
     "koyo": {
       "product": "SWG Koyo",
@@ -271,16 +271,16 @@
       "inProduction": 100,
       "shipping": 100,
       "fulfilled": 100,
-      "inStock": 0,
+      "inStock": 100,
       "colorMatching": "Complete",
       "eta": "2026-10-30",
-      "currentStatus": "예판분 발송 완료 (GB Fulfilled)"
+      "currentStatus": "인스탁 판매중 (In-Stock)"
     },
     {
       "product": "Salmon",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 0,
+      "inProduction": 50,
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
@@ -368,7 +368,7 @@
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
-      "colorMatching": "Not started",
+      "colorMatching": "In Progress",
       "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
@@ -470,7 +470,19 @@
     },
     {
       "product": "Nightshift",
-      "groupBuy": 0,
+      "groupBuy": 50,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Not started",
+      "eta": "",
+      "currentStatus": "Not started"
+    },
+    {
+      "product": "Retroguardia",
+      "groupBuy": 50,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -481,8 +493,5 @@
       "currentStatus": "Not started"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-11-09T02:02:30.241Z",
-    "status": "2026-11-09T02:03:10.014Z"
-  }
+  "fallbackSince": {}
 }
