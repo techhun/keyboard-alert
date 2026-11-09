@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T08:12:24.925Z",
+  "updatedAt": "2026-11-09T08:22:35.408Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -16,18 +16,12 @@
       "changedAt": "2026-10-06T13:41:41.420Z"
     },
     "swagkeys": {
-      "status": "ok",
-      "changedAt": "2026-11-09T01:52:29.049Z",
-      "mode": "degraded",
-      "degradedSince": "2026-11-09T02:02:30.241Z",
-      "fallbackSources": [
-        "roadmap",
-        "status"
-      ],
-      "degradedAlertedAt": "2026-11-09T03:03:53.983Z",
-      "consecutiveFailures": 2,
-      "lastFailureRunId": "42584011211",
-      "lastFailureAt": "2026-11-09T08:12:24.925Z"
+      "status": "fail",
+      "changedAt": "2026-11-09T08:22:34.923Z",
+      "consecutiveFailures": 3,
+      "lastFailureRunId": "42585205253",
+      "lastFailureAt": "2026-11-09T08:22:34.923Z",
+      "failureAlertedAt": "2026-11-09T08:22:34.923Z"
     },
     "oblotzky": {
       "status": "ok",
