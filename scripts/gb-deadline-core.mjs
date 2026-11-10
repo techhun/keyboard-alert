@@ -28,99 +28,110 @@ function dateDay(value) {
   return Number.isFinite(dayTimestamp(datePart)) ? datePart : null;
 }
 
-function titleFrom(page) {
-  const title = page?.properties?.["이름"];
-  if (title?.type !== "title" || !Array.isArray(title.title)) return "";
-  return title.title.map(part => part?.plain_text ?? part?.text?.content ?? "").join("").trim();
-}
+const SOURCE_URLS = Object.freeze({
+  GEONWORKS: "https://geonworks.kr/customhtml/release/release.html",
+  SWAGKEYS: "https://swagkeys.notion.site/swg-keycap-roadmap",
+});
+const MAX_STATE_AGE_MS = 72 * 60 * 60 * 1000;
 
-function safeLink(candidate) {
-  try {
-    const url = new URL(candidate);
-    return (url.protocol === "https:" || url.protocol === "http:") ? url.toString() : undefined;
-  } catch {
-    return undefined;
-  }
-}
-
-// Match the source already recorded in Keyboard Alert's Keepodd GB event feed.
-// Do not infer a seller from the manufacturer, a vague product URL, or name similarity.
-function gbNameKey(value) {
+function nameKey(value) {
   return typeof value === "string"
     ? value.normalize("NFKC").trim().toLocaleLowerCase("en").replace(/\s+/g, " ")
     : "";
 }
 
-export function gbReminderSource(page, sourcedEvents = []) {
-  if (!Array.isArray(sourcedEvents)) throw new Error("GB source event data must be an array");
-  const name = gbNameKey(titleFrom(page));
-  const period = page?.properties?.["판매 일정"];
-  const saleStart = period?.type === "date" ? dateDay(period.date?.start) : null;
-  const saleEnd = period?.type === "date" ? dateDay(period.date?.end) : null;
-  if (!name || !saleStart || !saleEnd) return undefined;
-
-  const sources = new Set();
-  for (const event of sourcedEvents) {
-    if (!event || !["GEONWORKS", "SWAGKEYS"].includes(event.source)) continue;
-    if (gbNameKey(event.name) !== name || event.saleStart !== saleStart) continue;
-    // The event may omit its end date, but may not contradict the confirmed Keepodd end date.
-    if (event.saleEnd && event.saleEnd !== saleEnd) continue;
-    sources.add(event.source);
+// Both inputs are already verified by the independent Keyboard Alert watchers.
+// Refuse stale or degraded snapshots instead of using a guessed GB end date.
+export function validateGbSnapshot(source, snapshot, now = new Date()) {
+  if (!snapshot || snapshot.version !== 1 || snapshot.initialized !== true ||
+      !Array.isArray(snapshot.rows) && source === "GEONWORKS" ||
+      source === "SWAGKEYS" && (!snapshot.roadmapDates || typeof snapshot.roadmapDates !== "object" ||
+        !snapshot.quarters || typeof snapshot.quarters !== "object" || snapshot.roadmapLayoutVersion !== 2)) {
+    throw new Error(`Invalid ${source} verified GB snapshot`);
   }
-  return sources.size === 1 ? [...sources][0] : undefined;
+  if (!["GEONWORKS", "SWAGKEYS"].includes(source)) throw new Error("Unsupported GB source");
+  const asOf = Date.parse(snapshot.updatedAt);
+  const age = now.getTime() - asOf;
+  if (!Number.isFinite(asOf) || age < -2 * 60 * 60 * 1000 || age > MAX_STATE_AGE_MS) {
+    throw new Error(`Stale ${source} GB schedule snapshot; fail closed`);
+  }
+  if (source === "SWAGKEYS" && Object.keys(snapshot.fallbackSince || {}).length > 0) {
+    throw new Error("SWAGKEYS GB roadmap is using fallback data; skip deadline notifications");
+  }
+  if (source === "GEONWORKS" && snapshot.rows.length > 5000) throw new Error("Unexpected GEONWORKS schedule size");
+  if (source === "SWAGKEYS" && Object.keys(snapshot.roadmapDates).length > 5000) throw new Error("Unexpected SWAGKEYS roadmap size");
+  return snapshot;
 }
 
-export function reminderKey(pageId, endDay, offset) {
-  if (typeof pageId !== "string" || !pageId || !Number.isFinite(dayTimestamp(endDay)) || !GB_REMINDER_OFFSETS.includes(offset)) {
-    throw new Error("Invalid GB reminder key");
-  }
-  // The public, separately maintained state branch never stores product names or Notion page IDs.
-  return createHash("sha256").update(`gb:v1:${pageId}:${endDay}:${offset}`).digest("hex");
+export function reminderKey(source, name, startDay, endDay, offset) {
+  if (!["GEONWORKS", "SWAGKEYS"].includes(source) || !nameKey(name) ||
+      !Number.isFinite(dayTimestamp(startDay)) || !Number.isFinite(dayTimestamp(endDay)) ||
+      !GB_REMINDER_OFFSETS.includes(offset)) throw new Error("Invalid GB reminder key");
+  // State branch contains no product names, but keeps a durable, deterministic alert fingerprint.
+  return createHash("sha256")
+    .update(`gb:watcher:v2:${source}:${nameKey(name)}:${startDay}:${endDay}:${offset}`)
+    .digest("hex");
 }
 
-export function dueGbReminders(pagesByCategory, now = new Date(), sourcedEvents = []) {
-  const today = kstDay(now);
-  const results = [];
-  const seen = new Set();
+function maybeDue(source, name, startDay, endDay, category, today) {
+  if (!nameKey(name) || !Number.isFinite(dayTimestamp(startDay)) ||
+      !Number.isFinite(dayTimestamp(endDay)) || daysUntil(startDay, endDay) < 0 ||
+      daysUntil(startDay, today) < 0) return null;
+  const offset = daysUntil(today, endDay);
+  if (!GB_REMINDER_OFFSETS.includes(offset)) return null;
+  return {
+    key: reminderKey(source, name, startDay, endDay, offset),
+    source, name: name.trim(), category, startDay, endDay, offset,
+    url: SOURCE_URLS[source],
+  };
+}
 
-  for (const [category, pages] of Object.entries(pagesByCategory)) {
-    if (!Array.isArray(pages)) throw new Error(`Invalid Notion page data for ${category}`);
-    for (const page of pages) {
-      if (page?.object !== "page" || page?.archived || page?.in_trash) continue;
-      if (page?.properties?.["판매 방식"]?.type !== "select" || page.properties["판매 방식"].select?.name !== "GB") continue;
-      const schedule = page.properties?.["판매 일정"];
-      if (schedule?.type !== "date" || !schedule.date) continue;
-      const startDay = dateDay(schedule.date.start);
-      const endDay = dateDay(schedule.date.end);
-      // No guessed end dates. Do not send alerts for an unstarted GB.
-      if (!startDay || !endDay || daysUntil(startDay, endDay) < 0 || daysUntil(startDay, today) < 0) continue;
-      const offset = daysUntil(today, endDay);
-      if (!GB_REMINDER_OFFSETS.includes(offset)) continue;
-      if (offset === 0 && typeof schedule.date.end === "string" && schedule.date.end.includes("T")) {
-        const endAt = new Date(schedule.date.end);
-        if (Number.isFinite(endAt.getTime()) && endAt.getTime() <= now.getTime()) continue;
-      }
-      const name = titleFrom(page);
-      const source = gbReminderSource(page, sourcedEvents);
-      if (!name || !page.id || !source) continue;
-      const key = reminderKey(page.id, endDay, offset);
-      if (seen.has(key)) continue;
-      seen.add(key);
+function activeGeonRelease(row) {
+  return nameKey(row?.saleType) === "group buy" &&
+    nameKey(row?.fixed) === "확정 / fixed" &&
+    nameKey(row?.status) === "for sale";
+}
 
-      const linkedUrl = page.properties?.URL?.type === "url" ? safeLink(page.properties.URL.url) : undefined;
-      results.push({
-        key,
-        name,
-        source,
-        category,
-        endDay,
-        offset,
-        url: linkedUrl || safeLink(page.url),
-      });
+// Match only products that are still on the current SWAGKEYS roadmap.
+// Removed products or undated/placeholder milestones must not generate reminders.
+function activeSwagProducts(state) {
+  const products = new Set();
+  for (const quarter of Object.values(state.quarters)) {
+    if (!Array.isArray(quarter)) throw new Error("Invalid SWAGKEYS roadmap quarter");
+    for (const product of quarter) {
+      if (typeof product === "string" && nameKey(product)) products.add(nameKey(product));
     }
   }
+  return products;
+}
 
-  return results.sort((a, b) => a.offset - b.offset || a.name.localeCompare(b.name, "ko"));
+export function dueGbReminders(geonRelease, swagkeys, now = new Date()) {
+  validateGbSnapshot("GEONWORKS", geonRelease, now);
+  validateGbSnapshot("SWAGKEYS", swagkeys, now);
+  const today = kstDay(now);
+  const eligible = [];
+  const used = new Set();
+  const append = item => {
+    if (!item || used.has(item.key)) return;
+    used.add(item.key);
+    eligible.push(item);
+  };
+
+  for (const row of geonRelease.rows) {
+    if (!activeGeonRelease(row)) continue;
+    const category = /keycap/i.test(row.type || "") ? "키캡" :
+      /keyboard/i.test(row.type || "") ? "키보드" : "GB";
+    append(maybeDue("GEONWORKS", row.product, row.start, row.end, category, today));
+  }
+
+  const listedSwagProducts = activeSwagProducts(swagkeys);
+  for (const row of Object.values(swagkeys.roadmapDates)) {
+    if (!row || !listedSwagProducts.has(nameKey(row.product))) continue;
+    const category = /^sws\s/i.test(row.product) ? "스위치" : "키캡";
+    append(maybeDue("SWAGKEYS", row.product, row.saleStart, row.saleEnd, category, today));
+  }
+
+  return eligible.sort((a, b) => a.offset - b.offset || a.source.localeCompare(b.source) || a.name.localeCompare(b.name, "ko"));
 }
 
 export function emptyReminderState() {
@@ -168,9 +179,9 @@ export function discordGbReminder(item) {
   const label = item.offset === 0 ? "오늘 마감" : `D-${item.offset}`;
   const embed = {
     title: `⏳ GB ${label} · ${item.name}`.slice(0, 256),
-    description: `Keepodd에 등록된 GB의 판매 종료일이 다가왔어요.\n${item.category} · ${item.endDay} (KST 기준 날짜)`,
+    description: `Keyboard Alert에서 확인한 GB 마감 일정입니다.\n${item.category} · ${item.endDay} (한국시간 기준 날짜)`,
     color: item.offset === 0 ? 0xc2410c : 0x2563eb,
-    footer: { text: `Keepodd · ${item.source} GB 마감 알림` },
+    footer: { text: `Keyboard Alert · ${item.source} GB 마감 알림` },
   };
   if (item.url) embed.url = item.url;
   return { embeds: [embed], allowed_mentions: { parse: [] } };
