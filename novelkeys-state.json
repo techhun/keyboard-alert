@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T14:31:29.681Z",
+  "updatedAt": "2026-11-10T17:51:06.060Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -300,7 +300,7 @@
     {
       "category": "Deskpad",
       "product": "Gurokawa Deskpads",
-      "status": "Fulfilled!",
+      "status": "Deskpads that were ordered alongside the keycaps will be shipped with the keycaps once they arrive.",
       "eta": "",
       "url": "https://novelkeys.com/products/gurokawa-deskpads"
     },
@@ -349,6 +349,7 @@
     "84fa0abe6d12e8c7b03f0b44": "2026-11-06T14:32:34.357Z",
     "3e46851e5190c6e917c08946": "2026-11-06T15:03:59.400Z",
     "9b9ee7c16a9c9a9d0e1cd8bb": "2026-11-10T14:31:29.422Z",
-    "a3a506a117ccfaa4f79a899e": "2026-11-10T14:31:29.681Z"
+    "a3a506a117ccfaa4f79a899e": "2026-11-10T14:31:29.681Z",
+    "449efb432a145fd6d8326537": "2026-11-10T17:51:06.059Z"
   }
 }
