@@ -212,15 +212,15 @@ GitHub의 **Actions** 탭에서 다음 workflow를 직접 실행할 수 있습�
 - GB 시작은 **별도 note_changed 이벤트**로 Keepodd에 누적한다(`new_gb` 중복 방지). 실제 Notion 생산상태가 `Not started`여도 일정 도래 알림을 생성할 수 있으며 생산상태 자체를 임의 변경하지 않는다.
 - 기존 다른 수집기/상태/웹훅 워크플로를 변경하지 않는다. 검증: `npm test` 및 PR CI, 최초 상태 변경 건수, 야간 스케줄/중복 알림, Nightshift 10/30~11/13 수집 확인. 운영 데이터 복구: 이 변경 전 main `58725bf4b12334199b3e3921a91bb76d3ca5e889` 재배포. `watcher-state` JSON은 코드 롤백만으로 복원되지 않으므로 백업/비교 후 대응.
 
-### Keepodd GB 마감 알림 (2026-11-10)
+### GB 마감 알림 (Keyboard Alert 단독, 2026-11-10)
 
-Keepodd에 등록된 GB의 확정 종료일을 사용하여 **D-3, D-1, 마감 당일** 알림을 기존 지온웍스/스웨그키 Discord 채널로 전송하는 **별도 일일 GitHub Actions** 작업입니다. 휴대폰 Keepodd 앱 푸시가 아니며, 기존 1분 Fast/10분 Slow 수집 및 GB 신규·일정변경 알림 로직은 그대로 유지합니다.
+기존 Keyboard Alert 수집 결과에서 **지온웍스·스웨그키 GB 종료일**을 확인하고 **D-3 / D-1 / 마감 당일** 기존 Discord 웹훅으로 발송합니다. **Keepodd·개인 Notion DB·Notion API·추가 토큰은 사용하지 않습니다.** 기존 1분 Fast/10분 Slow 수집과 신규/변경 GB 알림 로직은 수정하지 않습니다.
 
-- 소스: Keepodd Notion 키보드·키캡·액세서리 3개 데이터 소스의 `판매 방식=GB` 및 `판매 일정`의 **시작일과 확정 종료일**. 별도 새 Notion DB/속성은 만들지 않습니다. 실행 시 `watcher-state/keepodd-events.json`의 기존 변경 이벤트를 읽고 **상품명·판매 시작일이 일치하고 종료일이 상충하지 않는** 단 하나의 `source`(GEONWORKS/SWAGKEYS)만 대상으로 합니다. 이름 fuzzy-match·제조사·URL 추정·종료일 추정은 금지합니다. 이벤트 소스 불일치/미확정/삭제됨/이미 종료/인스탁은 제외합니다.
-- 실행: `.github/workflows/keyboard-alert-gb-deadlines.yml`. GitHub Actions 자체 `schedule`로 **매일 09:15 KST**(00:15 UTC)에 실행하도록 설정하되, 스케줄 실행 지연/누락 가능성이 있어 과거 D-day를 소급 전송하지 않습니다. 기존 Fast/Slow cron-job.org 스케줄과 독립적입니다.
-- 웹훅: **기존 동일 저장소의** `GEONWORKS_DISCORD_WEBHOOK_URL`, `SWAGKEYS_DISCORD_WEBHOOK_URL` (기존 스웨그키 호환 `SWG_DISCORD_WEBHOOK_URL`도 fallback) **그대로 재사용**. 신규 Discord 채널·웹훅 생성/Secret 복사는 필요 없습니다. 어느 출처인지 확인되지 않으면 메시지를 보내지 않습니다.
-- 영속 중복 방지: **이 저장소의 별도 `gb-reminder-state` 브랜치** `gb-deadline-state.json`을 사용합니다. 같은 Notion 페이지 ID·확정 종료일·D단계의 SHA-256 키를 **전송 전에** 예약 기록하여 재실행/장애 시 중복 발송 가능성을 줄입니다. 실패로 `reserved`가 남으면 자동 재발송하지 않으므로 로그·기록을 확인하고 수동으로 복구해야 합니다. 이 기록은 `watcher-state`의 수집 상태와 독립적이고 Notion 원본을 변경하지 않습니다.
-- **현재 운영 활성화는 보류**: GitHub Actions Repository Variable `KEEPODD_GB_REMINDERS_ENABLED=true`가 있어야 예약 실행합니다. 수동 `Run workflow`의 `dry_run=true`(기본값)는 상품별 전송 예정 정보를 출력할 뿐 실제 Discord 메시지나 기록을 변경하지 않습니다. Notion 조회 실패 시에는 추정 전송 대신 실패합니다.
-- **별도 필요한 Secret은 Notion 읽기 토큰 하나:** 같은 저장소 `techhun/keyboard-alert`의 Actions Secrets에 `KEEPODD_GB_NOTION_TOKEN`을 등록해야 하며, 키보드·키캡·액세서리 Data Source 3개 조회 권한이 필요합니다. Railway `NOTION_TOKEN`은 자동 공유되지 않으므로 read-only integration을 권장합니다. 실제 토큰을 GitHub 코드/로그/채팅에 복사하지 마세요.
-- 활성화 순서: Notion 토큰 설정 → `Keyboard Alert · Keepodd GB closing reminders`에서 `dry_run=true` 수동 실행 및 대상/오류 확인 → Repository Variable `KEEPODD_GB_REMINDERS_ENABLED=true` 등록 → 실제 D-3/D-1/D-0에 발송·중복 방지 확인. 최초 dry-run을 통과하기 전에는 자동 발송을 켜지 않습니다.
-- 검증: `npm test`에 `tests/gb-deadline-reminders.test.mjs` 포함. PR Actions의 기존 수집 관련 회귀 테스트도 수행합니다. Webhook 실제 발송은 Secret 설정 후에만 검증할 수 있으므로 **실발송 미검증 상태를 코드 배포와 구분**합니다. 코드 rollback: 이관 전 마지막 정상 keyboard-alert main `e84032ade33152e37b460cc351f9eed09f43387f`. 중복 방지 상태 브랜치는 코드 rollback 이후에도 남겨 두어야 합니다.
+- **지온웍스:** `watcher-state/geonworks-release-state.json`의 최신 Release Schedule을 사용합니다. `saleType = Group Buy`, `fixed = 확정 / Fixed`, `status = For Sale`인 상품에서 정확히 기입된 `start`와 `end` 날짜만 사용합니다. IC, Fixed 미확정, In-Stock, 완료 상품, 종료일 누락은 제외합니다.
+- **스웨그키:** `watcher-state/swagkeys-state.json`의 `roadmapDates`를 사용합니다. 현재 `quarters`에 실제 포함된 SWG/SWS 상품 중 정확한 `saleStart`·`saleEnd`가 모두 있는 항목만 사용합니다. 예정된 날짜가 없거나 로드맵에서 제거된 상품은 제외하며, `fallbackSince`가 남아 있거나 검증된 로드맵 구조가 아닌 경우 전체 발송을 중단합니다.
+- **공통 보호:** 저장된 일정 정보가 72시간보다 오래되었거나 시각이 비정상인 경우 전송 없이 오류로 종료합니다. 시작 전, 종료일 경과, 날짜 역전, D-3/D-1/당일 이외 기간도 알리지 않습니다. 날짜의 **종료 시각**을 알 수 없다면 마감 당일은 날짜 기준 알림이며 정확한 마감 시각을 보장하지 않습니다.
+- **스케줄:** `.github/workflows/keyboard-alert-gb-deadlines.yml` 독립 작업, 매일 09:15 KST(UTC 00:15). GitHub Actions 예약 실행은 지연 또는 누락될 수 있으며 D-day 소급 알림은 보내지 않습니다. 기존 cron-job.org Fast/Slow를 변경하지 않습니다.
+- **알림 채널:** 기존 `GEONWORKS_DISCORD_WEBHOOK_URL`과 `SWAGKEYS_DISCORD_WEBHOOK_URL`(없으면 `SWG_DISCORD_WEBHOOK_URL`)을 재사용합니다. 별도 채널/웹훅/Secret 추가가 필요 없습니다. 기존에 웹훅을 설정해 사용 중이더라도 실제 메시지 전달 성공은 운영 실행에서 별도 확인해야 합니다.
+- **중복 방지:** 이 저장소의 독립적인 `gb-reminder-state` 브랜치에 `gb-deadline-state.json` 기록. SHA-256(`출처·상품명·GB 시작일·종료일·D단계`) 키를 Discord 전송 **전에 예약**합니다. 동일 단계 중복 전송을 방지하고, 실패 시 `reserved`는 자동 재발송하지 않습니다. 발송 기록 브랜치는 수집 상태와 분리되어 있습니다.
+- **테스트:** `npm test` 및 CI의 `Smoke GB deadline dry-run from current watcher snapshots`에서 실제 운영 `watcher-state`를 읽되 메시지/상태 변경은 하지 않습니다. Actions의 `Run workflow`도 `dry_run=true`가 기본이며 발송 없이 계산 결과만 출력합니다. 수동 `dry_run=false`는 실제 발송이므로 주의해야 합니다.
+- **배포/복구:** 배포 후 첫 실제 알림은 대상 GB가 D-3/D-1/당일이 되는 날짜에만 발생합니다. 문제 시 `keyboard-alert-gb-deadlines.yml`의 예약 실행을 중단하고 이 변경 전 정상 main `8f8455233ba8b0f4381bfa8a59f662badc323233`으로 코드 롤백합니다. 알림 상태 브랜치는 재배포 후 중복 방지를 위해 보존합니다.
