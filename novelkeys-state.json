@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T01:12:33.635Z",
+  "updatedAt": "2026-11-10T14:31:29.681Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -229,13 +229,6 @@
     },
     {
       "category": "Keycap",
-      "product": "GMK CYL Masterpiece R2",
-      "status": "Shipping to customers.",
-      "eta": "Q4 2026",
-      "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-keycaps"
-    },
-    {
-      "category": "Keycap",
       "product": "DCS Cream Cheese and Green R3",
       "status": "In transit to NovelKeys.",
       "eta": "Q3 2026",
@@ -293,7 +286,7 @@
     {
       "category": "Deskpad",
       "product": "Masterpiece R2 Deskpad",
-      "status": "In production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-masterpiece-deskpad"
     },
@@ -354,6 +347,8 @@
     "63d7aebf448ca1ab1c05d94d": "2026-11-04T14:23:16.445Z",
     "b79c1a2b643756b8d4fe4082": "2026-11-04T15:03:50.999Z",
     "84fa0abe6d12e8c7b03f0b44": "2026-11-06T14:32:34.357Z",
-    "3e46851e5190c6e917c08946": "2026-11-06T15:03:59.400Z"
+    "3e46851e5190c6e917c08946": "2026-11-06T15:03:59.400Z",
+    "9b9ee7c16a9c9a9d0e1cd8bb": "2026-11-10T14:31:29.422Z",
+    "a3a506a117ccfaa4f79a899e": "2026-11-10T14:31:29.681Z"
   }
 }
