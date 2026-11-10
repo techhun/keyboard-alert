@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T14:31:50.321Z",
+  "updatedAt": "2026-11-10T14:40:57.890Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -29,17 +29,11 @@
     },
     "kbdfans": {
       "status": "ok",
-      "changedAt": "2026-10-12T13:41:09.140Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "42834754897",
-      "lastFailureAt": "2026-11-10T14:31:31.085Z"
+      "changedAt": "2026-10-12T13:41:09.140Z"
     },
     "cannonkeys": {
       "status": "ok",
-      "changedAt": "2026-09-28T09:51:30.322Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "42834754897",
-      "lastFailureAt": "2026-11-10T14:31:50.320Z"
+      "changedAt": "2026-09-28T09:51:30.322Z"
     },
     "deskhero": {
       "status": "ok",
