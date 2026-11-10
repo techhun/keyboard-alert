@@ -37,6 +37,7 @@ public final class BackgroundProbeService extends Service {
     static final String ACTION_SHIP_MULTI = "com.techhun.npayprobe.BG_SHIP_MULTI";
     static final String ACTION_SHIP_PAGE = "com.techhun.npayprobe.BG_SHIP_PAGE";
     static final String ACTION_SHIP_FOCUS = "com.techhun.npayprobe.BG_SHIP_FOCUS";
+    static final String ACTION_SHIP_FIFTH = "com.techhun.npayprobe.BG_SHIP_FIFTH";
     // Keep the previously tested small-sample bound. Allow more only in
     // the opt-in first-page scan, with the existing per-order / run timeouts.
     private static final int MAX_BUTTONS_PER_ITEM = 5;
@@ -50,13 +51,14 @@ public final class BackgroundProbeService extends Service {
     private static final String CHANNEL_DONE = "npay_bg_probe_result";
     private static final String URL = "https://pay.naver.com/pc/history?page=1&serviceChannel=SHOPPING";
     private static final String SHIPMENT_CONTEXT_JS = "(function(){try{var body=document.body,txt=body?body.innerText:'';var items=document.querySelectorAll('[role=dialog],dialog,[aria-modal=true]');var dialogs=0;for(var i=0;i<items.length&&i<60;i++)if(items[i].getClientRects().length)dialogs++;var controls=document.querySelectorAll('button,a,[role=button]');var clicks=0;for(var j=0;j<controls.length&&j<1200;j++){var z=controls[j];if(z.getClientRects().length&&['배송조회','배송 조회'].indexOf((z.innerText||'').trim())>=0)clicks++;}var frames=document.querySelectorAll('iframe'),readable=0,unreadable=0,payFrames=0,otherFrames=0,blankFrames=0,frameLabels=0,frameCarrier=0,frameBoth=0;var known=['CJ대한통운','한진택배','로젠택배','우체국택배','롯데택배','컬리넥스트마일','경동택배','대신택배'];for(var q=0;q<frames.length&&q<20;q++){var f=frames[q],raw=f.getAttribute('src')||'';if(!raw||raw==='about:blank')blankFrames++;else{try{var u=new URL(raw,location.href);if(u.origin===location.origin)payFrames++;else otherFrames++;}catch(_){otherFrames++;}}try{var d=f.contentDocument;if(!d||!d.body){unreadable++;continue;}readable++;var t=(d.body.innerText||'').slice(0,25000),label=t.indexOf('운송장')>=0||t.indexOf('송장번호')>=0,car=known.some(function(x){return t.indexOf(x)>=0;});if(label)frameLabels++;if(car)frameCarrier++;if(label&&car)frameBoth++;}catch(_){unreadable++;}}var path=location.pathname||'';var routeKind=/tracking|delivery|shipping|parcel/i.test(path)?'배송경로':/order|detail/i.test(path)?'주문상세':/history/i.test(path)?'결제목록':/payment|pay/i.test(path)?'결제화면':'기타Pay';var hasProductLabel=txt.indexOf('상품주문번호')>=0,hasLogin=txt.indexOf('로그인')>=0||txt.indexOf('본인인증')>=0,hasError=txt.indexOf('페이지를 찾을 수 없')>=0||txt.indexOf('오류가 발생')>=0||txt.indexOf('접근할 수 없')>=0;var next=document.getElementById('__NEXT_DATA__');var resourceCount=0,ajaxCount=0;try{var entries=performance.getEntriesByType('resource');resourceCount=Math.min(999,entries.length);for(var e=0;e<entries.length&&e<1200;e++){var t=entries[e].initiatorType;if(t==='fetch'||t==='xmlhttprequest')ajaxCount++;}}catch(_){}return JSON.stringify({ok:true,hasNextData:!!next,resourceCount:resourceCount,ajaxCount:Math.min(999,ajaxCount),routeKind:routeKind,hasProductLabel:hasProductLabel,hasLogin:hasLogin,hasError:hasError,ready:document.readyState,bodyLength:Math.min(99999,txt.length),dialogs:Math.min(60,dialogs),frames:Math.min(99,frames.length),controls:Math.min(999,clicks),hasShipping:txt.indexOf('배송조회')>=0||txt.indexOf('배송 조회')>=0,hasParcel:txt.indexOf('운송장')>=0||txt.indexOf('송장번호')>=0,frameReadable:readable,frameUnreadable:unreadable,framePay:payFrames,frameOther:otherFrames,frameBlank:blankFrames,frameLabel:frameLabels,frameCarrier:frameCarrier,frameBoth:frameBoth});}catch(_){return JSON.stringify({ok:false});}})()";
+    private static final String HYDRATION_META_JS = "(function(){try{var e=document.getElementById('__NEXT_DATA__');if(!e)return JSON.stringify({ok:true,kind:'none'});if(e.textContent.length>3000000)return JSON.stringify({ok:true,kind:'oversized'});var d=JSON.parse(e.textContent),p=(d&&d.props&&d.props.pageProps)||{},state=p.dehydratedState||{},q=Array.isArray(state.queries)?state.queries:[];var qs=0,qe=0,qp=0,qn=0;for(var i=0;i<q.length&&i<300;i++){var z=q[i]&&q[i].state||{};if(z.status==='success')qs++;else if(z.status==='error')qe++;else qp++;if(z.data==null)qn++;}var seen=0,limited=false,shippingKeys=0,invoiceKeys=0,carrierKeys=0,shippingValues=0;function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>18||seen>=12000){limited=true;return;}seen++;var keys=Object.keys(o);if(keys.length>300)limited=true;for(var k=0;k<keys.length&&k<300;k++){var name=keys[k],value=o[name],shipping=/delivery|shipment|shipping|parcel|tracking|waybill|invoice|courier|carrier|택배|송장|운송장/i.test(name),invoice=/invoice|waybill|tracking|송장|운송장/i.test(name),carrier=/carrier|courier|deliveryCompany|shippingCompany|택배사/i.test(name);if(shipping)shippingKeys++;if(invoice)invoiceKeys++;if(carrier)carrierKeys++;if(shipping&&typeof value==='string'&&value.length>0)shippingValues++;walk(value,depth+1);if(seen>=12000)break;}}walk(p,0);return JSON.stringify({ok:true,kind:'parsed',queryCount:Math.min(q.length,300),querySuccess:qs,queryError:qe,queryOther:qp,queryNoData:qn,shippingKeys:Math.min(shippingKeys,999),invoiceKeys:Math.min(invoiceKeys,999),carrierKeys:Math.min(carrierKeys,999),shippingValues:Math.min(shippingValues,999),walkLimited:limited});}catch(_){return JSON.stringify({ok:false,kind:'invalid'});}})()";
     private static final String PAGE_JS = "(function(){try{var path=location.pathname;if(location.protocol!=='https:'||location.hostname!=='pay.naver.com'||['/history','/history/','/pc/history','/pc/history/'].indexOf(path)<0)return JSON.stringify({ok:false,code:'NOT_HISTORY'});var el=document.getElementById('__NEXT_DATA__');if(!el)return JSON.stringify({ok:false,code:'WAIT'});if(el.textContent.length>5000000)return JSON.stringify({ok:false,code:'LIMIT'});var d=JSON.parse(el.textContent),q=d&&d.props&&d.props.pageProps&&d.props.pageProps.dehydratedState&&d.props.pageProps.dehydratedState.queries;if(!Array.isArray(q))return JSON.stringify({ok:false,code:'WAIT'});var p=null;for(var i=0;i<q.length;i++){if(Array.isArray(q[i].queryKey)&&q[i].queryKey[0]==='PAYMENT_LIST'){var pages=q[i].state&&q[i].state.data&&q[i].state.data.pages;if(Array.isArray(pages))for(var j=0;j<pages.length;j++)if(Number(pages[j].curPage)===__PAGE__){p=pages[j];break;}if(p)break;}}if(!p)return JSON.stringify({ok:false,code:'WAIT'});var count=Array.isArray(p.items)?p.items.length:-1,total=Number(p.totalPage);if(count<0||count>1000||!Number.isInteger(total)||total<0||total>500)return JSON.stringify({ok:false,code:'BAD_DATA'});var ids=[];if(__IDS__){for(var k=0;k<count;k++){var item=p.items[k],id=item&&item.additionalData&&item.additionalData.productOrderNo;if(typeof id!=='string'||!(/^[A-Za-z0-9_-]{1,80}$/).test(id))return JSON.stringify({ok:false,code:'BAD_ID'});ids.push(id);}}return JSON.stringify({ok:true,count:count,pages:total,page:__PAGE__,ids:ids});}catch(_){return JSON.stringify({ok:false,code:'PARSE'});}})()";
     private final Handler handler = new Handler(Looper.getMainLooper());
     private WebView webView;
     private PowerManager.WakeLock wakeLock;
     private boolean started = false, finished = false, scanAll = false, readQueued = false,
         sampleShipping = false, sampleMulti = false, samplePage = false,
-        sampleFocus = false;
+        sampleFocus = false, sampleFifth = false;
     private int sampleLimit=6, sampleStage=0, sampleStep=0, sampleIndex=0, sampleDone=0,
         sampleMatched=0, sampleNoButton=0, sampleUnknown=0, sampleCancelled=0,
         sampleClicks=0, samplePoll=0, sampleButtonIndex=0, sampleButtonCount=0,
@@ -138,15 +140,18 @@ public final class BackgroundProbeService extends Service {
             (ACTION_SHIP_SAMPLE.equals(intent.getAction())||
              ACTION_SHIP_MULTI.equals(intent.getAction())||
              ACTION_SHIP_PAGE.equals(intent.getAction())||
-             ACTION_SHIP_FOCUS.equals(intent.getAction()));
-        sampleFocus = intent != null && ACTION_SHIP_FOCUS.equals(intent.getAction());
+             ACTION_SHIP_FOCUS.equals(intent.getAction())||
+             ACTION_SHIP_FIFTH.equals(intent.getAction()));
+        sampleFifth = intent != null && ACTION_SHIP_FIFTH.equals(intent.getAction());
+        sampleFocus = sampleFifth || (intent != null && ACTION_SHIP_FOCUS.equals(intent.getAction()));
         samplePage = sampleFocus || (intent != null && ACTION_SHIP_PAGE.equals(intent.getAction()));
         sampleMulti = samplePage || (intent != null && ACTION_SHIP_MULTI.equals(intent.getAction()));
         sampleLimit=samplePage?15:6;
         sampleStartedAt=System.currentTimeMillis();
         try {
             Notification notification = notification(sampleShipping?
-                (sampleFocus?"백그라운드 4·5번 배송 진단":
+                (sampleFifth?"백그라운드 5번만 배송 데이터 진단":
+                    sampleFocus?"백그라운드 4·5번 배송 진단":
                     samplePage?"백그라운드 첫 페이지 최대 15건 배송조회":
                     sampleMulti?"백그라운드 복수 배송조회 최대 6건":"백그라운드 배송조회 최대 6건")+" 검사 준비": scanAll?
                 "백그라운드 전체 목록 검사 준비" : "화면 전환 후 구매목록 1페이지 검사");
@@ -181,7 +186,8 @@ public final class BackgroundProbeService extends Service {
         PendingIntent p = PendingIntent.getActivity(this, NOTIFICATION_ID, open, flags);
         return new Notification.Builder(this, CHANNEL)
             .setSmallIcon(android.R.drawable.stat_notify_sync)
-            .setContentTitle(sampleFocus? "NPay 4·5번 집중 배송 진단":
+            .setContentTitle(sampleFifth? "NPay 5번 데이터 진단":
+                sampleFocus? "NPay 4·5번 집중 배송 진단":
                 samplePage? "NPay 첫 페이지 배송조회 검사" :
                 sampleShipping? "NPay 백그라운드 배송조회 시범" :
                 scanAll ? "NPay 백그라운드 목록 검사" : "NPay 백그라운드 1페이지 테스트")
@@ -194,6 +200,7 @@ public final class BackgroundProbeService extends Service {
             .putLong("updated_at",System.currentTimeMillis()).apply();
     }
     private String modeName(){
+        if(sampleFifth)return "백그라운드 첫 페이지 5번 배송 데이터 진단";
         if(sampleFocus)return "백그라운드 첫 페이지 4·5번 배송 진단";
         if(samplePage)return "백그라운드 첫 페이지 배송검사";
         if(sampleShipping)return sampleMulti?
@@ -487,7 +494,8 @@ public final class BackgroundProbeService extends Service {
                         return;
                     }
                     for(int i=0;i<a.length();i++){
-                        if(sampleFocus && i!=3 && i!=4)continue;
+                        if(sampleFifth&&i!=4)continue;
+                        if(sampleFocus&&!sampleFifth&&i!=3&&i!=4)continue;
                         JSONObject row=a.getJSONObject(i);
                         String id=row.getString("id"),url=row.getString("url");
                         if(!id.matches("[A-Za-z0-9_-]{1,80}")||!safeDetailUrl(url))throw new IllegalArgumentException();
@@ -500,7 +508,7 @@ public final class BackgroundProbeService extends Service {
             });
         }catch(RuntimeException ex){finish("배송조회 시범 · 목록 실행 실패");}
     }
-    private int samplePosition(){return sampleFocus?sampleIndex+4:sampleIndex+1;}
+    private int samplePosition(){return sampleFifth?5:sampleFocus?sampleIndex+4:sampleIndex+1;}
     private void nextSample(){
         if(finished||!sampleShipping)return;
         if(sampleIndex>=sampleTargets.size()){
@@ -523,7 +531,9 @@ public final class BackgroundProbeService extends Service {
                     " · 지연 발견 "+sampleLateControls+"건"+
                     " · 식별 재확인 "+sampleAmbiguousRetries+"회":"")+
                 (samplePage?" · 미검출 화면 재로드 비활성(이전 테스트 0건 복구)":"")+
-                (sampleFocus?" · 현재 첫 페이지 기준 4·5번만 재진단"+
+                (sampleFifth?" · 현재 첫 페이지 기준 5번만 진단"+
+                    " (이전 검사와 동일한 주문인지 미확정)":
+                    sampleFocus?" · 현재 첫 페이지 기준 4·5번만 재진단"+
                     " (이전 검사와 동일한 주문인지 미확정)":"")+
                 (samplePage?" · 같은 상세 URL "+sampleSharedDetail+"건"+
                     " · 검증 결과 재사용 "+sampleCachedEntries+"건/"+sampleCachedButtons+"개"+
@@ -775,7 +785,7 @@ public final class BackgroundProbeService extends Service {
                             " · Fetch/XHR "+Math.max(0,Math.min(999,d.optInt("ajaxCount",0)));
                     }
                 }catch(Exception ignored){ /* Record only sanitized fallback. */ }
-                finishMissingControl(step,"배송정보 미검출 ("+sampleDetailObservation+
+                finishMissingWithHydration(step,"배송정보 미검출 ("+sampleDetailObservation+
                     " · "+navigation+" · 로드완료 "+navigations+"회"+
                     " · 새창요청 "+Math.min(99,samplePopupRequests)+"회"+
                     " · 사용자제스처 새창 "+Math.min(99,samplePopupUserGestureRequests)+"회"+
@@ -789,8 +799,39 @@ public final class BackgroundProbeService extends Service {
                     " · "+context+")");
             });
         }catch(RuntimeException ex){
-            finishMissingControl(step,"배송정보 미검출 ("+sampleDetailObservation+
+            finishMissingWithHydration(step,"배송정보 미검출 ("+sampleDetailObservation+
                 " · "+navigation+" · 화면 진단 실행 실패)");
+        }
+    }
+    private void finishMissingWithHydration(int step,String reason){
+        if(!sampleFifth||webView==null){
+            finishMissingControl(step,reason);
+            return;
+        }
+        try{
+            webView.evaluateJavascript(HYDRATION_META_JS,ret->{
+                if(finished||sampleStage!=2||sampleStep!=step)return;
+                String schema=" · Next구조 확인불가";
+                try{
+                    JSONObject d=decode(ret);
+                    String kind=d.optString("kind","invalid");
+                    if(d.optBoolean("ok")&&"parsed".equals(kind)){
+                        schema=" · Next쿼리 "+Math.min(300,Math.max(0,d.optInt("queryCount",0)))+
+                            " · 성공쿼리 "+Math.min(300,Math.max(0,d.optInt("querySuccess",0)))+
+                            " · 오류쿼리 "+Math.min(300,Math.max(0,d.optInt("queryError",0)))+
+                            " · 데이터없는쿼리 "+Math.min(300,Math.max(0,d.optInt("queryNoData",0)))+
+                            " · 배송필드 "+Math.min(999,Math.max(0,d.optInt("shippingKeys",0)))+
+                            " · 송장필드 "+Math.min(999,Math.max(0,d.optInt("invoiceKeys",0)))+
+                            " · 택배사필드 "+Math.min(999,Math.max(0,d.optInt("carrierKeys",0)))+
+                            " · 값있는배송필드 "+Math.min(999,Math.max(0,d.optInt("shippingValues",0)))+
+                            " · 탐색한도 "+(d.optBoolean("walkLimited")?"있음":"없음");
+                    }else if("none".equals(kind)||"oversized".equals(kind))
+                        schema=" · Next구조 "+("none".equals(kind)?"없음":"크기제한");
+                }catch(Exception ignored){}
+                finishMissingControl(step,reason+schema);
+            });
+        }catch(RuntimeException ex){
+            finishMissingControl(step,reason+" · Next구조 검사 실행 실패");
         }
     }
     private void finishMissingControl(int step,String safeReason){
