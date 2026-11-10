@@ -3,20 +3,14 @@ import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { dueGbReminders, discordGbReminder, reservedState, sentState, validateReminderState } from "./gb-deadline-core.mjs";
 
-const NOTION_VERSION = "2026-03-11";
-const STATE_BRANCH = "gb-reminder-state";
+ const STATE_BRANCH = "gb-reminder-state";
 const STATE_FILE = "gb-deadline-state.json";
-const SOURCED_GB_EVENTS_PATH = process.env.KEEPODD_GB_EVENTS_PATH || "keepodd-events.json";
+const GEON_RELEASE_PATH = process.env.GEON_RELEASE_STATE_PATH || "geonworks-release-state.json";
+const SWAGKEYS_PATH = process.env.SWAGKEYS_STATE_PATH || "swagkeys-state.json";
 const SOURCE_WEBHOOK_SECRETS = Object.freeze({
   GEONWORKS: ["GEONWORKS_DISCORD_WEBHOOK_URL"],
   SWAGKEYS: ["SWAGKEYS_DISCORD_WEBHOOK_URL", "SWG_DISCORD_WEBHOOK_URL"],
 });
-const DATA_SOURCES = Object.freeze({
-  키보드: "256c53d5-2ef8-802b-8c4c-000bfafad157",
-  키캡: "256c53d5-2ef8-80a7-8d09-000bcb3647ae",
-  액세서리: "8cf24bc4-b826-41b7-b663-ced2fcd5d46c",
-});
-
 function expectEnvironment(name) {
   const value = (process.env[name] || "").trim();
   if (!value) throw new Error(`GitHub secret/environment ${name} is missing`);
@@ -30,36 +24,10 @@ async function fetchJson(url, options = {}, label = "Request") {
   return data;
 }
 
-async function loadNotionPages(token, sourceId) {
-  let cursor;
-  const pages = [];
-  do {
-    const data = await fetchJson(`https://api.notion.com/v1/data_sources/${sourceId}/query`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Notion-Version": NOTION_VERSION,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ page_size: 100, ...(cursor ? { start_cursor: cursor } : {}) }),
-    }, "Notion GB data-source query");
-    if (!Array.isArray(data?.results) || typeof data.has_more !== "boolean") throw new Error("Unexpected Notion query response");
-    pages.push(...data.results);
-    if (pages.length > 5000) throw new Error("Unexpected Notion row count; fail closed");
-    if (data.has_more && (!data.next_cursor || data.next_cursor === cursor)) throw new Error("Notion pagination cursor invalid");
-    cursor = data.has_more ? data.next_cursor : undefined;
-  } while (cursor);
-  return pages;
-}
-
-async function loadSourcedGbEvents() {
-  // The workflow snapshots the live watcher-state file before starting the read-only check.
-  // Never fall back to guessed URLs or manufacturer names if this snapshot is missing.
-  const data = JSON.parse(await readFile(SOURCED_GB_EVENTS_PATH, "utf8"));
-  if (data?.version !== 1 || !Array.isArray(data.events) || data.events.length > 5000) {
-    throw new Error("Verified GB event snapshot is missing or invalid");
-  }
-  return data.events;
+async function readVerifiedSchedule(path, label) {
+  const data = JSON.parse(await readFile(path, "utf8"));
+  if (!data || data.version !== 1) throw new Error(`Invalid ${label} watcher-state snapshot`);
+  return data;
 }
 
 function githubApiUrl(repo) {
@@ -93,7 +61,7 @@ async function writeReminderState(repo, token, state, sha, label) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      message: `state(keepodd): GB deadline ${label}`,
+      message: `state(keyboard-alert): GB deadline ${label}`,
       content: Buffer.from(JSON.stringify(state, null, 2) + "\n").toString("base64"),
       branch: STATE_BRANCH,
       sha,
@@ -136,19 +104,17 @@ async function sendDiscordReminder(url, reminder) {
 
 export async function runGbDeadlineCheck(now = new Date()) {
   const dryRun = (process.env.DRY_RUN ?? "").trim().toLowerCase() !== "false";
-  const token = expectEnvironment("KEEPODD_GB_NOTION_TOKEN");
-  const pages = {};
-  for (const [category, sourceId] of Object.entries(DATA_SOURCES)) {
-    pages[category] = await loadNotionPages(token, sourceId);
-  }
-  const sourcedEvents = await loadSourcedGbEvents();
-  const due = dueGbReminders(pages, now, sourcedEvents);
-  const count = Object.values(pages).reduce((sum, p) => sum + p.length, 0);
+  // Read only the two verified watcher snapshots; never access Keepodd's Notion database.
+  const [geonRelease, swagkeys] = await Promise.all([
+    readVerifiedSchedule(GEON_RELEASE_PATH, "GEONWORKS release"),
+    readVerifiedSchedule(SWAGKEYS_PATH, "SWAGKEYS roadmap"),
+  ]);
+  const due = dueGbReminders(geonRelease, swagkeys, now);
   const sourceCounts = {
     GEONWORKS: due.filter(item => item.source === "GEONWORKS").length,
     SWAGKEYS: due.filter(item => item.source === "SWAGKEYS").length,
   };
-  console.log(`Keepodd GB deadline check: scanned ${count} records; verified due: GEONWORKS=${sourceCounts.GEONWORKS}, SWAGKEYS=${sourceCounts.SWAGKEYS}.`);
+  console.log(`Keyboard Alert GB closing check: verified due GEONWORKS=${sourceCounts.GEONWORKS}, SWAGKEYS=${sourceCounts.SWAGKEYS} (KST).`);
   if (due.length > 50) throw new Error("More than 50 GB reminders due; investigate before sending to prevent floods");
 
   if (dryRun) {
@@ -196,13 +162,13 @@ export async function runGbDeadlineCheck(now = new Date()) {
     await new Promise(resolve => setTimeout(resolve, 1200));
   }
 
-  console.log(`Keepodd GB deadline results: sent=${sent}, already-handled=${skipped}.`);
+  console.log(`Keyboard Alert GB deadline results: sent=${sent}, already-handled=${skipped}.`);
   return { dryRun: false, due: due.length, sent, skipped };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   runGbDeadlineCheck().catch(error => {
-    console.error(`Keepodd GB reminder failed: ${error instanceof Error ? error.message : "unknown error"}`);
+    console.error(`Keyboard Alert GB reminder failed: ${error instanceof Error ? error.message : "unknown error"}`);
     process.exitCode = 1;
   });
 }
