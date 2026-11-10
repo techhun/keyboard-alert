@@ -122,6 +122,16 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Run regression tests
         run: npm test
+      - name: Smoke GB deadline dry-run from current watcher snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin +refs/heads/watcher-state:refs/remotes/origin/watcher-state
+          git show origin/watcher-state:geonworks-release-state.json > "$RUNNER_TEMP/geonworks-release-state.json"
+          git show origin/watcher-state:swagkeys-state.json > "$RUNNER_TEMP/swagkeys-state.json"
+          GEON_RELEASE_STATE_PATH="$RUNNER_TEMP/geonworks-release-state.json" \
+          SWAGKEYS_STATE_PATH="$RUNNER_TEMP/swagkeys-state.json" \
+          DRY_RUN=true node scripts/check-gb-deadlines.mjs
       - name: Smoke check workflow watchdog
         env:
           WATCHDOG_GITHUB_TOKEN: ${{ github.token }}
