@@ -139,7 +139,13 @@ jobs:
       - name: Smoke check GEONWORKS GB
         run: npm run check:geonworks
       - name: Smoke check GEONWORKS Release
-        run: npm run check:geonworks-release
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Match the production slow watcher: compare the latest verified state,
+          # not the stale example state committed on the source branch.
+          cp "$RUNNER_TEMP/geonworks-release-state.json" geonworks-release-state.json
+          npm run check:geonworks-release
       - name: Smoke check Oblotzky Schedule
         run: npm run check:oblotzky
       - name: Smoke check NovelKeys Product Updates
