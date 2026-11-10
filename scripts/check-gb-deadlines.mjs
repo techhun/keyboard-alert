@@ -104,7 +104,7 @@ async function sendDiscordReminder(url, reminder) {
 
 export async function runGbDeadlineCheck(now = new Date()) {
   const dryRun = (process.env.DRY_RUN ?? "").trim().toLowerCase() !== "false";
-  // Read only the two verified watcher snapshots; never access Keepodd's Notion database.
+  // Read only the two verified watcher snapshots; no inventory/API lookups.
   const [geonRelease, swagkeys] = await Promise.all([
     readVerifiedSchedule(GEON_RELEASE_PATH, "GEONWORKS release"),
     readVerifiedSchedule(SWAGKEYS_PATH, "SWAGKEYS roadmap"),
@@ -124,12 +124,6 @@ export async function runGbDeadlineCheck(now = new Date()) {
     }
     console.log(`DRY RUN: ${due.length} eligible GB reminders; no Discord messages or state changes.`);
     return { dryRun: true, due: due.length, sent: 0 };
-  }
-
-  // A scheduled run must explicitly be enabled. Manual workflow_dispatch sends require dry_run=false.
-  if (process.env.GITHUB_EVENT_NAME !== "workflow_dispatch" &&
-      process.env.KEEPODD_GB_REMINDERS_ENABLED !== "true") {
-    throw new Error("Scheduled GB reminders are disabled");
   }
 
   // Resolve and validate every required webhook before reserving any message.
