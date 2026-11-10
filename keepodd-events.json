@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-09T15:31:17.640Z",
+  "updatedAt": "2026-11-10T02:50:32.917Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1742,6 +1742,23 @@
       "note": "컬러매칭 In Progress",
       "quarter": "Q3",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "ad550d596059d20be58dcb82f2345cc4",
+      "source": "GEONWORKS",
+      "name": "GMK Finer Things R2",
+      "eventType": "note_changed",
+      "before": "데스크매트 입고 완료. 금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. /The desk mats have been received. The Metal Artisan is due to be dispatched from the manufacturer to Zionworks at the end of November.",
+      "after": "금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. / Metal Artisan is scheduled to be dispatched from the manufacturer to Geonworks at the end of November.",
+      "occurredAt": "2026-11-10T02:50:32.917Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-07-07",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. / Metal Artisan is scheduled to be dispatched from the manufacturer to Geonworks at the end of November.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

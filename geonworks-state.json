@@ -1,18 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T10:30:41.809Z",
+  "updatedAt": "2026-11-10T02:50:32.917Z",
   "rows": [
-    {
-      "product": "GMK CYL GUROKAWA",
-      "gbStart": "2025. 7. 18",
-      "eta": "2026. 10. 26",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 9",
-      "note": "—"
-    },
     {
       "product": "Keycult No. 3 TKL",
       "gbStart": "2025. 9. 19",
@@ -90,7 +80,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 10",
       "note": "PVD 제품 제외 생산 완료."
     },
     {
@@ -100,7 +90,7 @@
       "type": "Keyboard",
       "manufacturer": "MACHINA",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 10",
       "note": "PVD 코팅 제외 유닛 : 9월 21일 발송 PVD 코팅 제품 (Stainless Steel Black) : 전량 재생산 진행 (현지 생산 기준 약 30~45일 지연) /Units without PVD coating: Shipping on September 21. PVD-coated products (Stainless Steel Black): All units are being remanufactured (approximately 30–45 days delay based on local production schedules)."
     },
     {
@@ -140,7 +130,7 @@
       "type": "Keyboard",
       "manufacturer": "Artifact Inderstry",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 10",
       "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
     },
     {
@@ -190,7 +180,7 @@
       "type": "Keyboard",
       "manufacturer": "Grit",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 10",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
@@ -304,16 +294,6 @@
       "note": "—"
     },
     {
-      "product": "GMK 2 PACK",
-      "gbStart": "2026. 6. 26",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
-      "note": "—"
-    },
-    {
       "product": "GMK Analog Dreams R3",
       "gbStart": "2026. 7. 3",
       "eta": "2026. 12. 31",
@@ -340,8 +320,8 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 4",
-      "note": "데스크매트 입고 완료. 금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. /The desk mats have been received. The Metal Artisan is due to be dispatched from the manufacturer to Zionworks at the end of November."
+      "update": "2026. 11. 10",
+      "note": "금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. / Metal Artisan is scheduled to be dispatched from the manufacturer to Geonworks at the end of November."
     },
     {
       "product": "Tofu TKL R2",
@@ -673,6 +653,13 @@
     "868642254bf9105524e25d92": "2026-11-09T10:30:40.733Z",
     "c3a4f73b7c0bd347f51c55a1": "2026-11-09T10:30:41.262Z",
     "9bfa1561c2dbc092e36b5d0b": "2026-11-09T10:30:41.491Z",
-    "6c513ed1a83a08cbc136e567": "2026-11-09T10:30:41.808Z"
+    "6c513ed1a83a08cbc136e567": "2026-11-09T10:30:41.808Z",
+    "82b264b88c258bef54c3d077": "2026-11-10T02:50:30.586Z",
+    "487e6042110487e5e241fad6": "2026-11-10T02:50:30.829Z",
+    "81c90d40fcabcedd0fcdf5e3": "2026-11-10T02:50:31.050Z",
+    "6b50511c2e63c3564f4809cb": "2026-11-10T02:50:31.388Z",
+    "ef6c4073185b9326794c7869": "2026-11-10T02:50:32.292Z",
+    "29f2d479631e5a909be4033f": "2026-11-10T02:50:32.525Z",
+    "ed435256485d3f3b39d12487": "2026-11-10T02:50:32.917Z"
   }
 }
