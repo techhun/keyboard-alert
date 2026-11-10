@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T02:50:32.917Z",
+  "updatedAt": "2026-11-10T04:20:31.648Z",
   "rows": [
     {
       "product": "Keycult No. 3 TKL",
@@ -170,7 +170,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 10",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
@@ -660,6 +660,7 @@
     "6b50511c2e63c3564f4809cb": "2026-11-10T02:50:31.388Z",
     "ef6c4073185b9326794c7869": "2026-11-10T02:50:32.292Z",
     "29f2d479631e5a909be4033f": "2026-11-10T02:50:32.525Z",
-    "ed435256485d3f3b39d12487": "2026-11-10T02:50:32.917Z"
+    "ed435256485d3f3b39d12487": "2026-11-10T02:50:32.917Z",
+    "1de6593aa2cb6a84dbf70e3b": "2026-11-10T04:20:31.648Z"
   }
 }
