@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-04T18:32:57.136Z",
+  "updatedAt": "2026-11-11T18:33:39.242Z",
   "rows": [
     {
       "product": "PBTfans G3",
@@ -72,8 +72,5 @@
       "sourceUrl": "https://omnitype.com/pages/product-updates"
     }
   ],
-  "sentChanges": {
-    "9787b1f27a9bacbdab7617cd": "2026-11-04T18:32:56.945Z",
-    "89805d378275c74085510217": "2026-11-04T18:32:57.136Z"
-  }
+  "sentChanges": {}
 }
