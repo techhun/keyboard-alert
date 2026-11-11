@@ -159,12 +159,12 @@ jobs:
                               JSONArray rows=d.getJSONArray("candidates");
                               if(rows.length()==0){status.setText("검사할 유효한 항목 없음");return;}
                               StringBuilder report=new StringBuilder();
-                              report.append("현재 네이버페이 첫 페이지의 검사 후보\\n")
+                              report.append("현재 네이버페이 첫 페이지의 검사 후보\n")
                                   .append("원본 목록 ").append(d.optInt("totalItems",0))
                                   .append("건 · 추출 후보 ").append(rows.length())
-                                  .append("건 (최대 15건)\\n")
-                                  .append("주문상세 링크/상품주문키 유효·중복 제거 기준\\n")
-                                  .append("이전 백그라운드 검사 당시 목록과 같다는 보장은 없음.\\n\\n");
+                                  .append("건 (최대 15건)\n")
+                                  .append("주문상세 링크/상품주문키 유효·중복 제거 기준\n")
+                                  .append("이전 백그라운드 검사 당시 목록과 같다는 보장은 없음.\n\n");
                               for(int i=0;i<rows.length();i++){
                                   JSONObject item=rows.getJSONObject(i);
                                   int original=item.optInt("sourcePosition",-1);
@@ -172,18 +172,18 @@ jobs:
                                   if(!id.matches("[A-Za-z0-9_-]{1,80}")||
                                       original<1||original>1000)throw new IllegalArgumentException();
                                   String masked="****"+id.substring(Math.max(0,id.length()-4));
-                                  String label=item.optString("label","").replace('\\n',' ').replace('\\r',' ').trim();
-                                  String alternate=item.optString("labelAlt","").replace('\\n',' ').replace('\\r',' ').trim();
+                                  String label=item.optString("label","").replace('\n',' ').replace('\r',' ').trim();
+                                  String alternate=item.optString("labelAlt","").replace('\n',' ').replace('\r',' ').trim();
                                   if(label.length()>120)label=label.substring(0,120);
                                   if(alternate.length()>120)alternate=alternate.substring(0,120);
                                   report.append(i==4?"[검사 대상 5번] ":"")
                                       .append("검사 ").append(i+1).append("번 / 원본 ")
-                                      .append(original).append("번째\\n")
+                                      .append(original).append("번째\n")
                                       .append("상품명 ").append(label.isEmpty()?"필드 미확인":"후보: "+label)
                                       .append(alternate.isEmpty()?"":" / 다른 후보: "+alternate)
-                                      .append(" · 주문키 끝4: ").append(masked).append("\\n\\n");
+                                      .append(" · 주문키 끝4: ").append(masked).append("\n\n");
                               }
-                              report.append("상품명은 목록 데이터에서 찾은 후보이며, 화면 상품명과 대조해야 확정됨.\\n")
+                              report.append("상품명은 목록 데이터에서 찾은 후보이며, 화면 상품명과 대조해야 확정됨.\n")
                                   .append("전체 상품주문번호·주문상세 URL·운송장번호 미포함.");
                               final String resultText=report.toString();
                               new android.app.AlertDialog.Builder(this)
