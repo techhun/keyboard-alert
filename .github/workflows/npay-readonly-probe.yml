@@ -128,6 +128,89 @@ jobs:
                       Toast.makeText(this,"복사 실패 · 클립보드 접근을 확인해 주세요.",Toast.LENGTH_LONG).show();
                   }
               }
+              private void showCurrentShippingTargets(){
+                  if(autoRunning||sweeping){
+                      status.setText("진행 중인 검사를 마친 뒤 대상 목록을 확인해줘.");return;
+                  }
+                  if(browser==null||!isHistoryPage(browser.getUrl()==null?"":browser.getUrl())){
+                      status.setText("결제내역 첫 페이지를 연 뒤 대상 목록을 확인해줘.");return;
+                  }
+                  try{
+                      Uri u=Uri.parse(browser.getUrl());
+                      String p=u.getQueryParameter("page");
+                      if(p!=null&&!"1".equals(p)){
+                          status.setText("현재 1페이지가 아니야. 결제내역을 누른 뒤 다시 확인해줘.");return;
+                      }
+                  }catch(RuntimeException e){
+                      status.setText("결제내역 주소 확인 실패");return;
+                  }
+                  final int seq=++inspectSeq;
+                  status.setText("현재 첫 페이지 검사대상 1~15번 확인 중");
+                  try{
+                      browser.evaluateJavascript(BackgroundDeliveryScripts.SAMPLE_LIST_JS
+                          .replace("__SAMPLE_LIMIT__","15"),ret->{
+                          if(seq!=inspectSeq)return;
+                          try{
+                              JSONObject d=decodeAuto(ret);
+                              if(!d.optBoolean("ok")){
+                                  status.setText("목록 데이터 준비 중 · 결제내역 로딩 후 다시 확인해줘.");
+                                  return;
+                              }
+                              JSONArray rows=d.getJSONArray("candidates");
+                              if(rows.length()==0){status.setText("검사할 유효한 항목 없음");return;}
+                              StringBuilder report=new StringBuilder();
+                              report.append("현재 네이버페이 첫 페이지의 검사 후보\\n")
+                                  .append("원본 목록 ").append(d.optInt("totalItems",0))
+                                  .append("건 · 추출 후보 ").append(rows.length())
+                                  .append("건 (최대 15건)\\n")
+                                  .append("주문상세 링크/상품주문키 유효·중복 제거 기준\\n")
+                                  .append("이전 백그라운드 검사 당시 목록과 같다는 보장은 없음.\\n\\n");
+                              for(int i=0;i<rows.length();i++){
+                                  JSONObject item=rows.getJSONObject(i);
+                                  int original=item.optInt("sourcePosition",-1);
+                                  String id=item.optString("id","");
+                                  if(!id.matches("[A-Za-z0-9_-]{1,80}")||
+                                      original<1||original>1000)throw new IllegalArgumentException();
+                                  String masked="****"+id.substring(Math.max(0,id.length()-4));
+                                  String label=item.optString("label","").replace('\\n',' ').replace('\\r',' ').trim();
+                                  String alternate=item.optString("labelAlt","").replace('\\n',' ').replace('\\r',' ').trim();
+                                  if(label.length()>120)label=label.substring(0,120);
+                                  if(alternate.length()>120)alternate=alternate.substring(0,120);
+                                  report.append(i==4?"[검사 대상 5번] ":"")
+                                      .append("검사 ").append(i+1).append("번 / 원본 ")
+                                      .append(original).append("번째\\n")
+                                      .append("상품명 ").append(label.isEmpty()?"필드 미확인":"후보: "+label)
+                                      .append(alternate.isEmpty()?"":" / 다른 후보: "+alternate)
+                                      .append(" · 주문키 끝4: ").append(masked).append("\\n\\n");
+                              }
+                              report.append("상품명은 목록 데이터에서 찾은 후보이며, 화면 상품명과 대조해야 확정됨.\\n")
+                                  .append("전체 상품주문번호·주문상세 URL·운송장번호 미포함.");
+                              final String resultText=report.toString();
+                              new android.app.AlertDialog.Builder(this)
+                                  .setTitle("NPay 현재 첫 페이지 검사 대상")
+                                  .setMessage(resultText)
+                                  .setPositiveButton("텍스트 복사",(dialog,which)->{
+                                      try{
+                                          android.content.ClipboardManager cb=
+                                              (android.content.ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                                          if(cb==null)throw new IllegalStateException();
+                                          cb.setPrimaryClip(android.content.ClipData.newPlainText(
+                                              "NPay 현재 검사대상 목록",resultText));
+                                          Toast.makeText(this,"검사 대상 목록 복사 완료",Toast.LENGTH_SHORT).show();
+                                      }catch(RuntimeException e){
+                                          Toast.makeText(this,"목록 복사 실패",Toast.LENGTH_LONG).show();
+                                      }
+                                  })
+                                  .setNegativeButton("닫기",null).show();
+                              status.setText("검사대상 목록 확인 완료 · 원본 순번과 검사 순번 구분");
+                          }catch(Exception e){
+                              status.setText("검사대상 추출 결과 해석 실패");
+                          }
+                      });
+                  }catch(RuntimeException e){
+                      status.setText("검사대상 확인 실행 실패");
+                  }
+              }
               private void startBackgroundProbe(boolean allPages,boolean sampleShipping,
                   boolean multi,boolean page,boolean focus,boolean fifth){
                   if(autoRunning||sweeping){status.setText("진행 중인 화면 검사를 먼저 중지해줘.");return;}
@@ -478,6 +561,10 @@ jobs:
                       if(autoRunning){stopAuto("사용자 중지 · 부분 결과");return;}
                       if(sweeping)stopSweep("사용자 중지 · 부분 결과");else{collectDetails=false;startSweep();}
                   });diagnostics.addView(sweepButton);
+                  Button targetPreview=new Button(this);
+                  targetPreview.setText("현재 1페이지 검사대상 1~15번 확인");
+                  targetPreview.setOnClickListener(v->showCurrentShippingTargets());
+                  diagnostics.addView(targetPreview);
                   Button bgStart=new Button(this);bgStart.setText("백그라운드 구매목록 1페이지 검증 (1회)");
                   bgStart.setOnClickListener(v->startBackgroundProbe(false,false,false,false,false,false));diagnostics.addView(bgStart);
                   Button bgAll=new Button(this);bgAll.setText("백그라운드 전체 구매목록 검사 (1회)");
