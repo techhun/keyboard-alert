@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T06:20:30.446Z",
+  "updatedAt": "2026-11-11T00:00:46.259Z",
   "rows": [
     {
       "product": "Keycult No. 3 TKL",
@@ -10,8 +10,8 @@
       "type": "Keyboard",
       "manufacturer": "Novelkeys",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 5",
-      "note": "—"
+      "update": "2026. 11. 11",
+      "note": "11/11발송 예정 / Scheduled for dispatch on 11 November"
     },
     {
       "product": "TYPFACE KAFKA Barebones Kit",
@@ -190,7 +190,7 @@
       "type": "Keycap",
       "manufacturer": "Signature Plastics",
       "status": "제작 중 / In progress",
-      "update": "2026. 5. 8",
+      "update": "2026. 11. 11",
       "note": "—"
     },
     {
@@ -200,8 +200,8 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
-      "note": "—"
+      "update": "2026. 11. 11",
+      "note": "제조사에서 지온웍스로 출발 / Started out as a manufacturer under the name Geonworks"
     },
     {
       "product": "RF-8X",
@@ -653,6 +653,9 @@
     "ef6c4073185b9326794c7869": "2026-11-10T02:50:32.292Z",
     "29f2d479631e5a909be4033f": "2026-11-10T02:50:32.525Z",
     "ed435256485d3f3b39d12487": "2026-11-10T02:50:32.917Z",
-    "1de6593aa2cb6a84dbf70e3b": "2026-11-10T04:20:31.648Z"
+    "1de6593aa2cb6a84dbf70e3b": "2026-11-10T04:20:31.648Z",
+    "d30e7a8eb20f37aabcbd5dac": "2026-11-11T00:00:45.646Z",
+    "5485a608d51e772dedc14123": "2026-11-11T00:00:46.023Z",
+    "6af423ddaeec1420688d8f6d": "2026-11-11T00:00:46.259Z"
   }
 }

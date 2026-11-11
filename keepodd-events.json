@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-10T02:50:32.917Z",
+  "updatedAt": "2026-11-11T00:00:46.259Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1758,6 +1758,38 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "금속 아티산 11월 말 제조사에서 지온웍스로 발송 예정. / Metal Artisan is scheduled to be dispatched from the manufacturer to Geonworks at the end of November.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "ccbd477c568077d4f83b2dd6bedaa504",
+      "source": "GEONWORKS",
+      "name": "GMK CYL SELENE",
+      "eventType": "note_changed",
+      "after": "제조사에서 지온웍스로 출발 / Started out as a manufacturer under the name Geonworks",
+      "occurredAt": "2026-11-11T00:00:46.259Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-05-15",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스로 출발 / Started out as a manufacturer under the name Geonworks",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "d6c3e1da015e6ce92839c0286b09c151",
+      "source": "GEONWORKS",
+      "name": "Keycult No. 3 TKL",
+      "eventType": "note_changed",
+      "after": "11/11발송 예정 / Scheduled for dispatch on 11 November",
+      "occurredAt": "2026-11-11T00:00:46.259Z",
+      "categoryHint": "키보드",
+      "maker": "Novelkeys",
+      "saleStart": "2025-09-19",
+      "eta": "2026-06-30",
+      "status": "검수 중 / Inspecting",
+      "note": "11/11발송 예정 / Scheduled for dispatch on 11 November",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
