@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-11T00:30:42.842Z",
+  "updatedAt": "2026-11-11T01:00:50.644Z",
   "rows": [
     {
       "product": "GMK CYL Blanks",
@@ -24,9 +24,21 @@
       "fixed": "확정 / Fixed",
       "start": "2026-10-27",
       "end": "2026-11-27"
+    },
+    {
+      "product": "GMK CYL Beige Boogaloo",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-10",
+      "end": "2026-11-27"
     }
   ],
   "sentChanges": {
-    "716cad7bcfd67d3744569c2a": "2026-11-09T23:40:37.107Z"
+    "716cad7bcfd67d3744569c2a": "2026-11-09T23:40:37.107Z",
+    "c36965e1bfdd3d2a17479e44": "2026-11-11T01:00:50.643Z"
   }
 }
