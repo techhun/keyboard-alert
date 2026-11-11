@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-11T00:40:28.922Z",
+  "updatedAt": "2026-11-11T00:50:29.927Z",
   "rows": [
     {
       "product": "Keycult No. 3 TKL",
@@ -34,11 +34,31 @@
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
     },
     {
+      "product": "GMK CYL Blanks",
+      "gbStart": "2026. 10. 20",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 11",
+      "note": "—"
+    },
+    {
       "product": "Chamber TKL",
       "gbStart": "2026. 10. 27",
       "eta": "2027. 3. 31",
       "type": "Keyboard",
       "manufacturer": "KBDfans",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 11",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Beige Boogaloo",
+      "gbStart": "2026. 11. 10",
+      "eta": "2027. 3. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 11. 11",
       "note": "—"
@@ -592,16 +612,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 10. 29",
       "note": "—"
-    },
-    {
-      "product": "GMK CYL Blanks",
-      "gbStart": "2026. 10. 20",
-      "eta": "2027. 3. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 5",
-      "note": "—"
     }
   ],
   "sentChanges": {
@@ -658,6 +668,8 @@
     "5485a608d51e772dedc14123": "2026-11-11T00:00:46.023Z",
     "6af423ddaeec1420688d8f6d": "2026-11-11T00:00:46.259Z",
     "c37387978f516b64417745f1": "2026-11-11T00:40:28.621Z",
-    "f955e0b52e16bbf2612561ac": "2026-11-11T00:40:28.922Z"
+    "f955e0b52e16bbf2612561ac": "2026-11-11T00:40:28.922Z",
+    "e7113f66c60e33d1d75776aa": "2026-11-11T00:50:29.709Z",
+    "14b21946a22af3cb8976a5b4": "2026-11-11T00:50:29.927Z"
   }
 }

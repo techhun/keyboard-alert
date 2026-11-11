@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-11T00:40:28.922Z",
+  "updatedAt": "2026-11-11T00:50:29.927Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1808,6 +1808,20 @@
       "status": "제작 중 / In progress",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "c5972d907d266fd103d8a2ac55617f95",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Beige Boogaloo",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-11T00:50:29.927Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-10",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-beige-boogaloo-%ED%82%A4%EC%BA%A1/760/category/47/display/1/",
+      "sourceUrlType": "product"
     }
   ]
 }
