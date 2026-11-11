@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-09T23:50:34.356Z",
+  "updatedAt": "2026-11-11T00:30:42.842Z",
   "rows": [
     {
       "product": "GMK CYL Blanks",
@@ -27,7 +27,6 @@
     }
   ],
   "sentChanges": {
-    "2f059c76a14ed80ef1c99e00": "2026-11-04T00:20:43.185Z",
     "716cad7bcfd67d3744569c2a": "2026-11-09T23:40:37.107Z"
   }
 }
