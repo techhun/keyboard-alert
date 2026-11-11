@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-11T00:00:46.259Z",
+  "updatedAt": "2026-11-11T00:40:28.922Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1790,6 +1790,22 @@
       "eta": "2026-06-30",
       "status": "검수 중 / Inspecting",
       "note": "11/11발송 예정 / Scheduled for dispatch on 11 November",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "7bedcb68255ac82db3a727342dd79484",
+      "source": "GEONWORKS",
+      "name": "GMK Salamander",
+      "eventType": "status_changed",
+      "before": "판매 중 / GB on sale",
+      "after": "제작 중 / In progress",
+      "occurredAt": "2026-11-11T00:40:28.922Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-13",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
