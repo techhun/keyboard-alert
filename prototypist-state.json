@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-11T10:40:49.589Z",
+  "updatedAt": "2026-11-11T11:40:50.540Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1008,16 +1008,6 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Selene-36404233415480a0b1e6f15b1b16f3c7",
-      "product": "GMK CYL Selene",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
       "product": "GMK CYL Gurokawa",
       "status": "Shipping to Customers",
@@ -1032,6 +1022,16 @@
       "product": "GMK Finer Things R2",
       "status": "Shipping to Customers",
       "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Selene-36404233415480a0b1e6f15b1b16f3c7",
+      "product": "GMK CYL Selene",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "gmk",
