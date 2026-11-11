@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-11T00:50:29.927Z",
+  "updatedAt": "2026-11-11T05:40:33.652Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1822,6 +1822,23 @@
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-beige-boogaloo-%ED%82%A4%EC%BA%A1/760/category/47/display/1/",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "2bfd4b4c0873fbd2ba22ee1f7204d53d",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "note_changed",
+      "before": "PCB 제외 입고완료 , pcb 10월 말 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are due to be dispatched from the local site around the end of October.",
+      "after": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November.",
+      "occurredAt": "2026-11-11T05:40:33.652Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }
