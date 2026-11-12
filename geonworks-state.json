@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T00:20:28.921Z",
+  "updatedAt": "2026-11-12T00:30:41.557Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -350,7 +350,7 @@
       "type": "Keyboard",
       "manufacturer": "SENSY",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 3",
+      "update": "2026. 11. 12",
       "note": "—"
     },
     {
@@ -645,6 +645,7 @@
     "4a3afd69b00155297cffaa8f": "2026-11-11T05:40:33.652Z",
     "4e3147632da93062c7d47f68": "2026-11-11T08:20:28.634Z",
     "97dfd6e2b8d90ce7a0a2812e": "2026-11-11T08:20:28.858Z",
-    "9caf44476942b7936af14db9": "2026-11-12T00:20:28.921Z"
+    "9caf44476942b7936af14db9": "2026-11-12T00:20:28.921Z",
+    "0a51d29cf0316b8e708a3daa": "2026-11-12T00:30:41.554Z"
   }
 }
