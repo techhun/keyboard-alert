@@ -51,12 +51,12 @@ jobs:
           else
             printf '{"error":"Browser probe returned no DOM","exitCode":%s}\n' "$code" > "$GITHUB_WORKSPACE/tests/restock-swagkey-dom-probe.json"
           fi
-          tail -c 2000 /tmp/restockprobe/probe.log > "$GITHUB_WORKSPACE/tests/restock-swagkey-probe-error.log"
+          tail -c 2000 /tmp/restockprobe/probe.log > "$GITHUB_WORKSPACE/tests/restock-swagkey-probe-error.txt"
           exit 0
       - name: Commit temporary sanitized selector report
         run: |
           git config user.name "restock-dom-probe"
           git config user.email "restock-dom-probe@users.noreply.github.com"
-          git add tests/restock-swagkey-dom-probe.json tests/restock-swagkey-probe-error.log
+          git add tests/restock-swagkey-dom-probe.json tests/restock-swagkey-probe-error.txt
           git commit -m "test(restock): capture public SWAGKEY option DOM for diagnosis"
           git push
