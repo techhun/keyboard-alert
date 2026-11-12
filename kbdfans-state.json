@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-11T08:03:11.573Z",
+  "updatedAt": "2026-11-12T09:12:27.820Z",
   "rows": [
     {
       "category": "GMK",
@@ -687,17 +687,6 @@
     },
     {
       "category": "KEYCAPS",
-      "product": "GMK 2 Pack",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Closed group, in production",
-      "latestUpdateDate": "2026-08-18",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Closed group, in production"
-    },
-    {
-      "category": "KEYCAPS",
       "product": "GMK Just MTNU",
       "status": "In production",
       "eta": "TBD",
@@ -1001,6 +990,7 @@
     "f62a03fc4acf8084bda20b7e": "2026-11-11T01:51:05.767Z",
     "5e52f5c86e2a0359fb8b258d": "2026-11-11T05:01:17.534Z",
     "8a3ef4f3d99d776d5da112fb": "2026-11-11T05:11:01.354Z",
-    "46b10f23ca7837a610d72441": "2026-11-11T05:32:34.804Z"
+    "46b10f23ca7837a610d72441": "2026-11-11T05:32:34.804Z",
+    "3026739c4191d51f9757ad3b": "2026-11-12T09:12:27.820Z"
   }
 }
