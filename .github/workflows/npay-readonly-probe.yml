@@ -1038,6 +1038,7 @@ jobs:
                   // The interrupted item is fully retried; roll back its partial counters.
                   if(autoButtonCount>=0)autoButtonsTotal=Math.max(0,autoButtonsTotal-autoButtonCount);
                   autoButtonsDone=Math.max(0,autoButtonsDone-autoButtonIndex);
+                  autoUnsupportedButtons=Math.max(0,autoUnsupportedButtons-orderUnsupportedButtons);
                   reportSummary="";reportFinishedAt=0;resumeAvailable=false;
                   inspectSeq++;inspecting=false;autoRunning=true;updateScanAwake();autoRun++;
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
@@ -1055,9 +1056,12 @@ jobs:
                       java.util.Set<String> pairs=linkedResults.get(detailKeys.get(0));
                       if(pairs!=null&&!pairs.isEmpty())oneOrder=android.text.TextUtils.join(" / ",pairs);
                   }
-                  result.setText("처리 "+autoDone+"/"+detailKeys.size()+" · 배송 확인 "+autoMatched+"건"+
+                  result.setText("처리 "+autoDone+"/"+detailKeys.size()+" · 배송 확인 "+autoMatched+
+                      "건 · 미지원 "+autoUnsupportedEntries+"건"+
                       (oneOrder.isEmpty()?"":"\n"+oneOrder));
-                  status.setText(reason+" · 취소 제외 "+autoCancelled+" / 미검출 "+autoMissing+" / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
+                  status.setText(reason+" · 취소 제외 "+autoCancelled+" / 배송조회 미지원 "+autoUnsupportedEntries+
+                      "건 / 미지원 버튼 "+autoUnsupportedButtons+"개 / 미검출 "+autoMissing+
+                      " / 실패 "+autoFailed+" / 링크 없음 "+autoNoLink+
                       " / 추가 확인 "+autoUnbound+"\n배송조회 버튼 직접 검사 "+autoButtonsDone+" / 결과 재사용 "+totalReusedButtons+" / 확인된 대상 "+autoButtonsTotal+
                       " · 목록 항목 단위 집계. 묶음 내 상품별 연결·전체 배송 보장 아님. 자동 저장·자동 전송 없음."+
                       (oneOrder.isEmpty()?"":"\n확인된 화면 배송정보: "+oneOrder));
@@ -1121,8 +1125,19 @@ jobs:
                   if(!autoRunning||run!=autoRun)return;
                   java.util.Set<String> pairs=linkedResults.get(detailKeys.get(autoIndex));
                   if(targetCancelled)autoCancelled++;
-                  else if(pairs!=null&&!pairs.isEmpty()){autoMatched++;if(autoOrderFailed)markUnbound("일부 검사 실패");}
-                  else if(autoOrderFailed)autoFailed++;
+                  else if(pairs!=null&&!pairs.isEmpty()){
+                      autoMatched++;
+                      if(orderUnsupportedButtons>0)
+                          markUnbound("운송장 확인과 배송조회 미지원이 혼재 · 상품별 연결 미확정");
+                      if(autoOrderFailed)markUnbound("일부 검사 실패");
+                  }
+                  else if(!autoOrderFailed&&!autoOrderUnbound&&
+                      autoButtonCount>0&&autoButtonIndex==autoButtonCount&&
+                      orderUnsupportedButtons==autoButtonCount){
+                      autoUnsupportedEntries++;
+                  }else if(orderUnsupportedButtons>0&&!autoOrderFailed){
+                      markUnbound("일부 배송조회 미지원 · 나머지 배송정보 확인 필요");
+                  }else if(autoOrderFailed)autoFailed++;
                   else if(!autoOrderUnbound)autoMissing++;
                   if(autoOrderUnbound)autoUnbound++;
                   if(canCache()&&pairs!=null&&!pairs.isEmpty()&&orderCache.size()<5000){
@@ -1229,7 +1244,21 @@ jobs:
                           try{
                               if(!page.equals(browser.getUrl())){if(attempt<11){pollAutoShipping(run,step,attempt+1);return;}markUnbound("배송조회 로딩 중 주소 변경 지속");buttonNote="주소 변경 지속";finishAutoShipping(run);return;}
                               JSONObject d=decodeAuto(ret);if(!d.optBoolean("ok"))throw new IllegalArgumentException();
-                              if(d.getJSONArray("domPairs").length()==0&&attempt<11){pollAutoShipping(run,step,attempt+1);return;}
+                              boolean unsupported=false;
+                  try{
+                      String p=Uri.parse(page).getPath();
+                      unsupported=d.getJSONArray("domPairs").length()==0&&
+                          d.optBoolean("shippingUnsupported")&&
+                          "complete".equals(d.optString("ready"))&&
+                          !sameAutoPage(page)&&p!=null&&
+                          p.matches("(?i).*(delivery|shipping|tracking|parcel).*");
+                  }catch(RuntimeException ignored){}
+                  if(unsupported){
+                      orderUnsupportedButtons++;autoUnsupportedButtons++;
+                      buttonNote="배송조회 미지원 · 네이버페이 택배사 안내 확인 · 운송장번호 없음으로 단정하지 않음";
+                      finishAutoShipping(run);return;
+                  }
+                  if(d.getJSONArray("domPairs").length()==0&&attempt<11){pollAutoShipping(run,step,attempt+1);return;}
                               readAutoPairs(d);
                               String found=pairsText(d);
                               buttonNote=found.isEmpty()?"택배사/번호 조합 미검출":found;
