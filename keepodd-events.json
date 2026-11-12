@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-12T07:50:30.182Z",
+  "updatedAt": "2026-11-12T17:11:55.460Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1952,6 +1952,23 @@
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-mtnu-dasher-%ED%82%A4%EC%BA%A1/761/category/47/display/1/",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "919031a94d30d93b327857eae4929fbc",
+      "source": "SWAGKEYS",
+      "name": "SWG Koyo",
+      "eventType": "note_changed",
+      "before": "2026-11-16 ~ 2026-12-07",
+      "after": "2026-11-30 ~ 2026-12-21",
+      "occurredAt": "2026-11-12T17:11:55.460Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-30",
+      "saleEnd": "2026-12-21",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
+      "sourceUrlType": "update",
+      "note": "판매 일정 2026-11-30 ~ 2026-12-21"
     }
   ]
 }
