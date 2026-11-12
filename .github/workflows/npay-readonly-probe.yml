@@ -1,5 +1,5 @@
 name: NPay Readonly Probe APK
-run-name: NPay probe v0.1.36 identify current scanned 5th entry using source list index and product name candidates
+run-name: NPay probe v0.1.37 separate order records from unsupported shipment tracking
 
 on:
   push:
@@ -35,8 +35,8 @@ jobs:
           rm -rf android/npay-probe-ci/app/src/test
           mkdir -p android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock
           sed -i 's/applicationId = "com.techhun.keyboardalert.restock"/applicationId = "com.techhun.npayprobe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i 's/versionName = "0.14.10"/versionName = "0.1.36-probe"/' android/npay-probe-ci/app/build.gradle.kts
-          sed -i -E 's/versionCode = [0-9]+/versionCode = 136/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i 's/versionName = "0.14.10"/versionName = "0.1.37-probe"/' android/npay-probe-ci/app/build.gradle.kts
+          sed -i -E 's/versionCode = [0-9]+/versionCode = 137/' android/npay-probe-ci/app/build.gradle.kts
           cat > android/npay-probe-ci/app/src/main/AndroidManifest.xml <<'MANIFEST'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.INTERNET" />
@@ -355,7 +355,7 @@ jobs:
                   return value==0?"미확인":new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z",java.util.Locale.ROOT).format(new java.util.Date(value));
               }
               private String buildReportText(){
-                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.36\n");
+                  StringBuilder out=new StringBuilder("NPay 조회 테스트 · v0.1.37\n");
                   out.append("검사 시작: ").append(reportTime(reportStartedAt)).append("\n검사 종료: ").append(reportTime(reportFinishedAt));
                   out.append("\n").append(reportSummary);
                   out.append("\n결과 항목 ").append(reportRows.size()).append("건 / 검사 대상 ").append(reportExpected).append("건");
@@ -512,7 +512,7 @@ jobs:
                   root.setPadding(dp(6),dp(2),dp(6),0);
                   root.setFitsSystemWindows(true);
                   TextView title=new TextView(this);
-                  title.setText("NPay 연동 검증 v0.1.36");title.setTextColor(Color.BLACK);title.setTextSize(15);
+                  title.setText("NPay 연동 검증 v0.1.37");title.setTextColor(Color.BLACK);title.setTextSize(15);
                   root.addView(title);
                   result=new TextView(this);result.setTextColor(Color.BLACK);result.setTextSize(16);
                   result.setMaxLines(2);result.setEllipsize(android.text.TextUtils.TruncateAt.END);
@@ -1294,6 +1294,46 @@ jobs:
           JAVA
           cp .github/npay-probe/BackgroundProbeService.java android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/BackgroundProbeService.java
           cp .github/npay-probe/BackgroundDeliveryScripts.java android/npay-probe-ci/app/src/main/java/com/techhun/keyboardalert/restock/BackgroundDeliveryScripts.java
+      - name: Regression test explicit unsupported-carrier DOM classification
+        shell: bash
+        run: |
+          node <<'JS'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const vm = require('node:vm');
+          const lines = fs.readFileSync('.github/npay-probe/BackgroundDeliveryScripts.java','utf8').split('\n');
+          const line = lines.find(x=>x.includes('static final String DETAIL_JS = '));
+          assert.ok(line,'Canonical shipping parser must exist');
+          const encoded = line.slice(line.indexOf('= "')+2,-1);
+          const script = JSON.parse(encoded);
+          function scan(message,elements=[]){
+            const document = {
+              body: { innerText: message },
+              getElementById: ()=>null,
+              querySelectorAll: selector=> selector==='iframe'?[]:elements
+            };
+            return JSON.parse(vm.runInNewContext(script,{
+              document,location:{protocol:'https:',hostname:'pay.naver.com'}
+            },{timeout:2000}));
+          }
+          const unsupported = scan('배송조회를 할 수 없는 택배사입니다\\n배송 상황은 판매자에게 문의해 주세요.');
+          assert.equal(unsupported.ok,true);
+          assert.equal(unsupported.shippingUnsupported,true);
+          assert.equal(unsupported.domPairs.length,0);
+          const directOnly = scan('11월 2일 직접 전달로 발송했어요');
+          assert.equal(directOnly.shippingUnsupported,false,'Direct delivery alone is not proof');
+          assert.equal(directOnly.directDelivery,true);
+          assert.equal(scan('배송조회 준비 중입니다').shippingUnsupported,false);
+          const trackedElement={innerText:'CJ대한통운 운송장번호 123456789012',getClientRects:()=>[{}]};
+          const tracked=scan('CJ대한통운 운송장번호 123456789012',[trackedElement]);
+          assert.equal(tracked.shippingUnsupported,false);
+          assert.equal(tracked.domPairs.length,1);
+          assert.equal(tracked.domPairs[0].tail,'9012');
+          const mixed=scan('배송조회를 할 수 없는 택배사입니다',[trackedElement]);
+          assert.equal(mixed.shippingUnsupported,true);
+          assert.equal(mixed.domPairs.length,1,'Verified pair must remain available and take priority');
+          console.log('NPay delivery status regression checks passed: explicit unsupported, direct-only, pending, tracked, mixed');
+          JS
       - name: Setup Android SDK
         shell: bash
         run: |
@@ -1301,7 +1341,7 @@ jobs:
           if [ ! -f "$ANDROID_HOME/platforms/android-37/android.jar" ]; then
             yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-37" "build-tools;37.0.0" || true
           fi
-      - name: Lint and assemble v0.1.36 debug APK
+      - name: Lint and assemble v0.1.37 debug APK
         run: |
           cd android/npay-probe-ci
           gradle :app:lintDebug :app:assembleDebug --stacktrace
@@ -1339,7 +1379,7 @@ jobs:
           trap 'rm -f "$key_file"' EXIT
           printf '%s' "$NPAY_KEYSTORE_BASE64" | base64 --decode > "$key_file"
           apk_dir=android/npay-probe-ci/app/build/outputs/apk/debug
-          target="$apk_dir/npay-v0.1.36-fixed-signed.apk"
+          target="$apk_dir/npay-v0.1.37-fixed-signed.apk"
           signer=(java -jar android/npay-probe-ci/signing-tools/apksigner.jar sign
             --ks "$key_file" --ks-type PKCS12 --ks-pass env:NPAY_STORE_PASSWORD)
           # apksigner infers the alias if the PKCS12 contains only one key;
@@ -1364,7 +1404,7 @@ jobs:
           name: npay-readonly-probe-ci-apks
           path: |
             android/npay-probe-ci/app/build/outputs/apk/debug/app-debug.apk
-            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.36-fixed-signed.apk
+            android/npay-probe-ci/app/build/outputs/apk/debug/npay-v0.1.37-fixed-signed.apk
             android/npay-probe-ci/signing-tools/apksigner.jar
           retention-days: 7
           if-no-files-found: error
