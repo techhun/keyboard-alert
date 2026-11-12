@@ -67,7 +67,9 @@ public final class BackgroundProbeService extends Service {
         sampleControlsObserved=0, sampleButtonsFound=0, sampleControlsSkipped=0,
         sampleMultiOrders=0, sampleCachedEntries=0, sampleCachedButtons=0,
         sampleCacheChanged=0, sampleControlNoDisplay=0, sampleControlsNotTested=0,
-        sampleItemDisplayCount=0, sampleItemCheckedCount=0, sampleItemNoDisplay=0;
+        sampleItemDisplayCount=0, sampleItemCheckedCount=0, sampleItemNoDisplay=0,
+        sampleItemUnsupportedCount=0, sampleUnsupportedButtons=0,
+        sampleUnsupportedEntries=0, sampleMixedEntries=0;
     private String sampleButtonSignature="",sampleIssue="",sampleDetailObservation="";
     private int sampleShippingNavigations=0, samplePopupRequests=0, samplePopupUserGestureRequests=0;
     private int sampleHttpClientErrors=0, sampleHttpServerErrors=0, sampleHttpMainErrors=0;
@@ -115,6 +117,8 @@ public final class BackgroundProbeService extends Service {
         return "배송조회 상태 미확인";
     }
     private final java.util.ArrayList<String[]> sampleTargets=new java.util.ArrayList<>();
+    private final java.util.ArrayList<String> sampleOrderNotes=new java.util.ArrayList<>();
+    private final java.util.ArrayList<String> sampleUnsupportedNotes=new java.util.ArrayList<>();
     private int attempt = 0, visibleChecks = 0, page = 1, totalPages = -1, scanned = 0, duplicates = 0;
     private final java.util.HashSet<String> seenHashes = new java.util.HashSet<>();
 
@@ -499,7 +503,11 @@ public final class BackgroundProbeService extends Service {
                         JSONObject row=a.getJSONObject(i);
                         String id=row.getString("id"),url=row.getString("url");
                         if(!id.matches("[A-Za-z0-9_-]{1,80}")||!safeDetailUrl(url))throw new IllegalArgumentException();
-                        sampleTargets.add(new String[]{id,url});
+                        String name=row.optString("label","").replace('\n',' ').replace('\r',' ')
+                            .replace('\t',' ').trim();
+                        if(name.length()>80)name=name.substring(0,80);
+                        if(name.isEmpty())name="상품명 미확인";
+                        sampleTargets.add(new String[]{id,url,name});
                         if(!sampleDetailUrls.add(url))sampleSharedDetail++;
                     }
                     sampleIndex=0;
@@ -521,10 +529,14 @@ public final class BackgroundProbeService extends Service {
                 (sampleMulti?" · 복수버튼 주문 "+sampleMultiOrders+
                     "건 · 발견 "+sampleControlsObserved+"개 · 표시 "+sampleButtonsFound+
                     "개 · 미확인 "+sampleControlsSkipped+"개":"")+
+                " · 배송조회 미지원 "+sampleUnsupportedEntries+"건/"+sampleUnsupportedButtons+"개"+
+                " · 배송정보/미지원 혼재 "+sampleMixedEntries+"건"+
                 (sampleFocus?" · 검사했으나 미검출 "+sampleControlNoDisplay+"개"+
                     " · 미검사 "+sampleControlsNotTested+"개":"")+
                 (sampleIssueNotes.isEmpty()?"":" · 추가확인 위치 "+
                     android.text.TextUtils.join(" / ",sampleIssueNotes))+
+                (sampleUnsupportedNotes.isEmpty()?"":" · 미지원 위치 "+
+                    android.text.TextUtils.join(" / ",sampleUnsupportedNotes))+
                 (sampleNoButtonNotes.isEmpty()?"":" · 버튼없음 위치 "+
                     android.text.TextUtils.join(" / ",sampleNoButtonNotes))+
                 (sampleMulti?" · 버튼 재확인 "+sampleEmptyRetries+"회"+
@@ -542,7 +554,9 @@ public final class BackgroundProbeService extends Service {
                     " · 소요 "+((System.currentTimeMillis()-sampleStartedAt)/1000L)+"초":"")+
                 (reusedDetailNotes.isEmpty()?"":" · 재사용 위치 "+
                     android.text.TextUtils.join(" / ",reusedDetailNotes)+
-                    " (동일 주문상세만 확인 · 상품별 송장 연결 미확정)")+marker);
+                    " (동일 주문상세만 확인 · 상품별 송장 연결 미확정)")+
+                (sampleOrderNotes.isEmpty()?"":" · 주문목록/배송상태 분리 기록 "+
+                    android.text.TextUtils.join(" / ",sampleOrderNotes))+marker);
             return;
         }
         String url=sampleTargets.get(sampleIndex)[1];
@@ -550,7 +564,8 @@ public final class BackgroundProbeService extends Service {
         sampleButtonIndex=0;sampleButtonCount=0;sampleButtonSignature="";sampleIssue="";
         sampleDetailObservation="";
         sampleEmptyReads=0;sampleAmbiguousReads=0;
-        sampleItemDisplayCount=0;sampleItemCheckedCount=0;sampleItemNoDisplay=0;
+        sampleItemDisplayCount=0;sampleItemCheckedCount=0;
+        sampleItemNoDisplay=0;sampleItemUnsupportedCount=0;
         sampleShippingNavigations=0;samplePopupRequests=0;samplePopupUserGestureRequests=0;
         final int step=++sampleStep;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+"건 완료 · 상세화면 읽는 중");
