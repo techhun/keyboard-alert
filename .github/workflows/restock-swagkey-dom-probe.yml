@@ -14,7 +14,7 @@ jobs:
       - name: Inspect public Imweb product selectors in an isolated browser
         shell: bash
         run: |
-          set -euo pipefail
+          set +e
           mkdir -p /tmp/restockprobe
           cd /tmp/restockprobe
           npm init -y >/dev/null
@@ -43,13 +43,20 @@ jobs:
             await browser.close();
           })().catch(e=>{console.error('probe error',String(e));process.exitCode=1;});
           NODE
-          node probe.cjs
+          node probe.cjs > /tmp/restockprobe/probe.log 2>&1
+          code=$?
           mkdir -p "$GITHUB_WORKSPACE/tests"
-          cp /tmp/restockprobe/result.json "$GITHUB_WORKSPACE/tests/restock-swagkey-dom-probe.json"
+          if [[ -s /tmp/restockprobe/result.json ]]; then
+            cp /tmp/restockprobe/result.json "$GITHUB_WORKSPACE/tests/restock-swagkey-dom-probe.json"
+          else
+            printf '{"error":"Browser probe returned no DOM","exitCode":%s}\n' "$code" > "$GITHUB_WORKSPACE/tests/restock-swagkey-dom-probe.json"
+          fi
+          tail -c 2000 /tmp/restockprobe/probe.log > "$GITHUB_WORKSPACE/tests/restock-swagkey-probe-error.log"
+          exit 0
       - name: Commit temporary sanitized selector report
         run: |
           git config user.name "restock-dom-probe"
           git config user.email "restock-dom-probe@users.noreply.github.com"
-          git add tests/restock-swagkey-dom-probe.json
+          git add tests/restock-swagkey-dom-probe.json tests/restock-swagkey-probe-error.log
           git commit -m "test(restock): capture public SWAGKEY option DOM for diagnosis"
           git push
