@@ -739,7 +739,50 @@ public final class BackgroundProbeService extends Service {
                                 verifiedDetails.put(detailUrl,new VerifiedDetail(
                                     sampleButtonSignature,sampleButtonCount,samplePosition()));
                             }
-                            advanceSample(sampleItemNoDisplay>0?2:3);
+                            advanceSample(sampleItemNoDisplay>0?2:
+                                sampleItemUnsupportedCount>0?5:3);
+                        }
+                        return;
+                    }
+                    // A direct/special delivery order is still an order. Only an
+                    // explicit, visible "tracking unavailable for this carrier"
+                    // notice on a completed Pay shipping page can classify a
+                    // particular button as unsupported. No tracking number exists
+                    // in this result; never synthesize one.
+                    boolean unsupported=false;
+                    try{
+                        String current=webView.getUrl(),original=sampleTargets.get(sampleIndex)[1];
+                        android.net.Uri currentUri=android.net.Uri.parse(current);
+                        String path=currentUri.getPath();
+                        unsupported=d.optBoolean("shippingUnsupported")&&
+                            "complete".equals(d.optString("ready"))&&
+                            current!=null&&!current.equals(original)&&
+                            safeDetailUrl(current)&&path!=null&&
+                            path.matches("(?i).*(delivery|shipping|tracking|parcel).*");
+                    }catch(RuntimeException ignored){}
+                    if(unsupported){
+                        sampleUnsupportedButtons++;sampleItemUnsupportedCount++;
+                        sampleItemCheckedCount++;sampleButtonIndex++;
+                        if(sampleMulti&&sampleButtonIndex<sampleButtonCount&&
+                            sampleButtonIndex<buttonLimit()){
+                            sampleStage=1;sampleStep++;readQueued=false;attempt=0;
+                            final int nextStep=sampleStep;
+                            handler.postDelayed(()->{
+                                if(!finished&&sampleStep==nextStep&&sampleStage==1&&webView!=null)
+                                    webView.loadUrl(sampleTargets.get(sampleIndex)[1]);
+                            },700L);
+                            return;
+                        }
+                        if(sampleMulti&&sampleButtonIndex<sampleButtonCount){
+                            markSampleIssue("건당 "+buttonLimit()+"개 검사 한도 · 배송조회 미지원 일부 확인");
+                            advanceSample(2);
+                        }else if(sampleButtonIndex<sampleButtonCount){
+                            markSampleIssue("배송조회 미지원 "+sampleItemUnsupportedCount+
+                                "개 · 나머지 버튼 미검사");
+                            advanceSample(2);
+                        }else{
+                            advanceSample(sampleItemNoDisplay>0?2:
+                                sampleItemDisplayCount>0?5:4);
                         }
                         return;
                     }
@@ -876,12 +919,14 @@ public final class BackgroundProbeService extends Service {
     }
     private void advanceSample(int outcome){
         if(finished||!sampleShipping||sampleIndex>=sampleTargets.size())return;
-        // outcome: 0 explicit cancelled, 1 no button, 2 unknown, 3 display hit.
+        // 0 cancelled, 1 no button, 2 unresolved, 3 all tracked,
+        // 4 all explicitly unsupported, 5 tracked + unsupported (complete).
         if(outcome==1)sampleNoButton++;
         else if(outcome==2){
             sampleUnknown++;
             if(sampleMulti&&sampleButtonCount>0){
-                sampleControlsSkipped+=Math.max(0,sampleButtonCount-sampleItemDisplayCount);
+                sampleControlsSkipped+=Math.max(0,
+                    sampleButtonCount-sampleItemDisplayCount-sampleItemUnsupportedCount);
                 if(sampleFocus){
                     sampleControlNoDisplay+=sampleItemNoDisplay;
                     sampleControlsNotTested+=Math.max(0,sampleButtonCount-sampleItemCheckedCount);
@@ -892,7 +937,32 @@ public final class BackgroundProbeService extends Service {
                     (sampleIssue.isEmpty()?"상세 확인 실패":sampleIssue));
         }
         else if(outcome==3)sampleMatched++;
+        else if(outcome==4){
+            sampleUnsupportedEntries++;
+            if(sampleUnsupportedNotes.size()<sampleLimit)
+                sampleUnsupportedNotes.add(samplePosition()+"번("+
+                    sampleItemUnsupportedCount+"/"+sampleButtonCount+"개 · 명시적 미지원 안내)");
+        }else if(outcome==5){
+            sampleMixedEntries++;
+            if(sampleUnsupportedNotes.size()<sampleLimit)
+                sampleUnsupportedNotes.add(samplePosition()+"번(운송장표시 "+
+                    sampleItemDisplayCount+"개 · 미지원 "+sampleItemUnsupportedCount+"개)");
+        }
         if(outcome==0)sampleCancelled++;
+        // Order presence is independent of whether shipment tracking is supported.
+        // Preserve only a bounded display name and masked product-order suffix
+        // in the user-controlled, locally copied run summary.
+        String[] target=sampleTargets.get(sampleIndex);
+        String key=target[0],name=target.length>2?target[2]:"상품명 미확인";
+        String masked="****"+key.substring(Math.max(0,key.length()-4));
+        String shipment=outcome==0?"취소 제외":
+            outcome==1?"배송조회 버튼 없음":
+            outcome==2?"배송정보 추가 확인":
+            outcome==3?"운송장 표시":
+            outcome==4?"배송조회 미지원":"운송장/미지원 혼재";
+        if(sampleOrderNotes.size()<sampleLimit)
+            sampleOrderNotes.add(samplePosition()+"번 "+name+" ("+masked+
+                ") · 주문목록 확인 / 배송정보 "+shipment);
         sampleDone++;sampleIndex++;sampleStep++;sampleStage=3;readQueued=false;
         progress("배송조회 시범 "+sampleDone+"/"+sampleTargets.size()+
             "건 · 표시정보 "+sampleMatched+" · 추가확인 "+sampleUnknown);
@@ -935,6 +1005,7 @@ public final class BackgroundProbeService extends Service {
         sampleTargets.clear();sampleDetailUrls.clear();verifiedDetails.clear();
         reusedDetailNotes.clear();seenHashes.clear();
         sampleIssueNotes.clear();sampleNoButtonNotes.clear();
+        sampleOrderNotes.clear();sampleUnsupportedNotes.clear();
         super.onDestroy();
     }
 
