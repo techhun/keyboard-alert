@@ -654,6 +654,10 @@ public class MainActivity extends Activity {
                     DiagnosticLog.add(this, "OPTION_PAGE_STATE_OK", pendingLookupProduct,
                         match + " · 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
                 }
+            } else if (SiteSupport.SWAGKEY_IMWEB.equals(siteType)
+                && "SWAGKEY_DOM".equals(result.optString("source", ""))) {
+                DiagnosticLog.add(this, "OPTION_SWAGKEY_DOM_OK", pendingLookupProduct,
+                    "상품 옵션 " + latestOptions.length() + "개 · " + optionSummary(latestOptions));
             }
             resumeMonitorAfterOptionLookup();
             showOptionPicker();

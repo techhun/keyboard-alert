@@ -7,6 +7,7 @@ on:
       - 'android/restock-worker/**'
       - 'tests/restock-inventory-status.test.mjs'
       - 'tests/restock-page-capture.test.mjs'
+      - 'tests/restock-swagkey-options.test.mjs'
       - '.github/workflows/android-restock-worker.yml'
 
 jobs:
@@ -35,7 +36,7 @@ jobs:
           gradle-version: '9.6.0'
 
       - name: Verify SmartStore inventory status behavior
-        run: node --test ../../tests/restock-inventory-status.test.mjs ../../tests/restock-page-capture.test.mjs
+        run: node --test ../../tests/restock-inventory-status.test.mjs ../../tests/restock-page-capture.test.mjs ../../tests/restock-swagkey-options.test.mjs
 
       - name: Test, lint and build debug APK
         run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --stacktrace
