@@ -38,8 +38,30 @@ jobs:
                 productRoot:document.querySelector('#prod_options')?.outerHTML.slice(0,10000)||null,
                 visibleContent:(document.querySelector('.shop_view')?.innerText||'').slice(0,1400)};
             });
-            // Summarized anonymous public-page structure only; no cookies/headers.
-            require('fs').writeFileSync('/tmp/restockprobe/result.json',JSON.stringify(data,null,2));
+            // Run the production Java text-block parser against the real
+            // anonymous site DOM, without clicking or purchasing anything.
+            const fs = require('fs');
+            const appSource = fs.readFileSync(process.env.GITHUB_WORKSPACE
+              + '/android/restock-worker/app/src/main/java/com/techhun/keyboardalert/restock/SwagkeyScript.java','utf8');
+            const embedded = appSource.split('static final String SCRIPT = """')[1]
+              .split('""";')[0].replaceAll('\\\\', '\\');
+            const parsed = await page.evaluate((script) => {
+              let response = null;
+              window.RestockBridge = {onResult: json => { response = JSON.parse(json); }};
+              (0,eval)(script);
+              return response;
+            }, embedded);
+            data.parserResult = {
+              ok:parsed?.ok, source:parsed?.source, error:parsed?.error,
+              options:(parsed?.options||[]).map(x=>({id:x.id,name:x.optionName1,stock:x.stockQuantity,available:x.available}))
+            };
+            console.log('live parser result:',JSON.stringify(data.parserResult));
+            // Anonymous public-page structure only; no cookies/headers.
+            fs.writeFileSync('/tmp/restockprobe/result.json',JSON.stringify(data,null,2));
+            if (!parsed?.ok || parsed?.source !== 'SWAGKEY_DOM' || parsed.options.length !== 10) {
+              console.error('unexpected SWAGKEY variants; do not publish!');
+              process.exitCode=1;
+            }
             console.log('probe selectors:',JSON.stringify(data.groups.map(x=>[x.selector,x.total])));
             await browser.close();
           })().catch(e=>{console.error('probe error',String(e));process.exitCode=1;});
