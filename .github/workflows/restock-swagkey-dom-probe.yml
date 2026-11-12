@@ -19,11 +19,12 @@ jobs:
           cd /tmp/restockprobe
           npm init -y >/dev/null
           npm install --no-audit --no-fund playwright@1.56.1 >/dev/null
-          npx playwright install chromium >/dev/null
           cat > probe.cjs <<'NODE'
           const { chromium } = require('playwright');
           (async () => {
-            const browser = await chromium.launch({ headless: true });
+            const executablePath = ['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium'].find(p=>require('fs').existsSync(p));
+            console.log('browser-path:',executablePath);
+            const browser = await chromium.launch({ headless: true, executablePath, args: ['--no-sandbox'] });
             const page = await browser.newPage({viewport:{width:400,height:850},locale:'ko-KR'});
             await page.goto('https://www.swagkey.kr/227/?idx=1228',{waitUntil:'domcontentloaded',timeout:50000});
             await page.waitForTimeout(5000);
