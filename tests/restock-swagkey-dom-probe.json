@@ -1,1 +1,374 @@
-{"error":"Browser probe returned no DOM","exitCode":1}
+{
+  "title": "Swagkeys x JJW Integral 커스텀 기계식 키보드 [58 ~ 62Key] : 스웨그키 공식 온라인 스토어",
+  "url": "/227/?idx=1228",
+  "groups": [
+    {
+      "selector": "#prod_options",
+      "total": 1,
+      "elements": [
+        {
+          "tag": "DIV",
+          "cls": "goods_select",
+          "id": "prod_options",
+          "txt": ".goods_select .form-select-wrap .dropdown-menu .dropdown-item:has(.low-stock-nudge-option) {\n\t\t\t\tposition: relative;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dr",
+          "html": "<div class=\"goods_select\" id=\"prod_options\">\t\t<style>\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item:has(.low-stock-nudge-option) {\n\t\t\t\tposition: relative;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .low-stock-nudge-option {\n\t\t\t\tposition: absolute;\n\t\t\t\tz-index: 1;\n\t\t\t\ttop: 50%;\n\t\t\t\tright: 12px;\n\t\t\t\tmax-width: 45%;\n\t\t\t\toverflow: hidden;\n\t\t\t\tfloat: none !important;\n\t\t\t\tmargin: 0 !important;\n\t\t\t\ttext-align: right;\n\t\t\t\ttext-overflow: ellipsis;\n\t\t\t\ttransform: translateY(-50%);\n\t\t\t\twhite-space: nowrap;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-ite"
+        }
+      ]
+    },
+    {
+      "selector": ".option_title",
+      "total": 1,
+      "elements": [
+        {
+          "tag": "DIV",
+          "cls": "option_title text-12 text-bold padding-bottom-xl",
+          "id": "",
+          "txt": "옵션 *",
+          "html": "<div class=\"option_title text-12 text-bold padding-bottom-xl\">옵션 <span class=\"option_require\">*</span></div>"
+        }
+      ]
+    },
+    {
+      "selector": ".form-select-wrap",
+      "total": 3,
+      "elements": [
+        {
+          "tag": "SPAN",
+          "cls": "form-select-wrap",
+          "id": "",
+          "txt": "",
+          "html": "<span class=\"form-select-wrap\" style=\"display:none;\">\n\t\t<select class=\"countryList\" title=\"countryList\">\n\t\t\t<option value=\"KR\" selected=\"\"></option>\n\t\t</select>\n\t</span>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "form-select-wrap",
+          "id": "",
+          "txt": "선결제",
+          "html": "<div class=\"form-select-wrap\">\n\t\t\t\t\t\t<a class=\"dropdown-toggle\" href=\"javascript:;\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n\t\t\t\t선결제\t\t\t</a>\n\t\t\t<div class=\"dropdown-menu\">\n\t\t\t\t<div class=\"dropdown-item selected\">\n\t\t\t\t\t<a class=\"blocked\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.loadItemInfo({prod_idx:'1228',change_country:'KR',deliv_type:'',deliv_pay_type:'price'})\">\n\t\t\t\t\t\t<span class=\"no-margin blocked\">선결제</span>\n\t\t\t\t\t</a>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"dropdown-item\">\n\t\t\t\t\t<a class=\"blocked\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.loadItemInfo({p"
+        },
+        {
+          "tag": "DIV",
+          "cls": "form-select-wrap _form_select_wrap _form_select_wrap_O20250717687843868ca4e",
+          "id": "",
+          "txt": "옵션 (필수)\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t1개 남았어요!Champagne / WK 499,000원3개 남았어요!Champagne / WKL 499,000원Champagne / HHKB 499,000원Silver / WK 499,000원 (품절)Silver / WKL ",
+          "html": "<div class=\"form-select-wrap _form_select_wrap _form_select_wrap_O20250717687843868ca4e\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-toggle\" href=\"javascript:;\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n\t\t\t\t\t\t\t\t\t옵션 (필수)\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\">\n\t\t\t\t\t\t\t\t\t<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O2026111254f87b5d674f0', 'Champagne / WK',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"l"
+        }
+      ]
+    },
+    {
+      "selector": ".dropdown-item",
+      "total": 12,
+      "elements": [
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item selected",
+          "id": "",
+          "txt": "선결제",
+          "html": "<div class=\"dropdown-item selected\">\n\t\t\t\t\t<a class=\"blocked\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.loadItemInfo({prod_idx:'1228',change_country:'KR',deliv_type:'',deliv_pay_type:'price'})\">\n\t\t\t\t\t\t<span class=\"no-margin blocked\">선결제</span>\n\t\t\t\t\t</a>\n\t\t\t\t</div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item",
+          "id": "",
+          "txt": "착불",
+          "html": "<div class=\"dropdown-item\">\n\t\t\t\t\t<a class=\"blocked\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.loadItemInfo({prod_idx:'1228',change_country:'KR',deliv_type:'',deliv_pay_type:'deliv_price_after'})\">\n\t\t\t\t\t\t<span class=\"no-margin blocked\">착불</span>\n\t\t\t\t\t</a>\n\t\t\t\t</div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "1개 남았어요!Champagne / WK 499,000원",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O2026111254f87b5d674f0', 'Champagne / WK',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">1개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / WK</span><span class=\"no-margin blocked\"><strong> 499,000원</"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "3개 남았어요!Champagne / WKL 499,000원",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112e822729012e7b', 'Champagne / WKL',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">3개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Champagne / HHKB 499,000원",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112d2553a40e732c', 'Champagne / HHKB',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Silver / WK 499,000원 (품절)",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / WK</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Silver / WKL 499,000원 (품절)",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Silver / HHKB 499,000원 (품절)",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Black / WKL 499,000원 (품절)",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Black / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "Black / HHKB 499,000원 (품절)",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Black / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div>"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "2개 남았어요!Grey / WK 499,000원",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O2026111295b028136e1c8', 'Grey / WK',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">2개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Grey / WK</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></s"
+        },
+        {
+          "tag": "DIV",
+          "cls": "dropdown-item ",
+          "id": "",
+          "txt": "1개 남았어요!Grey / HHKB 499,000원",
+          "html": "<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112571d317966608', 'Grey / HHKB',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">1개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Grey / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원</strong"
+        }
+      ]
+    },
+    {
+      "selector": ".dropdown-menu",
+      "total": 21,
+      "elements": [
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu animation-dock member_profile",
+          "id": "member_profile",
+          "txt": "Alarm\n\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\n\t\n\t\t마이페이지\n\t\t\t\t로그아웃",
+          "html": "<ul class=\"dropdown-menu animation-dock member_profile\" id=\"member_profile\">\n\t<li class=\"dropdown-profile text-center\">\n\t\t<a href=\"javascript:;\" class=\"nav-btn-icon profile alarm-toggle _show_alarm\" onclick=\"ALARM_MENU.showAlarmSlide();\" id=\"slide-alarm\" style=\"right: 0; position:absolute; right: 0; top:0; font-size:20px; padding:20px; \"><i class=\"icon-bell\"></i><span class=\"sr-only\">Alarm</span></a>\n\t\t<span class=\"profile-info\">\n\t\t\t<div onclick=\"SITE_MEMBER.editProfile()\">\n\t\t\t\t<img src=\"/common/img/default_profile.png\" class=\"img-circle dropdown-avatar-big _profile_img\" alt=\"프로필 정보수정\">\n\t\t\t</d"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu more_list _more_list",
+          "id": "",
+          "txt": "",
+          "html": "<ul class=\"dropdown-menu more_list _more_list\"></ul>"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu more_list _more_list",
+          "id": "",
+          "txt": "",
+          "html": "<ul class=\"dropdown-menu more_list _more_list\"></ul>"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu more_list _more_list",
+          "id": "",
+          "txt": "Main\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\tKeyboards\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t커스텀\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t완제품\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t기판\n",
+          "html": "<ul class=\"dropdown-menu more_list _more_list\"><li class=\"_show_m2026061505f44794b6f90 dropdown-submenu\" style=\"\" id=\"dropdown_m2026061505f44794b6f90\" data-code=\"m2026061505f44794b6f90\">\n\t\t\t\t<a href=\"/170\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"170\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m2026061505f44794b6f90 plain_name\" data-hover=\"\">Main</span>\n\t\t\t\t</a>\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t</li><li class=\"_show_m20240609006e2b665bf86 dropdown-submenu sub-active\" style=\"\" id=\"dropdown_m20240609006e2b665bf86\" data-code=\"m20240609006e2b665bf86\">\n\t\t\t\t<a h"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "커스텀\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t완제품\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t기판\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t보강판\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t파츠\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m20260616faede1ae20648   \" data-code=\"m20260616faede1ae20648\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/227\" data-url=\"227\" class=\"_txt_m20260616faede1ae20648  active   _fade_link \"><span class=\"plain_name\" data-hover=\"\">커스텀</span></a>\n\t\t\t\t\t\t\n\t\t\t\t\t</li>\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m20260616d9ccf57027daa   \" data-code=\"m20260616d9ccf57027daa\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/242\" data-url=\"242\" class=\"_txt_m20260616d9ccf57027daa   _fade_link \"><span class=\"plain_name\" data-hover=\"\">완제품</spa"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "리니어\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t택타일\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t클릭\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t저소음\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t게이밍(HE)",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m202404028ae12daf5f5fb   \" data-code=\"m202404028ae12daf5f5fb\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/39\" data-url=\"39\" class=\"_txt_m202404028ae12daf5f5fb   _fade_link \"><span class=\"plain_name\" data-hover=\"\">리니어</span></a>\n\t\t\t\t\t\t\n\t\t\t\t\t</li>\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m2024040261c5e66eda929   \" data-code=\"m2024040261c5e66eda929\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/40\" data-url=\"40\" class=\"_txt_m2024040261c5e66eda929   _fade_link \"><span class=\"plain_name\" data-hover=\"\">택타일</span></a>\n\t\t\t\t\t"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "제조사\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t DoodleCaps\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t Swagkeys\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t etc\n\t\t\t\t\t\t\t \n\t",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m202504210adf03037c68e sub-active\" data-code=\"m202504210adf03037c68e\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/2105527903\" data-url=\"2105527903\" class=\"_txt_m202504210adf03037c68e   _fade_link \"><span class=\"plain_name\" data-hover=\"\">제조사</span></a>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20260622ad750e50cd2e5 dropdown-submenu   \" data-code=\"m20260622ad750e50cd2e5\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/240\" data-url=\"240\" class=\"_txt_m20260622ad750e50cd2e5   _fade_"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "DoodleCaps\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t Swagkeys\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t etc",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20260622ad750e50cd2e5 dropdown-submenu   \" data-code=\"m20260622ad750e50cd2e5\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/240\" data-url=\"240\" class=\"_txt_m20260622ad750e50cd2e5   _fade_link \"><span class=\"plain_name\" data-hover=\"\">DoodleCaps</span></a>\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t </li>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20231219df6d9d4ddf456 dropdown-submenu   \" data-code=\"m20231219df6d9d4ddf456\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/64\" data-url=\"64\" class=\"_txt_m20231219df6d9d4ddf456   _fade_link \"><span class=\"plain_name\" data-hov"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "ABS\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t PBT\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t PC\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t Ceramic(세라키)",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m202606221ddceb37ba045 dropdown-submenu   \" data-code=\"m202606221ddceb37ba045\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/241\" data-url=\"241\" class=\"_txt_m202606221ddceb37ba045   _fade_link \"><span class=\"plain_name\" data-hover=\"\">ABS</span></a>\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t </li>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m202606227b3970c0fa07c dropdown-submenu   \" data-code=\"m202606227b3970c0fa07c\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/1214902822\" data-url=\"1214902822\" class=\"_txt_m202606227b3970c0fa07c   _fade_link \"><span class=\"plain_name\""
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "스테빌라이저\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t 무보강용\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t 보강용\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m20220412029b46fabca65 sub-active\" data-code=\"m20220412029b46fabca65\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/1196627058\" data-url=\"1196627058\" class=\"_txt_m20220412029b46fabca65   _fade_link \"><span class=\"plain_name\" data-hover=\"\">스테빌라이저</span></a>\n\t\t\t\t\t\t\n\t\t\t\t\t\t<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20220413299cb9dc27a0d dropdown-submenu   \" data-code=\"m20220413299cb9dc27a0d\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/1813787610\" data-url=\"1813787610\" class=\"_txt_m20220413299cb"
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "무보강용\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t 보강용",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20220413299cb9dc27a0d dropdown-submenu   \" data-code=\"m20220413299cb9dc27a0d\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/1813787610\" data-url=\"1813787610\" class=\"_txt_m20220413299cb9dc27a0d   _fade_link \"><span class=\"plain_name\" data-hover=\"\">무보강용</span></a>\n\t\t\t\t\t\t\t \n\t\t\t\t\t\t\t </li>\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t<li class=\"_show_m20220413b8f1fb566c67c dropdown-submenu   \" data-code=\"m20220413b8f1fb566c67c\" style=\"\">\n\t\t\t\t\t\t\t <a tabindex=\"-1\" href=\"/54\" data-url=\"54\" class=\"_txt_m20220413b8f1fb566c67c   _fade_link \"><span class=\"plain_name\" "
+        },
+        {
+          "tag": "UL",
+          "cls": "dropdown-menu",
+          "id": "",
+          "txt": "커스텀\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t완제품\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t기판\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t보강판\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t파츠\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t",
+          "html": "<ul class=\"dropdown-menu\" role=\"menu\">\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m20260616faede1ae20648   \" data-code=\"m20260616faede1ae20648\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/227\" data-url=\"227\" class=\"_txt_m20260616faede1ae20648  active   _fade_link \"><span class=\"plain_name\" data-hover=\"\">커스텀</span></a>\n\t\t\t\t\t\t\n\t\t\t\t\t</li>\n\t\t\t\t\t\n\t\t\t\t\t<li class=\"dropdown-submenu _show_m20260616d9ccf57027daa   \" data-code=\"m20260616d9ccf57027daa\" style=\"\">\n\t\t\t\t\t\t<a tabindex=\"-1\" href=\"/242\" data-url=\"242\" class=\"_txt_m20260616d9ccf57027daa   _fade_link \"><span class=\"plain_name\" data-hover=\"\">완제품</spa"
+        }
+      ]
+    },
+    {
+      "selector": ".dropdown-toggle",
+      "total": 27,
+      "elements": [
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown",
+          "id": "",
+          "txt": "",
+          "html": "<a data-toggle=\"dropdown\" class=\"fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown\" aria-expanded=\"false\"><i class=\"icon-options vertical-middle\" aria-hidden=\"true\"></i></a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Main",
+          "html": "<a href=\"/170\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"170\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m2026061505f44794b6f90 plain_name\" data-hover=\"\">Main</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown  active   _fade_link ",
+          "id": "",
+          "txt": "Keyboards",
+          "html": "<a href=\"/22\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown  active   _fade_link \" data-url=\"22\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m20240609006e2b665bf86 plain_name\" data-hover=\"\">Keyboards</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Switches",
+          "html": "<a href=\"/21\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"21\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m20240609f3cca31f30669 plain_name\" data-hover=\"\">Switches</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Keycaps",
+          "html": "<a href=\"/23\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"23\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m20240609c6304ed80c31d plain_name\" data-hover=\"\">Keycaps</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "SWG Keycaps",
+          "html": "<a href=\"/235\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"235\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m2026090876228b53375cb plain_name\" data-hover=\"\">SWG Keycaps</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Accessories",
+          "html": "<a href=\"/24\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"24\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m202406091c9bf4a052895 plain_name\" data-hover=\"\">Accessories</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Gaming",
+          "html": "<a href=\"/205\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"205\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m20260622f9610f008c18d plain_name\" data-hover=\"\">Gaming</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown",
+          "id": "",
+          "txt": "",
+          "html": "<a data-toggle=\"dropdown\" class=\"fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown\" aria-expanded=\"false\"><i class=\"icon-options vertical-middle\" aria-hidden=\"true\"></i></a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown",
+          "id": "",
+          "txt": "",
+          "html": "<a data-toggle=\"dropdown\" class=\"fixed_transform dropdown-toggle disabled dropdown-more _header_dropdown\" aria-expanded=\"false\"><i class=\"icon-options vertical-middle\" aria-hidden=\"true\"></i></a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link ",
+          "id": "",
+          "txt": "Main",
+          "html": "<a href=\"/170\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown   _fade_link \" data-url=\"170\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m2026061505f44794b6f90 plain_name\" data-hover=\"\">Main</span>\n\t\t\t\t</a>"
+        },
+        {
+          "tag": "A",
+          "cls": "fixed_transform dropdown-toggle disabled _header_dropdown  active   _fade_link ",
+          "id": "",
+          "txt": "Keyboards",
+          "html": "<a href=\"/22\" class=\"fixed_transform dropdown-toggle disabled _header_dropdown  active   _fade_link \" data-url=\"22\" data-toggle=\"dropdown\">\n\t\t\t\t\t<span class=\"_txt_m20240609006e2b665bf86 plain_name\" data-hover=\"\">Keyboards</span>\n\t\t\t\t</a>"
+        }
+      ]
+    },
+    {
+      "selector": "select",
+      "total": 1,
+      "elements": [
+        {
+          "tag": "SELECT",
+          "cls": "countryList",
+          "id": "",
+          "txt": "",
+          "html": "<select class=\"countryList\" title=\"countryList\">\n\t\t\t<option value=\"KR\" selected=\"\"></option>\n\t\t</select>"
+        }
+      ]
+    },
+    {
+      "selector": "[data-option]",
+      "total": 0,
+      "elements": []
+    },
+    {
+      "selector": "#prod_options select",
+      "total": 0,
+      "elements": []
+    }
+  ],
+  "keys": [
+    "getScreenDetails",
+    "USE_SHOP_IN_SHOP",
+    "IMWEB_SHOP_ANALYTICS_SDK",
+    "SITE_SHOP_DISCOUNT_RESULT",
+    "SITE_SHOP_DETAIL",
+    "SITE_SHOP_CART",
+    "SITE_SHOP_REVIEW",
+    "SHOP_REVIEW_COMMENT",
+    "SITE_SHOP_QNA",
+    "SITE_SHOP_MYPAGE",
+    "RECENT_PRODUCT",
+    "IMWEB_SHOP_FREE_SHIP_NOTIFY_SDK",
+    "IMWEB_SHOP_PAYMENT_METHOD_BENEFIT_SDK",
+    "search_option_data_w202606159c2faaef37447",
+    "search_option_data_w2026061588ba31620fd11",
+    "__bsShopViewPromotionTracking",
+    "IMWEB_SHOP_DETAIL_PAGE",
+    "SHOP_REVIEW_LIST"
+  ],
+  "productRoot": "<div class=\"goods_select\" id=\"prod_options\">\t\t<style>\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item:has(.low-stock-nudge-option) {\n\t\t\t\tposition: relative;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .low-stock-nudge-option {\n\t\t\t\tposition: absolute;\n\t\t\t\tz-index: 1;\n\t\t\t\ttop: 50%;\n\t\t\t\tright: 12px;\n\t\t\t\tmax-width: 45%;\n\t\t\t\toverflow: hidden;\n\t\t\t\tfloat: none !important;\n\t\t\t\tmargin: 0 !important;\n\t\t\t\ttext-align: right;\n\t\t\t\ttext-overflow: ellipsis;\n\t\t\t\ttransform: translateY(-50%);\n\t\t\t\twhite-space: nowrap;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > a:has(> .low-stock-nudge-option) {\n\t\t\t\tdisplay: grid !important;\n\t\t\t\tgrid-template-areas: \"content stock\";\n\t\t\t\tgrid-template-columns: minmax(0, 1fr) max-content;\n\t\t\t\talign-items: start;\n\t\t\t\tgap: 8px;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > a:has(> .low-stock-nudge-option):has(> .blocked.tw-flex-wrap) {\n\t\t\t\tgrid-template-areas:\n\t\t\t\t\t\"badges badges\"\n\t\t\t\t\t\"content stock\";\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > a:has(> .low-stock-nudge-option) > .blocked.tw-flex-wrap {\n\t\t\t\tgrid-area: badges;\n\t\t\t\tmin-width: 0;\n\t\t\t\twidth: 100%;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > a:has(> .low-stock-nudge-option) > .tw-flex-row {\n\t\t\t\tgrid-area: content;\n\t\t\t\tmin-width: 0;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > a:has(> .low-stock-nudge-option) > .low-stock-nudge-option {\n\t\t\t\tposition: static;\n\t\t\t\tgrid-area: stock;\n\t\t\t\talign-self: center;\n\t\t\t\tmax-width: none;\n\t\t\t\toverflow: visible;\n\t\t\t\ttransform: none;\n\t\t\t}\n\t\t\t/* V2 옵션은 배지 래퍼와 옵션 본문을 같은 행의 가로 2열로 배치한다. */\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item:has(> div > .low-stock-nudge-option) {\n\t\t\t\tdisplay: grid;\n\t\t\t\tgrid-template-areas:\n\t\t\t\t\t\"badges badges\"\n\t\t\t\t\t\"content stock\";\n\t\t\t\tgrid-template-columns: minmax(0, 1fr) max-content;\n\t\t\t\talign-items: start;\n\t\t\t\tcolumn-gap: 8px;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > div:has(> .low-stock-nudge-option) {\n\t\t\t\tdisplay: contents;\n\t\t\t\tmargin: 0 !important;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item:has(> div > .low-stock-nudge-option) > .tabled {\n\t\t\t\tgrid-area: content;\n\t\t\t\tmin-width: 0;\n\t\t\t\twidth: 100%;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > div:has(> .low-stock-nudge-option) > .blocked.tw-flex-wrap {\n\t\t\t\tgrid-area: badges;\n\t\t\t\tmin-width: 0;\n\t\t\t\tmargin: 8px 12px 0;\n\t\t\t}\n\t\t\t.goods_select .form-select-wrap .dropdown-menu .dropdown-item > div:has(> .low-stock-nudge-option) > .low-stock-nudge-option {\n\t\t\t\tposition: static;\n\t\t\t\tgrid-area: stock;\n\t\t\t\talign-self: center;\n\t\t\t\tmax-width: 100%;\n\t\t\t\toverflow: hidden;\n\t\t\t\tpadding: 0 12px 0 0;\n\t\t\t\ttext-overflow: ellipsis;\n\t\t\t\ttransform: none;\n\t\t\t}\n\t\t\t\t\t</style>\n\t<div class=\"row m-margin-bottom-xxl\">\n\t\t\t\t\t<div class=\"col-xs-12 col-md-12 margin-bottom-xxxl\">\n\t\t\t\t\t<div class=\"option_title text-12 text-bold padding-bottom-xl\">옵션 <span class=\"option_require\">*</span></div>\n\t\t\t\t\t<div class=\"form-select-wrap _form_select_wrap _form_select_wrap_O20250717687843868ca4e\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-toggle\" href=\"javascript:;\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">\n\t\t\t\t\t\t\t\t\t옵션 (필수)\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<div class=\"dropdown-menu\">\n\t\t\t\t\t\t\t\t\t<div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O2026111254f87b5d674f0', 'Champagne / WK',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">1개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / WK</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112e822729012e7b', 'Champagne / WKL',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">3개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112d2553a40e732c', 'Champagne / HHKB',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Champagne / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / WK</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Silver / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Black / WKL</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"return false;\" style=\"cursor: not-allowed;\"><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"opacity-40\"><span class=\"blocked margin-bottom-lg\">Black / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원 (품절)</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O2026111295b028136e1c8', 'Grey / WK',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">2개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Grey / WK</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div><div class=\"dropdown-item \"><a class=\"blocked _requireOption\" href=\"javascript:;\" onclick=\"SITE_SHOP_DETAIL.selectRequireOption('prod', 1228,'O20250717687843868ca4e', 'O20261112571d317966608', 'Grey / HHKB',function(){ SITE_SHOP_DETAIL.updateSelectedOptions('prod'); })\"><span class=\"low-stock-nudge-option\" style=\"color:#ED1515!important;font-size:12px;font-weight:600;line-height:16px;\">1개 남았어요!</span><div class=\"tw-flex tw-flex-row tw-justify-between tw-items-center\"><div class=\"\"><span class=\"blocked margin-bottom-lg\">Grey / HHKB</span><span class=\"no-margin blocked\"><strong> 499,000원</strong></span></div></div></a></div>\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t</div>\n</div>",
+  "visibleContent": "닫기\n\t\n스웨그키 공식 온라인 스토어\n\t\n장바구니\nsite search\n1개 남았어요!\nSwagkeys x JJW Integral 커스텀 기계식 키보드 [58 ~ 62Key]\n499,000원\n\nSwagkeys x JJW Integral Barebone Kit\n\n\n\n\n기판 구매 페이지\n\n\n\n\n 14 \n적립\n\n4,990\n포인트 적립예정\n적립예정\n\n구매\n\n최소 구매 수량\n1\n\n배송비 결제\n선결제\n배송\n\n택배\n·\n기본 무료\n\n100,000원 이상 구매 시 무료배송\n\n상세정보\n구매평 0\nQ&A4\n반품/교환\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n﻿\n\n\n\n\nSwagkeys x JJW Integral Barebone Kit\n\nJJW는 부드러운 곡선, 정교한 챔퍼 디테일, 다양한 소재를 기반으로\n디자인과 타건감 모두에서 높은 완성도를 추구해온 프리미엄 키보드 브랜드입니다.\n\n\n이번 콜라보를 통해\n기존의 유려한 디자인에서 벗어나,\n보다 직선적이고 날렵한 형태를 표현했습니다.\n\n\n레이아웃은 많은 고민 끝에,\n가장 익숙하고 애정을 담고 있는 60% 배열로 결정했습니다.\n\n또한 진동에 대한 흡수력이 뛰어나고 안정적인 포론 가스켓 구조와\n무보강(plateless) 설계를 적용해,\n부드럽고 유연한 타건감을 구현했습니다.\n\n\n\n\n제품 정보\n\n배열 : 60% -WK WKL HHKB\n결합 방식 : Plateless PCB Gasket\n전고 : 16.07 mm\nEKH : 20.96 mm\n자경 : 7.4˚\n무게 : 1.2kg / 1.5kg\n\n구성품\n\n키보드\n보관용 극세사 천\n가방\nSW Knight Stab\n범폰\n\n\n\n\n\n\n\n제품 사진\n\n\n\n\n\n\n\n색상﻿\n\nSilver\n\nBlack\n\n\nGrey\n\n\nIce Blue\n\n\nChampagne\n\n\n\n\n\n\n\n\n\n\n상품정보 제공고시\n품명 및 모델명\t상품상세 참조\nKC 인증정보\t상품상세 참조\n정격전압, 소비전력\t상품상세 참조\n에너지소비효율등급\t상품상세 참조\n동일모델의 출시년월\t상품상세 참조\n제조자\t상품상세 참조\n제조국\t상품상세 참조\n크기, 무게\t상품상세 참조\n주요 사양\t상품상세 참조\n품질보증기준\t상품상세 참조\nA/S 책임자와 전화번호\t상품상세 참조\n구매평\n0\n\n구매평은 구매자만 작성할 수 있고, 삭제 전까지 기간 제한 없이 게시돼요.\n\n별점은 5점 만점으로 표시돼요.\n\n운영자가 뽑은 베스트 구매평은 배지와 함께 상단에, 워스트 구매평은 하단에 노출돼요.\n\n삭제 기준과 이의제기 절차는 운영사 내부 규칙을 따라요.\n\n구매평 작성\n 포토 구매평만 보기\n등록된 구매평이 없습니다.\n구매평 작성\nQ&A\n4\n구매하시려는 상품에 대해 궁금한 점이 있으면 문의주세요.\n상품문의\n1:1 문의\n슷바랑 하단 버튼들 사이즈가 어떻게 되나요?? 1\n답변완료\nKKK 2026-07-24 21:23\n개수 1\n답변완료\n김민준 2025-07-25 21:28\n비밀글입니다. \n답변완료\n엄태경 2025"
+}
