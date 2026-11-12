@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T19:53:21.291Z",
+  "updatedAt": "2026-11-12T20:03:26.322Z",
   "rows": [
     {
       "id": 385,
@@ -323,9 +323,9 @@
       "startDate": "2026-03-26",
       "endDate": "2026-04-13",
       "eta": "Late Q3 / Early Q4 2026",
-      "latestUpdateId": 1863,
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateDescription": "KAP Ghost has been delayed due to the manufacturer relocating factories and we don't have an updated ETA as of this time."
+      "latestUpdateId": 1951,
+      "latestUpdateDate": "2026-11-12",
+      "latestUpdateDescription": "The manufacturer is estimating that they will finish in 1-2 weeks and will ship sets via sea shipping to CannonKeys in the weeks to follow."
     },
     {
       "id": 264,
@@ -3455,6 +3455,7 @@
     "4eb95a45fa2e3862d179e931": "2026-11-06T18:23:10.830Z",
     "3c1371b63e5cfbe154f73c42": "2026-11-06T18:23:11.003Z",
     "730e5fecfb9db7d8379eb35c": "2026-11-12T16:52:41.890Z",
-    "caa1adc4e34f8da3d8fa626a": "2026-11-12T19:53:21.289Z"
+    "caa1adc4e34f8da3d8fa626a": "2026-11-12T19:53:21.289Z",
+    "064efd98424b548e9e2aef71": "2026-11-12T20:03:26.321Z"
   }
 }
