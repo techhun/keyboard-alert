@@ -734,6 +734,7 @@ public final class BackgroundProbeService extends Service {
                             advanceSample(2);
                         }else {
                             if(samplePage&&sampleButtonCount>0&&sampleItemNoDisplay==0&&
+                                sampleItemUnsupportedCount==0&&
                                 sampleButtonIndex==sampleButtonCount){
                                 String detailUrl=sampleTargets.get(sampleIndex)[1];
                                 verifiedDetails.put(detailUrl,new VerifiedDetail(
