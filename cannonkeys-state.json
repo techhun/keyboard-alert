@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T20:03:26.322Z",
+  "updatedAt": "2026-11-12T20:13:56.219Z",
   "rows": [
     {
       "id": 385,
@@ -307,13 +307,13 @@
       "id": 263,
       "displayName": "PAPER65",
       "category": "keyboard",
-      "status": "manufacturing",
+      "status": "en_route",
       "startDate": "2026-03-31",
       "endDate": "2026-04-14",
       "eta": "Aug/Sept 2026",
-      "latestUpdateId": 1899,
-      "latestUpdateDate": "2026-10-16",
-      "latestUpdateDescription": "We're currently waiting on production of about 50% of PCBs. Wuque expects to ship the keyboards to our freight forwarder in 1–2 weeks. From there, ocean freight to CannonKeys will take an additional 6–8 weeks."
+      "latestUpdateId": 1952,
+      "latestUpdateDate": "2026-11-12",
+      "latestUpdateDescription": "Production of PAPER65 has completed and units are being shipped to us via sea shipping!"
     },
     {
       "id": 265,
@@ -691,13 +691,13 @@
       "id": 232,
       "displayName": "Altair + Altair-X R2",
       "category": "keyboard",
-      "status": "manufacturing",
+      "status": "en_route",
       "startDate": "2025-09-19",
       "endDate": "2025-10-20",
       "eta": "Q4 2026",
-      "latestUpdateId": 1900,
-      "latestUpdateDate": "2026-10-20",
-      "latestUpdateDescription": "Delay Update: During our packing and vendor kitting process in China, our team identified a few issues: Altair: Missing kitting Components: We are missing a portion of the PC plates and all the daughterboard screws required for keyboard kitting. Missing Addons: We are also missing a number of the steel weight and aluminum tripod weight addons needed to complete fulfillment. Altair-X: Missing kitting Components: We are also missing a portion of the PC plates and all the daughterboard screws required for keyboard kitting. Machining Error: Unfortunately, the manufacturer mistakenly used the wrong file to machine the aluminum tripod weights for the Altair-X. Because of this error, every aluminum tripod weight for the Altair-X must be remade from scratch using the correct files. Next Steps & Timeline We are already in direct communication with our manufacturing partner to locate, produce and deliver the missing and the incorrect parts. The factory has prioritized these remakes, and while we are keeping the timeline flexible until all components are physically in hand and verified, they expect a relatively quick turnaround. We know delays are frustrating, so we really appreciate you hanging in there with us. We’ll keep a close eye on the progress of these remakes and touch base as soon as we have a more concrete timeline to share."
+      "latestUpdateId": 1953,
+      "latestUpdateDate": "2026-11-07",
+      "latestUpdateDescription": "A partial shipment of the Altair + Altair-X R2 is currently on its way to us via sea freight, and we expect it to arrive at our facility in 6 to 8 weeks. Regarding the remaining missing parts (mentioned in our October 19th update), our manufacturer has provided a revised production ETA of about 6 weeks. To prevent any further delays, we will be shipping these final components via air freight as soon as production wraps up."
     },
     {
       "id": 231,
@@ -3456,6 +3456,8 @@
     "3c1371b63e5cfbe154f73c42": "2026-11-06T18:23:11.003Z",
     "730e5fecfb9db7d8379eb35c": "2026-11-12T16:52:41.890Z",
     "caa1adc4e34f8da3d8fa626a": "2026-11-12T19:53:21.289Z",
-    "064efd98424b548e9e2aef71": "2026-11-12T20:03:26.321Z"
+    "064efd98424b548e9e2aef71": "2026-11-12T20:03:26.321Z",
+    "8ee8e27d8b5a1e26ba19e267": "2026-11-12T20:13:56.015Z",
+    "d6d79bfba329cd0f504f0a85": "2026-11-12T20:13:56.218Z"
   }
 }
