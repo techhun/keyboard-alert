@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T00:30:41.557Z",
+  "updatedAt": "2026-11-12T07:10:36.836Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -110,8 +110,8 @@
       "type": "Keyboard",
       "manufacturer": "Novelkeys",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 11",
-      "note": "6u HHKB H/S PCB 미포함 주문 11/12 발송예정. 6u HHKB H/S PCB 생산중 / Orders for the 6u HHKB H/S (excluding PCB) are scheduled for dispatch on 12 November. The 6u HHKB H/S PCB is currently in production."
+      "update": "2026. 11. 12",
+      "note": "PCB 제작 완료. 알루미늄 부품 생산 중 / PCB production completed. Aluminium components are currently being manufactured."
     },
     {
       "product": "Katina TKL",
@@ -646,6 +646,7 @@
     "4e3147632da93062c7d47f68": "2026-11-11T08:20:28.634Z",
     "97dfd6e2b8d90ce7a0a2812e": "2026-11-11T08:20:28.858Z",
     "9caf44476942b7936af14db9": "2026-11-12T00:20:28.921Z",
-    "0a51d29cf0316b8e708a3daa": "2026-11-12T00:30:41.554Z"
+    "0a51d29cf0316b8e708a3daa": "2026-11-12T00:30:41.554Z",
+    "e61b0984d1cb8ed81abe42e1": "2026-11-12T07:10:36.805Z"
   }
 }
