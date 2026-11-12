@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-12T07:10:36.836Z",
+  "updatedAt": "2026-11-12T07:50:30.182Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1907,6 +1907,51 @@
       "note": "PCB 제작 완료. 알루미늄 부품 생산 중 / PCB production completed. Aluminium components are currently being manufactured.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "467ca76f1ac64fbb83fe859b95f67e39",
+      "source": "GEONWORKS",
+      "name": "GMK CYL SELENE",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스로 출발 / Started out as a manufacturer under the name Geonworks",
+      "occurredAt": "2026-11-12T07:50:30.182Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-05-15",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "641b05953acddc8f63e04591b56f00b5",
+      "source": "GEONWORKS",
+      "name": "GMK CYL SELENE",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-12T07:50:30.182Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-05-15",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "c7015a249043db108b25feb0779cdfa1",
+      "source": "GEONWORKS",
+      "name": "GMK MTNU Dasher",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-12T07:50:30.182Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-12",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-mtnu-dasher-%ED%82%A4%EC%BA%A1/761/category/47/display/1/",
+      "sourceUrlType": "product"
     }
   ]
 }
