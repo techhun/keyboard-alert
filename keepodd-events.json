@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-11T08:20:28.858Z",
+  "updatedAt": "2026-11-12T00:20:28.921Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -1871,6 +1871,23 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "6u HHKB H/S PCB 미포함 주문 11/12 발송예정. 6u HHKB H/S PCB 생산중 / Orders for the 6u HHKB H/S (excluding PCB) are scheduled for dispatch on 12 November. The 6u HHKB H/S PCB is currently in production.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "f75a053fbace7548bc35ccc06d5796f8",
+      "source": "GEONWORKS",
+      "name": "GEHIRN60 Barebone Kit",
+      "eventType": "note_changed",
+      "before": "일부 품목 배대지 입고 / Receipt of certain items at the distribution centre",
+      "after": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th.",
+      "occurredAt": "2026-11-12T00:20:28.921Z",
+      "categoryHint": "키보드",
+      "maker": "BAIONLENJA",
+      "saleStart": "2026-01-19",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
