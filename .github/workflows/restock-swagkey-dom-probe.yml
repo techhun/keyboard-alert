@@ -1,0 +1,55 @@
+name: Restock SWAGKEY DOM probe (temporary)
+on:
+  push:
+    paths:
+      - '.github/workflows/restock-swagkey-dom-probe.yml'
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect public Imweb product selectors in an isolated browser
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/restockprobe
+          cd /tmp/restockprobe
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund playwright@1.56.1 >/dev/null
+          npx playwright install chromium >/dev/null
+          cat > probe.cjs <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({viewport:{width:400,height:850},locale:'ko-KR'});
+            await page.goto('https://www.swagkey.kr/227/?idx=1228',{waitUntil:'domcontentloaded',timeout:50000});
+            await page.waitForTimeout(5000);
+            const data = await page.evaluate(() => {
+              const mini = (e) => ({tag:e.tagName,cls:String(e.className).slice(0,140),id:e.id,
+                txt:String(e.innerText||e.textContent||'').replace(/\\s+/g,' ').trim().slice(0,160),
+                html:e.outerHTML.slice(0,600)});
+              const groups=['#prod_options','.option_title','.form-select-wrap','.dropdown-item','.dropdown-menu','.dropdown-toggle','select','[data-option]','#prod_options select'].map(selector=>({selector,total:document.querySelectorAll(selector).length,elements:[...document.querySelectorAll(selector)].slice(0,12).map(mini)}));
+              const keys=Object.keys(window).filter(s=>/shop|option|prod|item|detail/i.test(s)).slice(0,65);
+              return {title:document.title,url:location.pathname+location.search,groups,keys,
+                productRoot:document.querySelector('#prod_options')?.outerHTML.slice(0,10000)||null,
+                visibleContent:(document.querySelector('.shop_view')?.innerText||'').slice(0,1400)};
+            });
+            // Summarized anonymous public-page structure only; no cookies/headers.
+            require('fs').writeFileSync('/tmp/restockprobe/result.json',JSON.stringify(data,null,2));
+            console.log('probe selectors:',JSON.stringify(data.groups.map(x=>[x.selector,x.total])));
+            await browser.close();
+          })().catch(e=>{console.error('probe error',String(e));process.exitCode=1;});
+          NODE
+          node probe.cjs
+          mkdir -p "$GITHUB_WORKSPACE/tests"
+          cp /tmp/restockprobe/result.json "$GITHUB_WORKSPACE/tests/restock-swagkey-dom-probe.json"
+      - name: Commit temporary sanitized selector report
+        run: |
+          git config user.name "restock-dom-probe"
+          git config user.email "restock-dom-probe@users.noreply.github.com"
+          git add tests/restock-swagkey-dom-probe.json
+          git commit -m "test(restock): capture public SWAGKEY option DOM for diagnosis"
+          git push
