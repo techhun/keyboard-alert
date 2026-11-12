@@ -322,7 +322,12 @@ jobs:
                   if(label==null)label="선택한 주문";
                   java.util.Set<String> pairs=linkedResults.get(key);
                   boolean matched=pairs!=null&&!pairs.isEmpty();
-                  String state=partial?"중지 · 미완료":targetCancelled?"취소완료 · 배송조회 대상 제외":matched?"배송 확인":autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
+                  boolean allUnsupported=!partial&&!targetCancelled&&!matched&&
+                      !autoOrderFailed&&!autoOrderUnbound&&autoButtonCount>0&&
+                      autoButtonIndex==autoButtonCount&&orderUnsupportedButtons==autoButtonCount;
+                  String state=partial?"중지 · 미완료":targetCancelled?"취소완료 · 배송조회 대상 제외":
+                      allUnsupported?"주문 확인 · 배송조회 미지원":matched?"배송 확인":
+                      autoOrderFailed?"실패":autoOrderUnbound?"추가 확인":"미검출";
                   if(!partial&&matched&&(autoOrderUnbound||autoOrderFailed))state+=" · 추가 확인";
                   if(reusedButtons>0)state+=" · 같은 주문 결과 재사용";
                   boolean kurlyReview=matched&&pairs.contains("컬리넥스트마일 · ****0001");
@@ -331,6 +336,10 @@ jobs:
                   if(autoButtonCount<0)body.append("배송조회 버튼 수 미확인 · 직접 검사 완료 0개");
                   else body.append("배송조회 버튼 ").append(autoButtonCount).append("개 · 직접 검사 완료 ").append(autoButtonIndex-reusedButtons).append("개 · 결과 재사용 ").append(reusedButtons).append("개");
                   if(matched)body.append("\n확인된 표시 정보: ").append(android.text.TextUtils.join(" / ",pairs));
+                  if(orderUnsupportedButtons>0)
+                      body.append("\n주문정보 유지 · 배송조회 미지원 안내 확인 ")
+                          .append(orderUnsupportedButtons).append("/").append(autoButtonCount)
+                          .append("개 · 미지원 버튼의 운송장번호는 확인되지 않음");
                   if(!orderReasons.isEmpty())body.append("\n사유: ").append(android.text.TextUtils.join(" / ",orderReasons));
                   if(kurlyReview)body.append("\n컬리넥스트마일 끝자리 0001이 여러 주문에서 관찰됨 · 고유 운송장 및 상품별 연결 검증 필요");
                   if(!buttonNotes.isEmpty())body.append("\n").append(conciseButtonNotes());
@@ -444,6 +453,7 @@ jobs:
               private Button autoButton;
               private boolean collectDetails=false, autoRunning=false, autoReading=false, resumeAvailable=false;
               private int autoRun=0, autoStep=0, autoIndex=0, autoDone=0, autoMatched=0, autoMissing=0, autoFailed=0, autoUnbound=0, autoNoLink=0, autoListCount=0;
+              private int autoUnsupportedEntries=0,autoUnsupportedButtons=0,orderUnsupportedButtons=0;
               private final java.util.LinkedHashMap<String,String> detailQueue=new java.util.LinkedHashMap<>();
               private final java.util.ArrayList<String> detailKeys=new java.util.ArrayList<>();
               private android.widget.ScrollView diagnosticScroll;
@@ -459,7 +469,7 @@ jobs:
                   OrderCache(java.util.Set<String> p,java.util.List<String> n,String s){pairs=new java.util.LinkedHashSet<>(p);notes=new java.util.ArrayList<>(n);source=s;}
               }
               private final java.util.HashMap<String,OrderCache> orderCache=new java.util.HashMap<>();
-              private boolean canCache(){return targetPresent&&!targetCancelled&&!autoOrderFailed&&!autoOrderUnbound&&autoButtonCount>0&&autoButtonIndex==autoButtonCount&&reusedButtons==0&&!currentCacheKey.isEmpty()&&buttonNotes.size()==autoButtonCount;}
+              private boolean canCache(){return targetPresent&&!targetCancelled&&!autoOrderFailed&&!autoOrderUnbound&&orderUnsupportedButtons==0&&autoButtonCount>0&&autoButtonIndex==autoButtonCount&&reusedButtons==0&&!currentCacheKey.isEmpty()&&buttonNotes.size()==autoButtonCount;}
               private int autoButtonIndex=0,autoButtonCount=-1,autoButtonsDone=0,autoButtonsTotal=0;
               private boolean autoShipping=false;
               private String autoSignature="",autoRootPairs="";
@@ -491,7 +501,7 @@ jobs:
                   "hasDetail:a.filter(x=>!!(x&&x.orderDetailUrl)).length,bundles:a.filter(x=>Number(x&&x.bundlePaymentCount)>1).length,"+
                   "pages:Number((p[0]&&p[0].totalPage)||0)});}catch(_){return JSON.stringify({ok:false,reason:'PARSE_ERROR'});}})()";
 
-              private final String detailJs = "(function(){try{if(location.protocol!=='https:'||!(location.hostname==='pay.naver.com'||location.hostname.endsWith('.pay.naver.com')))return JSON.stringify({ok:false,reason:'NOT_PAY_ORIGIN'});var invoiceKeys=['invoiceNo','invoiceNumber','trackingNo','trackingNumber','waybillNo','waybillNumber'];var carrierKeys=['deliveryCompanyName','deliveryCompany','courierName','carrierName','shippingCompanyName'];var seen=[],pairs=0,invoices=0,carriers=0,nodes=0,limited=false;function invoice(v,c){if(typeof v!=='string')return false;var n=v.replace(/[ -]/g,'');if(c==='컬리넥스트마일')return /^[A-Za-z0-9]{8,40}$/.test(n)&&/[0-9]/.test(n);return /^[0-9]{8,20}$/.test(n);}function carrier(v){return typeof v==='string'&&/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)$/.test(v.trim());}function walk(o,depth){if(!o||typeof o!=='object')return;if(depth>25||++nodes>30000){limited=true;return;}var inv='',car='';for(var j=0;j<carrierKeys.length;j++){var w=o[carrierKeys[j]];if(carrier(w)){car=w.trim();break;}}for(var i=0;i<invoiceKeys.length;i++){var v=o[invoiceKeys[i]];if(invoice(v,car)){inv=v.replace(/[ -]/g,'');break;}}if(inv&&seen.indexOf(inv)<0){seen.push(inv);invoices++;if(car)pairs++;}if(car)carriers++;Object.keys(o).forEach(function(k){walk(o[k],depth+1);});}var el=document.getElementById('__NEXT_DATA__'),hasData=!!el;if(el){if(el.textContent.length>5000000)return JSON.stringify({ok:false,reason:'DATA_TOO_LARGE'});walk(JSON.parse(el.textContent),0);}var body=document.body?document.body.innerText:'';if(body.length>500000){body=body.slice(0,500000);limited=true;}var label=/운송장\\s*번호|송장\\s*번호/.test(body);var matches=body.match(/(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*([0-9][0-9 -]{6,28}[0-9])/g)||[];var dom=0;matches.forEach(function(m){var v=m.replace(/^(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*/,'');if(invoice(v))dom++;});var domPairs=[],pairKeys=[],elements=document.querySelectorAll('div,section,li,p,span,dl');var pairPattern=/^(CJ대한통운|CJ 대한통운|대한통운|한진택배|한진|롯데택배|롯데|로젠택배|로젠|우체국택배|우체국|경동택배|경동|대신택배|대신|CU편의점택배|GSPostbox|GS postbox|컬리넥스트마일)\\s*(?:(?:운송장\\s*번호|송장\\s*번호)\\s*[:：]?\\s*)?([A-Za-z0-9][A-Za-z0-9 -]{6,38}[A-Za-z0-9])\\s*(?:복사하기|복사)?$/;for(var ei=0;ei<elements.length&&ei<12000;ei++){var node=elements[ei];if(!node.getClientRects().length)continue;var t=(node.innerText||'').trim();if(!t||t.length>100)continue;var pm=t.match(pairPattern);if(!pm||!invoice(pm[2],pm[1]))continue;var number=pm[2].replace(/[ -]/g,''),key=pm[1]+'|'+number;if(pairKeys.indexOf(key)>=0)continue;pairKeys.push(key);if(domPairs.length<10)domPairs.push({carrier:pm[1],tail:(pm[1]==='컬리넥스트마일'?number.toUpperCase():number).slice(-4)});}if(elements.length>12000||pairKeys.length>10)limited=true;return JSON.stringify({ok:true,domPairs:domPairs,domPairCount:pairKeys.length,hasData:hasData,structuredInvoices:invoices,structuredCarriers:carriers,structuredPairs:pairs,domInvoices:dom,hasLabel:label,limited:limited});}catch(_){return JSON.stringify({ok:false,reason:'DETAIL_PARSE_ERROR'});}})()";
+              private final String detailJs = BackgroundDeliveryScripts.DETAIL_JS;
               @Override @SuppressLint("SetJavaScriptEnabled")
               protected void onCreate(Bundle state) {
                   super.onCreate(state);
@@ -1011,7 +1021,7 @@ jobs:
                   resumeAvailable=false;reportRows.clear();reportSummary="";
                   detailKeys.clear();detailKeys.addAll(detailQueue.keySet());reportExpected=detailKeys.size();reportPage=0;reportFinishedAt=0;
                   autoRunning=true;updateScanAwake();autoRun++;autoIndex=0;autoDone=0;autoMatched=0;autoMissing=0;
-                  autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;autoCancelled=0;totalReusedButtons=0;orderCache.clear();
+                  autoFailed=0;autoUnbound=0;autoNoLink=0;autoButtonsDone=0;autoButtonsTotal=0;autoCancelled=0;totalReusedButtons=0;autoUnsupportedEntries=0;autoUnsupportedButtons=0;orderUnsupportedButtons=0;orderCache.clear();
                   autoButton.setText("자동 검사 중지");closeDiagnostics();nextAutoOrder(autoRun);
               }
               private void resumeAuto(){
@@ -1070,7 +1080,7 @@ jobs:
                           autoNoLink++;autoDone++;autoIndex++;continue;
                       }
                       reusedButtons=0;targetPresent=false;currentCacheKey="";changedRetries=0;
-                      autoButtonIndex=0;autoButtonCount=-1;autoSignature="";autoRootPairs="";autoShipping=false;
+                      autoButtonIndex=0;autoButtonCount=-1;autoSignature="";autoRootPairs="";autoShipping=false;orderUnsupportedButtons=0;
                       autoOrderFailed=false;autoOrderUnbound=false;targetCancelled=false;orderReasons.clear();buttonNotes.clear();observedButtonPairs.clear();buttonNote="";
                       linkedResults.put(key,new java.util.LinkedHashSet<>());loadAutoPage(run,link);return;
                   }
