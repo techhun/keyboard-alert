@@ -1,8 +1,20 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-10T22:01:16.529Z",
+  "updatedAt": "2026-11-12T16:52:41.892Z",
   "rows": [
+    {
+      "id": 385,
+      "displayName": "Retro UI Deskmats",
+      "category": "deskmat",
+      "status": "ordered",
+      "startDate": "2026-09-28",
+      "endDate": "2026-12-28",
+      "eta": "December 2026",
+      "latestUpdateId": 1950,
+      "latestUpdateDate": "2026-11-12",
+      "latestUpdateDescription": "GB has concluded."
+    },
     {
       "id": 384,
       "displayName": "GMK CYL Blanks",
@@ -352,18 +364,6 @@
       "latestUpdateDescription": "All group buy orders for PBS WoB have been fulfilled and are currently shipping out to participants!"
     },
     {
-      "id": 253,
-      "displayName": "Bullet Train",
-      "category": "keyboard",
-      "status": "manufacturing",
-      "startDate": "2026-02-05",
-      "endDate": "2026-03-08",
-      "eta": "Q4 2026",
-      "latestUpdateId": 1871,
-      "latestUpdateDate": "2026-09-23",
-      "latestUpdateDescription": "Currently in production. More specifically, we are waiting on the production of PCBs."
-    },
-    {
       "id": 256,
       "displayName": "PFF Verdant Retro",
       "category": "keyset",
@@ -386,6 +386,18 @@
       "latestUpdateId": 1891,
       "latestUpdateDate": "2026-10-16",
       "latestUpdateDescription": "PFF WoB has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+    },
+    {
+      "id": 253,
+      "displayName": "Bullet Train",
+      "category": "keyboard",
+      "status": "manufacturing",
+      "startDate": "2026-02-05",
+      "endDate": "2026-03-08",
+      "eta": "Q4 2026",
+      "latestUpdateId": 1871,
+      "latestUpdateDate": "2026-09-23",
+      "latestUpdateDescription": "Currently in production. More specifically, we are waiting on the production of PCBs."
     },
     {
       "id": 252,
@@ -820,18 +832,6 @@
       "latestUpdateDescription": "All GB orders of KAP WoB have shipped to participants! Please allow 3-5 business days for tracking info to update."
     },
     {
-      "id": 219,
-      "displayName": "PBS Strawberry Milk",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2025-06-20",
-      "endDate": "2025-07-20",
-      "eta": "Mid March",
-      "latestUpdateId": 1896,
-      "latestUpdateDate": "2026-10-16",
-      "latestUpdateDescription": "All group buy orders for PBS Strawberry Milk have been fulfilled and are currently shipping out to participants!"
-    },
-    {
       "id": 220,
       "displayName": "21XX",
       "category": "keyboard",
@@ -842,6 +842,18 @@
       "latestUpdateId": 1780,
       "latestUpdateDate": "2026-07-30",
       "latestUpdateDescription": "21XX has finished the QC progress! Keyboards are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. We want to take this moment to also mention two additional things. First, the build guide will be completed shortly, and will be posted in our Discord server and in the 21XX listing soon. Second, the PCB will ship with VIA firmware pre-loaded on. The PCB designer, Cipulot, has been hard at work adding features into VIA that specifically benefit 21XX. Due to these additions, we've opted to ship with VIA firmware and supply an optional VIAL firmware soon for those who still want it. The firmware will be posted in our Discord server once ready."
+    },
+    {
+      "id": 219,
+      "displayName": "PBS Strawberry Milk",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2025-06-20",
+      "endDate": "2025-07-20",
+      "eta": "Mid March",
+      "latestUpdateId": 1896,
+      "latestUpdateDate": "2026-10-16",
+      "latestUpdateDescription": "All group buy orders for PBS Strawberry Milk have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 221,
@@ -892,18 +904,6 @@
       "latestUpdateDescription": "All ZoomTKL DYNA GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update."
     },
     {
-      "id": 214,
-      "displayName": "PBS Modern Abacus",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2025-05-16",
-      "endDate": "2025-06-15",
-      "eta": "Q4 2025",
-      "latestUpdateId": 1429,
-      "latestUpdateDate": "2026-01-02",
-      "latestUpdateDescription": "All GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/pbs-modern-abacus)**"
-    },
-    {
       "id": 215,
       "displayName": "Link Split Ergo",
       "category": "keyboard",
@@ -914,6 +914,18 @@
       "latestUpdateId": 1550,
       "latestUpdateDate": "2026-04-14",
       "latestUpdateDescription": "Link Split Ergo has arrived at our facilities! They are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+    },
+    {
+      "id": 214,
+      "displayName": "PBS Modern Abacus",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2025-05-16",
+      "endDate": "2025-06-15",
+      "eta": "Q4 2025",
+      "latestUpdateId": 1429,
+      "latestUpdateDate": "2026-01-02",
+      "latestUpdateDescription": "All GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/pbs-modern-abacus)**"
     },
     {
       "id": 213,
@@ -1048,18 +1060,6 @@
       "latestUpdateDescription": "**[Photon extras are available in-stock and ready to ship!](https://cannonkeys.com/products/photon?_pos=2&_psq=photon&_ss=e&_v=1.0)**"
     },
     {
-      "id": 201,
-      "displayName": "NicePBT Whale",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2025-01-31",
-      "endDate": "2025-02-28",
-      "eta": "Q3 2025",
-      "latestUpdateId": 1249,
-      "latestUpdateDate": "2025-07-11",
-      "latestUpdateDescription": "All GB orders of NicePBT Whale have been fulfilled and are currently shipping to customers! Please allow 3-5 business days for tracking info to update. **[Extras are currently available in-stock and ready to ship!](https://cannonkeys.com/products/nicepbt-whale?_pos=1&_psq=whale&_ss=e&_v=1.0)**"
-    },
-    {
       "id": 202,
       "displayName": "NPBT Whale Deskmats",
       "category": "deskmat",
@@ -1070,6 +1070,18 @@
       "latestUpdateId": 1250,
       "latestUpdateDate": "2025-07-11",
       "latestUpdateDescription": "All the GB orders of NicePBT Whale Deskmats have been shipped to participants! Please allow 3-5 business days for tracking info to update. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/npbt-whale-deskmats?_pos=3&_psq=whale&_ss=e&_v=1.0)**"
+    },
+    {
+      "id": 201,
+      "displayName": "NicePBT Whale",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2025-01-31",
+      "endDate": "2025-02-28",
+      "eta": "Q3 2025",
+      "latestUpdateId": 1249,
+      "latestUpdateDate": "2025-07-11",
+      "latestUpdateDescription": "All GB orders of NicePBT Whale have been fulfilled and are currently shipping to customers! Please allow 3-5 business days for tracking info to update. **[Extras are currently available in-stock and ready to ship!](https://cannonkeys.com/products/nicepbt-whale?_pos=1&_psq=whale&_ss=e&_v=1.0)**"
     },
     {
       "id": 197,
@@ -1372,18 +1384,6 @@
       "latestUpdateDescription": "All Petrichor GB orders have shipped to participants! Please allow 3-5 business days for tracking info to update. We highly recommend following **[this build guide](https://c5e58bbf.ck-docs.pages.dev/petrichor-guide/)** as an aide in your building process."
     },
     {
-      "id": 173,
-      "displayName": "Zoom65 V3",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2024-06-17",
-      "endDate": "2024-07-01",
-      "eta": "Q4 2024",
-      "latestUpdateId": 1062,
-      "latestUpdateDate": "2024-12-18",
-      "latestUpdateDescription": "All GB orders have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras.**"
-    },
-    {
       "id": 170,
       "displayName": "KAM ASTHA",
       "category": "keyset",
@@ -1394,6 +1394,18 @@
       "latestUpdateId": 1023,
       "latestUpdateDate": "2024-11-07",
       "latestUpdateDescription": "All GB orders for KAM Astha have shipped to participants. **Waiting on extras info.**"
+    },
+    {
+      "id": 173,
+      "displayName": "Zoom65 V3",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2024-06-17",
+      "endDate": "2024-07-01",
+      "eta": "Q4 2024",
+      "latestUpdateId": 1062,
+      "latestUpdateDate": "2024-12-18",
+      "latestUpdateDescription": "All GB orders have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras.**"
     },
     {
       "id": 172,
@@ -1504,18 +1516,6 @@
       "latestUpdateDescription": "All orders have shipped to participants! Please wait 3-5 business days for tracking to update. **Waiting on extras info**"
     },
     {
-      "id": 161,
-      "displayName": "Freya + Freya Ultra",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2024-02-06",
-      "endDate": "2024-02-15",
-      "eta": "August 2024",
-      "latestUpdateId": 1018,
-      "latestUpdateDate": "2024-11-04",
-      "latestUpdateDescription": "All GB orders have shipped to participants! **Waiting on extras info.**"
-    },
-    {
       "id": 157,
       "displayName": "MKC65",
       "category": "keyboard",
@@ -1526,6 +1526,18 @@
       "latestUpdateId": 1061,
       "latestUpdateDate": "2024-12-18",
       "latestUpdateDescription": "We still have some hope that MKC will come through and deliver on these GBs. That said, due to the uncertainty around the future of these projects, the continued delays, and the lack of communication from MKC, we are offering a swap to one of our Brutal V2 keyboard kits with an included hotswap PCB. If you purchased MKC65, you can swap to our Brutal V2 65% keyboard kit in the color of your choice (pending stock availability). If you purchased JRIS80, you can swap to either our Brutal V2 1800 keyboard kit, or the Brutal V2 65% keyboard kit + a set of budget keycaps (color and budget keycap choice pending stock availability). Please fill out **[this google form](https://forms.gle/XxaW1RjWqzFziPUj9)** by January 2nd 2025 if you want to proceed with the swap."
+    },
+    {
+      "id": 161,
+      "displayName": "Freya + Freya Ultra",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2024-02-06",
+      "endDate": "2024-02-15",
+      "eta": "August 2024",
+      "latestUpdateId": 1018,
+      "latestUpdateDate": "2024-11-04",
+      "latestUpdateDescription": "All GB orders have shipped to participants! **Waiting on extras info.**"
     },
     {
       "id": 160,
@@ -1612,18 +1624,6 @@
       "latestUpdateDescription": "We still have some hope that MKC will come through and deliver on these GBs. That said, due to the uncertainty around the future of these projects, the continued delays, and the lack of communication from MKC, we are offering a swap to one of our Brutal V2 keyboard kits with an included hotswap PCB. If you purchased MKC65, you can swap to our Brutal V2 65% keyboard kit in the color of your choice (pending stock availability). If you purchased JRIS80, you can swap to either our Brutal V2 1800 keyboard kit, or the Brutal V2 65% keyboard kit + a set of budget keycaps (color and budget keycap choice pending stock availability). Please fill out **[this google form](https://forms.gle/XxaW1RjWqzFziPUj9)** by January 2nd 2025 if you want to proceed with the swap."
     },
     {
-      "id": 152,
-      "displayName": "Castle on a Cliff Deskmat",
-      "category": "deskmat",
-      "status": "complete",
-      "startDate": "2023-11-08",
-      "endDate": "2023-12-08",
-      "eta": "Q1 2024",
-      "latestUpdateId": 839,
-      "latestUpdateDate": "2024-03-15",
-      "latestUpdateDescription": "All GB orders for Castle on a Cliff deskmats have shipped to participants. Please allow **3-5 business days** for tracking info to update. **Waiting on extras info**"
-    },
-    {
       "id": 153,
       "displayName": "Scape Deskmats",
       "category": "deskmat",
@@ -1634,6 +1634,18 @@
       "latestUpdateId": 840,
       "latestUpdateDate": "2024-03-15",
       "latestUpdateDescription": "All GB orders for the Scape Deskmats have shipped to participants! Please allow **3-5 business days** for tracking info to update. **Waiting on extras info.**"
+    },
+    {
+      "id": 152,
+      "displayName": "Castle on a Cliff Deskmat",
+      "category": "deskmat",
+      "status": "complete",
+      "startDate": "2023-11-08",
+      "endDate": "2023-12-08",
+      "eta": "Q1 2024",
+      "latestUpdateId": 839,
+      "latestUpdateDate": "2024-03-15",
+      "latestUpdateDescription": "All GB orders for Castle on a Cliff deskmats have shipped to participants. Please allow **3-5 business days** for tracking info to update. **Waiting on extras info**"
     },
     {
       "id": 146,
@@ -1708,6 +1720,18 @@
       "latestUpdateDescription": "We've received all items for the Zoom October batch at our facilities! We're currently sorting, counting, and packing in preparation for shipment. This is your final opportunity to update your shipping address on your order. You can update it using our **[self-service portal.](https://self-service.cannonkeys.com/login)**"
     },
     {
+      "id": 142,
+      "displayName": "Chillkey Paw65",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2023-09-13",
+      "endDate": "2023-10-27",
+      "eta": "January/February 2024",
+      "latestUpdateId": 845,
+      "latestUpdateDate": "2024-03-20",
+      "latestUpdateDescription": "Extras are in-stock and ready to ship! - **[Assembled Edition Extras](https://cannonkeys.com/products/chillkey-paw65-assembled-edition?_pos=2&_psq=paw65&_ss=e&_v=1.0)** - **[Barebones Edition Extras](https://cannonkeys.com/products/chillkey-paw65-ee?_pos=1&_psq=paw65&_ss=e&_v=1.0)**"
+    },
+    {
       "id": 145,
       "displayName": "Stone Cat Deskmats",
       "category": "deskmat",
@@ -1730,18 +1754,6 @@
       "latestUpdateId": 803,
       "latestUpdateDate": "2024-01-31",
       "latestUpdateDescription": "All orders for the Whale deskmats have been shipped to participants! Please wait 3-5 business days for tracking info to update. **[Waiting on extras info.](https://cannonkeys.com/products/whale-deskmats?_pos=1&_sid=c78564de3&_ss=r)**"
-    },
-    {
-      "id": 142,
-      "displayName": "Chillkey Paw65",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2023-09-13",
-      "endDate": "2023-10-27",
-      "eta": "January/February 2024",
-      "latestUpdateId": 845,
-      "latestUpdateDate": "2024-03-20",
-      "latestUpdateDescription": "Extras are in-stock and ready to ship! - **[Assembled Edition Extras](https://cannonkeys.com/products/chillkey-paw65-assembled-edition?_pos=2&_psq=paw65&_ss=e&_v=1.0)** - **[Barebones Edition Extras](https://cannonkeys.com/products/chillkey-paw65-ee?_pos=1&_psq=paw65&_ss=e&_v=1.0)**"
     },
     {
       "id": 141,
@@ -2320,18 +2332,6 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/dd-40-keyboard)**"
     },
     {
-      "id": 92,
-      "displayName": "[Air Shipping] Zoom65 Essential Edition R2",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-09-21",
-      "endDate": "2022-11-01",
-      "eta": "December 2022",
-      "latestUpdateId": 389,
-      "latestUpdateDate": "2023-01-17",
-      "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
-    },
-    {
       "id": 93,
       "displayName": "[Sea Shipping] Zoom65 Essential Edition R2",
       "category": "keyboard",
@@ -2342,6 +2342,18 @@
       "latestUpdateId": 390,
       "latestUpdateDate": "2023-01-17",
       "latestUpdateDescription": "Units have shipped out to all group buy participants! Please allow **3-5 business days** for tracking to update. Extras are live as well - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
+    },
+    {
+      "id": 92,
+      "displayName": "[Air Shipping] Zoom65 Essential Edition R2",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-09-21",
+      "endDate": "2022-11-01",
+      "eta": "December 2022",
+      "latestUpdateId": 389,
+      "latestUpdateDate": "2023-01-17",
+      "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/zoom65-ee)**"
     },
     {
       "id": 94,
@@ -2368,18 +2380,6 @@
       "latestUpdateDescription": "All GB orders have been shipped to participants! Please wait 3-5 business days for tracking info to update. **Waiting on extras info.**"
     },
     {
-      "id": 88,
-      "displayName": "WS Camping",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2022-08-23",
-      "endDate": "2022-09-12",
-      "eta": "April 2023",
-      "latestUpdateId": 530,
-      "latestUpdateDate": "2023-06-20",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ws-camping-keycaps)**"
-    },
-    {
       "id": 87,
       "displayName": "Ikki68 Aurora x Camping",
       "category": "keyboard",
@@ -2390,6 +2390,18 @@
       "latestUpdateId": 529,
       "latestUpdateDate": "2023-06-20",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-camping?variant=40918913613935)**"
+    },
+    {
+      "id": 88,
+      "displayName": "WS Camping",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2022-08-23",
+      "endDate": "2022-09-12",
+      "eta": "April 2023",
+      "latestUpdateId": 530,
+      "latestUpdateDate": "2023-06-20",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ws-camping-keycaps)**"
     },
     {
       "id": 86,
@@ -2440,18 +2452,6 @@
       "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/aella)**"
     },
     {
-      "id": 17,
-      "displayName": "Aurora x AluMizu Bundle",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-06-03",
-      "endDate": "2022-06-21",
-      "eta": "Q1 2023",
-      "latestUpdateId": 526,
-      "latestUpdateDate": "2023-06-20",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-alumizu-bundle?_pos=1&_psq=alumizu&_ss=e&_v=1.0&variant=40846319419503)**"
-    },
-    {
       "id": 50,
       "displayName": "AluMizu",
       "category": "keyset",
@@ -2462,6 +2462,18 @@
       "latestUpdateId": 527,
       "latestUpdateDate": "2023-06-20",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/alumizu-keycaps?_pos=2&_psq=alumizu&_ss=e&_v=1.0)**"
+    },
+    {
+      "id": 17,
+      "displayName": "Aurora x AluMizu Bundle",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-06-03",
+      "endDate": "2022-06-21",
+      "eta": "Q1 2023",
+      "latestUpdateId": 526,
+      "latestUpdateDate": "2023-06-20",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/ikki68-aurora-x-alumizu-bundle?_pos=1&_psq=alumizu&_ss=e&_v=1.0&variant=40846319419503)**"
     },
     {
       "id": 89,
@@ -2512,18 +2524,6 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/iron160?_pos=1&_psq=iron160&_ss=e&_v=1.0)**"
     },
     {
-      "id": 15,
-      "displayName": "Zoom65 - [Air Express] Essential Edition",
-      "category": "keyboard",
-      "status": "complete",
-      "startDate": "2022-04-16",
-      "endDate": "2022-04-23",
-      "eta": "July 2022",
-      "latestUpdateId": 280,
-      "latestUpdateDate": "2022-09-22",
-      "latestUpdateDescription": "Extras have sold out and project is complete!"
-    },
-    {
       "id": 54,
       "displayName": "Voynich Deskmats",
       "category": "deskmat",
@@ -2544,6 +2544,18 @@
       "endDate": "2022-04-23",
       "eta": "Q3 2022",
       "latestUpdateId": 279,
+      "latestUpdateDate": "2022-09-22",
+      "latestUpdateDescription": "Extras have sold out and project is complete!"
+    },
+    {
+      "id": 15,
+      "displayName": "Zoom65 - [Air Express] Essential Edition",
+      "category": "keyboard",
+      "status": "complete",
+      "startDate": "2022-04-16",
+      "endDate": "2022-04-23",
+      "eta": "July 2022",
+      "latestUpdateId": 280,
       "latestUpdateDate": "2022-09-22",
       "latestUpdateDescription": "Extras have sold out and project is complete!"
     },
@@ -2680,18 +2692,6 @@
       "latestUpdateDescription": "All extras are sold out and the project is complete!"
     },
     {
-      "id": 51,
-      "displayName": "November Fog Deskmats",
-      "category": "deskmat",
-      "status": "complete",
-      "startDate": "2021-11-02",
-      "endDate": "2021-12-02",
-      "eta": "April 2023",
-      "latestUpdateId": 514,
-      "latestUpdateDate": "2023-06-15",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/november-fog-deskmats?variant=40642702245999)**"
-    },
-    {
       "id": 43,
       "displayName": "DMK Ghost",
       "category": "keyset",
@@ -2702,6 +2702,18 @@
       "latestUpdateId": 461,
       "latestUpdateDate": "2023-04-07",
       "latestUpdateDescription": "**[Extras for DMK Ghost are available in-stock and ready to ship!](https://cannonkeys.com/products/domikey-ghost?_pos=1&_psq=ghost&_ss=e&_v=1.0)**"
+    },
+    {
+      "id": 51,
+      "displayName": "November Fog Deskmats",
+      "category": "deskmat",
+      "status": "complete",
+      "startDate": "2021-11-02",
+      "endDate": "2021-12-02",
+      "eta": "April 2023",
+      "latestUpdateId": 514,
+      "latestUpdateDate": "2023-06-15",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/november-fog-deskmats?variant=40642702245999)**"
     },
     {
       "id": 12,
@@ -2752,18 +2764,6 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-villanelle?_pos=1&_psq=gmk+villanelle&_ss=e&_v=1.0)**"
     },
     {
-      "id": 42,
-      "displayName": "GMK Soyamilk",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2021-10-02",
-      "endDate": "2021-11-02",
-      "eta": "August 2023",
-      "latestUpdateId": 599,
-      "latestUpdateDate": "2023-08-02",
-      "latestUpdateDescription": "All GB orders and pre-orders for GMK Soyamilk have been shipped to participants! Please wait 3-5 business days for tracking to upate. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-soyamilk?_pos=1&_psq=gmk+soyamilk&_ss=e&_v=1.0)**"
-    },
-    {
       "id": 41,
       "displayName": "GMK Rudy R2",
       "category": "keyset",
@@ -2774,6 +2774,18 @@
       "latestUpdateId": 587,
       "latestUpdateDate": "2023-07-24",
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gb-gmk-rudy?_pos=1&_psq=gmk+rudy&_ss=e&_v=1.0)**"
+    },
+    {
+      "id": 42,
+      "displayName": "GMK Soyamilk",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2021-10-02",
+      "endDate": "2021-11-02",
+      "eta": "August 2023",
+      "latestUpdateId": 599,
+      "latestUpdateDate": "2023-08-02",
+      "latestUpdateDescription": "All GB orders and pre-orders for GMK Soyamilk have been shipped to participants! Please wait 3-5 business days for tracking to upate. **[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-soyamilk?_pos=1&_psq=gmk+soyamilk&_ss=e&_v=1.0)**"
     },
     {
       "id": 44,
@@ -2800,18 +2812,6 @@
       "latestUpdateDescription": "Extras are live - **[view the collection here](https://cannonkeys.com/collections/cloudline-keyboard)**"
     },
     {
-      "id": 40,
-      "displayName": "GMK Nightlight",
-      "category": "keyset",
-      "status": "complete",
-      "startDate": "2021-09-16",
-      "endDate": "2021-10-16",
-      "eta": "July 2023",
-      "latestUpdateId": 594,
-      "latestUpdateDate": "2023-07-28",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-nightlight?_pos=1&_psq=gmk+nightlight&_ss=e&_v=1.0)**"
-    },
-    {
       "id": 39,
       "displayName": "DCS 9009",
       "category": "keyset",
@@ -2822,6 +2822,18 @@
       "latestUpdateId": 300,
       "latestUpdateDate": "2022-10-13",
       "latestUpdateDescription": "Extras are live - **[view the product page here](https://cannonkeys.com/products/dcs-9009?_pos=1&_psq=dcs+9009&_ss=e&_v=1.0)**"
+    },
+    {
+      "id": 40,
+      "displayName": "GMK Nightlight",
+      "category": "keyset",
+      "status": "complete",
+      "startDate": "2021-09-16",
+      "endDate": "2021-10-16",
+      "eta": "July 2023",
+      "latestUpdateId": 594,
+      "latestUpdateDate": "2023-07-28",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/gmk-nightlight?_pos=1&_psq=gmk+nightlight&_ss=e&_v=1.0)**"
     },
     {
       "id": 8,
@@ -2980,16 +2992,16 @@
       "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/collections/gmk-keycaps)**"
     },
     {
-      "id": 66,
-      "displayName": "Ikki68 Aurora x PNC",
-      "category": "keyboard",
+      "id": 27,
+      "displayName": "GMK Peaches n Cream (PnC) Lite",
+      "category": "keyset",
       "status": "complete",
-      "startDate": "2021-05-09",
+      "startDate": "2021-04-16",
       "endDate": "2021-05-16",
-      "eta": "",
-      "latestUpdateId": null,
-      "latestUpdateDate": "",
-      "latestUpdateDescription": ""
+      "eta": "February 2023",
+      "latestUpdateId": 573,
+      "latestUpdateDate": "2023-07-18",
+      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/pre-order-gmk-peaches-n-cream-lite?_pos=1&_psq=gmk+peaches+n&_ss=e&_v=1.0&variant=39863911055471)**"
     },
     {
       "id": 83,
@@ -3004,16 +3016,16 @@
       "latestUpdateDescription": ""
     },
     {
-      "id": 27,
-      "displayName": "GMK Peaches n Cream (PnC) Lite",
-      "category": "keyset",
+      "id": 66,
+      "displayName": "Ikki68 Aurora x PNC",
+      "category": "keyboard",
       "status": "complete",
-      "startDate": "2021-04-16",
+      "startDate": "2021-05-09",
       "endDate": "2021-05-16",
-      "eta": "February 2023",
-      "latestUpdateId": 573,
-      "latestUpdateDate": "2023-07-18",
-      "latestUpdateDescription": "**[Extras are available in-stock and ready to ship!](https://cannonkeys.com/products/pre-order-gmk-peaches-n-cream-lite?_pos=1&_psq=gmk+peaches+n&_ss=e&_v=1.0&variant=39863911055471)**"
+      "eta": "",
+      "latestUpdateId": null,
+      "latestUpdateDate": "",
+      "latestUpdateDescription": ""
     },
     {
       "id": 28,
@@ -3441,6 +3453,7 @@
     "4526c815b6ff9f1a075f921e": "2026-11-05T21:10:59.945Z",
     "3a3326249b98f48a42ebd456": "2026-11-05T21:11:00.095Z",
     "4eb95a45fa2e3862d179e931": "2026-11-06T18:23:10.830Z",
-    "3c1371b63e5cfbe154f73c42": "2026-11-06T18:23:11.003Z"
+    "3c1371b63e5cfbe154f73c42": "2026-11-06T18:23:11.003Z",
+    "730e5fecfb9db7d8379eb35c": "2026-11-12T16:52:41.890Z"
   }
 }
