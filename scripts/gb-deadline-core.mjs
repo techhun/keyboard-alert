@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 
 export const GB_REMINDER_OFFSETS = Object.freeze([3, 1, 0]);
+export const GB_SOURCES = Object.freeze(["GEONWORKS", "SWAGKEYS"]);
 const DAY_MS = 86_400_000;
 const KST_MS = 9 * 60 * 60 * 1000;
 const VALID_DAY = /^\d{4}-\d{2}-\d{2}$/;
@@ -105,30 +106,87 @@ function activeSwagProducts(state) {
   return products;
 }
 
-export function dueGbReminders(geonRelease, swagkeys, now = new Date()) {
-  validateGbSnapshot("GEONWORKS", geonRelease, now);
-  validateGbSnapshot("SWAGKEYS", swagkeys, now);
-  const today = kstDay(now);
-  const eligible = [];
-  const used = new Set();
-  const append = item => {
-    if (!item || used.has(item.key)) return;
-    used.add(item.key);
-    eligible.push(item);
-  };
-
-  for (const row of geonRelease.rows) {
+function geonDueItems(snapshot, today) {
+  const items = [];
+  for (const row of snapshot.rows) {
     if (!activeGeonRelease(row)) continue;
     const category = /keycap/i.test(row.type || "") ? "키캡" :
       /keyboard/i.test(row.type || "") ? "키보드" : "GB";
-    append(maybeDue("GEONWORKS", row.product, row.start, row.end, category, today));
+    const item = maybeDue("GEONWORKS", row.product, row.start, row.end, category, today);
+    if (item) items.push(item);
   }
+  return items;
+}
 
-  const listedSwagProducts = activeSwagProducts(swagkeys);
-  for (const row of Object.values(swagkeys.roadmapDates)) {
+function swagkeysDueItems(snapshot, today) {
+  const items = [];
+  const listedSwagProducts = activeSwagProducts(snapshot);
+  for (const row of Object.values(snapshot.roadmapDates)) {
     if (!row || !listedSwagProducts.has(nameKey(row.product))) continue;
     const category = /^sws\s/i.test(row.product) ? "스위치" : "키캡";
-    append(maybeDue("SWAGKEYS", row.product, row.saleStart, row.saleEnd, category, today));
+    const item = maybeDue("SWAGKEYS", row.product, row.saleStart, row.saleEnd, category, today);
+    if (item) items.push(item);
+  }
+  return items;
+}
+
+const SOURCE_DUE_ITEMS = Object.freeze({
+  GEONWORKS: geonDueItems,
+  SWAGKEYS: swagkeysDueItems,
+});
+
+// Evaluate one vendor in isolation. A vendor whose snapshot is not independently
+// verified throws here and nowhere else, so the other vendor keeps notifying.
+export function dueGbRemindersForSource(source, snapshot, now = new Date()) {
+  if (!Object.hasOwn(SOURCE_DUE_ITEMS, source)) throw new Error("Unsupported GB source");
+  if (!(now instanceof Date) || !Number.isFinite(now.getTime())) throw new Error("Invalid reminder clock");
+  validateGbSnapshot(source, snapshot, now);
+  return SOURCE_DUE_ITEMS[source](snapshot, kstDay(now));
+}
+
+function reportSourceStatus(status, options) {
+  if (typeof options?.onSourceStatus === "function") {
+    options.onSourceStatus(status);
+    return;
+  }
+  if (status.ok) return;
+  console.warn(`Keyboard Alert GB ${status.source} deadline check skipped: ${status.error.message}`);
+}
+
+// Vendors are fault-isolated: a blocked or stale schedule only loses that vendor's
+// reminders, never the other vendor's. Only when every vendor fails is this fatal.
+export function dueGbReminders(geonRelease, swagkeys, now = new Date(), options = {}) {
+  const snapshots = { GEONWORKS: geonRelease, SWAGKEYS: swagkeys };
+  const eligible = [];
+  const used = new Set();
+  const statuses = [];
+  const failures = [];
+
+  for (const source of GB_SOURCES) {
+    let items;
+    try {
+      items = dueGbRemindersForSource(source, snapshots[source], now);
+    } catch (error) {
+      const failure = error instanceof Error ? error : new Error(String(error));
+      failures.push({ source, error: failure });
+      statuses.push({ source, ok: false, due: 0, error: failure });
+      continue;
+    }
+    statuses.push({ source, ok: true, due: items.length });
+    for (const item of items) {
+      if (used.has(item.key)) continue;
+      used.add(item.key);
+      eligible.push(item);
+    }
+  }
+
+  for (const status of statuses) reportSourceStatus(status, options);
+
+  if (failures.length === GB_SOURCES.length) {
+    throw new Error(
+      `All GB deadline sources failed; skip deadline notifications (${failures.map(f => `${f.source}: ${f.error.message}`).join("; ")})`,
+      { cause: failures[0].error },
+    );
   }
 
   return eligible.sort((a, b) => a.offset - b.offset || a.source.localeCompare(b.source) || a.name.localeCompare(b.name, "ko"));

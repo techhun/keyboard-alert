@@ -1,11 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  GB_REMINDER_OFFSETS,
-  kstDay, daysUntil, validateGbSnapshot, dueGbReminders, reminderKey,
+  GB_REMINDER_OFFSETS, GB_SOURCES,
+  kstDay, daysUntil, validateGbSnapshot, dueGbReminders, dueGbRemindersForSource, reminderKey,
   emptyReminderState, validateReminderState, reservedState, sentState,
   discordGbReminder,
 } from "../scripts/gb-deadline-core.mjs";
@@ -108,11 +109,74 @@ test("SWAGKEYS split SWG/SWS products do not cross-match, and duplicate quarter 
 
 test("source snapshots must be verified and recent, never a stale or fallback snapshot", () => {
   assert.equal(validateGbSnapshot("GEONWORKS", geon(), NOW).version, 1);
-  assert.throws(() => dueGbReminders({ ...geon(), updatedAt: "2026-11-01T00:00:00Z" }, swag(), NOW), /Stale GEONWORKS/);
-  assert.throws(() => dueGbReminders(geon(), { ...swag(), fallbackSince: { Q4: "2026-11-08T00:00:00Z" } }, NOW), /fallback/);
-  assert.throws(() => dueGbReminders(geon(), { ...swag(), roadmapLayoutVersion: 1 }, NOW), /Invalid SWAGKEYS/);
-  assert.throws(() => dueGbReminders(geon(), { ...swag(), updatedAt: "invalid" }, NOW), /Stale SWAGKEYS/);
-  assert.throws(() => dueGbReminders(geon(), { ...swag(), quarters: { Q4: null } }, NOW), /quarter/);
+  assert.throws(() => validateGbSnapshot("GEONWORKS", { ...geon(), updatedAt: "2026-11-01T00:00:00Z" }, NOW), /Stale GEONWORKS/);
+  assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), fallbackSince: { Q4: "2026-11-08T00:00:00Z" } }, NOW), /fallback/);
+  assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), roadmapLayoutVersion: 1 }, NOW), /Invalid SWAGKEYS/);
+  assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), updatedAt: "invalid" }, NOW), /Stale SWAGKEYS/);
+  assert.throws(() => dueGbRemindersForSource("SWAGKEYS", { ...swag(), quarters: { Q4: null } }, NOW), /quarter/);
+  assert.throws(() => dueGbRemindersForSource("GEONWORKS", null, NOW), /Invalid GEONWORKS/);
+  assert.throws(() => dueGbRemindersForSource("KEEBIO", geon(), NOW), /Unsupported GB source/);
+  // One unusable vendor is contained instead of aborting the whole check.
+  assert.deepEqual(dueGbReminders({ ...geon(), updatedAt: "2026-11-01T00:00:00Z" }, swag(), NOW, { onSourceStatus() {} }), []);
+  // Every vendor unusable is still a hard failure.
+  assert.throws(
+    () => dueGbReminders({ ...geon(), updatedAt: "2026-11-01T00:00:00Z" },
+      { ...swag(), fallbackSince: { Q4: "2026-11-08T00:00:00Z" } }, NOW, { onSourceStatus() {} }),
+    error => {
+      assert.match(error.message, /All GB deadline sources failed/);
+      assert.match(error.message, /GEONWORKS: Stale GEONWORKS/);
+      assert.match(error.message, /SWAGKEYS: .*fallback/);
+      return true;
+    },
+  );
+});
+
+test("a SWAGKEYS fallback snapshot no longer blocks due GEONWORKS closing reminders", () => {
+  const statuses = [];
+  const due = dueGbReminders(
+    geon([release("GMK CYL Blanks", "2026-11-13")]),
+    {
+      ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
+      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" },
+    },
+    NOW,
+    { onSourceStatus: status => statuses.push(status) },
+  );
+  assert.deepEqual(due.map(x => [x.source, x.name, x.offset]), [["GEONWORKS", "GMK CYL Blanks", 3]]);
+  assert.deepEqual(statuses.map(s => [s.source, s.ok, s.due]), [["GEONWORKS", true, 1], ["SWAGKEYS", false, 0]]);
+  assert.match(statuses[1].error.message, /fallback/);
+  assert.deepEqual(GB_SOURCES, ["GEONWORKS", "SWAGKEYS"]);
+});
+
+test("a stale GEONWORKS snapshot no longer blocks due SWAGKEYS closing reminders", () => {
+  const statuses = [];
+  const due = dueGbReminders(
+    { ...geon(), updatedAt: "2026-11-02T00:00:00Z" },
+    swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
+    NOW,
+    { onSourceStatus: status => statuses.push(status) },
+  );
+  assert.deepEqual(due.map(x => [x.source, x.name, x.offset]), [["SWAGKEYS", "SWG Space Cadet", 3]]);
+  assert.deepEqual(statuses.map(s => [s.source, s.ok, s.due]), [["GEONWORKS", false, 0], ["SWAGKEYS", true, 1]]);
+  assert.match(statuses[0].error.message, /Stale GEONWORKS/);
+});
+
+test("a skipped vendor is a warning log, never an exception, when both sources are not lost", () => {
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnings.push(args.join(" "));
+  try {
+    const due = dueGbReminders(
+      geon([release("GMK CYL Blanks", "2026-11-13")]),
+      { ...swag(), fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" } },
+      NOW,
+    );
+    assert.equal(due.length, 1);
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /SWAGKEYS deadline check skipped: SWAGKEYS GB roadmap is using fallback data/);
 });
 
 test("event fingerprint is source + product + exact dates + D-stage, not Notion page IDs", () => {
@@ -161,10 +225,94 @@ test("daily workflow consumes only verified watcher states and reuses existing w
   assert.match(workflow, /GEONWORKS_DISCORD_WEBHOOK_URL:\s*\$\{\{ secrets\.GEONWORKS_DISCORD_WEBHOOK_URL \}\}/);
   assert.match(workflow, /SWAGKEYS_DISCORD_WEBHOOK_URL:\s*\$\{\{ secrets\.SWAGKEYS_DISCORD_WEBHOOK_URL \}\}/);
   assert.match(workflow, /SWG_DISCORD_WEBHOOK_URL:\s*\$\{\{ secrets\.SWG_DISCORD_WEBHOOK_URL \}\}/);
-  assert.match(runner, /dueGbReminders\(geonRelease, swagkeys, now\)/);
+  assert.match(runner, /dueGbReminders\(geonRelease, swagkeys, now, \{/);
+  assert.match(runner, /onSourceStatus/);
+  assert.match(core, /All GB deadline sources failed/);
   assert.match(runner, /const dryRun = .*!== "false"/);
   assert.ok(runner.indexOf("writeReminderState(repo, ghToken, next") < runner.indexOf("sendDiscordReminder(webhooks[reminder.source], reminder)"));
   for (const text of [workflow, runner, core]) {
     assert.doesNotMatch(text, /api\.notion\.com|KEEPODD_GB_NOTION_TOKEN|NOTION_TOKEN|loadNotionPages|keepodd-events\.json/i);
   }
+});
+
+let runnerImports = 0;
+
+// Runs the real runner in dry-run mode against throw-away watcher snapshots.
+async function invokeRunner({ geonSnapshot, swagSnapshot, now = NOW }) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "gb-deadline-runner-"));
+  const geonPath = path.join(dir, "geonworks-release-state.json");
+  const swagPath = path.join(dir, "swagkeys-state.json");
+  if (geonSnapshot !== undefined) fs.writeFileSync(geonPath, JSON.stringify(geonSnapshot));
+  if (swagSnapshot !== undefined) fs.writeFileSync(swagPath, JSON.stringify(swagSnapshot));
+  const savedEnv = {
+    GEON_RELEASE_STATE_PATH: process.env.GEON_RELEASE_STATE_PATH,
+    SWAGKEYS_STATE_PATH: process.env.SWAGKEYS_STATE_PATH,
+    DRY_RUN: process.env.DRY_RUN,
+  };
+  const logs = [], warnings = [];
+  const originalLog = console.log, originalWarn = console.warn;
+  console.log = (...args) => logs.push(args.join(" "));
+  console.warn = (...args) => warnings.push(args.join(" "));
+  let result, error;
+  try {
+    process.env.GEON_RELEASE_STATE_PATH = geonPath;
+    process.env.SWAGKEYS_STATE_PATH = swagPath;
+    process.env.DRY_RUN = "true";
+    runnerImports++;
+    const { runGbDeadlineCheck } = await import(`../scripts/check-gb-deadlines.mjs?fixture=${runnerImports}`);
+    result = await runGbDeadlineCheck(now);
+  } catch (caught) {
+    error = caught;
+  } finally {
+    console.log = originalLog;
+    console.warn = originalWarn;
+    for (const [key, value] of Object.entries(savedEnv)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+  return { result, error, logs, warnings };
+}
+
+test("runner dry-run keeps GEONWORKS closing reminders while SWAGKEYS is in fallback", async () => {
+  const { result, error, logs, warnings } = await invokeRunner({
+    geonSnapshot: geon([release("GMK CYL Blanks", "2026-11-13")]),
+    swagSnapshot: {
+      ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
+      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z", status: "2026-11-12T17:42:40.276Z" },
+    },
+  });
+  assert.equal(error, undefined);
+  assert.equal(result.dryRun, true);
+  assert.equal(result.due, 1);
+  assert.equal(result.sent, 0);
+  assert.ok(logs.some(line => /DRY RUN GEONWORKS D-3: GMK CYL Blanks/.test(line)), logs.join("\n"));
+  assert.ok(logs.some(line => /GEONWORKS: 1 verified due reminder/.test(line)));
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /SWAGKEYS deadline check skipped: SWAGKEYS GB roadmap is using fallback data/);
+});
+
+test("runner dry-run keeps going when one watcher snapshot file cannot be read", async () => {
+  const { result, error, warnings } = await invokeRunner({
+    geonSnapshot: geon([release("GMK CYL Blanks", "2026-11-13")]),
+  });
+  assert.equal(error, undefined);
+  assert.equal(result.due, 1);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /SWAGKEYS deadline check skipped: .*ENOENT/);
+});
+
+test("runner fails only when every vendor snapshot is unusable", async () => {
+  const { result, error } = await invokeRunner({
+    geonSnapshot: { ...geon(), updatedAt: "2026-11-01T00:00:00Z" },
+    swagSnapshot: {
+      ...swag(),
+      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" },
+    },
+  });
+  assert.equal(result, undefined);
+  assert.match(error.message, /All GB deadline sources failed/);
+  assert.match(error.message, /GEONWORKS: Stale GEONWORKS/);
+  assert.match(error.message, /SWAGKEYS: .*fallback/);
 });
