@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T00:20:29.748Z",
+  "updatedAt": "2026-11-13T03:00:51.340Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -32,16 +32,6 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 3",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
-    },
-    {
-      "product": "GMK CYL SELENE",
-      "gbStart": "2026. 5. 15",
-      "eta": "2026. 9. 30",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 12",
-      "note": "—"
     },
     {
       "product": "GMK CYL Blanks",
@@ -656,6 +646,7 @@
     "0a51d29cf0316b8e708a3daa": "2026-11-12T00:30:41.554Z",
     "e61b0984d1cb8ed81abe42e1": "2026-11-12T07:10:36.805Z",
     "655c4102bdcd65d1b273cd0f": "2026-11-12T07:50:29.981Z",
-    "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z"
+    "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z",
+    "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z"
   }
 }
