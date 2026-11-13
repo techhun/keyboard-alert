@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T18:23:30.906Z",
+  "updatedAt": "2026-11-13T20:03:15.449Z",
   "rows": [
     {
       "id": 385,
@@ -91,13 +91,13 @@
       "id": 345,
       "displayName": "Blaine V2: SE",
       "category": "keyboard",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-07-10",
       "endDate": "2026-08-09",
       "eta": "",
-      "latestUpdateId": 1882,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "Blaine V2: SE order details have been finalized with the CNC factory! The keyboard is now in the production queue."
+      "latestUpdateId": 1954,
+      "latestUpdateDate": "2026-11-13",
+      "latestUpdateDescription": "Blaine V2: SE is currently in production!"
     },
     {
       "id": 343,
@@ -107,8 +107,8 @@
       "startDate": "2026-06-19",
       "endDate": "2026-07-19",
       "eta": "",
-      "latestUpdateId": 1885,
-      "latestUpdateDate": "2026-10-09",
+      "latestUpdateId": 1956,
+      "latestUpdateDate": "2026-11-13",
       "latestUpdateDescription": "The current status for DCS Handarbeit has not changed since our last update. For reference, the order has been placed."
     },
     {
@@ -611,9 +611,9 @@
       "startDate": "2025-10-31",
       "endDate": "2025-12-03",
       "eta": "Q2 2026",
-      "latestUpdateId": 1888,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "October 9th Update: Everything is now done except for the cases, and we are arranging shipment of everything to go to the manufacturer for quick kitting and case production."
+      "latestUpdateId": 1955,
+      "latestUpdateDate": "2026-11-13",
+      "latestUpdateDescription": "Case production for the Minimi40 is currently underway! Once production is complete packing will begin, and as soon as we have an ETA we will share it."
     },
     {
       "id": 238,
@@ -3453,6 +3453,9 @@
     "caa1adc4e34f8da3d8fa626a": "2026-11-12T19:53:21.289Z",
     "064efd98424b548e9e2aef71": "2026-11-12T20:03:26.321Z",
     "8ee8e27d8b5a1e26ba19e267": "2026-11-12T20:13:56.015Z",
-    "d6d79bfba329cd0f504f0a85": "2026-11-12T20:13:56.218Z"
+    "d6d79bfba329cd0f504f0a85": "2026-11-12T20:13:56.218Z",
+    "dfe6771f78daa421cf0d47af": "2026-11-13T20:03:14.923Z",
+    "9e2325c5e70482a5e3876f76": "2026-11-13T20:03:15.209Z",
+    "c3cf5a78f711a8f6db9d7cd3": "2026-11-13T20:03:15.447Z"
   }
 }
