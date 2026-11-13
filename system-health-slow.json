@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T23:52:33.915Z",
+  "updatedAt": "2026-11-13T12:02:53.469Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -19,9 +19,10 @@
       "status": "fail",
       "changedAt": "2026-11-12T23:52:33.548Z",
       "consecutiveFailures": 3,
-      "lastFailureRunId": "43332176112",
-      "lastFailureAt": "2026-11-12T23:52:33.548Z",
-      "failureAlertedAt": "2026-11-12T23:52:33.548Z"
+      "lastFailureRunId": "43421571809",
+      "lastFailureAt": "2026-11-13T12:02:53.160Z",
+      "failureAlertedAt": "2026-11-12T23:52:33.548Z",
+      "failureReminderAt": "2026-11-13T12:02:53.160Z"
     },
     "oblotzky": {
       "status": "ok",
