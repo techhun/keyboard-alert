@@ -105,11 +105,30 @@ async function sendDiscordReminder(url, reminder) {
 export async function runGbDeadlineCheck(now = new Date()) {
   const dryRun = (process.env.DRY_RUN ?? "").trim().toLowerCase() !== "false";
   // Read only the two verified watcher snapshots; no inventory/API lookups.
+  // A vendor whose snapshot cannot be read is contained to that vendor.
+  const readErrors = new Map();
+  const readSource = async (source, path, label) => {
+    try {
+      return await readVerifiedSchedule(path, label);
+    } catch (error) {
+      readErrors.set(source, error instanceof Error ? error.message : String(error));
+      return null;
+    }
+  };
   const [geonRelease, swagkeys] = await Promise.all([
-    readVerifiedSchedule(GEON_RELEASE_PATH, "GEONWORKS release"),
-    readVerifiedSchedule(SWAGKEYS_PATH, "SWAGKEYS roadmap"),
+    readSource("GEONWORKS", GEON_RELEASE_PATH, "GEONWORKS release"),
+    readSource("SWAGKEYS", SWAGKEYS_PATH, "SWAGKEYS roadmap"),
   ]);
-  const due = dueGbReminders(geonRelease, swagkeys, now);
+  const due = dueGbReminders(geonRelease, swagkeys, now, {
+    onSourceStatus: ({ source, ok, due: count, error }) => {
+      if (!ok) {
+        const reason = readErrors.get(source) ?? error.message;
+        console.warn(`Keyboard Alert GB ${source} deadline check skipped: ${reason}`);
+        return;
+      }
+      console.log(`Keyboard Alert GB ${source}: ${count} verified due reminder(s).`);
+    },
+  });
   const sourceCounts = {
     GEONWORKS: due.filter(item => item.source === "GEONWORKS").length,
     SWAGKEYS: due.filter(item => item.source === "SWAGKEYS").length,
