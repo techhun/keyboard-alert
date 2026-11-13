@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T14:33:06.623Z",
+  "updatedAt": "2026-11-13T14:52:32.504Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -202,7 +202,7 @@
     {
       "category": "Keycap",
       "product": "CYL Finer Things R2",
-      "status": "Order placed.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-finer-things-r2-keycaps"
     },
@@ -279,7 +279,7 @@
     {
       "category": "Deskpad",
       "product": "Finer Things R2 Deskpad",
-      "status": "In production.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/finer-things-r2-deskpad"
     },
@@ -344,6 +344,8 @@
     "3e46851e5190c6e917c08946": "2026-11-06T15:03:59.400Z",
     "9b9ee7c16a9c9a9d0e1cd8bb": "2026-11-10T14:31:29.422Z",
     "a3a506a117ccfaa4f79a899e": "2026-11-10T14:31:29.681Z",
-    "449efb432a145fd6d8326537": "2026-11-10T17:51:06.059Z"
+    "449efb432a145fd6d8326537": "2026-11-10T17:51:06.059Z",
+    "338b1d73251f189a9b6f0156": "2026-11-13T14:52:32.214Z",
+    "c936774458859d13423b13b0": "2026-11-13T14:52:32.503Z"
   }
 }
