@@ -123,6 +123,8 @@ npm run system:health -- ...
 
 의존성은 `package-lock.json`으로 고정하며 GitHub Actions에서는 `npm ci`를 사용합니다. Playwright는 현재 `1.55.0`으로 고정되어 있습니다.
 
+`SWAGKEYS_SKIP_DISCORD=true npm run check:swagkeys`는 Discord 웹훅 없이 실행되며, 변경이 있으면 `SWAGKEYS_SUMMARY_JSON=` 한 줄(JSON)로 `announcementChanged`·`quarterChanges`·`changes`·`starts`·`announcement`를 출력하고 state와 Keepodd 이벤트는 정상 갱신합니다. Chromium은 두 Notion API 읽기가 모두 실패해 브라우저 fallback이 필요할 때만 실행합니다.
+
 ## 알림 Secret
 
 GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관리합니다.
@@ -156,6 +158,7 @@ GitHub 저장소의 **Settings → Secrets and variables → Actions**에서 관
 - GEONWORKS / ProtoTypist / SWAGKEYS / Oblotzky / NovelKeys / KBDfans / CannonKeys / Deskhero / Omnitype에서 기존 항목의 **목록 제거**가 감지되면 해당 소스를 즉시 한 번 더 읽고, 두 번 연속 같은 제거가 확인될 때만 제거 알림과 state 갱신을 수행합니다.
 - 두 번째 확인에서 항목이 다시 나타나거나 제거 목록이 달라지면 해당 제거를 확정하지 않아 일시적인 부분 로딩을 삭제로 오인하지 않습니다.
 - SWAGKEYS는 Notion의 `Loading`, `No results`, 오류 placeholder 등을 정상 제품으로 저장하지 않으며, 상태표를 일시적으로 읽지 못하면 마지막 검증된 상태를 재사용합니다.
+- `SWAGKEYS_SKIP_DISCORD=true`(Pickle 실행)일 때는 Discord 전송만 생략하고 state·Keepodd 이벤트는 정상 갱신합니다. 이 값이 없고 웹훅도 없으면 기존과 같이 변경을 보류하고 state를 넘기지 않습니다.
 - system health는 정상→오류, 오류→정상처럼 상태가 바뀔 때만 Discord 알림을 보내 중복 장애 알림을 막습니다.
 - workflow watchdog도 정상→정체, 정체→정상 전환 때만 Discord 알림을 보내 반복 알림을 막습니다.
 - runtime state의 기준은 `watcher-state` 브랜치이며, workflow 시작 시 해당 브랜치의 state를 복원한 뒤 그 복원본을 실행별 baseline으로 보관합니다.

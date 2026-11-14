@@ -5,6 +5,10 @@ import { buildSwagkeysKeepoddEvents, canonicalProductKey, commitStateAndKeepoddE
 
 const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
+// Pickle (the user's assistant) runs this collector without Discord: it formats the
+// chat notifications itself from the printed SWAGKEYS_SUMMARY_JSON line.
+export const parseSkipDiscord = (value) => /^(?:1|true)$/i.test(String(value ?? '').trim());
+export const SKIP_DISCORD = parseSkipDiscord(process.env.SWAGKEYS_SKIP_DISCORD);
 const ROADMAP_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 const STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
 const STATUS_PAGE_ID = '3b5f75d5-3601-8064-b051-e6a663b41d35';
@@ -618,11 +622,20 @@ async function fetchSnapshot(fallback = {}) {
     && fallback.announcement?.content
     && quarterSnapshotIsValid(fallback.quarters)
   );
-  const browser = await chromium.launch({ headless: true, channel: 'chrome' });
-  const context = await browser.newContext({
-    viewport: { width: 1800, height: 1400 },
-    locale: 'ko-KR'
-  });
+  // Chromium is only needed for the browser fallback. Launching it lazily keeps
+  // the direct Notion API path usable in environments without a Chrome binary.
+  let browser = null;
+  let context = null;
+  const browserContext = async () => {
+    if (context) return context;
+    console.log('SWAGKEYS browser fallback: launching Playwright Chromium.');
+    browser = await chromium.launch({ headless: true, channel: 'chrome' });
+    context = await browser.newContext({
+      viewport: { width: 1800, height: 1400 },
+      locale: 'ko-KR'
+    });
+    return context;
+  };
   try {
     let roadmap = null;
     let roadmapFresh = true;
@@ -634,7 +647,7 @@ async function fetchSnapshot(fallback = {}) {
         console.log(`SWAGKEYS roadmap direct API counts: ${Object.entries(candidate.quarters).map(([quarter, products]) => `${quarter}=${products.length}`).join(', ')}`);
       } catch (apiError) {
         console.warn(`SWAGKEYS roadmap direct API failed; using browser fallback: ${apiError?.message || apiError}`);
-        candidate = await openWithRetry(context, ROADMAP_URL, 'roadmap browser fallback', extractRoadmap);
+        candidate = await openWithRetry(await browserContext(), ROADMAP_URL, 'roadmap browser fallback', extractRoadmap);
       }
       if (!candidate.announcement.heading || !candidate.announcement.content) throw new Error('roadmap announcement was empty');
       if (!quarterSnapshotIsValid(candidate.quarters)) throw new Error('quarter roadmap snapshot failed validation');
@@ -678,7 +691,7 @@ async function fetchSnapshot(fallback = {}) {
         console.log(`SWAGKEYS status table direct API rows: ${candidateRows.length}`);
       } catch (apiError) {
         console.warn(`SWAGKEYS status direct API failed; using browser fallback: ${apiError?.message || apiError}`);
-        candidateRows = await openWithRetry(context, STATUS_URL, 'status table browser fallback', extractRows);
+        candidateRows = await openWithRetry(await browserContext(), STATUS_URL, 'status table browser fallback', extractRows);
       }
       if (candidateRows.length < 10) throw new Error(`status table returned too few rows: ${candidateRows.length}`);
       rows = candidateRows;
@@ -723,8 +736,8 @@ async function fetchSnapshot(fallback = {}) {
       fallbackMetadataChanged
     };
   } finally {
-    await context.close();
-    await browser.close();
+    if (context) await context.close();
+    if (browser) await browser.close();
   }
 }
 
@@ -1012,6 +1025,24 @@ export function removedEmbed(row, detectedAt = new Date().toISOString()) {
   };
 }
 
+// Pickle formats its own chat notifications, so skip-mode runs print one machine-readable
+// line instead of posting Discord embeds. State and Keepodd events advance exactly as usual.
+export function skipDiscordSummaryLine({ announcementChanged, quarterChanges, changes, starts, announcement }) {
+  return `SWAGKEYS_SUMMARY_JSON=${JSON.stringify({
+    announcementChanged,
+    quarterChanges,
+    changes,
+    starts,
+    announcement: announcementChanged ? (announcement || null) : null
+  })}`;
+}
+
+// Discord webhook · Discord-less Pickle run · or the legacy pending guard.
+export function notificationMode({ webhookUrl = DISCORD_WEBHOOK_URL, skipDiscord = SKIP_DISCORD } = {}) {
+  if (skipDiscord) return 'skip';
+  return String(webhookUrl || '').trim() ? 'discord' : 'pending';
+}
+
 async function postDiscord(embed) {
   for (let attempt = 1; attempt <= 3; attempt += 1) {
     const response = await fetch(DISCORD_WEBHOOK_URL, {
@@ -1149,21 +1180,35 @@ async function main() {
     if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
     return;
   }
-  if (!DISCORD_WEBHOOK_URL) {
+  const mode = notificationMode();
+  if (mode === 'pending') {
     console.log('[discord] SWAGKEYS_DISCORD_WEBHOOK_URL/SWG_DISCORD_WEBHOOK_URL is not configured. Changes remain pending; state was not updated.');
     return;
   }
 
-  if (announcementChanged) await postDiscord(announcementEmbed(snapshot.announcement));
-  if (quartersChanged) await postDiscord(quartersEmbed(quarterChanges));
-  for (const start of starts) await postDiscord(gbStartEmbed(start));
-  for (const change of changes) {
-    if (change.kind === 'added') await postDiscord(addedEmbed(change.row));
-    else if (change.kind === 'changed') await postDiscord(changedEmbed(change));
-    else await postDiscord(removedEmbed(change.row));
+  if (mode === 'discord') {
+    if (announcementChanged) await postDiscord(announcementEmbed(snapshot.announcement));
+    if (quartersChanged) await postDiscord(quartersEmbed(quarterChanges));
+    for (const start of starts) await postDiscord(gbStartEmbed(start));
+    for (const change of changes) {
+      if (change.kind === 'added') await postDiscord(addedEmbed(change.row));
+      else if (change.kind === 'changed') await postDiscord(changedEmbed(change));
+      else await postDiscord(removedEmbed(change.row));
+    }
   }
   await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts);
-  console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} SWAGKEYS notification(s) and updated state.`);
+  if (mode === 'skip') {
+    console.log(`SWAGKEYS_SKIP_DISCORD is enabled: ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} change group(s) reported without Discord, state and Keepodd events updated.`);
+    console.log(skipDiscordSummaryLine({
+      announcementChanged,
+      quarterChanges,
+      changes,
+      starts,
+      announcement: snapshot.announcement
+    }));
+  } else {
+    console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} SWAGKEYS notification(s) and updated state.`);
+  }
   if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
 }
 
