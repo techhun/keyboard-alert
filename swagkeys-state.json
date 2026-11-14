@@ -1,11 +1,12 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-12T17:42:40.359Z",
+  "updatedAt": "2026-11-14T09:11:27.696Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
-    "retroguardia": "2026-11-09"
+    "retroguardia": "2026-11-09",
+    "moomin": "2026-11-13"
   },
   "announcement": {
     "heading": "업데이트(26.10.14)",
@@ -183,8 +184,8 @@
     },
     "moomin": {
       "product": "SWG Moomin",
-      "saleStart": "",
-      "saleEnd": ""
+      "saleStart": "2026-11-13",
+      "saleEnd": "2026-11-23"
     },
     "koyo": {
       "product": "SWG Koyo",
@@ -478,7 +479,7 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "Not started"
+      "currentStatus": "예약판매 진행중 (in GB)"
     },
     {
       "product": "Retroguardia",
@@ -490,11 +491,20 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "Not started"
+      "currentStatus": "예약판매 진행중 (in GB)"
+    },
+    {
+      "product": "Moomin",
+      "groupBuy": 50,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Complete",
+      "eta": "",
+      "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-11-12T17:24:19.913Z",
-    "status": "2026-11-12T17:42:40.276Z"
-  }
+  "fallbackSince": {}
 }
