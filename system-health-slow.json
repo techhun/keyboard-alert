@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-14T16:43:27.426Z",
+  "updatedAt": "2026-11-14T21:42:25.328Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -25,9 +25,9 @@
         "status"
       ],
       "degradedAlertedAt": "2026-11-14T10:23:44.432Z",
-      "consecutiveFailures": 1,
-      "lastFailureRunId": "43609635620",
-      "lastFailureAt": "2026-11-14T15:22:27.308Z"
+      "consecutiveFailures": 2,
+      "lastFailureRunId": "43644040865",
+      "lastFailureAt": "2026-11-14T21:42:25.328Z"
     },
     "oblotzky": {
       "status": "ok",
