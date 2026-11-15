@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-15T11:01:40.650Z",
+  "updatedAt": "2026-11-15T11:11:37.720Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1945,8 +1945,7 @@
     }
   ],
   "fallbackSince": {
-    "keyboard": "2026-11-15T11:01:14.048Z",
-    "gmk": "2026-11-15T11:01:26.624Z",
-    "keyset": "2026-11-15T11:01:39.088Z"
+    "gmk": "2026-11-15T11:11:23.369Z",
+    "keyset": "2026-11-15T11:11:36.147Z"
   }
 }
