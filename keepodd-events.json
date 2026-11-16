@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T00:00:52.904Z",
+  "updatedAt": "2026-11-16T02:30:33.959Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2069,6 +2069,37 @@
       "saleEnd": "2026-12-06",
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "1b37424cdc652fe11a376355b2b25561",
+      "source": "GEONWORKS",
+      "name": "Atelier Magnus Slate Zero",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "occurredAt": "2026-11-16T02:30:33.959Z",
+      "categoryHint": "키보드",
+      "maker": "Atelier Magnus",
+      "saleStart": "2026-04-27",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "9d52ae76195f9dbb8f423d2a2a996364",
+      "source": "GEONWORKS",
+      "name": "Atelier Magnus Slate Zero",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-16T02:30:33.959Z",
+      "categoryHint": "키보드",
+      "maker": "Atelier Magnus",
+      "saleStart": "2026-04-27",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

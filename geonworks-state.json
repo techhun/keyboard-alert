@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T01:50:29.028Z",
+  "updatedAt": "2026-11-16T02:30:33.959Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -32,6 +32,16 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 3",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
+    },
+    {
+      "product": "Atelier Magnus Slate Zero",
+      "gbStart": "2026. 4. 27",
+      "eta": "2026. 12. 31",
+      "type": "Keyboard",
+      "manufacturer": "Atelier Magnus",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 16",
+      "note": "—"
     },
     {
       "product": "GMK CYL Blanks",
@@ -172,16 +182,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 5. 18",
       "note": "—"
-    },
-    {
-      "product": "Atelier Magnus Slate Zero",
-      "gbStart": "2026. 4. 27",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "Atelier Magnus",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 10",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
       "product": "Grit Jahre 65",
@@ -636,6 +636,7 @@
     "655c4102bdcd65d1b273cd0f": "2026-11-12T07:50:29.981Z",
     "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z",
     "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z",
-    "d0e632d8e951329652846efc": "2026-11-16T00:00:49.321Z"
+    "d0e632d8e951329652846efc": "2026-11-16T00:00:49.321Z",
+    "6ded52235b979237a0a84c5a": "2026-11-16T02:30:33.959Z"
   }
 }
