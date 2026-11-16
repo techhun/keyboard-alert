@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T06:40:35.387Z",
+  "updatedAt": "2026-11-16T07:13:09.407Z",
   "rows": [
     {
       "product": "LILY R2 HHKB Barebone Kit",
@@ -20,7 +20,7 @@
       "type": "Keyboard",
       "manufacturer": "BAIONLENJA",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 12",
+      "update": "2026. 11. 16",
       "note": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th."
     },
     {
@@ -642,6 +642,7 @@
     "e867955029461dfd123e71f2": "2026-11-16T06:20:29.812Z",
     "b778ed5a2c782ae3da430501": "2026-11-16T06:20:30.048Z",
     "88c65c5bde80b4e5e9cba848": "2026-11-16T06:20:30.221Z",
-    "e6226dd2f92c38846d006bf4": "2026-11-16T06:40:35.387Z"
+    "e6226dd2f92c38846d006bf4": "2026-11-16T06:40:35.387Z",
+    "265e01b7927c939dc6d1285c": "2026-11-16T07:13:09.387Z"
   }
 }
