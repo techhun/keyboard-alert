@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T15:12:31.366Z",
+  "updatedAt": "2026-11-16T17:12:57.022Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -202,7 +202,7 @@
     {
       "category": "Keycap",
       "product": "CYL Finer Things R2",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-finer-things-r2-keycaps"
     },
@@ -230,8 +230,8 @@
     {
       "category": "Keycap",
       "product": "DCS Cream Cheese and Green R3",
-      "status": "In transit to NovelKeys.",
-      "eta": "Q3 2026",
+      "status": "Fulfilled!",
+      "eta": "",
       "url": "https://novelkeys.com/products/dcs-cream-cheese-r3"
     },
     {
@@ -279,7 +279,7 @@
     {
       "category": "Deskpad",
       "product": "Finer Things R2 Deskpad",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/finer-things-r2-deskpad"
     },
@@ -345,6 +345,9 @@
     "a3a506a117ccfaa4f79a899e": "2026-11-10T14:31:29.681Z",
     "449efb432a145fd6d8326537": "2026-11-10T17:51:06.059Z",
     "338b1d73251f189a9b6f0156": "2026-11-13T14:52:32.214Z",
-    "c936774458859d13423b13b0": "2026-11-13T14:52:32.503Z"
+    "c936774458859d13423b13b0": "2026-11-13T14:52:32.503Z",
+    "16a12e17ce02d910551a8bed": "2026-11-16T17:12:56.643Z",
+    "9aa5b2b5e563861126f5f2c7": "2026-11-16T17:12:56.879Z",
+    "14054d53a8c810af9485ee5c": "2026-11-16T17:12:57.022Z"
   }
 }
