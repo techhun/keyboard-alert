@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T20:03:15.449Z",
+  "updatedAt": "2026-11-16T17:22:40.093Z",
   "rows": [
     {
       "id": 385,
@@ -142,7 +142,7 @@
       "status": "manufacturing",
       "startDate": "2026-06-01",
       "endDate": "2026-07-01",
-      "eta": "October 2026",
+      "eta": "Early December 2026",
       "latestUpdateId": 1909,
       "latestUpdateDate": "2026-10-30",
       "latestUpdateDescription": "CannonKeys x Tamagotchi Paradise Deskmats are nearing completion and production should be wrapping up in 1-2 weeks!"
@@ -3456,6 +3456,7 @@
     "d6d79bfba329cd0f504f0a85": "2026-11-12T20:13:56.218Z",
     "dfe6771f78daa421cf0d47af": "2026-11-13T20:03:14.923Z",
     "9e2325c5e70482a5e3876f76": "2026-11-13T20:03:15.209Z",
-    "c3cf5a78f711a8f6db9d7cd3": "2026-11-13T20:03:15.447Z"
+    "c3cf5a78f711a8f6db9d7cd3": "2026-11-13T20:03:15.447Z",
+    "530eafbb1a5b63508513adfb": "2026-11-16T17:22:40.091Z"
   }
 }
