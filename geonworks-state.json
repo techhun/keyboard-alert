@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T06:20:30.221Z",
+  "updatedAt": "2026-11-16T06:40:35.387Z",
   "rows": [
     {
       "product": "LILY R2 HHKB Barebone Kit",
@@ -49,6 +49,16 @@
       "eta": "2026. 12. 31",
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 16",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Noire R2",
+      "gbStart": "2026. 7. 20",
+      "eta": "2026. 12. 31",
+      "type": "Keycap",
+      "manufacturer": "GMK",
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 16",
       "note": "—"
@@ -331,16 +341,6 @@
       "manufacturer": "KBDfans",
       "status": "제작 중 / In progress",
       "update": "2026. 11. 6",
-      "note": "—"
-    },
-    {
-      "product": "GMK CYL Noire R2",
-      "gbStart": "2026. 7. 20",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "GMK",
-      "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
       "note": "—"
     },
     {
@@ -641,6 +641,7 @@
     "046c249f9207ba00ada06fbb": "2026-11-16T06:20:29.545Z",
     "e867955029461dfd123e71f2": "2026-11-16T06:20:29.812Z",
     "b778ed5a2c782ae3da430501": "2026-11-16T06:20:30.048Z",
-    "88c65c5bde80b4e5e9cba848": "2026-11-16T06:20:30.221Z"
+    "88c65c5bde80b4e5e9cba848": "2026-11-16T06:20:30.221Z",
+    "e6226dd2f92c38846d006bf4": "2026-11-16T06:40:35.387Z"
   }
 }

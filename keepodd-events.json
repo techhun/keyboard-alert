@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T06:20:30.221Z",
+  "updatedAt": "2026-11-16T06:40:35.387Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2133,6 +2133,22 @@
       "eta": "2026-05-31",
       "status": "검수 중 / Inspecting",
       "note": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "124d0f04f66b958b211bf9090a4fb600",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Noire R2",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-16T06:40:35.387Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-07-20",
+      "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
