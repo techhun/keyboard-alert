@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-14T09:11:27.696Z",
+  "updatedAt": "2026-11-16T00:00:52.904Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2055,6 +2055,20 @@
       "note": "컬러매칭 Complete",
       "quarter": "Q4",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "dcd184b4cb5e8c37ffef2a8c155a1699",
+      "source": "GEONWORKS",
+      "name": "GMK NTNU Dasher",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-16T00:00:52.904Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-12",
+      "saleEnd": "2026-12-06",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]

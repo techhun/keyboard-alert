@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T03:00:51.340Z",
+  "updatedAt": "2026-11-16T00:00:49.322Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -190,7 +190,7 @@
       "type": "Keyboard",
       "manufacturer": "Grit",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 10",
+      "update": "2026. 11. 16",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
@@ -647,6 +647,7 @@
     "e61b0984d1cb8ed81abe42e1": "2026-11-12T07:10:36.805Z",
     "655c4102bdcd65d1b273cd0f": "2026-11-12T07:50:29.981Z",
     "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z",
-    "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z"
+    "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z",
+    "d0e632d8e951329652846efc": "2026-11-16T00:00:49.321Z"
   }
 }
