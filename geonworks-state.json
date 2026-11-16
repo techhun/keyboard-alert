@@ -1,8 +1,18 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T02:30:33.959Z",
+  "updatedAt": "2026-11-16T06:20:30.221Z",
   "rows": [
+    {
+      "product": "LILY R2 HHKB Barebone Kit",
+      "gbStart": "2025. 9. 3",
+      "eta": "2026. 5. 31",
+      "type": "Keyboard",
+      "manufacturer": "TypePlus",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 16",
+      "note": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November"
+    },
     {
       "product": "GEHIRN60 Barebone Kit",
       "gbStart": "2026. 1. 19",
@@ -20,7 +30,7 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 11",
+      "update": "2026. 11. 16",
       "note": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November."
     },
     {
@@ -30,7 +40,7 @@
       "type": "Keyboard",
       "manufacturer": "SENSY",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 3",
+      "update": "2026. 11. 16",
       "note": "pcb 및 일부 물품 추가 입고 후 발송 예정 / We plan to ship after receiving additional PCBs and some other items."
     },
     {
@@ -90,18 +100,8 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
+      "update": "2026. 11. 16",
       "note": "컬러매칭 완료. 생산 일정 확인 중 / Color matching complete. Checking the production schedule."
-    },
-    {
-      "product": "LILY R2 HHKB Barebone Kit",
-      "gbStart": "2025. 9. 3",
-      "eta": "2026. 5. 31",
-      "type": "Keyboard",
-      "manufacturer": "TypePlus",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 9",
-      "note": "EC 킷 배대지 입고 / EC Kit received at the distribution centre"
     },
     {
       "product": "HAVEN 60",
@@ -637,6 +637,10 @@
     "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z",
     "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z",
     "d0e632d8e951329652846efc": "2026-11-16T00:00:49.321Z",
-    "6ded52235b979237a0a84c5a": "2026-11-16T02:30:33.959Z"
+    "6ded52235b979237a0a84c5a": "2026-11-16T02:30:33.959Z",
+    "046c249f9207ba00ada06fbb": "2026-11-16T06:20:29.545Z",
+    "e867955029461dfd123e71f2": "2026-11-16T06:20:29.812Z",
+    "b778ed5a2c782ae3da430501": "2026-11-16T06:20:30.048Z",
+    "88c65c5bde80b4e5e9cba848": "2026-11-16T06:20:30.221Z"
   }
 }

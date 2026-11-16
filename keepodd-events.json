@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T02:30:33.959Z",
+  "updatedAt": "2026-11-16T06:20:30.221Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2099,6 +2099,40 @@
       "saleStart": "2026-04-27",
       "eta": "2026-12-31",
       "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "de1ddd23c22e9604b4eecc03998d49de",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "note_changed",
+      "before": "EC 킷 배대지 입고 / EC Kit received at the distribution centre",
+      "after": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November",
+      "occurredAt": "2026-11-16T06:20:30.221Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
+      "status": "검수 중 / Inspecting",
+      "note": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "e7a6fc4c0816b8adeb677427d5584237",
+      "source": "GEONWORKS",
+      "name": "LILY R2 HHKB Barebone Kit",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-16T06:20:30.221Z",
+      "categoryHint": "키보드",
+      "maker": "TypePlus",
+      "saleStart": "2025-09-03",
+      "eta": "2026-05-31",
+      "status": "검수 중 / Inspecting",
+      "note": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
