@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T02:22:03.697Z",
+  "updatedAt": "2026-11-17T09:13:31.358Z",
   "rows": [
     {
       "category": "GMK",
@@ -394,17 +394,6 @@
       "status": "In Production",
       "eta": "Jan 2027",
       "progress": 10,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Selene",
-      "status": "In production",
-      "eta": "Q4 2026",
-      "progress": 50,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -959,6 +948,7 @@
     "98abc22fb81163b2e8afbc47": "2026-11-13T01:02:59.897Z",
     "39ee741857a3259cea83de7b": "2026-11-16T09:02:37.554Z",
     "d6122bb983a8130eebb86c36": "2026-11-16T09:02:37.863Z",
-    "0d72862959e3c738ace90eb7": "2026-11-17T02:22:03.696Z"
+    "0d72862959e3c738ace90eb7": "2026-11-17T02:22:03.696Z",
+    "17d5550f4c8d578f48e13d9f": "2026-11-17T09:13:31.358Z"
   }
 }
