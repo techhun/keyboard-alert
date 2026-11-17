@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T23:01:18.849Z",
+  "updatedAt": "2026-11-17T23:18:01.680Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -506,5 +506,1023 @@
       "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
+  "schedule": {
+    "version": 1,
+    "initialized": true,
+    "updatedAt": "2026-11-17T23:18:01.658Z",
+    "sources": {
+      "reservations": {
+        "items": [
+          {
+            "product": "FAUKWAA [MY-2K] 1999",
+            "category": "키보드",
+            "brands": [
+              "Matrix Lab"
+            ],
+            "status": "발송완료",
+            "saleStart": "2026-05-26",
+            "saleEnd": "2026-05-28",
+            "eta": "26년 11월",
+            "key": "키보드|faukwaa [my-2k] 1999"
+          },
+          {
+            "product": "VIDA",
+            "category": "키보드",
+            "brands": [
+              "Cannonkeys"
+            ],
+            "status": "드랍 예정",
+            "eta": "26년 2분기",
+            "key": "키보드|vida"
+          },
+          {
+            "product": "Paper65",
+            "category": "키보드",
+            "brands": [
+              "WHATEVER STUDIO"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-04-01",
+            "saleEnd": "2026-04-15",
+            "eta": "26년 11월",
+            "url": "https://www.zfrontier.com/app/flow/lJ7EBYXMKMVo",
+            "key": "키보드|paper65"
+          },
+          {
+            "product": "SW x StelLive 하나코 나나 콜라보 굿즈",
+            "category": "키보드",
+            "brands": [
+              "Ticktype"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-01-15",
+            "saleEnd": "2026-01-29",
+            "eta": "26년 4월 말 → 6월 순차배송",
+            "key": "키보드|sw x stellive 하나코 나나 콜라보 굿즈"
+          },
+          {
+            "product": "Cybermat R3",
+            "category": "패드류",
+            "brands": [
+              "Angrymiao"
+            ],
+            "status": "IC",
+            "key": "패드류|cybermat r3"
+          },
+          {
+            "product": "Cloudline V2.1",
+            "category": "키보드",
+            "brands": [
+              "JJW"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월 중순",
+            "key": "키보드|cloudline v2.1"
+          },
+          {
+            "product": "Derivative R2",
+            "category": "키보드",
+            "brands": [
+              "JJW"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월 중순",
+            "key": "키보드|derivative r2"
+          },
+          {
+            "product": "Deacon (래플)",
+            "category": "키보드",
+            "brands": [
+              "Bowl Keyboards"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-09-28",
+            "saleEnd": "2026-09-30",
+            "eta": "27년 2분기",
+            "key": "키보드|deacon (래플)"
+          },
+          {
+            "product": "Altair & Altair-X R2",
+            "category": "키보드",
+            "brands": [
+              "Cannonkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 3분기 말 예상",
+            "key": "키보드|altair & altair-x r2"
+          },
+          {
+            "product": "NP-R 넘패드",
+            "category": "키보드",
+            "brands": [
+              "Flatbrain"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-03-05",
+            "saleEnd": "2026-04-01",
+            "eta": "27년 1분기",
+            "url": "https://geekhack.org/index.php?topic=126401.msg3214089#msg3214089",
+            "key": "키보드|np-r 넘패드"
+          },
+          {
+            "product": "Motif65",
+            "category": "키보드",
+            "brands": [
+              "Akukolabs & Bowl Keyboards"
+            ],
+            "status": "생산 중",
+            "eta": "26년",
+            "key": "키보드|motif65"
+          },
+          {
+            "product": "Ophanim",
+            "category": "키보드",
+            "brands": [
+              "Baionlenja"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-08",
+            "saleEnd": "2026-07-10",
+            "eta": "27년 1분기",
+            "key": "키보드|ophanim"
+          },
+          {
+            "product": "Schema",
+            "category": "키보드",
+            "brands": [
+              "Bowl Keyboards & Alexotos"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-22",
+            "saleEnd": "2026-08-03",
+            "eta": "27년 2분기",
+            "key": "키보드|schema"
+          },
+          {
+            "product": "Shy60",
+            "category": "키보드",
+            "brands": [
+              "NBH"
+            ],
+            "status": "생산 중",
+            "saleStart": "2025-12-02",
+            "saleEnd": "2025-12-15",
+            "eta": "26년 3분기 말 예상",
+            "key": "키보드|shy60"
+          },
+          {
+            "product": "Agar Micro",
+            "category": "키보드",
+            "brands": [
+              "kbdfans"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-07-02",
+            "saleEnd": "2026-07-27",
+            "eta": "26년 4분기",
+            "key": "키보드|agar micro"
+          },
+          {
+            "product": "Dia",
+            "category": "키보드",
+            "brands": [
+              "Nonumbers"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-18",
+            "saleEnd": "2026-09-22",
+            "eta": "27년 3분기",
+            "key": "키보드|dia"
+          },
+          {
+            "product": "Aria80",
+            "category": "키보드",
+            "brands": [
+              "Owlab"
+            ],
+            "key": "키보드|aria80"
+          },
+          {
+            "product": "Bowlttleship",
+            "category": "키보드",
+            "brands": [
+              "Bowl Keyboards"
+            ],
+            "key": "키보드|bowlttleship"
+          },
+          {
+            "product": "PC CCRX",
+            "category": "키보드",
+            "brands": [
+              "NBH"
+            ],
+            "key": "키보드|pc ccrx"
+          },
+          {
+            "product": "60% Prototype",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "key": "키보드|60% prototype"
+          },
+          {
+            "product": "B60",
+            "category": "키보드",
+            "brands": [
+              "KMG,Swagkeys"
+            ],
+            "status": "샘플링",
+            "key": "키보드|b60"
+          },
+          {
+            "product": "[Pre-order] NEO80 Cu",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-11-06",
+            "saleEnd": "2027-02-28",
+            "eta": "27년 3월 말",
+            "key": "키보드|[pre-order] neo80 cu"
+          },
+          {
+            "product": "SWG Cadet 4종",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-10-15",
+            "saleEnd": "2026-11-12",
+            "eta": "27년 7월 말",
+            "key": "키캡|swg cadet 4종"
+          },
+          {
+            "product": "SWG Moomin",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-11-13",
+            "saleEnd": "2026-11-23",
+            "eta": "27년 3월 말",
+            "key": "키캡|swg moomin"
+          },
+          {
+            "product": "SWG Nightshift",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-10-30",
+            "saleEnd": "2026-11-13",
+            "eta": "27년 8월",
+            "key": "키캡|swg nightshift"
+          },
+          {
+            "product": "GMK Liminal",
+            "category": "키캡",
+            "brands": [
+              "GMK"
+            ],
+            "key": "키캡|gmk liminal"
+          },
+          {
+            "product": "SWG Salmon",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "배송 중",
+            "saleStart": "2026-10-13",
+            "saleEnd": "2026-10-16",
+            "eta": "26년 11월 중순",
+            "key": "키캡|swg salmon"
+          },
+          {
+            "product": "GMK CYL Purple",
+            "category": "키캡",
+            "brands": [
+              "GMK"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-10-12",
+            "saleEnd": "2026-11-23",
+            "eta": "27년 2분기",
+            "key": "키캡|gmk cyl purple"
+          },
+          {
+            "product": "SWG Feralis",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-31",
+            "saleEnd": "2026-09-28",
+            "eta": "27년 4월 말",
+            "key": "키캡|swg feralis"
+          },
+          {
+            "product": "SWG Lavender",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-24",
+            "saleEnd": "2026-09-07",
+            "eta": "27년 3월 말",
+            "key": "키캡|swg lavender"
+          },
+          {
+            "product": "SWG Hypermix",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-14",
+            "saleEnd": "2026-09-14",
+            "eta": "27년 3월 말",
+            "key": "키캡|swg hypermix"
+          },
+          {
+            "product": "GMK CYL Solarized Reborn",
+            "category": "키캡",
+            "brands": [
+              "GMK"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-07",
+            "saleEnd": "2026-08-28",
+            "eta": "27년 1월",
+            "key": "키캡|gmk cyl solarized reborn"
+          },
+          {
+            "product": "SWG Evil Eye",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-05",
+            "saleEnd": "2026-08-19",
+            "eta": "27년 3월 초",
+            "key": "키캡|swg evil eye"
+          },
+          {
+            "product": "SWG Hazakura",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-08-03",
+            "saleEnd": "2026-08-17",
+            "eta": "27년 2월 말",
+            "key": "키캡|swg hazakura"
+          },
+          {
+            "product": "GMK Pandemonium",
+            "category": "키캡",
+            "brands": [
+              "GMK"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-01",
+            "saleEnd": "2026-07-01",
+            "eta": "27년 1월",
+            "key": "키캡|gmk pandemonium"
+          },
+          {
+            "product": "GMK Gonzales",
+            "category": "키캡",
+            "brands": [
+              "GMK"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-05-04",
+            "saleEnd": "2026-06-03",
+            "eta": "26년 10월",
+            "key": "키캡|gmk gonzales"
+          },
+          {
+            "product": "SWG Heartbreaker",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-07-20",
+            "saleEnd": "2026-08-03",
+            "eta": "27년 1분기",
+            "key": "키캡|swg heartbreaker"
+          },
+          {
+            "product": "Bowlpit",
+            "category": "키캡",
+            "brands": [
+              "Bowl Keyboards,signature plastics"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-04-13",
+            "saleEnd": "2026-04-27",
+            "eta": "26년 3분기",
+            "key": "키캡|bowlpit"
+          },
+          {
+            "product": "SWG Nerve",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-07-13",
+            "saleEnd": "2026-08-10",
+            "eta": "27년 1월 말",
+            "key": "키캡|swg nerve"
+          },
+          {
+            "product": "SWG TARS",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-15",
+            "saleEnd": "2026-06-29",
+            "eta": "26년 11월 초",
+            "key": "키캡|swg tars"
+          },
+          {
+            "product": "SWG Classic Red",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-03-26",
+            "saleEnd": "2026-04-16",
+            "eta": "26년 9월",
+            "key": "키캡|swg classic red"
+          },
+          {
+            "product": "SWG Classic Blue",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "판매중",
+            "saleStart": "2026-05-04",
+            "saleEnd": "2026-05-18",
+            "eta": "26년 11월",
+            "key": "키캡|swg classic blue"
+          },
+          {
+            "product": "SWG Midnight Rainbow",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-29",
+            "saleEnd": "2026-07-13",
+            "eta": "26년 12월 초",
+            "key": "키캡|swg midnight rainbow"
+          },
+          {
+            "product": "SWG Rainbow Alert",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-06-01",
+            "saleEnd": "2026-06-15",
+            "eta": "26년 10월 말",
+            "key": "키캡|swg rainbow alert"
+          },
+          {
+            "product": "SWG Skeletoon",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-05-18",
+            "saleEnd": "2026-06-01",
+            "eta": "26년 9월 말",
+            "key": "키캡|swg skeletoon"
+          },
+          {
+            "product": "SWG Neowell",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "saleStart": "2026-07-06",
+            "saleEnd": "2026-07-27",
+            "eta": "26년 12월 말",
+            "key": "키캡|swg neowell"
+          }
+        ],
+        "fresh": true
+      },
+      "instock": {
+        "items": [
+          {
+            "product": "Cybermat R3",
+            "category": "패드류",
+            "brands": [
+              "Angrymiao"
+            ],
+            "status": "IC",
+            "key": "패드류|cybermat r3"
+          },
+          {
+            "product": "EVO80",
+            "category": "키보드",
+            "brands": [
+              "Evoworks"
+            ],
+            "status": "판매중",
+            "eta": "26년 11월",
+            "key": "키보드|evo80#3e9f75d5"
+          },
+          {
+            "product": "Zen75",
+            "category": "키보드",
+            "brands": [
+              "Cerakey"
+            ],
+            "status": "판매중",
+            "eta": "26년 11월",
+            "key": "키보드|zen75"
+          },
+          {
+            "product": "Eave65 HE",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "배송 중",
+            "eta": "26년 11월 말",
+            "key": "키보드|eave65 he"
+          },
+          {
+            "product": "Relic80 R1.5",
+            "category": "키보드",
+            "brands": [
+              "Angrymiao"
+            ],
+            "status": "배송 중",
+            "eta": "26년 11월",
+            "key": "키보드|relic80 r1.5"
+          },
+          {
+            "product": "트랜지션 87",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월",
+            "key": "키보드|트랜지션 87"
+          },
+          {
+            "product": "트랜지션 106 - 핑크/핑크/이온축",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월",
+            "key": "키보드|트랜지션 106 - 핑크/핑크/이온축"
+          },
+          {
+            "product": "트랜지션 106 - 핑크/핑크/화이트피치축",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "27년 1분기",
+            "key": "키보드|트랜지션 106 - 핑크/핑크/화이트피치축"
+          },
+          {
+            "product": "트랜지션 라이트 베어본 킷",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월",
+            "key": "키보드|트랜지션 라이트 베어본 킷"
+          },
+          {
+            "product": "트랜지션87 HE",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월",
+            "key": "키보드|트랜지션87 he"
+          },
+          {
+            "product": "Eave65 MX",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 12월",
+            "key": "키보드|eave65 mx"
+          },
+          {
+            "product": "QK100MK2 - Aquamarine Blue",
+            "category": "키보드",
+            "brands": [
+              "Qwertykeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 말",
+            "key": "키보드|qk100mk2 - aquamarine blue"
+          },
+          {
+            "product": "EVO80",
+            "category": "키보드",
+            "brands": [
+              "Evoworks"
+            ],
+            "status": "생산 중",
+            "eta": "27년 1월",
+            "key": "키보드|evo80#3faf75d5"
+          },
+          {
+            "product": "NV60 빌드 에디션",
+            "category": "키보드",
+            "brands": [
+              "GDK Lab"
+            ],
+            "status": "판매 예정",
+            "eta": "26년 11월",
+            "key": "키보드|nv60 빌드 에디션"
+          },
+          {
+            "product": "DP104",
+            "category": "키보드",
+            "brands": [
+              "Ticktype"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월",
+            "key": "키보드|dp104#3cff75d5"
+          },
+          {
+            "product": "DP104",
+            "category": "키보드",
+            "brands": [
+              "Ticktype"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월",
+            "key": "키보드|dp104#39ff75d5"
+          },
+          {
+            "product": "60% 신제품 (GH60 기반)",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "eta": "26년 4분기~",
+            "key": "키보드|60% 신제품 (gh60 기반)"
+          },
+          {
+            "product": "트랜지션87 EC (무접점)",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "eta": "27년",
+            "key": "키보드|트랜지션87 ec (무접점)"
+          },
+          {
+            "product": "QK60 HE",
+            "category": "키보드",
+            "brands": [
+              "Qwertykeys"
+            ],
+            "key": "키보드|qk60 he"
+          },
+          {
+            "product": "NEO Ergo Cu",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "key": "키보드|neo ergo cu"
+          },
+          {
+            "product": "NEO60 Core Plus",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "key": "키보드|neo60 core plus"
+          },
+          {
+            "product": "NEO80 V2",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "key": "키보드|neo80 v2"
+          },
+          {
+            "product": "NEO108",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "key": "키보드|neo108"
+          },
+          {
+            "product": "Pangea Mini IM",
+            "category": "키보드",
+            "brands": [
+              "Bowl Keyboards"
+            ],
+            "key": "키보드|pangea mini im"
+          },
+          {
+            "product": "트랜지션87 불투명 컬러",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "eta": "27년",
+            "key": "키보드|트랜지션87 불투명 컬러"
+          },
+          {
+            "product": "Smurve80 투명 빌드 에디션",
+            "category": "키보드",
+            "brands": [
+              "Play Keyboard,Swagkeys"
+            ],
+            "status": "판매 예정",
+            "eta": "26년 11월",
+            "key": "키보드|smurve80 투명 빌드 에디션"
+          },
+          {
+            "product": "특주 택타일 스위치",
+            "category": "스위치",
+            "brands": [
+              "Swagkeys,Wingtree"
+            ],
+            "eta": "27년 1분기",
+            "key": "스위치|특주 택타일 스위치"
+          },
+          {
+            "product": "Suki",
+            "category": "스위치",
+            "brands": [
+              "Keygeek"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 말",
+            "key": "스위치|suki"
+          },
+          {
+            "product": "각설탕",
+            "category": "스위치",
+            "brands": [
+              "Wingtree"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 말",
+            "key": "스위치|각설탕"
+          },
+          {
+            "product": "Doodlecaps Playful Hands",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "eta": "27년",
+            "key": "키캡|doodlecaps playful hands"
+          },
+          {
+            "product": "AM Infinity .100 R2",
+            "category": "마우스",
+            "brands": [
+              "Angrymiao"
+            ],
+            "key": "마우스|am infinity .100 r2"
+          },
+          {
+            "product": "캣민트",
+            "category": "스위치",
+            "brands": [
+              "SWK"
+            ],
+            "status": "판매 예정",
+            "eta": "26년 11월",
+            "key": "스위치|캣민트"
+          },
+          {
+            "product": "HE EVO 유리축",
+            "category": "스위치",
+            "brands": [
+              "Unionwell"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월",
+            "key": "스위치|he evo 유리축"
+          },
+          {
+            "product": "세라키 V2 블루 크레이즈",
+            "category": "키캡",
+            "brands": [
+              "Cerakey"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월",
+            "key": "키캡|세라키 v2 블루 크레이즈"
+          },
+          {
+            "product": "레인",
+            "category": "스위치",
+            "brands": [
+              "HMX"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 초 ~ 중순",
+            "key": "스위치|레인"
+          },
+          {
+            "product": "머랭",
+            "category": "스위치",
+            "brands": [
+              "HMX"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "스위치|머랭"
+          },
+          {
+            "product": "라이",
+            "category": "스위치",
+            "brands": [
+              "NEO STUDIO,Keygeek"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "스위치|라이"
+          },
+          {
+            "product": "골든애플",
+            "category": "스위치",
+            "brands": [
+              "Wingtree"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "스위치|골든애플"
+          },
+          {
+            "product": "SW 나이트 스테빌라이저 스크류인 버전",
+            "category": "툴",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 말",
+            "key": "툴|sw 나이트 스테빌라이저 스크류인 버전"
+          },
+          {
+            "product": "문라이트 레드 (Azalea)",
+            "category": "스위치",
+            "brands": [
+              "HMX"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "스위치|문라이트 레드 (azalea)"
+          },
+          {
+            "product": "거봉",
+            "category": "스위치",
+            "brands": [
+              "HMX"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "스위치|거봉"
+          },
+          {
+            "product": "화이트 피치 반저소음",
+            "category": "스위치",
+            "brands": [
+              "HMX"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월",
+            "key": "스위치|화이트 피치 반저소음"
+          },
+          {
+            "product": "GMK 호환 트레이 (PC)",
+            "category": "툴",
+            "brands": [
+              "Swagkeys"
+            ],
+            "key": "툴|gmk 호환 트레이 (pc)"
+          },
+          {
+            "product": "SWG Beige (ShineThrough Kit 추가)",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "생산 중",
+            "eta": "26년 4분기",
+            "key": "키캡|swg beige (shinethrough kit 추가)"
+          },
+          {
+            "product": "DoodleCaps 인절미",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "eta": "27년",
+            "key": "키캡|doodlecaps 인절미"
+          },
+          {
+            "product": "SW 멜라민 키캡",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "eta": "27년",
+            "key": "키캡|sw 멜라민 키캡"
+          },
+          {
+            "product": "Moonlight",
+            "category": "스위치",
+            "brands": [
+              "Haimu"
+            ],
+            "status": "샘플링",
+            "eta": "미정",
+            "key": "스위치|moonlight"
+          },
+          {
+            "product": "ALU 키캡",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "샘플링",
+            "eta": "27년",
+            "key": "키캡|alu 키캡"
+          },
+          {
+            "product": "드래곤 고스트 V2",
+            "category": "스위치",
+            "brands": [
+              "SWK"
+            ],
+            "status": "샘플링",
+            "eta": "미정",
+            "key": "스위치|드래곤 고스트 v2"
+          },
+          {
+            "product": "지음 V3",
+            "category": "스위치",
+            "brands": [
+              "SWK"
+            ],
+            "status": "샘플링",
+            "eta": "미정",
+            "key": "스위치|지음 v3"
+          }
+        ],
+        "fresh": true
+      }
+    },
+    "closingsNotified": {},
+    "fallbackSince": {}
+  },
   "fallbackSince": {}
 }
