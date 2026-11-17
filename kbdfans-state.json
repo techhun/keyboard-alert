@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T09:02:37.863Z",
+  "updatedAt": "2026-11-17T02:22:03.697Z",
   "rows": [
     {
       "category": "GMK",
@@ -710,9 +710,9 @@
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Purple",
-      "status": "In production",
+      "status": "Group buy",
       "eta": "Q2 2027",
-      "progress": 75,
+      "progress": 50,
       "summary": "Start time: October 10th - November 10th",
       "latestUpdateDate": "2026-07-09",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -958,6 +958,7 @@
     "3026739c4191d51f9757ad3b": "2026-11-12T09:12:27.820Z",
     "98abc22fb81163b2e8afbc47": "2026-11-13T01:02:59.897Z",
     "39ee741857a3259cea83de7b": "2026-11-16T09:02:37.554Z",
-    "d6122bb983a8130eebb86c36": "2026-11-16T09:02:37.863Z"
+    "d6122bb983a8130eebb86c36": "2026-11-16T09:02:37.863Z",
+    "0d72862959e3c738ace90eb7": "2026-11-17T02:22:03.696Z"
   }
 }
