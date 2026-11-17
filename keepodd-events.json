@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-16T06:40:35.387Z",
+  "updatedAt": "2026-11-17T01:30:38.142Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2148,6 +2148,37 @@
       "maker": "GMK",
       "saleStart": "2026-07-20",
       "eta": "2026-12-31",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "3b6f5750f7d172274980de0329674843",
+      "source": "GEONWORKS",
+      "name": "Katina TKL",
+      "eventType": "note_changed",
+      "before": "배대지 입고 / Receipt at the distribution centre",
+      "occurredAt": "2026-11-17T01:30:38.142Z",
+      "categoryHint": "키보드",
+      "maker": "INN Studio",
+      "saleStart": "2026-03-18",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "f759079e1749abd1638bd6952418c41a",
+      "source": "GEONWORKS",
+      "name": "Katina TKL",
+      "eventType": "status_changed",
+      "before": "제작 중 / In progress",
+      "after": "검수 중 / Inspecting",
+      "occurredAt": "2026-11-17T01:30:38.142Z",
+      "categoryHint": "키보드",
+      "maker": "INN Studio",
+      "saleStart": "2026-03-18",
+      "eta": "2026-09-30",
       "status": "검수 중 / Inspecting",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
