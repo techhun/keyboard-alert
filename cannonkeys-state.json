@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T17:22:40.093Z",
+  "updatedAt": "2026-11-17T20:52:32.486Z",
   "rows": [
     {
       "id": 385,
@@ -23,9 +23,9 @@
       "startDate": "2026-10-16",
       "endDate": "2026-11-16",
       "eta": "Late Q1 2027",
-      "latestUpdateId": 1949,
-      "latestUpdateDate": "2026-11-06",
-      "latestUpdateDescription": "**[GB live.](https://cannonkeys.com/products/gmk-cyl-blanks)**"
+      "latestUpdateId": 1988,
+      "latestUpdateDate": "2026-11-17",
+      "latestUpdateDescription": "GB has concluded."
     },
     {
       "id": 383,
@@ -647,9 +647,9 @@
       "startDate": "2025-10-11",
       "endDate": "2025-11-12",
       "eta": "Q3 2026",
-      "latestUpdateId": 1838,
-      "latestUpdateDate": "2026-08-31",
-      "latestUpdateDescription": "The wood part that needed to be remade has been finished and they are en route to our manufacturer to wrap up production of the Soleil!"
+      "latestUpdateId": 1987,
+      "latestUpdateDate": "2026-11-17",
+      "latestUpdateDescription": "The keyboard manufacturer Hongtu has finished the production of all necessary parts for the Soleil and that they are currently in the assembly process. The previous ETA given to us was the end of October. Since that has passed we are currently working on getting an updated timeline from them. Once they share it with us, we will be sure to pass along the info to you!"
     },
     {
       "id": 235,
@@ -3457,6 +3457,8 @@
     "dfe6771f78daa421cf0d47af": "2026-11-13T20:03:14.923Z",
     "9e2325c5e70482a5e3876f76": "2026-11-13T20:03:15.209Z",
     "c3cf5a78f711a8f6db9d7cd3": "2026-11-13T20:03:15.447Z",
-    "530eafbb1a5b63508513adfb": "2026-11-16T17:22:40.091Z"
+    "530eafbb1a5b63508513adfb": "2026-11-16T17:22:40.091Z",
+    "2c009ff05fc2ae39533360a9": "2026-11-17T20:52:32.200Z",
+    "cf2c059ed84bdf0c5e5c0ba9": "2026-11-17T20:52:32.485Z"
   }
 }
