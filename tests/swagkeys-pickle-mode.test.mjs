@@ -54,7 +54,8 @@ test('skip-mode summary is one parseable SWAGKEYS_SUMMARY_JSON line with the Pic
   assert.ok(line.startsWith('SWAGKEYS_SUMMARY_JSON='));
 
   const payload = JSON.parse(line.slice('SWAGKEYS_SUMMARY_JSON='.length));
-  assert.deepEqual(Object.keys(payload), ['announcementChanged', 'quarterChanges', 'changes', 'starts', 'announcement']);
+  assert.deepEqual(Object.keys(payload), ['announcementChanged', 'quarterChanges', 'changes', 'starts', 'announcement', 'schedule']);
+  assert.equal(payload.schedule, null);
   assert.equal(payload.announcementChanged, true);
   assert.deepEqual(payload.quarterChanges, quarterChanges);
   assert.deepEqual(payload.changes, changes);
@@ -69,6 +70,29 @@ test('skip-mode summary is one parseable SWAGKEYS_SUMMARY_JSON line with the Pic
     announcement
   }).slice('SWAGKEYS_SUMMARY_JSON='.length));
   assert.equal(withoutAnnouncement.announcement, null);
+});
+
+test('skip-mode summary carries schedule DB changes for Pickle', () => {
+  const schedule = {
+    baseline: false,
+    added: [{ sourceKey: 'reservations', item: { key: '키보드|neo80 cu', product: 'NEO80 Cu', saleEnd: '2027-02-28' } }],
+    changed: [{ sourceKey: 'instock', key: '키보드|zen75', item: { key: '키보드|zen75', product: 'Zen75' }, fields: [] }],
+    closings: [{ key: '키보드|gmk cyl purple|2026-11-23|3', offset: 3, saleEnd: '2026-11-23', item: { key: '키보드|gmk cyl purple', product: 'GMK CYL Purple' } }]
+  };
+
+  const payload = JSON.parse(skipDiscordSummaryLine({
+    announcementChanged: false,
+    quarterChanges: { moved: [], added: [], removed: [], datesChanged: [] },
+    changes: [],
+    starts: [],
+    announcement: null,
+    schedule
+  }).slice('SWAGKEYS_SUMMARY_JSON='.length));
+
+  assert.equal(payload.schedule.added.length, 1);
+  assert.equal(payload.schedule.added[0].sourceKey, 'reservations');
+  assert.equal(payload.schedule.changed[0].item.product, 'Zen75');
+  assert.deepEqual(Object.keys(payload.schedule.closings[0]), ['key', 'offset', 'saleEnd', 'item']);
 });
 
 test('skip mode still commits state and Keepodd events before printing the summary', () => {

@@ -2,6 +2,16 @@ import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 import { buildSwagkeysKeepoddEvents, canonicalProductKey, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
+import {
+  SCHEDULE_SOURCES,
+  diffScheduleItems,
+  dueScheduleClosings,
+  formatScheduleSale,
+  kstDayString,
+  parseScheduleCollectionRows,
+  pruneScheduleClosings,
+  scheduleProductKey
+} from './lib/swagkeys-schedule.mjs';
 
 const STATE_PATH = 'swagkeys-state.json';
 const DISCORD_WEBHOOK_URL = (process.env.SWAGKEYS_DISCORD_WEBHOOK_URL || process.env.SWG_DISCORD_WEBHOOK_URL || '').trim();
@@ -481,9 +491,9 @@ export function notionRetryDelayMs(status, retryAfterValue, attempt, nowMs = Dat
   return Math.min(10000, 1500 * Math.max(1, attempt));
 }
 
-async function postNotionPublicApi(path, body, headers = {}) {
+async function postNotionPublicApi(path, body, headers = {}, { attempts = 3 } = {}) {
   let lastError;
-  for (let attempt = 1; attempt <= 3; attempt += 1) {
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
       const response = await fetch(`${NOTION_API_BASE}/${path}`, {
         method: 'POST',
@@ -500,7 +510,7 @@ async function postNotionPublicApi(path, body, headers = {}) {
       return await response.json();
     } catch (error) {
       lastError = error;
-      if (attempt < 3) {
+      if (attempt < Math.max(1, attempts)) {
         const delayMs = notionRetryDelayMs(error?.status, error?.retryAfter, attempt);
         console.warn(`SWAGKEYS Notion API retry in ${Math.ceil(delayMs / 1000)}s after ${error?.message || error}`);
         await sleep(delayMs);
@@ -741,6 +751,127 @@ async function fetchSnapshot(fallback = {}) {
   }
 }
 
+// 판매·입고 일정 DB는 부가 소스다. 요청 수를 늘리지 않도록 재시도 없이 한 번만 읽고,
+// 실패하면 저장된 이전 행을 그대로 쓴다. 기존 로드맵/진행현황의 fallbackSince에는
+// 손대지 않아 health 판정과 공제 마감 알림 조건이 바뀌지 않는다.
+async function fetchScheduleItemsFromNotionApi(sourceKey) {
+  const source = SCHEDULE_SOURCES[sourceKey];
+  const collectionData = await postNotionPublicApi('queryCollection?src=initial_load', {
+    collection: { id: source.collectionId },
+    collectionView: { id: source.viewId },
+    source: { type: 'collection', id: source.collectionId },
+    loader: {
+      type: 'reducer',
+      reducers: { collection_group_results: { type: 'results', limit: 1000, loadContentCover: true } },
+      filter: { filters: [], operator: 'and' },
+      searchQuery: '',
+      userTimeZone: 'Asia/Seoul'
+    }
+  }, {}, { attempts: 1 });
+  const items = parseScheduleCollectionRows(collectionData, sourceKey);
+  if (!items.length) throw new Error('Notion returned no schedule rows');
+  return items;
+}
+
+async function fetchScheduleSnapshot(previous = null) {
+  const sources = {};
+  const fallbackSince = { ...(previous?.fallbackSince || {}) };
+  for (const sourceKey of Object.keys(SCHEDULE_SOURCES)) {
+    const source = SCHEDULE_SOURCES[sourceKey];
+    const previousItems = Array.isArray(previous?.sources?.[sourceKey]?.items)
+      ? previous.sources[sourceKey].items
+      : [];
+    try {
+      const items = await fetchScheduleItemsFromNotionApi(sourceKey);
+      sources[sourceKey] = { items, fresh: true };
+      if (fallbackSince[sourceKey]) {
+        delete fallbackSince[sourceKey];
+        console.log(`SWAGKEYS ${source.label}: fresh data recovered; fallback timer cleared.`);
+      }
+      console.log(`SWAGKEYS ${source.label}: ${items.length} rows (fresh)`);
+    } catch (error) {
+      const reason = error?.message || String(error);
+      if (!previousItems.length) {
+        sources[sourceKey] = { items: [], fresh: false };
+        console.warn(`SWAGKEYS ${source.label} unavailable and no stored rows yet: ${reason}`);
+        continue;
+      }
+      fallbackSince[sourceKey] = fallbackSince[sourceKey] || new Date().toISOString();
+      sources[sourceKey] = { items: previousItems, fresh: false };
+      console.warn(`SWAGKEYS ${source.label} unavailable; reusing ${previousItems.length} stored rows: ${reason}`);
+    }
+  }
+  return { sources, fallbackSince };
+}
+
+// 이전 실행과 비교해 새 품목·상태/일정 변경·마감 임박을 만든다.
+// 첫 실행(저장된 일정이 없음)은 기준선만 저장하고 알리지 않는다.
+// 로드맵에 이미 올라온 품목은 기존 GB 마감 알림이 맡으므로 마감 대상에서 뺀다.
+// watcher-state에 매번 통째로 커밋되는 값이라 블록 id와 빈 필드는 빼고 저장한다.
+function scheduleItemForState(item) {
+  const stored = {};
+  for (const [key, value] of Object.entries(item || {})) {
+    if (key === 'id') continue;
+    if (value === '' || (Array.isArray(value) && value.length === 0)) continue;
+    stored[key] = value;
+  }
+  return stored;
+}
+
+export function buildScheduleEvents({ schedule, previous = null, now = new Date(), roadmapProducts = [] }) {
+  const baseline = !previous?.initialized;
+  const added = [];
+  const changed = [];
+  const closings = [];
+  const sources = {};
+  const skipProductKeys = (roadmapProducts || []).map(scheduleProductKey).filter(Boolean);
+
+  for (const sourceKey of Object.keys(SCHEDULE_SOURCES)) {
+    const current = schedule?.sources?.[sourceKey] || { items: [], fresh: false };
+    sources[sourceKey] = { items: (current.items || []).map(scheduleItemForState), fresh: Boolean(current.fresh) };
+    if (baseline || !current.fresh) continue;
+    const diff = diffScheduleItems(previous?.sources?.[sourceKey]?.items || [], current.items || []);
+    for (const item of diff.added) added.push({ sourceKey, item });
+    for (const change of diff.changed) changed.push({ sourceKey, ...change });
+    if (diff.removed.length) {
+      // 품목이 표에서 빠지는 것은 판매 종료·정리라서 알리지 않고 로그만 남긴다.
+      console.log(`SWAGKEYS ${SCHEDULE_SOURCES[sourceKey].label}: ${diff.removed.length} row(s) left the table (not notified).`);
+    }
+  }
+
+  const closingsNotified = pruneScheduleClosings(previous?.closingsNotified || {}, now);
+  const reservations = schedule?.sources?.reservations;
+  if (!baseline && reservations?.fresh) {
+    for (const closing of dueScheduleClosings({
+      items: reservations.items || [],
+      notified: closingsNotified,
+      now,
+      skipProductKeys
+    })) {
+      closings.push(closing);
+      closingsNotified[closing.key] = kstDayString(now);
+    }
+  }
+
+  return {
+    baseline,
+    added,
+    changed,
+    closings,
+    sources,
+    closingsNotified,
+    fallbackSince: schedule?.fallbackSince || {},
+    nextState: {
+      version: 1,
+      initialized: true,
+      updatedAt: new Date(now).toISOString(),
+      sources,
+      closingsNotified,
+      fallbackSince: schedule?.fallbackSince || {}
+    }
+  };
+}
+
 function loadState() {
   try {
     const parsed = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
@@ -761,6 +892,7 @@ function statePayload(snapshot, updatedAt = new Date().toISOString()) {
     quarters: snapshot.quarters,
     ...(snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {}),
     rows: snapshot.rows.map((row) => ({ ...row, eta: normalizeEta(row.eta) })),
+    ...(snapshot.schedule ? { schedule: snapshot.schedule } : {}),
     fallbackSince: snapshot.fallbackSince || {}
   };
 }
@@ -1025,15 +1157,103 @@ export function removedEmbed(row, detectedAt = new Date().toISOString()) {
   };
 }
 
+const SCHEDULE_CHANGE_FIELD_NAMES = Object.freeze({
+  status: '상태',
+  sale: '판매 일정',
+  arrival: '입고일자',
+  eta: '배송 예상'
+});
+
+// 이미 '이전 → 현재'로 보여준 항목은 현재 값 목록에서 빼서 같은 내용을 두 번 적지 않는다.
+function scheduleBaseFields(item, omit = new Set()) {
+  const fields = [
+    { name: '카테고리', value: truncate(item.category || '—'), inline: true },
+    { name: '브랜드', value: truncate((item.brands || []).join(', ') || '—'), inline: true },
+    { name: '상태', value: truncate(item.status || '—'), inline: true },
+    ...(item.saleStart || item.saleEnd ? [{ name: '판매 일정', value: formatScheduleSale(item), inline: true }] : []),
+    ...(item.arrivalDate ? [{ name: '입고일자', value: item.arrivalDate, inline: true }] : []),
+    ...(item.eta ? [{ name: '배송 예상', value: truncate(item.eta), inline: true }] : [])
+  ];
+  return fields.filter((field) => !omit.has(field.name));
+}
+
+function scheduleAuxiliaryFields(sourceKey, item, detectedAt) {
+  const source = SCHEDULE_SOURCES[sourceKey];
+  return [
+    { name: '변경 감지 시각', value: `${formatKst(detectedAt)} KST`, inline: false },
+    { name: '링크', value: item?.url ? `[🔗 제품 보기](${item.url})` : `[🔗 ${source.label}](${source.url})`, inline: false }
+  ];
+}
+
+function scheduleEmbed({ title, sourceKey, item, detectedAt, extraFields = [], omit = new Set() }) {
+  const source = SCHEDULE_SOURCES[sourceKey];
+  return {
+    title: truncate(title, 250),
+    url: source.url,
+    footer: { text: `SWAGKEYS · ${source.label}` },
+    timestamp: detectedAt,
+    fields: [
+      ...extraFields,
+      ...scheduleBaseFields(item, omit),
+      ...scheduleAuxiliaryFields(sourceKey, item, detectedAt)
+    ]
+  };
+}
+
+export function scheduleAddedEmbed(sourceKey, item, detectedAt = new Date().toISOString()) {
+  const source = SCHEDULE_SOURCES[sourceKey];
+  return scheduleEmbed({
+    title: `🆕 SWAGKEYS ${source.label} 등록 · ${item.product}`,
+    sourceKey,
+    item,
+    detectedAt
+  });
+}
+
+export function scheduleChangedEmbed(sourceKey, change, detectedAt = new Date().toISOString()) {
+  const source = SCHEDULE_SOURCES[sourceKey];
+  return scheduleEmbed({
+    title: `🔄 SWAGKEYS ${source.label} 변경 · ${change.item.product}`,
+    sourceKey,
+    item: change.item,
+    detectedAt,
+    extraFields: change.fields.map((field) => ({
+      name: `${field.label} 변경`,
+      value: truncate(`이전: ${field.before}\n현재: ${field.after}`),
+      inline: false
+    })),
+    omit: new Set(change.fields.map((field) => SCHEDULE_CHANGE_FIELD_NAMES[field.key]).filter(Boolean))
+  });
+}
+
+export function scheduleClosingEmbed(closing, detectedAt = new Date().toISOString()) {
+  const { item, offset } = closing;
+  const remain = offset === 0 ? '오늘 마감' : `D-${offset}`;
+  return scheduleEmbed({
+    title: `⏳ SWAGKEYS 예약판매 마감 ${remain} · ${item.product}`,
+    sourceKey: 'reservations',
+    item,
+    detectedAt,
+    extraFields: [{ name: '마감일', value: item.saleEnd, inline: true }]
+  });
+}
+
 // Pickle formats its own chat notifications, so skip-mode runs print one machine-readable
 // line instead of posting Discord embeds. State and Keepodd events advance exactly as usual.
-export function skipDiscordSummaryLine({ announcementChanged, quarterChanges, changes, starts, announcement }) {
+export function skipDiscordSummaryLine({ announcementChanged, quarterChanges, changes, starts, announcement, schedule = null }) {
   return `SWAGKEYS_SUMMARY_JSON=${JSON.stringify({
     announcementChanged,
     quarterChanges,
     changes,
     starts,
-    announcement: announcementChanged ? (announcement || null) : null
+    announcement: announcementChanged ? (announcement || null) : null,
+    schedule: schedule ? {
+      added: schedule.added || [],
+      changed: schedule.changed || [],
+      closings: (schedule.closings || []).map((closing) => ({
+        key: closing.key, offset: closing.offset, saleEnd: closing.saleEnd, item: closing.item
+      }))
+    } : null
   })}`;
 }
 
@@ -1074,6 +1294,15 @@ async function main() {
     fallbackSince: state?.fallbackSince && typeof state.fallbackSince === 'object' ? state.fallbackSince : {}
   };
   let snapshot = await fetchSnapshot(fallback);
+  // 키보드·GMK·스위치까지 포함한 예약판매/입고 일정 2곳. 첫 실행은 기준선만 저장한다.
+  const previousSchedule = state?.schedule && typeof state.schedule === 'object' ? state.schedule : null;
+  const scheduleEvents = buildScheduleEvents({
+    schedule: await fetchScheduleSnapshot(previousSchedule),
+    previous: previousSchedule,
+    now: new Date(),
+    roadmapProducts: Object.values(snapshot.quarters || {}).flat().filter((product) => typeof product === 'string')
+  });
+  snapshot.schedule = scheduleEvents.nextState;
   const roadmapDatesInitialized = !state?.roadmapDates && Boolean(snapshot.roadmapDates);
   console.log(`SWAGKEYS announcement: ${snapshot.announcement.heading}${snapshot.roadmapFresh ? '' : ' (stored fallback)'}`);
   console.log(`SWAGKEYS status rows: ${snapshot.rows.length}${snapshot.statusFresh ? '' : ' (stored fallback)'}`);
@@ -1163,15 +1392,22 @@ async function main() {
     }
   }
 
+  // 삭제 검증 재조회로 snapshot이 교체될 수 있어 일정 상태를 마지막에 다시 붙인다.
+  snapshot.schedule = scheduleEvents.nextState;
   let { announcementChanged, quarterChanges, quartersChanged, changes, starts } = calculated;
+  const scheduleActivity = scheduleEvents.added.length + scheduleEvents.changed.length + scheduleEvents.closings.length;
+  const scheduleStateChanged = JSON.stringify(previousSchedule?.sources || {}) !== JSON.stringify(scheduleEvents.nextState.sources)
+    || JSON.stringify(previousSchedule?.closingsNotified || {}) !== JSON.stringify(scheduleEvents.nextState.closingsNotified)
+    || JSON.stringify(previousSchedule?.fallbackSince || {}) !== JSON.stringify(scheduleEvents.nextState.fallbackSince);
   console.log(`SWAGKEYS announcement changed: ${announcementChanged}`);
   console.log(`SWAGKEYS quarter roadmap changed: ${quartersChanged}`);
   console.log(`SWAGKEYS product changes: ${changes.length}`);
   console.log(`SWAGKEYS GB starts due: ${starts.length}`);
+  console.log(`SWAGKEYS schedule events: ${scheduleEvents.added.length} new / ${scheduleEvents.changed.length} changed / ${scheduleEvents.closings.length} closing${scheduleEvents.baseline ? ' (baseline saved without notifications)' : ''}`);
 
   snapshot.gbStartsNotified = { ...(state.gbStartsNotified || {}), ...Object.fromEntries(starts.map(row => [row.key, row.saleStart])) };
-  if (!announcementChanged && !quartersChanged && changes.length === 0 && starts.length === 0) {
-    if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized || snapshot.roadmapLayoutVersion !== (state.roadmapLayoutVersion || 1)) {
+  if (!announcementChanged && !quartersChanged && changes.length === 0 && starts.length === 0 && scheduleActivity === 0) {
+    if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized || snapshot.roadmapLayoutVersion !== (state.roadmapLayoutVersion || 1) || scheduleStateChanged) {
       saveState(snapshot);
       console.log('SWAGKEYS verified roadmap metadata updated without backfilling historical events.');
     } else {
@@ -1195,19 +1431,23 @@ async function main() {
       else if (change.kind === 'changed') await postDiscord(changedEmbed(change));
       else await postDiscord(removedEmbed(change.row));
     }
+    for (const event of scheduleEvents.added) await postDiscord(scheduleAddedEmbed(event.sourceKey, event.item));
+    for (const event of scheduleEvents.changed) await postDiscord(scheduleChangedEmbed(event.sourceKey, event));
+    for (const closing of scheduleEvents.closings) await postDiscord(scheduleClosingEmbed(closing));
   }
   await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts);
   if (mode === 'skip') {
-    console.log(`SWAGKEYS_SKIP_DISCORD is enabled: ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} change group(s) reported without Discord, state and Keepodd events updated.`);
+    console.log(`SWAGKEYS_SKIP_DISCORD is enabled: ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length + scheduleActivity} change group(s) reported without Discord, state and Keepodd events updated.`);
     console.log(skipDiscordSummaryLine({
       announcementChanged,
       quarterChanges,
       changes,
       starts,
-      announcement: snapshot.announcement
+      announcement: snapshot.announcement,
+      schedule: scheduleEvents
     }));
   } else {
-    console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length} SWAGKEYS notification(s) and updated state.`);
+    console.log(`Sent ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length + scheduleActivity} SWAGKEYS notification(s) and updated state.`);
   }
   if (removalVerificationInconclusive) throw new Error(removalVerificationInconclusive);
 }

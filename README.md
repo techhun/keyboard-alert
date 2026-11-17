@@ -11,7 +11,7 @@
 | GEONWORKS GB | GB Schedule | 신규/변경/목록 제거 | `geonworks-state.json` |
 | GEONWORKS Release | Release Schedule | 신규/변경/목록 제거 | `geonworks-release-state.json` |
 | ProtoTypist | Keyboard / GMK / Keyset 진행 보드 | 신규/상태·배송예정 변경/목록 제거 | `prototypist-state.json` |
-| SWAGKEYS | 분기별 Keycap Roadmap + Keycap Status | 공지, 분기 이동·신규 배치·로드맵 제외, 진행상황 변경 | `swagkeys-state.json` |
+| SWAGKEYS | 분기별 Keycap Roadmap + Keycap Status + `예약판매 품목 현황`/`일반 품목 입고 현황` | 공지, 분기 이동·신규 배치·로드맵 제외, 진행상황 변경, 예약판매 신규 등록·상태/판매일정/입고일정 변경, 공제 마감 D-3·D-1·D-day | `swagkeys-state.json` |
 | Oblotzky Industries | Schedule | 신규/Last Updated·Status 변경/목록 제거 | `oblotzky-state.json` |
 | NovelKeys | Product Updates | 신규/Current Status·Estimated Arrival 변경/목록 제거 | `novelkeys-state.json` |
 | KBDfans | Product Updates | 신규/상태·ETA·진행률·최신 업데이트 변경/목록 제거 | `kbdfans-state.json` |
@@ -96,6 +96,8 @@ Healthchecks.io Ping URL 자체가 인증 정보 역할을 하므로 저장소 �
 - workflow watchdog이 Fast/Slow 실행 정체를 감지하면 별도 실행 감시 오류/복구 알림 전송
 - 오류가 발생한 실행의 GitHub Actions 링크를 Discord 알림 제목에 연결
 
+SWAGKEYS 수집 실패는 Pickle(사용자 채팅) 쪽에서 보고하므로, 이 프로젝트는 SWAGKEYS의 상태(`system-health-slow.json`)만 기록하고 디스코드 시스템 채널로는 오류·복구 알림을 보내지 않습니다(`scripts/system-health.mjs`의 `PICKLE_REPORTED_SOURCES`).
+
 상태는 용도별로 분리해 저장합니다.
 
 - `system-health-fast.json`
@@ -123,7 +125,7 @@ npm run system:health -- ...
 
 의존성은 `package-lock.json`으로 고정하며 GitHub Actions에서는 `npm ci`를 사용합니다. Playwright는 현재 `1.55.0`으로 고정되어 있습니다.
 
-`SWAGKEYS_SKIP_DISCORD=true npm run check:swagkeys`는 Discord 웹훅 없이 실행되며, 변경이 있으면 `SWAGKEYS_SUMMARY_JSON=` 한 줄(JSON)로 `announcementChanged`·`quarterChanges`·`changes`·`starts`·`announcement`를 출력하고 state와 Keepodd 이벤트는 정상 갱신합니다. Chromium은 두 Notion API 읽기가 모두 실패해 브라우저 fallback이 필요할 때만 실행합니다.
+`SWAGKEYS_SKIP_DISCORD=true npm run check:swagkeys`는 Discord 웹훅 없이 실행되며, 변경이 있으면 `SWAGKEYS_SUMMARY_JSON=` 한 줄(JSON)로 `announcementChanged`·`quarterChanges`·`changes`·`starts`·`announcement`·`schedule`을 출력하고 state와 Keepodd 이벤트는 정상 갱신합니다. `schedule`에는 키보드·GMK 등 전체 품목을 다루는 예약판매/입고 일정 DB 2곳의 신규 등록(`added`)·변경(`changed`)·마감 임박(`closings`)이 담깁니다. Chromium은 두 Notion API 읽기가 모두 실패해 브라우저 fallback이 필요할 때만 실행합니다.
 
 ## 알림 Secret
 
@@ -176,6 +178,7 @@ scripts/
 ├─ check-geonworks-release.mjs
 ├─ check-prototypist.mjs
 ├─ check-swagkeys.mjs
+├─ lib/swagkeys-schedule.mjs
 ├─ check-oblotzky.mjs
 ├─ check-novelkeys.mjs
 ├─ check-kbdfans.mjs

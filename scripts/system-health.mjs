@@ -4,6 +4,9 @@ const DISCORD_WEBHOOK_URL = (process.env.SYSTEM_DISCORD_WEBHOOK_URL || '').trim(
 const FAILURE_THRESHOLD = 3;
 const FAILURE_REMINDER_AFTER_MS = 12 * 60 * 60 * 1000;
 const DEGRADED_ALERT_AFTER_MS = 60 * 60 * 1000;
+// SWAGKEYS 수집은 Pickle이 자기 채팅으로 보고한다(2026-11-15 사용자 선택: 피클 채팅으로만).
+// 이 워크플로는 상태만 기록하고, 디스코드 시스템 채널로는 더 이상 오류/복구 알림을 보내지 않는다.
+const PICKLE_REPORTED_SOURCES = new Set(['swagkeys']);
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function clean(value) {
@@ -146,6 +149,8 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const previousStatus = previous.status || null;
   const runId = currentRunId();
   const now = new Date().toISOString();
+  const pickleReported = PICKLE_REPORTED_SOURCES.has(sourceKey);
+  const canAlert = Boolean(DISCORD_WEBHOOK_URL) && !pickleReported;
 
   if (status === 'degraded') {
     const degraded = loadDegradedInfo(sourceKey);
@@ -163,7 +168,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
     };
 
     if (degradedAgeMs >= DEGRADED_ALERT_AFTER_MS && !previous.degradedAlertedAt) {
-      if (DISCORD_WEBHOOK_URL) {
+      if (canAlert) {
         const durationMinutes = Math.floor(degradedAgeMs / 60000);
         await postDiscord({
           ...baseEmbed(`⚠️ 수집 지연 · ${label}`),
@@ -181,6 +186,8 @@ async function transition(group, sourceKey, status, label, detail = '') {
         });
         next.degradedAlertedAt = now;
         console.log(`[system] ${label}: degraded warning sent after ${durationMinutes}m`);
+      } else if (pickleReported) {
+        console.log(`[system] ${label}: degraded warning not sent to Discord (Pickle reports this source).`);
       } else {
         console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} degraded warning remains pending.`);
       }
@@ -206,7 +213,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
       const reminderAgeMs = Math.max(0, Date.parse(now) - Date.parse(reminderBase));
 
       if (reminderAgeMs >= FAILURE_REMINDER_AFTER_MS) {
-        if (DISCORD_WEBHOOK_URL) {
+        if (canAlert) {
           const failureSince = previous.changedAt || previous.lastFailureAt || reminderBase;
           const durationHours = Math.max(1, Math.floor((Date.parse(now) - Date.parse(failureSince)) / (60 * 60 * 1000)));
           await postDiscord({
@@ -226,6 +233,8 @@ async function transition(group, sourceKey, status, label, detail = '') {
           };
           saveState(group, state);
           console.log(`[system] ${label}: persistent failure reminder sent after ${durationHours}h`);
+        } else if (pickleReported) {
+          console.log(`[system] ${label}: persistent failure reminder not sent to Discord (Pickle reports this source).`);
         } else {
           console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} persistent failure reminder remains pending.`);
         }
@@ -247,7 +256,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
       return;
     }
 
-    if (!DISCORD_WEBHOOK_URL) {
+    if (!canAlert) {
       state.sources[sourceKey] = {
         ...previous,
         consecutiveFailures,
@@ -255,7 +264,9 @@ async function transition(group, sourceKey, status, label, detail = '') {
         lastFailureAt: now
       };
       saveState(group, state);
-      console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} failure threshold reached; alert remains pending.`);
+      console.log(pickleReported
+        ? `[system] ${label}: failure not sent to Discord (Pickle reports this source).`
+        : `[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} failure threshold reached; alert remains pending.`);
       return;
     }
 
@@ -288,19 +299,23 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const hadPendingFailures = failureCount(previous) > 0;
 
   if (previousStatus === 'fail') {
-    if (!DISCORD_WEBHOOK_URL) {
-      console.log(`[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} recovery remains pending.`);
-      return;
+    if (!canAlert) {
+      console.log(pickleReported
+        ? `[system] ${label}: recovery not sent to Discord (Pickle reports this source).`
+        : `[system] SYSTEM_DISCORD_WEBHOOK_URL is not configured. ${label} recovery remains pending.`);
+      if (!pickleReported) return;
     }
 
-    await postDiscord({
-      ...baseEmbed(`✅ 복구 · ${label}`),
-      description: '정상 수집이 다시 확인되었습니다.',
-      fields: [
-        { name: '그룹', value: group.toUpperCase(), inline: true },
-        { name: '상태', value: '정상', inline: true }
-      ]
-    });
+    if (canAlert) {
+      await postDiscord({
+        ...baseEmbed(`✅ 복구 · ${label}`),
+        description: '정상 수집이 다시 확인되었습니다.',
+        fields: [
+          { name: '그룹', value: group.toUpperCase(), inline: true },
+          { name: '상태', value: '정상', inline: true }
+        ]
+      });
+    }
 
     state.sources[sourceKey] = {
       ...clearDegraded(clearPendingFailure(previous)),
@@ -315,7 +330,7 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const hadDegradedWarning = Boolean(previous.degradedAlertedAt);
   const wasDegraded = previous.mode === 'degraded' || Boolean(previous.degradedSince);
   if (wasDegraded) {
-    if (hadDegradedWarning && DISCORD_WEBHOOK_URL) {
+    if (hadDegradedWarning && canAlert) {
       await postDiscord({
         ...baseEmbed(`✅ 수집 지연 해소 · ${label}`),
         description: 'fresh 수집이 다시 확인되었습니다.',
