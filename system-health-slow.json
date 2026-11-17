@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T20:12:41.479Z",
+  "updatedAt": "2026-11-17T20:20:57.416Z",
   "sources": {
     "geonworks-gb": {
       "status": "ok",
@@ -17,13 +17,7 @@
     },
     "swagkeys": {
       "status": "ok",
-      "changedAt": "2026-11-17T19:01:50.656Z",
-      "mode": "degraded",
-      "degradedSince": "2026-11-17T20:12:02.071Z",
-      "fallbackSources": [
-        "roadmap",
-        "status"
-      ]
+      "changedAt": "2026-11-17T19:01:50.656Z"
     },
     "oblotzky": {
       "status": "ok",
