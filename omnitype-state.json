@@ -1,11 +1,11 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-11T18:33:39.242Z",
+  "updatedAt": "2026-11-17T16:23:20.635Z",
   "rows": [
     {
       "product": "PBTfans G3",
-      "overview": "These are estimated to arrive to us Q4 2026. | Production completion estimate is November.",
+      "overview": "These are in transit to us.",
       "components": [],
       "sourceUrl": "https://omnitype.com/pages/product-updates"
     },
@@ -72,5 +72,7 @@
       "sourceUrl": "https://omnitype.com/pages/product-updates"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "782a3641519dbaf465d82854": "2026-11-17T16:23:20.635Z"
+  }
 }
