@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T19:21:39.488Z",
+  "updatedAt": "2026-11-17T19:31:37.918Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -1618,16 +1618,6 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
-      "product": "DCS Hangul PBT",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/PBS-WoB-317042334154803aa932d0e916927d87",
       "product": "PBS WoB",
       "status": "Shipping to Prototypist",
@@ -1668,18 +1658,8 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DSS-Distortion-36404233415480c7a112f1841c026aae",
-      "product": "DSS Distortion",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Cream-Cheese-Green-R3-36404233415480e494eae3a020d55e81",
-      "product": "DCS Cream Cheese & Green R3",
+      "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
+      "product": "DCS Hangul PBT",
       "status": "Shipping to Customers",
       "expectedShipping": "Q4 2026"
     },
@@ -1690,7 +1670,27 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Bowl-Pit-364042334154804dae9cd782331dc85a",
       "product": "DCS Bowl Pit",
-      "status": "Shipping to Customers",
+      "status": "Completed",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Cream-Cheese-Green-R3-36404233415480e494eae3a020d55e81",
+      "product": "DCS Cream Cheese & Green R3",
+      "status": "Completed",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DSS-Distortion-36404233415480c7a112f1841c026aae",
+      "product": "DSS Distortion",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1912,41 +1912,7 @@
       "product": "Awekeys Wild Ice Mystery Artisans",
       "status": "Completed",
       "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/MW-Unmanned-Playground-292042334154805b94afd6d3d3b627c8",
-      "product": "MW Unmanned Playground",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/MW-Dim-Sum-20e04233415480b1b1b2e2b58da730e0",
-      "product": "MW Dim Sum",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/KAP-Grey-Alert-33504233415480e88a98dfd42521f266",
-      "product": "KAP Grey Alert",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "keyboard": "2026-11-17T19:21:12.885Z",
-    "gmk": "2026-11-17T19:21:25.390Z",
-    "keyset": "2026-11-17T19:21:37.917Z"
-  }
+  "fallbackSince": {}
 }
