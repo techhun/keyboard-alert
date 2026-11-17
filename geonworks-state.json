@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T02:50:39.606Z",
+  "updatedAt": "2026-11-17T04:30:43.368Z",
   "rows": [
     {
       "product": "LILY R2 HHKB Barebone Kit",
@@ -605,7 +605,6 @@
     }
   ],
   "sentChanges": {
-    "1de6593aa2cb6a84dbf70e3b": "2026-11-10T04:20:31.648Z",
     "d30e7a8eb20f37aabcbd5dac": "2026-11-11T00:00:45.646Z",
     "5485a608d51e772dedc14123": "2026-11-11T00:00:46.023Z",
     "6af423ddaeec1420688d8f6d": "2026-11-11T00:00:46.259Z",
