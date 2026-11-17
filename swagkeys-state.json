@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T20:32:35.640Z",
+  "updatedAt": "2026-11-17T21:01:27.834Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -506,8 +506,5 @@
       "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
-  "fallbackSince": {
-    "roadmap": "2026-11-17T20:31:56.242Z",
-    "status": "2026-11-17T20:32:35.570Z"
-  }
+  "fallbackSince": {}
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T20:52:32.486Z",
+  "updatedAt": "2026-11-17T21:01:33.990Z",
   "rows": [
     {
       "id": 385,
@@ -395,9 +395,9 @@
       "startDate": "2026-02-05",
       "endDate": "2026-03-08",
       "eta": "Q4 2026",
-      "latestUpdateId": 1871,
-      "latestUpdateDate": "2026-09-23",
-      "latestUpdateDescription": "Currently in production. More specifically, we are waiting on the production of PCBs."
+      "latestUpdateId": 1989,
+      "latestUpdateDate": "2026-11-17",
+      "latestUpdateDescription": "Previously we had mentioned that PCBs were still in production. This delay was due to the discontinuation of a component used in the daughterboard, resulting in the need to redesign the Fly DB used in the Bullet Train. Since the last update, the redesigned daughterboard has been successfully designed, tested, and is now in production. We are constantly checking in with the manufacturer and once we have another update we will be sure to share it with you as soon as possible!"
     },
     {
       "id": 252,
@@ -3459,6 +3459,7 @@
     "c3cf5a78f711a8f6db9d7cd3": "2026-11-13T20:03:15.447Z",
     "530eafbb1a5b63508513adfb": "2026-11-16T17:22:40.091Z",
     "2c009ff05fc2ae39533360a9": "2026-11-17T20:52:32.200Z",
-    "cf2c059ed84bdf0c5e5c0ba9": "2026-11-17T20:52:32.485Z"
+    "cf2c059ed84bdf0c5e5c0ba9": "2026-11-17T20:52:32.485Z",
+    "5f613a2b45e277773671ca60": "2026-11-17T21:01:33.989Z"
   }
 }
