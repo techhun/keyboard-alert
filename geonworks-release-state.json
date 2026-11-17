@@ -1,19 +1,8 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-16T23:50:37.034Z",
+  "updatedAt": "2026-11-17T02:40:38.347Z",
   "rows": [
-    {
-      "product": "GMK CYL Blanks",
-      "manufacturer": "GMK",
-      "region": "KR/GLOBAL",
-      "saleType": "Group Buy",
-      "type": "Keycaps",
-      "status": "For Sale",
-      "fixed": "확정 / Fixed",
-      "start": "2026-10-20",
-      "end": "2026-11-16"
-    },
     {
       "product": "Chamber TKL",
       "manufacturer": "KBDfans",
@@ -50,6 +39,7 @@
   ],
   "sentChanges": {
     "c36965e1bfdd3d2a17479e44": "2026-11-11T01:00:50.643Z",
-    "b47b640372cfd086effb7349": "2026-11-16T00:00:52.904Z"
+    "b47b640372cfd086effb7349": "2026-11-16T00:00:52.904Z",
+    "0f0904a6d8fe5b51acf389e4": "2026-11-17T02:40:38.347Z"
   }
 }
