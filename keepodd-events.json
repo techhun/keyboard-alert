@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-18T01:00:44.410Z",
+  "updatedAt": "2026-11-18T05:00:45.852Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2292,6 +2292,34 @@
       "eta": "2027-03-31",
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "b5719d6a78a678d2191981f28148f123",
+      "source": "GEONWORKS",
+      "name": "Vida Doo and Do.25",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-18T05:00:45.852Z",
+      "categoryHint": "키보드",
+      "maker": "KEZEWA",
+      "saleStart": "2026-11-17",
+      "saleEnd": "2026-12-13",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "f02c8a2a19d77051e0f729606cb09761",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Neon Vice",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-18T05:00:45.852Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-18",
+      "saleEnd": "2026-12-15",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]

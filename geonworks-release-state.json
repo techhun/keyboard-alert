@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T01:10:33.659Z",
+  "updatedAt": "2026-11-18T05:00:45.852Z",
   "rows": [
     {
       "product": "Chamber TKL",
@@ -35,10 +35,34 @@
       "fixed": "확정 / Fixed",
       "start": "2026-11-12",
       "end": "2026-12-06"
+    },
+    {
+      "product": "Vida Doo and Do.25",
+      "manufacturer": "KEZEWA",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keyboard",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-17",
+      "end": "2026-12-13"
+    },
+    {
+      "product": "GMK CYL Neon Vice",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-18",
+      "end": "2026-12-15"
     }
   ],
   "sentChanges": {
     "b47b640372cfd086effb7349": "2026-11-16T00:00:52.904Z",
-    "0f0904a6d8fe5b51acf389e4": "2026-11-17T02:40:38.347Z"
+    "0f0904a6d8fe5b51acf389e4": "2026-11-17T02:40:38.347Z",
+    "daa44fc34718f80be96476cc": "2026-11-18T05:00:45.685Z",
+    "3d29596c85c8654812435e94": "2026-11-18T05:00:45.852Z"
   }
 }
