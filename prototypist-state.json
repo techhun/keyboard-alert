@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T17:31:43.771Z",
+  "updatedAt": "2026-11-18T17:42:08.655Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -498,20 +498,20 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
-      "product": "Ramune60",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Q3 2026"
+      "itemUrl": "https://prototypist.notion.site/Tofu65-Pad-36404233415480dd9e6dc02997acf367",
+      "product": "Tofu65 Pad",
+      "status": "Completed",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Tofu65-Pad-36404233415480dd9e6dc02997acf367",
-      "product": "Tofu65 Pad",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Q4 2026"
+      "itemUrl": "https://prototypist.notion.site/Ramune60-292042334154804ab817ea4d0a1ffdee",
+      "product": "Ramune60",
+      "status": "Completed",
+      "expectedShipping": "Q3 2026"
     },
     {
       "sourceId": "keyboard",
@@ -742,26 +742,6 @@
       "product": "Keycult No1/60",
       "status": "Completed",
       "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Cerberus-13f04233415480fe819dc75011554be7",
-      "product": "Cerberus",
-      "status": "Completed",
-      "expectedShipping": "Q1 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Theseus75-1dfaee6bb4a44f74824c2f8a9818a12f",
-      "product": "Theseus75",
-      "status": "Completed",
-      "expectedShipping": "Q4 2025"
     },
     {
       "sourceId": "gmk",
@@ -1915,8 +1895,7 @@
     }
   ],
   "fallbackSince": {
-    "keyboard": "2026-11-18T17:31:17.246Z",
-    "gmk": "2026-11-18T17:31:29.754Z",
-    "keyset": "2026-11-18T17:31:42.205Z"
+    "gmk": "2026-11-18T17:41:48.961Z",
+    "keyset": "2026-11-18T17:42:01.581Z"
   }
 }
