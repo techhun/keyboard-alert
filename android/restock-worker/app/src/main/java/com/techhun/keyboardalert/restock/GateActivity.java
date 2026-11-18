@@ -17,14 +17,16 @@ import android.widget.TextView;
 
 public class GateActivity extends Activity {
     private static final int REQUEST_LOGIN = 9101;
-    private static final int BLUE = Color.rgb(49, 130, 246);
-    private static final int TEXT = Color.rgb(25, 31, 40);
+    private int BLUE;
+    private int TEXT;
 
     private boolean loginLaunching;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BLUE = Ui.color(this, R.color.restock_accent);
+        TEXT = Ui.color(this, R.color.restock_ink);
 
         Window window = getWindow();
         window.setStatusBarColor(Color.WHITE);

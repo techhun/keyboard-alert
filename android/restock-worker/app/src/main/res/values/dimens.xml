@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 타입 스케일: 12 · 13 · 15 · 17 · 20 · 28sp -->
+    <dimen name="restock_text_caption">12sp</dimen>
+    <dimen name="restock_text_label">13sp</dimen>
+    <dimen name="restock_text_body">15sp</dimen>
+    <dimen name="restock_text_card_title">17sp</dimen>
+    <dimen name="restock_text_screen_title">20sp</dimen>
+    <dimen name="restock_text_display">28sp</dimen>
+
+    <!-- 모서리 -->
+    <dimen name="restock_radius_control">12dp</dimen>
+    <dimen name="restock_radius_chip">10dp</dimen>
+    <dimen name="restock_radius_card">20dp</dimen>
+    <dimen name="restock_radius_sheet">24dp</dimen>
+
+    <!-- 간격 -->
+    <dimen name="restock_screen_padding">20dp</dimen>
+    <dimen name="restock_card_padding">16dp</dimen>
+    <dimen name="restock_card_gap">10dp</dimen>
+    <dimen name="restock_hairline">1dp</dimen>
+
+    <!-- 터치·컨트롤 -->
+    <dimen name="restock_touch_min">48dp</dimen>
+    <dimen name="restock_badge_height">24dp</dimen>
+    <dimen name="restock_pill_height">26dp</dimen>
+    <dimen name="restock_chip_height">38dp</dimen>
+    <dimen name="restock_ghost_height">34dp</dimen>
+    <dimen name="restock_switch_width">48dp</dimen>
+    <dimen name="restock_switch_height">48dp</dimen>
+    <dimen name="restock_list_row_height">50dp</dimen>
+</resources>
