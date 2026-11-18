@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Restock 팔레트. 화면 코드는 이 값만 참조하고 색을 직접 만들지 않는다. -->
+    <color name="restock_bg">#F7F8FA</color>
+    <color name="restock_surface">#FFFFFF</color>
+    <color name="restock_field">#F1F3F5</color>
+    <color name="restock_line">#EDF0F3</color>
+
+    <color name="restock_ink">#191F28</color>
+    <color name="restock_ink_2">#5A6473</color>
+
+    <color name="restock_accent">#1B64DA</color>
+    <color name="restock_accent_soft">#E8F0FB</color>
+
+    <color name="restock_ok">#067A4A</color>
+    <color name="restock_ok_soft">#E3F3EC</color>
+
+    <color name="restock_warn">#8A5A00</color>
+    <color name="restock_warn_soft">#FBF0DA</color>
+
+    <color name="restock_danger">#B3172A</color>
+    <color name="restock_danger_soft">#FBEAEC</color>
+
+    <color name="restock_track_off">#C7CDD6</color>
+    <color name="restock_disabled">#BEC6CF</color>
+</resources>

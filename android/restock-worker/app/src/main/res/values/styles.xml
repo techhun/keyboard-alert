@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 앱 공통 테마: 상태바·내비게이션바를 화면 배경과 맞추고,
+         시스템 AlertDialog의 강조색이 플랫폼 기본색이 아니라 앱 파랑이 되게 한다. -->
+    <style name="RestockTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/restock_bg</item>
+        <item name="android:colorAccent">@color/restock_accent</item>
+        <item name="android:colorPrimary">@color/restock_accent</item>
+        <item name="android:colorControlActivated">@color/restock_accent</item>
+        <item name="android:colorControlHighlight">@color/restock_field</item>
+        <item name="android:textColorPrimary">@color/restock_ink</item>
+        <item name="android:textColorSecondary">@color/restock_ink_2</item>
+        <item name="android:statusBarColor">@color/restock_bg</item>
+        <item name="android:navigationBarColor">@color/restock_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="android:alertDialogTheme">@style/RestockDialog</item>
+    </style>
+
+    <style name="RestockDialog" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/restock_accent</item>
+        <item name="android:textColorPrimary">@color/restock_ink</item>
+        <item name="android:textColorSecondary">@color/restock_ink_2</item>
+    </style>
+</resources>
