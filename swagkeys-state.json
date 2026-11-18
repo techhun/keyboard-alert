@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T10:01:07.962Z",
+  "updatedAt": "2026-11-18T11:01:19.952Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -509,7 +509,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-18T10:01:07.948Z",
+    "updatedAt": "2026-11-18T11:01:19.732Z",
     "sources": {
       "reservations": {
         "items": [
@@ -570,6 +570,19 @@
             "key": "패드류|cybermat r3"
           },
           {
+            "product": "NP-R 넘패드",
+            "category": "키보드",
+            "brands": [
+              "Flatbrain"
+            ],
+            "status": "배송 중",
+            "saleStart": "2026-03-05",
+            "saleEnd": "2026-04-01",
+            "eta": "27년 1분기",
+            "url": "https://geekhack.org/index.php?topic=126401.msg3214089#msg3214089",
+            "key": "키보드|np-r 넘패드"
+          },
+          {
             "product": "Cloudline V2.1",
             "category": "키보드",
             "brands": [
@@ -610,19 +623,6 @@
             "status": "생산 중",
             "eta": "26년 3분기 말 예상",
             "key": "키보드|altair & altair-x r2"
-          },
-          {
-            "product": "NP-R 넘패드",
-            "category": "키보드",
-            "brands": [
-              "Flatbrain"
-            ],
-            "status": "배송 중",
-            "saleStart": "2026-03-05",
-            "saleEnd": "2026-04-01",
-            "eta": "27년 1분기",
-            "url": "https://geekhack.org/index.php?topic=126401.msg3214089#msg3214089",
-            "key": "키보드|np-r 넘패드"
           },
           {
             "product": "Motif65",
@@ -695,6 +695,18 @@
             "key": "키보드|dia"
           },
           {
+            "product": "[Pre-order] NEO80 Cu",
+            "category": "키보드",
+            "brands": [
+              "NEO STUDIO"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-11-06",
+            "saleEnd": "2027-02-28",
+            "eta": "27년 3월 말",
+            "key": "키보드|[pre-order] neo80 cu"
+          },
+          {
             "product": "Aria80",
             "category": "키보드",
             "brands": [
@@ -737,18 +749,6 @@
             "key": "키보드|b60"
           },
           {
-            "product": "[Pre-order] NEO80 Cu",
-            "category": "키보드",
-            "brands": [
-              "NEO STUDIO"
-            ],
-            "status": "공제 중",
-            "saleStart": "2026-11-06",
-            "saleEnd": "2027-02-28",
-            "eta": "27년 3월 말",
-            "key": "키보드|[pre-order] neo80 cu"
-          },
-          {
             "product": "SWG Cadet 4종",
             "category": "키캡",
             "brands": [
@@ -759,6 +759,18 @@
             "saleEnd": "2026-11-12",
             "eta": "27년 7월 말",
             "key": "키캡|swg cadet 4종"
+          },
+          {
+            "product": "SWS Beige",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-11-18",
+            "saleEnd": "2026-12-02",
+            "eta": "26년 12월 31일",
+            "key": "키캡|sws beige"
           },
           {
             "product": "SWG Moomin",
