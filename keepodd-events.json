@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-18T05:00:45.852Z",
+  "updatedAt": "2026-11-18T08:30:37.296Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2321,6 +2321,20 @@
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "50a206f1b4def54d82c38f4754617017",
+      "source": "GEONWORKS",
+      "name": "DCS NIGHTS",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-18T08:30:37.296Z",
+      "categoryHint": "키캡",
+      "maker": "Signature Plastics",
+      "saleStart": "2026-11-18",
+      "eta": "2027-06-30",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-dcs-nights-%ED%82%A4%EC%BA%A1/766/category/47/display/1/",
+      "sourceUrlType": "product"
     }
   ]
 }

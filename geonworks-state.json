@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T08:20:34.075Z",
+  "updatedAt": "2026-11-18T08:30:37.296Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -81,6 +81,16 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 11. 12",
+      "note": "—"
+    },
+    {
+      "product": "DCS NIGHTS",
+      "gbStart": "2026. 11. 18",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "Signature Plastics",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 18",
       "note": "—"
     },
     {
@@ -580,7 +590,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 17",
+      "update": "2026. 11. 18",
       "note": "—"
     }
   ],
@@ -612,6 +622,8 @@
     "5051c7cedfe250f2a1f2be3f": "2026-11-18T01:00:43.847Z",
     "81833abd58809cb3a379b1fb": "2026-11-18T01:00:44.005Z",
     "235195cc66163e76cc7c5b4d": "2026-11-18T01:00:44.260Z",
-    "7ccf6b30342d0e7aaa0c6f42": "2026-11-18T01:00:44.410Z"
+    "7ccf6b30342d0e7aaa0c6f42": "2026-11-18T01:00:44.410Z",
+    "2d9c5b501e5f27be363e3cb4": "2026-11-18T08:30:37.141Z",
+    "86a623fe5e29ee95e1bb814d": "2026-11-18T08:30:37.296Z"
   }
 }
