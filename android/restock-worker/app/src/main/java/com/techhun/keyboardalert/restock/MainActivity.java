@@ -597,15 +597,27 @@ public class MainActivity extends Activity {
     }
 
     private void editProduct(JSONObject product) {
-        if (product.optBoolean("enabled", false)) {
-            toast("알림을 끈 뒤 옵션을 수정해주세요.");
-            return;
-        }
         if (optionFlowBusy()) {
             toast("옵션을 불러오는 중이에요.");
             return;
         }
-        loadProductForEdit(product.optString("url"), product.optString("id"));
+        if (!product.optBoolean("enabled", false)) {
+            loadProductForEdit(product.optString("url"), product.optString("id"));
+            return;
+        }
+        // 켜진 상품은 옵션을 바꾸는 동안 감시를 잠시 꺼야 한다. 토스트로 막는 대신 선택지를 준다.
+        new AlertDialog.Builder(this)
+            .setTitle("옵션을 수정할까요?")
+            .setMessage("수정하는 동안 이 상품의 알림을 잠시 꺼요. 저장한 뒤 다시 켤 수 있어요.")
+            .setNegativeButton("취소", null)
+            .setPositiveButton("끄고 수정", (dialog, which) -> {
+                String id = product.optString("id", "");
+                ProductStore.setEnabled(this, id, false);
+                syncMonitorService();
+                renderProducts(false);
+                loadProductForEdit(product.optString("url"), id);
+            })
+            .show();
     }
 
     private void loadProductForEdit(String url, String id) {
