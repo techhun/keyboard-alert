@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T15:33:41.381Z",
+  "updatedAt": "2026-11-18T16:03:36.198Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -509,7 +509,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-18T15:33:41.369Z",
+    "updatedAt": "2026-11-18T16:03:36.179Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1540,7 +1540,6 @@
     }
   },
   "fallbackSince": {
-    "roadmap": "2026-11-18T15:33:01.769Z",
-    "status": "2026-11-18T15:33:41.131Z"
+    "roadmap": "2026-11-18T15:33:01.769Z"
   }
 }
