@@ -1,132 +1,132 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-09-27T21:41:35.705Z",
+  "updatedAt": "2026-11-18T11:41:24.790Z",
   "rows": [
     {
       "project": "GMK CYL Motif",
-      "lastUpdated": "04 June 2026",
-      "status": "Colormatching, production still pending, awaiting approval of current sample. If successful, shipping within Q3 2026"
-    },
-    {
-      "project": "GMK CYL Gurokawa",
-      "lastUpdated": "22 Sept 2026",
-      "status": "Colormatching completed, expected to ship by end of November 2026"
+      "lastUpdated": "18 November 2026",
+      "status": "Colormatching completed, ships December"
     },
     {
       "project": "GMK CYL Mizu R2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Fulfilled sans Deskmats, deskmats were unfortunately lost and are currently being remade"
-    },
-    {
-      "project": "GMK CYL Centinela Extension Kit",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting approval of Gurokawa color"
-    },
-    {
-      "project": "GMK CYL BRG R2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Arrived, in fulfillment"
-    },
-    {
-      "project": "GMK CYL Prussian Alert",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Early October"
-    },
-    {
-      "project": "GMK CYL Thunder God",
-      "lastUpdated": "14 Sept 2026",
-      "status": "October"
+      "lastUpdated": "18 November 2026",
+      "status": "Fulfilled sans Deskmats, deskmats were unfortunately lost. Remade ones en route via ship due to arrive mid December"
     },
     {
       "project": "GMK CYL Masterpiece R2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "October"
-    },
-    {
-      "project": "GMK CYL 2 Pack",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
-    },
-    {
-      "project": "GMK CYL Noire R2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
+      "lastUpdated": "18 November 2026",
+      "status": "Fulfilled sans Deskmats, these are en route via ship due to arrive mid December"
     },
     {
       "project": "GMK CYL TA Neo",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
+      "lastUpdated": "18 November 2026",
+      "status": "Arrives November 30th"
     },
     {
       "project": "GMK CYL / MTNU Analog Dreams R3",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
+      "lastUpdated": "18 November 2026",
+      "status": "Arrives November 30th"
     },
     {
       "project": "GMK CYL Finer Things R2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
+      "lastUpdated": "18 November 2026",
+      "status": "Fulfilled sans Artisans, these will follow end of November"
     },
     {
       "project": "GMK CYL Huperfuse Origins R3",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Awaiting production"
+      "lastUpdated": "18 November 2026",
+      "status": "Arrives November 30th"
     },
     {
       "project": "GMK MTNU JUST",
-      "lastUpdated": "14 Sept 2026",
+      "lastUpdated": "18 November 2026",
       "status": "Awaiting production"
     },
     {
       "project": "GMK CYL Solarized Reborn",
-      "lastUpdated": "14 Sept 2026",
+      "lastUpdated": "18 November 2026",
       "status": "Awaiting production"
     },
     {
-      "project": "DCS Cream Cheese and Green R3",
-      "lastUpdated": "14 Sept 2026",
-      "status": "October"
+      "project": "GMK CYL Boho R2",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK CYL Red Devils R2",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK MTNU Oblivion",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK CYL Miami and Tokyo Nights",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK CYL Zombie",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK CYL Evil Dolch R2",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "DCS Chladni",
+      "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
     },
     {
       "project": "DCS Handarbeit",
-      "lastUpdated": "14 Sept 2026",
-      "status": "In production"
+      "lastUpdated": "18 November 2026",
+      "status": "ETA December"
     },
     {
       "project": "DCS Mudbeam",
-      "lastUpdated": "14 Sept 2026",
-      "status": "In production"
+      "lastUpdated": "18 November 2026",
+      "status": "ETA Q1 2027"
     },
     {
       "project": "Matrix Lab MP-01 Glass Mouse pad",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Completed, awaiting transport from China to Germany via ship"
+      "lastUpdated": "18 November 2026",
+      "status": "En route via ship due to arrive mid December"
+    },
+    {
+      "project": "Matrix Carnival",
+      "lastUpdated": "18 November 2026",
+      "status": "En route via ship due to arrive mid December"
     },
     {
       "project": "is0GR2",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Completed, awaiting transport from China to Germany via ship"
+      "lastUpdated": "18 November 2026",
+      "status": "En route via ship due to arrive mid December"
     },
     {
       "project": "Keycult No3/TKL",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Almost completed, then transport from China to Germany via ship"
+      "lastUpdated": "18 November 2026",
+      "status": "En route via ship due to arrive mid December"
     },
     {
       "project": "Keycult Wrist Rests",
-      "lastUpdated": "14 Sept 2026",
-      "status": "Completed, awaiting transport from China to Germany via ship"
+      "lastUpdated": "18 November 2026",
+      "status": "En route via ship due to arrive mid December"
     },
     {
       "project": "Keycult No2/TKL",
-      "lastUpdated": "14 Sept 2026",
-      "status": "In production, ETA Q4 2026"
+      "lastUpdated": "18 November 2026",
+      "status": "In production, ETA Q1 2027"
     },
     {
       "project": "Keycult No2/60",
-      "lastUpdated": "14 Sept 2026",
-      "status": "In production"
+      "lastUpdated": "18 November 2026",
+      "status": "In production, ETA Q1 2027"
     },
     {
       "project": "Lily R2",
@@ -159,5 +159,39 @@
       "status": "In production"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "a6800273bf79d9dd097275ef": "2026-11-18T11:41:12.512Z",
+    "aa92b42874a201dd8b9c08a1": "2026-11-18T11:41:12.736Z",
+    "df9413e2f441af61bb4f5531": "2026-11-18T11:41:12.856Z",
+    "a9431d1453e0b933ece4c2e2": "2026-11-18T11:41:12.977Z",
+    "17257e45682b37eb02042e8c": "2026-11-18T11:41:13.172Z",
+    "42e9815fc6b4b1a5e5d86993": "2026-11-18T11:41:13.284Z",
+    "9ed5f5679f66f9924d2f9b3b": "2026-11-18T11:41:13.388Z",
+    "1328e542dba03b443a1edc8a": "2026-11-18T11:41:13.863Z",
+    "1ec7b0d67f190a2a8e7bf786": "2026-11-18T11:41:14.345Z",
+    "08b9af3094e7c09eb87c4e38": "2026-11-18T11:41:14.515Z",
+    "8d37e9677abdc1f31fc42271": "2026-11-18T11:41:15.303Z",
+    "8a4334a82685857b865a88cc": "2026-11-18T11:41:15.492Z",
+    "47526339ee42c428718b7cea": "2026-11-18T11:41:15.971Z",
+    "cc0d023c03ab35b31dd78a7b": "2026-11-18T11:41:16.100Z",
+    "0a847919b2688314cf040a67": "2026-11-18T11:41:16.616Z",
+    "4bd53825c5c99db67faa3850": "2026-11-18T11:41:17.165Z",
+    "d6affb5e234023ba984a6862": "2026-11-18T11:41:17.331Z",
+    "f07d7badea869803d4bfde8a": "2026-11-18T11:41:17.848Z",
+    "bbd56ade228faaf69ecbdaf2": "2026-11-18T11:41:18.314Z",
+    "bc28fefedb69c0959b600945": "2026-11-18T11:41:18.466Z",
+    "e4dea4cd99cd12fabc95a392": "2026-11-18T11:41:18.935Z",
+    "fd7a01f9f19d4dd7473b226b": "2026-11-18T11:41:19.435Z",
+    "d1dbbab08a75010ae8fdffa3": "2026-11-18T11:41:19.924Z",
+    "e732fe79bafa9035fba3fe3e": "2026-11-18T11:41:22.244Z",
+    "8668746b6f790ac7a55315cf": "2026-11-18T11:41:22.374Z",
+    "09af61cd0855afbfc25e83c2": "2026-11-18T11:41:22.500Z",
+    "ea054ae0ee7b60230fba7f37": "2026-11-18T11:41:22.658Z",
+    "a5ee36c937788be318abfbdf": "2026-11-18T11:41:22.831Z",
+    "42175ef8b2666c3eb3b697fc": "2026-11-18T11:41:23.030Z",
+    "7f7755ba2578d0c2bec8cf50": "2026-11-18T11:41:23.147Z",
+    "0ad1b44401d1f92c596a1214": "2026-11-18T11:41:23.637Z",
+    "d2b907c5e6e9ce2aea48683b": "2026-11-18T11:41:23.778Z",
+    "1992dcdd6515b69bf2e9dce2": "2026-11-18T11:41:24.787Z"
+  }
 }
