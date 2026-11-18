@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T06:31:24.601Z",
+  "updatedAt": "2026-11-18T09:11:09.511Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -509,7 +509,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-18T06:31:24.586Z",
+    "updatedAt": "2026-11-18T09:11:08.873Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1307,7 +1307,7 @@
             "brands": [
               "Keygeek"
             ],
-            "status": "생산 중",
+            "status": "판매 예정",
             "eta": "26년 11월 말",
             "key": "스위치|suki"
           },
@@ -1338,16 +1338,6 @@
               "Angrymiao"
             ],
             "key": "마우스|am infinity .100 r2"
-          },
-          {
-            "product": "캣민트",
-            "category": "스위치",
-            "brands": [
-              "SWK"
-            ],
-            "status": "판매중",
-            "eta": "26년 11월",
-            "key": "스위치|캣민트"
           },
           {
             "product": "HE EVO 유리축",
@@ -1390,14 +1380,14 @@
             "key": "스위치|머랭"
           },
           {
-            "product": "라이",
+            "product": "라이 V2",
             "category": "스위치",
             "brands": [
               "NEO STUDIO,Keygeek"
             ],
-            "status": "생산 중",
+            "status": "판매 예정",
             "eta": "26년 4분기",
-            "key": "스위치|라이"
+            "key": "스위치|라이 v2"
           },
           {
             "product": "골든애플",
@@ -1435,7 +1425,7 @@
             "brands": [
               "HMX"
             ],
-            "status": "생산 중",
+            "status": "판매 예정",
             "eta": "26년 4분기",
             "key": "스위치|거봉"
           },
