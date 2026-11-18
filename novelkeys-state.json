@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T17:52:35.283Z",
+  "updatedAt": "2026-11-18T11:21:08.906Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -13,7 +13,7 @@
     {
       "category": "Keyboard",
       "product": "KeyBoy Advance",
-      "status": "Order placed.",
+      "status": "In production.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/key-boy-advance"
     },
@@ -355,6 +355,7 @@
     "14054d53a8c810af9485ee5c": "2026-11-16T17:12:57.022Z",
     "c5cbd5aea02933c57fdf78cd": "2026-11-17T16:02:53.783Z",
     "46a255b7d6099dad3337fbbf": "2026-11-17T16:02:56.154Z",
-    "a1ff96cda8e8803b836b0615": "2026-11-17T16:02:56.414Z"
+    "a1ff96cda8e8803b836b0615": "2026-11-17T16:02:56.414Z",
+    "0c6a11e0ad0bfcbf96eb74d3": "2026-11-18T11:21:08.906Z"
   }
 }
