@@ -542,6 +542,7 @@ public class SettingsActivity extends Activity {
     private void showBackupDialog() {
         new AlertDialog.Builder(this)
             .setTitle("설정 백업 · 복원")
+            .setMessage("등록한 상품, 선택 옵션, 알림 ON/OFF, 조회 주기, 재고 부족 기준을 JSON 파일로 보관해요. 로그인 정보는 포함하지 않아요.")
             .setItems(new String[]{"백업 파일로 내보내기", "백업 파일에서 가져오기"}, (dialog, which) -> {
                 if (which == 0) exportBackup();
                 else importBackup();
