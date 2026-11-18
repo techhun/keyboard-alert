@@ -1,8 +1,18 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T00:50:48.645Z",
+  "updatedAt": "2026-11-18T01:00:44.410Z",
   "rows": [
+    {
+      "product": "GEHIRN60 Barebone Kit",
+      "gbStart": "2026. 1. 19",
+      "eta": "2026. 9. 30",
+      "type": "Keyboard",
+      "manufacturer": "BAIONLENJA",
+      "status": "검수 중 / Inspecting",
+      "update": "2026. 11. 16",
+      "note": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th."
+    },
     {
       "product": "TYPFACE KAFKA Barebones Kit",
       "gbStart": "2026. 1. 29",
@@ -12,26 +22,6 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 16",
       "note": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November."
-    },
-    {
-      "product": "Katina TKL",
-      "gbStart": "2026. 3. 18",
-      "eta": "2026. 9. 30",
-      "type": "Keyboard",
-      "manufacturer": "INN Studio",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 17",
-      "note": "11월 18일 발송 예정"
-    },
-    {
-      "product": "Seal80",
-      "gbStart": "2026. 3. 24",
-      "eta": "2026. 12. 31",
-      "type": "Keyboard",
-      "manufacturer": "SENSY",
-      "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 17",
-      "note": "11월 18일 발송 예정"
     },
     {
       "product": "Atelier Magnus Slate Zero",
@@ -52,6 +42,16 @@
       "status": "검수 중 / Inspecting",
       "update": "2026. 11. 17",
       "note": "패키징에 문제가 있는 개체가 발견되어 GMK 측 확인 중 / An item with a packaging issue has been identified and is currently being investigated by GMK"
+    },
+    {
+      "product": "Vida Doo and Do.25 Keyboard Kit",
+      "gbStart": "2025. 11. 17",
+      "eta": "2027. 3. 31",
+      "type": "Keyboard",
+      "manufacturer": "Vida",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 18",
+      "note": "—"
     },
     {
       "product": "Chamber TKL",
@@ -582,16 +582,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 11. 17",
       "note": "—"
-    },
-    {
-      "product": "LILY R2 HHKB Barebone Kit",
-      "gbStart": "2025. 9. 3",
-      "eta": "2026. 5. 31",
-      "type": "Keyboard",
-      "manufacturer": "TypePlus",
-      "status": "완료 / DONE",
-      "update": "2026. 11. 17",
-      "note": "EC킷 입고. 11월 17일 발송 /EC Kit in stock. Dispatched on 17 November"
     }
   ],
   "sentChanges": {
@@ -623,6 +613,11 @@
     "89efdda4d13b4abf113f264e": "2026-11-17T05:50:30.374Z",
     "cdb42f36b6b2c03a7f3ea4b3": "2026-11-17T05:50:30.535Z",
     "48f3e6fa01f03fe5d9fd4ffb": "2026-11-17T05:50:30.747Z",
-    "d40710c005c8bfc80eab32a6": "2026-11-17T05:50:30.924Z"
+    "d40710c005c8bfc80eab32a6": "2026-11-17T05:50:30.924Z",
+    "1100b2842400399c0d13cc40": "2026-11-18T01:00:43.618Z",
+    "5051c7cedfe250f2a1f2be3f": "2026-11-18T01:00:43.847Z",
+    "81833abd58809cb3a379b1fb": "2026-11-18T01:00:44.005Z",
+    "235195cc66163e76cc7c5b4d": "2026-11-18T01:00:44.260Z",
+    "7ccf6b30342d0e7aaa0c6f42": "2026-11-18T01:00:44.410Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-17T05:50:30.925Z",
+  "updatedAt": "2026-11-18T01:00:44.410Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2262,6 +2262,35 @@
       "eta": "2026-12-31",
       "status": "검수 중 / Inspecting",
       "note": "제품 검수 중 / Product inspection in progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "3a092ded62b74f259d9d0b4e6cec8d55",
+      "source": "GEONWORKS",
+      "name": "GEHIRN60 Barebone Kit",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-18T01:00:44.410Z",
+      "categoryHint": "키보드",
+      "maker": "BAIONLENJA",
+      "saleStart": "2026-01-19",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "bbd69b7c9b8f80d495581ef753133f8e",
+      "source": "GEONWORKS",
+      "name": "Vida Doo and Do.25 Keyboard Kit",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-18T01:00:44.410Z",
+      "categoryHint": "키보드",
+      "maker": "Vida",
+      "saleStart": "2025-11-17",
+      "eta": "2027-03-31",
+      "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
