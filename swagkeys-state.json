@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T23:18:01.680Z",
+  "updatedAt": "2026-11-18T01:31:22.894Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -509,7 +509,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-17T23:18:01.658Z",
+    "updatedAt": "2026-11-18T01:31:21.355Z",
     "sources": {
       "reservations": {
         "items": [
@@ -617,7 +617,7 @@
             "brands": [
               "Flatbrain"
             ],
-            "status": "생산 중",
+            "status": "배송 중",
             "saleStart": "2026-03-05",
             "saleEnd": "2026-04-01",
             "eta": "27년 1분기",
@@ -1283,6 +1283,16 @@
             "key": "키보드|smurve80 투명 빌드 에디션"
           },
           {
+            "product": "레인스",
+            "category": "스위치",
+            "brands": [
+              "Gateron"
+            ],
+            "status": "생산 중",
+            "eta": "26년 11월 말",
+            "key": "스위치|레인스"
+          },
+          {
             "product": "특주 택타일 스위치",
             "category": "스위치",
             "brands": [
@@ -1335,7 +1345,7 @@
             "brands": [
               "SWK"
             ],
-            "status": "판매 예정",
+            "status": "판매중",
             "eta": "26년 11월",
             "key": "스위치|캣민트"
           },
@@ -1366,7 +1376,7 @@
               "HMX"
             ],
             "status": "생산 중",
-            "eta": "26년 11월 초 ~ 중순",
+            "eta": "생산 지연으로 현지 발송 완료로 확인 시 업데이트 하도록 하겠습니다. 죄송합니다.",
             "key": "스위치|레인"
           },
           {
@@ -1416,7 +1426,7 @@
               "HMX"
             ],
             "status": "생산 중",
-            "eta": "26년 4분기",
+            "eta": "생산 지연으로 현지 발송 완료로 확인 시 업데이트 하도록 하겠습니다. 죄송합니다.",
             "key": "스위치|문라이트 레드 (azalea)"
           },
           {
@@ -1436,7 +1446,7 @@
               "HMX"
             ],
             "status": "생산 중",
-            "eta": "26년 11월",
+            "eta": "26년 12월",
             "key": "스위치|화이트 피치 반저소음"
           },
           {
