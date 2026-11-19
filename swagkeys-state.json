@@ -1,12 +1,13 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T01:22:32.875Z",
+  "updatedAt": "2026-11-19T01:31:00.982Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
     "retroguardia": "2026-11-09",
-    "moomin": "2026-11-13"
+    "moomin": "2026-11-13",
+    "sws:beige": "2026-11-18"
   },
   "announcement": {
     "heading": "업데이트(26.10.14)",
@@ -209,8 +210,8 @@
     },
     "sws:beige": {
       "product": "SWS Beige",
-      "saleStart": "",
-      "saleEnd": ""
+      "saleStart": "2026-11-18",
+      "saleEnd": "2026-12-02"
     },
     "sws:soware": {
       "product": "SWS Soware",
@@ -509,7 +510,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-19T01:22:32.863Z",
+    "updatedAt": "2026-11-19T01:31:00.464Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1045,7 +1046,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1530,17 +1531,11 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {},
-    "fallbackSince": {
-      "reservations": "2026-11-19T01:22:32.785Z",
-      "instock": "2026-11-19T01:22:32.863Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-19T01:21:53.306Z",
-    "status": "2026-11-19T01:22:32.643Z"
-  }
+  "fallbackSince": {}
 }

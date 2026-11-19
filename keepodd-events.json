@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T00:50:33.290Z",
+  "updatedAt": "2026-11-19T01:31:00.982Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2352,6 +2352,39 @@
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "0cfdc60259fd4137f750b0ced3992d2e",
+      "source": "SWAGKEYS",
+      "name": "SWS Beige",
+      "eventType": "note_changed",
+      "after": "GB 시작 2026-11-18 ~ 2026-12-02",
+      "occurredAt": "2026-11-19T01:31:00.982Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-18",
+      "saleEnd": "2026-12-02",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.com/products/swg-beige",
+      "sourceUrlType": "product",
+      "note": "GB 시작 2026-11-18 ~ 2026-12-02"
+    },
+    {
+      "id": "160cf68e800770016f916c31f027f333",
+      "source": "SWAGKEYS",
+      "name": "SWS Beige",
+      "eventType": "note_changed",
+      "before": "미정",
+      "after": "2026-11-18 ~ 2026-12-02",
+      "occurredAt": "2026-11-19T01:31:00.982Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-18",
+      "saleEnd": "2026-12-02",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.com/products/swg-beige",
+      "sourceUrlType": "product",
+      "note": "판매 일정 2026-11-18 ~ 2026-12-02"
     }
   ]
 }
