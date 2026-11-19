@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T05:00:45.852Z",
+  "updatedAt": "2026-11-19T08:30:41.781Z",
   "rows": [
     {
       "product": "Chamber TKL",
@@ -48,6 +48,17 @@
       "end": "2026-12-13"
     },
     {
+      "product": "DCS NIGHTS",
+      "manufacturer": "Signature Plastics",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-18",
+      "end": "2026-12-18"
+    },
+    {
       "product": "GMK CYL Neon Vice",
       "manufacturer": "GMK",
       "region": "KR/GLOBAL",
@@ -55,7 +66,7 @@
       "type": "Keycaps",
       "status": "For Sale",
       "fixed": "확정 / Fixed",
-      "start": "2026-11-18",
+      "start": "2026-11-19",
       "end": "2026-12-15"
     }
   ],
@@ -63,6 +74,8 @@
     "b47b640372cfd086effb7349": "2026-11-16T00:00:52.904Z",
     "0f0904a6d8fe5b51acf389e4": "2026-11-17T02:40:38.347Z",
     "daa44fc34718f80be96476cc": "2026-11-18T05:00:45.685Z",
-    "3d29596c85c8654812435e94": "2026-11-18T05:00:45.852Z"
+    "3d29596c85c8654812435e94": "2026-11-18T05:00:45.852Z",
+    "18b52d7f01eda4782f471339": "2026-11-19T08:30:41.620Z",
+    "64581e4f6a7d107ce76d707e": "2026-11-19T08:30:41.780Z"
   }
 }
