@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T01:31:00.982Z",
+  "updatedAt": "2026-11-19T01:51:08.105Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -195,8 +195,8 @@
     },
     "9oo9": {
       "product": "SWG 9o_o9",
-      "saleStart": "2026-12-07",
-      "saleEnd": "2026-12-28"
+      "saleStart": "",
+      "saleEnd": ""
     },
     "meadow": {
       "product": "SWG Meadow",
@@ -510,7 +510,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-19T01:31:00.464Z",
+    "updatedAt": "2026-11-19T01:51:07.830Z",
     "sources": {
       "reservations": {
         "items": [

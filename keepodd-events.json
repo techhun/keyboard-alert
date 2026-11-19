@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T01:31:00.982Z",
+  "updatedAt": "2026-11-19T01:51:08.105Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2385,6 +2385,21 @@
       "sourceUrl": "https://swagkeys.com/products/swg-beige",
       "sourceUrlType": "product",
       "note": "판매 일정 2026-11-18 ~ 2026-12-02"
+    },
+    {
+      "id": "7fa879abaccc5ce579c02c288e3dca8b",
+      "source": "SWAGKEYS",
+      "name": "SWG 9o_o9",
+      "eventType": "note_changed",
+      "before": "2026-12-07 ~ 2026-12-28",
+      "after": "미정",
+      "occurredAt": "2026-11-19T01:51:08.105Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
+      "sourceUrlType": "update",
+      "note": "판매 일정 미정"
     }
   ]
 }
