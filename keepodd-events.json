@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-19T01:51:08.105Z",
+  "updatedAt": "2026-11-19T07:20:31.017Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2400,6 +2400,23 @@
       "sourceUrl": "https://swagkeys.notion.site/swg-keycap-roadmap",
       "sourceUrlType": "update",
       "note": "판매 일정 미정"
+    },
+    {
+      "id": "315805e983f8f544f7ea19438c57b447",
+      "source": "GEONWORKS",
+      "name": "Overture 2",
+      "eventType": "note_changed",
+      "before": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Geonworks around the end of October.",
+      "after": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "occurredAt": "2026-11-19T07:20:31.017Z",
+      "categoryHint": "키보드",
+      "maker": "MACHINA",
+      "saleStart": "2026-04-09",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }

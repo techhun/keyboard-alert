@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T00:50:33.290Z",
+  "updatedAt": "2026-11-19T07:20:31.017Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -160,8 +160,8 @@
       "type": "Keyboard",
       "manufacturer": "MACHINA",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 20",
-      "note": "10월 20일 QC 시작. 10월 말 경 지온웍스로 발송 예정. /QC begins on October 20. Scheduled to be shipped to Geonworks around the end of October."
+      "update": "2026. 11. 19",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
       "product": "PBS-Retro S.M AG",
@@ -595,7 +595,6 @@
     }
   ],
   "sentChanges": {
-    "e61b0984d1cb8ed81abe42e1": "2026-11-12T07:10:36.805Z",
     "655c4102bdcd65d1b273cd0f": "2026-11-12T07:50:29.981Z",
     "95dc503421e84985aeb3a706": "2026-11-12T07:50:30.182Z",
     "70032c1e59a17ef7cfed0676": "2026-11-13T03:00:51.339Z",
@@ -623,6 +622,7 @@
     "7ccf6b30342d0e7aaa0c6f42": "2026-11-18T01:00:44.410Z",
     "2d9c5b501e5f27be363e3cb4": "2026-11-18T08:30:37.141Z",
     "86a623fe5e29ee95e1bb814d": "2026-11-18T08:30:37.296Z",
-    "0490da30e4709a5adff07cd8": "2026-11-19T00:50:33.290Z"
+    "0490da30e4709a5adff07cd8": "2026-11-19T00:50:33.290Z",
+    "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z"
   }
 }
