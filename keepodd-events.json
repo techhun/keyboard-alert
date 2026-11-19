@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-18T08:30:37.296Z",
+  "updatedAt": "2026-11-19T00:50:33.290Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2335,6 +2335,23 @@
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-dcs-nights-%ED%82%A4%EC%BA%A1/766/category/47/display/1/",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "73913eea590ebbb80768cfad8fe13f4e",
+      "source": "GEONWORKS",
+      "name": "Grit Jahre 65",
+      "eventType": "eta_changed",
+      "before": "2026-12-30",
+      "after": "2026-12-31",
+      "occurredAt": "2026-11-19T00:50:33.290Z",
+      "categoryHint": "키보드",
+      "maker": "Grit",
+      "saleStart": "2026-05-01",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
     }
   ]
 }
