@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T08:30:37.296Z",
+  "updatedAt": "2026-11-19T00:20:31.696Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -595,7 +595,6 @@
     }
   ],
   "sentChanges": {
-    "9caf44476942b7936af14db9": "2026-11-12T00:20:28.921Z",
     "0a51d29cf0316b8e708a3daa": "2026-11-12T00:30:41.554Z",
     "e61b0984d1cb8ed81abe42e1": "2026-11-12T07:10:36.805Z",
     "655c4102bdcd65d1b273cd0f": "2026-11-12T07:50:29.981Z",
