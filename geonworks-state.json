@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T07:20:31.017Z",
+  "updatedAt": "2026-11-19T07:30:36.641Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -91,6 +91,16 @@
       "manufacturer": "Signature Plastics",
       "status": "판매 중 / GB on sale",
       "update": "2026. 11. 18",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Neon Vice",
+      "gbStart": "2026. 11. 19",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 19",
       "note": "—"
     },
     {
@@ -623,6 +633,7 @@
     "2d9c5b501e5f27be363e3cb4": "2026-11-18T08:30:37.141Z",
     "86a623fe5e29ee95e1bb814d": "2026-11-18T08:30:37.296Z",
     "0490da30e4709a5adff07cd8": "2026-11-19T00:50:33.290Z",
-    "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z"
+    "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z",
+    "ca466f942957174bce0d1301": "2026-11-19T07:30:36.641Z"
   }
 }
