@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T14:31:14.141Z",
+  "updatedAt": "2026-11-19T15:01:11.012Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -510,7 +510,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-19T14:31:14.123Z",
+    "updatedAt": "2026-11-19T15:01:10.828Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1538,7 +1538,9 @@
         "fresh": true
       }
     },
-    "closingsNotified": {},
+    "closingsNotified": {
+      "키캡|gmk cyl purple|2026-11-23|3": "2026-11-20"
+    },
     "fallbackSince": {}
   },
   "fallbackSince": {}
