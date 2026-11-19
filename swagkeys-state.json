@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-19T05:41:05.473Z",
+  "updatedAt": "2026-11-19T06:51:04.054Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -510,7 +510,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-19T05:41:05.450Z",
+    "updatedAt": "2026-11-19T06:51:03.174Z",
     "sources": {
       "reservations": {
         "items": [
@@ -803,6 +803,10 @@
             "brands": [
               "GMK"
             ],
+            "status": "공제 중",
+            "saleStart": "2026-11-16",
+            "saleEnd": "2026-12-15",
+            "eta": "27년 2분기",
             "key": "키캡|gmk liminal"
           },
           {
