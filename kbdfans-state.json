@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T06:53:45.024Z",
+  "updatedAt": "2026-11-20T07:03:39.148Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -144,29 +144,7 @@
       "summary": "6-26 Hold",
       "latestUpdateDate": "2026-09-14",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "6-26 Hold"
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "Cat：）",
-      "status": "Ongoing",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "September-July Sponsorship arrangement in September, pre-sale in October",
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateTitle": "Project Progress",
-      "latestUpdateBody": "GB is scheduled to go live in October"
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "TOFU60 Electrostatic Capacitor Module",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "9-7 Expected to be in stock in September, with dynacap and meta",
-      "latestUpdateDate": "2026-09-07",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Expected to be in stock in September, with dynacap and meta"
+      "latestUpdateBody": "6-26 Suspended"
     },
     {
       "category": "KEYBOARDS",
@@ -423,21 +401,10 @@
     },
     {
       "category": "KEYCAPS",
-      "product": "GMK CYL King of the Seas",
-      "status": "In production",
-      "eta": "Q4 2026",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
       "product": "PBTfans Guide Line",
       "status": "In production",
       "eta": "November 20",
-      "progress": 75,
+      "progress": 90,
       "summary": "Awaiting Injection Molding",
       "latestUpdateDate": "2026-09-11",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -448,7 +415,7 @@
       "product": "PBTfans 1984 R2",
       "status": "In Production",
       "eta": "Nov 2026",
-      "progress": 50,
+      "progress": 100,
       "summary": "Awaiting Injection Molding",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -993,6 +960,12 @@
     "4594bcb981ec9a8174ac3515": "2026-11-20T06:53:44.583Z",
     "5e6982a7c06f7e6de5b13832": "2026-11-20T06:53:44.718Z",
     "73da6c744d8327653ea07435": "2026-11-20T06:53:44.886Z",
-    "1e9ccd8bf96e388540601a64": "2026-11-20T06:53:45.023Z"
+    "1e9ccd8bf96e388540601a64": "2026-11-20T06:53:45.023Z",
+    "b12e4e341cf808a883aaf79e": "2026-11-20T07:03:38.474Z",
+    "97db39a782b7f79da29998b8": "2026-11-20T07:03:38.597Z",
+    "57ff43e5292410967b659dcd": "2026-11-20T07:03:38.729Z",
+    "ca6e2d1c1f903b2a3fe7c9f5": "2026-11-20T07:03:38.886Z",
+    "274426ff7a41c5a33398509f": "2026-11-20T07:03:39.049Z",
+    "382d17bd648a1902c4c35b03": "2026-11-20T07:03:39.147Z"
   }
 }
