@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T07:03:39.148Z",
+  "updatedAt": "2026-11-20T08:43:16.653Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -148,14 +148,14 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "TOFU TKL Lucy co-branded",
-      "status": "In progress",
+      "product": "TOFU TKL x Lucy",
+      "status": "Ongoing",
       "eta": "TBD",
-      "progress": 0,
+      "progress": 90,
       "summary": "9-7 CNC finished, already in anode phase",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 CNC finished, already in anode phase"
+      "latestUpdateBody": "11-17 In assembly, expected to start shipping in late November"
     },
     {
       "category": "KEYBOARDS",
@@ -409,17 +409,6 @@
       "latestUpdateDate": "2026-09-11",
       "latestUpdateTitle": "Graphite Project Progress",
       "latestUpdateBody": "Production is expected to be completed on November 14"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans 1984 R2",
-      "status": "In Production",
-      "eta": "Nov 2026",
-      "progress": 100,
-      "summary": "Awaiting Injection Molding",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
     },
     {
       "category": "KEYCAPS",
@@ -966,6 +955,9 @@
     "57ff43e5292410967b659dcd": "2026-11-20T07:03:38.729Z",
     "ca6e2d1c1f903b2a3fe7c9f5": "2026-11-20T07:03:38.886Z",
     "274426ff7a41c5a33398509f": "2026-11-20T07:03:39.049Z",
-    "382d17bd648a1902c4c35b03": "2026-11-20T07:03:39.147Z"
+    "382d17bd648a1902c4c35b03": "2026-11-20T07:03:39.147Z",
+    "4358dbb25d4489351e3d96cc": "2026-11-20T08:43:16.052Z",
+    "0539af89f79175c7e4f6d241": "2026-11-20T08:43:16.461Z",
+    "d649f072c63667d68e41d2ff": "2026-11-20T08:43:16.652Z"
   }
 }
