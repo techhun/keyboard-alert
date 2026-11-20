@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T09:03:17.626Z",
+  "updatedAt": "2026-11-20T09:13:58.125Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -214,29 +214,7 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "DOE60 by Hare",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "6-26 In the production of the new prototype, there are still some small problems to be fixed",
-      "latestUpdateDate": "2026-06-26",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "6-26 In the production of the new prototype, there are still some small problems to be fixed"
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "Aurum",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "3-14 In Production, Order Submitted",
-      "latestUpdateDate": "2026-03-14",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "3-14 In Production, Order Submitted"
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "Apsis60 - Boomerang Designer 60%",
+      "product": "Apsis 60",
       "status": "In progress",
       "eta": "TBD",
       "progress": 0,
@@ -408,18 +386,18 @@
       "summary": "05-08 Prepare to schedule production",
       "latestUpdateDate": "2026-05-08",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "plan to produce in October"
+      "latestUpdateBody": "plan to produce in December"
     },
     {
       "category": "KEYCAPS",
       "product": "PBTfans Sugar Rush",
-      "status": "In progress",
+      "status": "Ongoing",
       "eta": "TBD",
       "progress": 0,
       "summary": "01-13 Pre-sale scheduled for Q2 2026",
       "latestUpdateDate": "2026-01-13",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "01-13 Pre-sale scheduled for Q2 2026"
+      "latestUpdateBody": "Pre-sale date TBD"
     },
     {
       "category": "KEYCAPS",
@@ -478,17 +456,6 @@
     },
     {
       "category": "KEYCAPS",
-      "product": "PBTfans electric runner",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Wait for the designer to adjust the new file",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Wait for the designer to adjust the new file"
-    },
-    {
-      "category": "KEYCAPS",
       "product": "PBTfans Tag",
       "status": "In progress",
       "eta": "TBD",
@@ -501,13 +468,13 @@
     {
       "category": "KEYCAPS",
       "product": "PBTfans Idol Tenshi",
-      "status": "In progress",
+      "status": "Not Started",
       "eta": "TBD",
       "progress": 0,
       "summary": "Designing",
       "latestUpdateDate": "2026-09-11",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Designing"
+      "latestUpdateBody": "making samples"
     },
     {
       "category": "KEYCAPS",
@@ -534,13 +501,13 @@
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Boho",
-      "status": "Group buy",
+      "status": "In production",
       "eta": "Q1 2027",
       "progress": 50,
       "summary": "25 September - 2 October",
       "latestUpdateDate": "2026-09-10",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "25 September - 2 October"
+      "latestUpdateBody": "in-production"
     },
     {
       "category": "KEYCAPS",
@@ -955,6 +922,15 @@
     "2a170f75e230c5314cbaad58": "2026-11-20T09:03:16.961Z",
     "75e2254d5c944ca51844b85f": "2026-11-20T09:03:17.228Z",
     "da5154d0a3ee8f04a344c291": "2026-11-20T09:03:17.413Z",
-    "b6eba7f592c5405c688c29cb": "2026-11-20T09:03:17.626Z"
+    "b6eba7f592c5405c688c29cb": "2026-11-20T09:03:17.626Z",
+    "4e2fd6867d9db724d48e7aa1": "2026-11-20T09:13:54.421Z",
+    "6d11c7253303d9f5035e8ae9": "2026-11-20T09:13:54.789Z",
+    "d2365607ae1b32969aac11ae": "2026-11-20T09:13:54.970Z",
+    "da91df6fa711391bdb9db0e2": "2026-11-20T09:13:55.169Z",
+    "c2c61fccf464f495ada416b3": "2026-11-20T09:13:55.337Z",
+    "a4e5b92fa4e19adb245c6a06": "2026-11-20T09:13:55.538Z",
+    "ba213937715e991dec53361f": "2026-11-20T09:13:57.639Z",
+    "1fb6f17263175a1d59583a37": "2026-11-20T09:13:57.893Z",
+    "31a55baeb72048d4257a1847": "2026-11-20T09:13:58.124Z"
   }
 }
