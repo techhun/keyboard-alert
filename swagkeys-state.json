@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T03:23:47.758Z",
+  "updatedAt": "2026-11-20T04:18:21.856Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -10,8 +10,8 @@
     "sws:beige": "2026-11-18"
   },
   "announcement": {
-    "heading": "업데이트(26.10.14)",
-    "content": "SWG Space Cadet, Crimson Cadet, Forest Cadet의 렌더 및 키팅이 추가되었습니다. / SWG Space Cadet, Crimson Cadet, Forest Cadet Renders and Kitting have been added.\nSWS Fan U.C의 키팅 및 렌더들이 추가되었습니다. / SWS Fan U.C kitting and renders have been added."
+    "heading": "업데이트(26.11.20)",
+    "content": "4분기 키캡의 일부가 2027년도 공제로 변경되었습니다. / A few keycap set GBs have been delayed until 2027.\nSWG Koyo의 키팅 및 렌더가 추가되었습니다. / SWG Koyo’s kitting and renders have been added."
   },
   "quarters": {
     "Q1": [
@@ -49,10 +49,7 @@
       "SWG Moomin",
       "SWG Koyo",
       "SWG Meadow",
-      "SWS Beige",
-      "SWS Soware",
-      "SWS WoB",
-      "SWS FAN U.C"
+      "SWS Beige"
     ]
   },
   "roadmapDates": {
@@ -200,21 +197,6 @@
       "product": "SWS Beige",
       "saleStart": "2026-11-18",
       "saleEnd": "2026-12-02"
-    },
-    "sws:soware": {
-      "product": "SWS Soware",
-      "saleStart": "",
-      "saleEnd": ""
-    },
-    "sws:wob": {
-      "product": "SWS WoB",
-      "saleStart": "",
-      "saleEnd": ""
-    },
-    "sws:fanuc": {
-      "product": "SWS FAN U.C",
-      "saleStart": "",
-      "saleEnd": ""
     }
   },
   "rows": [
@@ -270,25 +252,25 @@
       "product": "Salmon",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 83.3,
-      "shipping": 0,
+      "inProduction": 100,
+      "shipping": 33.3,
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
       "eta": "2026-11-24",
-      "currentStatus": "생산 대기중 (Awaiting Production)"
+      "currentStatus": "배송중 (Shipping)"
     },
     {
       "product": "Skeletoon",
       "groupBuy": 100,
       "waitingProduction": 100,
-      "inProduction": 0,
+      "inProduction": 16.7,
       "shipping": 0,
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
       "eta": "2026-12-23",
-      "currentStatus": "생산 대기중 (Awaiting Production)"
+      "currentStatus": "생산중 (In Production)"
     },
     {
       "product": "Rainbow Alert",
@@ -432,7 +414,7 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
       "product": "Crimson Cadet",
@@ -444,7 +426,7 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
       "product": "Forest Cadet",
@@ -456,7 +438,7 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
       "product": "Nightshift",
@@ -468,7 +450,7 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
       "product": "Retroguardia",
@@ -498,7 +480,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-20T03:23:47.746Z",
+    "updatedAt": "2026-11-20T04:18:18.898Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1038,7 +1020,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1523,19 +1505,13 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
       "키캡|gmk cyl purple|2026-11-23|3": "2026-11-20"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-20T03:23:47.705Z",
-      "instock": "2026-11-20T03:23:47.746Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-20T03:23:08.552Z",
-    "status": "2026-11-20T03:23:47.605Z"
-  }
+  "fallbackSince": {}
 }
