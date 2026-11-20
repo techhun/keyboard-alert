@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T09:34:30.399Z",
+  "updatedAt": "2026-11-20T09:44:38.938Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -510,15 +510,59 @@
       "latestUpdateBody": "Interest Survey Stage"
     },
     {
-      "category": "KEYCAPS",
-      "product": "PBTfans 1984 dark",
-      "status": "In production",
-      "eta": "Nov 2026",
-      "progress": 100,
-      "summary": "Project update",
-      "latestUpdateDate": "2026-11-20",
-      "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "In Stock Now"
+      "category": "GMK",
+      "product": "GMK Momo Yume (もも ゆめ)",
+      "status": "In progress",
+      "eta": "TBD",
+      "progress": 0,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-01-13",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "Interest Survey Stage"
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Highlight",
+      "status": "In progress",
+      "eta": "TBD",
+      "progress": 0,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-01-13",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "Interest Survey Stage"
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Modo and Modo Light",
+      "status": "In progress",
+      "eta": "TBD",
+      "progress": 0,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-01-13",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "Interest Survey Stage"
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Monokai Light",
+      "status": "In progress",
+      "eta": "TBD",
+      "progress": 0,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-01-13",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "Interest Survey Stage"
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Cleopatra",
+      "status": "In progress",
+      "eta": "TBD",
+      "progress": 0,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-01-13",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "Interest Survey Stage"
     },
     {
       "category": "KEYCAPS",
@@ -526,39 +570,6 @@
       "status": "Group buy",
       "eta": "Q1 2027",
       "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans PYGA R2",
-      "status": "Prototyping",
-      "eta": "TBD",
-      "progress": 25,
-      "summary": "Project update",
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "production schedule isn't finalized yet"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Luna",
-      "status": "Prototyping",
-      "eta": "TBD",
-      "progress": 25,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Virtuoso Dark",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 75,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -574,138 +585,6 @@
       "latestUpdateDate": "2026-11-20",
       "latestUpdateTitle": "Project update",
       "latestUpdateBody": ""
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Guide Line",
-      "status": "In production",
-      "eta": "November 20",
-      "progress": 90,
-      "summary": "Awaiting Injection Molding",
-      "latestUpdateDate": "2026-09-11",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Production is expected to be completed on November 14"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Valhalla",
-      "status": "Prototyping",
-      "eta": "TBD",
-      "progress": 25,
-      "summary": "05-08 Prepare to schedule production",
-      "latestUpdateDate": "2026-05-08",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "plan to produce in December"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Sugar Rush",
-      "status": "Ongoing",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "01-13 Pre-sale scheduled for Q2 2026",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Pre-sale date TBD"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Synthblaze Neo",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Waiting to schedule R1 sample",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Waiting to schedule R1 sample"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Caveman",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Waiting to schedule R1 sample",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Waiting to schedule R1 sample"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Charoite",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Waiting to schedule R1 sample",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Waiting to schedule R1 sample"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Purpurite R2",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Waiting to schedule R1 sample",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Waiting to schedule R1 sample"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Blood Night",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Awaiting design file adjustment",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Awaiting design file adjustment"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Tag",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "R1 Sample Confirmation",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "R1 Sample Confirmation"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Idol Tenshi",
-      "status": "Not Started",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Designing",
-      "latestUpdateDate": "2026-09-11",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "making samples"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans CTRLFREK",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Production is expected to be completed on 23 November",
-      "latestUpdateDate": "2026-09-11",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Production is expected to be completed on 23 November"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "PBTfans Berry",
-      "status": "Prototyping",
-      "eta": "TBD",
-      "progress": 25,
-      "summary": "6-20 Scheduling R2 Samples",
-      "latestUpdateDate": "2026-06-20",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "making color sample"
     },
     {
       "category": "KEYCAPS",
@@ -772,61 +651,6 @@
       "latestUpdateDate": "2026-08-18",
       "latestUpdateTitle": "Graphite Project Progress",
       "latestUpdateBody": "Closed group, in production"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK Momo Yume (もも ゆめ)",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Highlight",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Modo and Modo Light",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Monokai Light",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Cleopatra",
-      "status": "In progress",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-01-13",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
     },
     {
       "category": "KEYCAPS",
@@ -970,6 +794,32 @@
     "1a119ba14e20d35ab1de02aa": "2026-11-20T09:34:24.235Z",
     "f885f5eb1e28cc7f634dacd5": "2026-11-20T09:34:26.373Z",
     "c76c6ba13f6d243103f4c9be": "2026-11-20T09:34:28.263Z",
-    "8d2626eae7a0b7dacfd767a9": "2026-11-20T09:34:30.399Z"
+    "8d2626eae7a0b7dacfd767a9": "2026-11-20T09:34:30.399Z",
+    "8c9e6c1290553bbd0e7aff78": "2026-11-20T09:44:30.368Z",
+    "0d12bdb4ab9ac54079124840": "2026-11-20T09:44:30.656Z",
+    "ef9ce475377a87fd68db23b8": "2026-11-20T09:44:30.841Z",
+    "b5cdcb73402f626991e6c183": "2026-11-20T09:44:30.972Z",
+    "67a76643d7051dc2f5840fd2": "2026-11-20T09:44:31.105Z",
+    "4f7efb0af5da7a5e7c268a94": "2026-11-20T09:44:31.280Z",
+    "55792a5cadba5b5e9700f5aa": "2026-11-20T09:44:31.400Z",
+    "e05a718c9daf602625058413": "2026-11-20T09:44:31.551Z",
+    "4dd8cbdec85b630a40590c7c": "2026-11-20T09:44:32.218Z",
+    "66c691b3350fa63db921c5fe": "2026-11-20T09:44:32.355Z",
+    "12d82f8ff4f3b24af608cc83": "2026-11-20T09:44:32.805Z",
+    "673bb6001b29f8fc3dd23926": "2026-11-20T09:44:33.278Z",
+    "d2938b6dca82593a8c0af037": "2026-11-20T09:44:33.778Z",
+    "578cf0f67f67c54fae16cdba": "2026-11-20T09:44:34.279Z",
+    "29b98ebc0937c05df0336009": "2026-11-20T09:44:34.471Z",
+    "595237ea2bbfb8d2fdf1a56c": "2026-11-20T09:44:34.953Z",
+    "e942d3198b34da087a5ed851": "2026-11-20T09:44:35.456Z",
+    "3eb11fcacd74a0b73ee86381": "2026-11-20T09:44:35.636Z",
+    "3531e1a8995c51ece7482087": "2026-11-20T09:44:36.116Z",
+    "731d5483f7b83c27dd9fd5fe": "2026-11-20T09:44:36.793Z",
+    "84be73890e4fb03a26440e84": "2026-11-20T09:44:36.926Z",
+    "e50207c336447742b6ac4f6e": "2026-11-20T09:44:37.370Z",
+    "8c47f5666a6ed93d67dd1b3f": "2026-11-20T09:44:37.831Z",
+    "1c12e1ce2f8918b08b179730": "2026-11-20T09:44:37.944Z",
+    "d01ec06a86d65abea54dd65f": "2026-11-20T09:44:38.466Z",
+    "5584a018de8f666318056391": "2026-11-20T09:44:38.937Z"
   }
 }
