@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T06:43:41.169Z",
+  "updatedAt": "2026-11-20T06:53:45.024Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -104,21 +104,21 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "Athena 75 Pre-orders",
+      "product": "Athena 75",
       "status": "In production",
       "eta": "Q4 2026",
-      "progress": 30,
+      "progress": 90,
       "summary": "Pre-order colors are expected to ship in Q4 2026",
       "latestUpdateDate": "2026-08-10",
       "latestUpdateTitle": "Pre-order colors are expected to ship in Q4 2026",
-      "latestUpdateBody": "Athena 75 pre-order colors are expected to ship around Q4 2026."
+      "latestUpdateBody": "Athena 75 pre-order colors are expected to ship around early December."
     },
     {
       "category": "KEYBOARDS",
       "product": "TOFU TKL R2",
       "status": "In production",
-      "eta": "Nov 2026",
-      "progress": 85,
+      "eta": "Dec 2026",
+      "progress": 90,
       "summary": "Project update",
       "latestUpdateDate": "2026-09-21",
       "latestUpdateTitle": "Project update",
@@ -130,10 +130,10 @@
       "status": "In production",
       "eta": "Q1 2027",
       "progress": 40,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
+      "summary": "Project update",
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "11-20 CNC machining in progress"
     },
     {
       "category": "KEYBOARDS",
@@ -989,6 +989,10 @@
     "7e96925cadd66f5de5982ee7": "2026-11-20T06:43:40.513Z",
     "34b2f3c1b26983db83d8786f": "2026-11-20T06:43:40.758Z",
     "66f725d056272ab8d4abb4d2": "2026-11-20T06:43:40.979Z",
-    "14b42d4adcaf1650c7ad2dfb": "2026-11-20T06:43:41.169Z"
+    "14b42d4adcaf1650c7ad2dfb": "2026-11-20T06:43:41.169Z",
+    "4594bcb981ec9a8174ac3515": "2026-11-20T06:53:44.583Z",
+    "5e6982a7c06f7e6de5b13832": "2026-11-20T06:53:44.718Z",
+    "73da6c744d8327653ea07435": "2026-11-20T06:53:44.886Z",
+    "1e9ccd8bf96e388540601a64": "2026-11-20T06:53:45.023Z"
   }
 }
