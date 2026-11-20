@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T01:03:08.157Z",
+  "updatedAt": "2026-11-20T04:43:29.596Z",
   "rows": [
     {
       "category": "GMK",
@@ -109,8 +109,8 @@
       "eta": "November 2026",
       "progress": 20,
       "summary": "Keycaps are expected to arrive in November",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
       "latestUpdateBody": ""
     },
     {
@@ -193,7 +193,7 @@
     {
       "category": "KEYBOARDS",
       "product": "Cat：）",
-      "status": "In progress",
+      "status": "Ongoing",
       "eta": "TBD",
       "progress": 0,
       "summary": "September-July Sponsorship arrangement in September, pre-sale in October",
@@ -383,9 +383,9 @@
       "status": "In Production",
       "eta": "Jan 2027",
       "progress": 10,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
+      "summary": "Project update",
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
       "latestUpdateBody": ""
     },
     {
@@ -933,6 +933,9 @@
     "d6122bb983a8130eebb86c36": "2026-11-16T09:02:37.863Z",
     "0d72862959e3c738ace90eb7": "2026-11-17T02:22:03.696Z",
     "17d5550f4c8d578f48e13d9f": "2026-11-17T09:13:31.358Z",
-    "a2e8d10b89cf2d9b84231485": "2026-11-20T00:43:55.380Z"
+    "a2e8d10b89cf2d9b84231485": "2026-11-20T00:43:55.380Z",
+    "3b9d526ebb6ae585712a31c4": "2026-11-20T04:43:29.324Z",
+    "b8e6d79ad037d321edfe6fa4": "2026-11-20T04:43:29.469Z",
+    "46226de0238426758b7ef525": "2026-11-20T04:43:29.596Z"
   }
 }
