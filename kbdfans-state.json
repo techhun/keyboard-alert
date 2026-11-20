@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T09:53:54.965Z",
+  "updatedAt": "2026-11-20T10:03:41.078Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -375,7 +375,7 @@
       "summary": "Plan to start the group in August",
       "latestUpdateDate": "2026-08-18",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Plan to start the group in August"
+      "latestUpdateBody": "Plan to start the group in December"
     },
     {
       "category": "GMK",
@@ -792,6 +792,7 @@
     "265aec053a1941b7dd1f8732": "2026-11-20T09:53:53.515Z",
     "1367ac514fea07a4fc3bb756": "2026-11-20T09:53:54.044Z",
     "130058ef4408c8fb8d5f30ef": "2026-11-20T09:53:54.521Z",
-    "a2436ba80765a4db0e0862ae": "2026-11-20T09:53:54.965Z"
+    "a2436ba80765a4db0e0862ae": "2026-11-20T09:53:54.965Z",
+    "fe281dbfa137faeca6165447": "2026-11-20T10:03:41.077Z"
   }
 }
