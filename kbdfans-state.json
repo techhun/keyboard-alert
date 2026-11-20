@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T04:43:29.596Z",
+  "updatedAt": "2026-11-20T05:03:53.837Z",
   "rows": [
     {
       "category": "GMK",
@@ -171,9 +171,9 @@
     {
       "category": "KEYBOARDS",
       "product": "TOFULL",
-      "status": "Group Buy is Live",
+      "status": "In production",
       "eta": "Q1 2027",
-      "progress": 10,
+      "progress": 40,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -936,6 +936,7 @@
     "a2e8d10b89cf2d9b84231485": "2026-11-20T00:43:55.380Z",
     "3b9d526ebb6ae585712a31c4": "2026-11-20T04:43:29.324Z",
     "b8e6d79ad037d321edfe6fa4": "2026-11-20T04:43:29.469Z",
-    "46226de0238426758b7ef525": "2026-11-20T04:43:29.596Z"
+    "46226de0238426758b7ef525": "2026-11-20T04:43:29.596Z",
+    "a04b0fd6bf0f08028361f508": "2026-11-20T05:03:53.836Z"
   }
 }
