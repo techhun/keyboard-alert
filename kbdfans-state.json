@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T08:43:16.653Z",
+  "updatedAt": "2026-11-20T09:03:17.626Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -159,69 +159,58 @@
     },
     {
       "category": "KEYBOARDS",
-      "product": "TOFU TKL Gurokawa co-branded",
-      "status": "In progress",
+      "product": "TOFU TKL x Gurokawa",
+      "status": "Ongoing",
       "eta": "TBD",
-      "progress": 0,
+      "progress": 55,
       "summary": "9-7 GMK keycap delivery delayed to October, keyboard project pushed back",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 GMK keycap delivery delayed to October, keyboard project pushed back"
+      "latestUpdateBody": "Currently in the process of confirming the final configuration; production is expected to be scheduled for December."
     },
     {
       "category": "KEYBOARDS",
       "product": "Chamber TKL",
-      "status": "In progress",
+      "status": "Ongoing",
       "eta": "TBD",
       "progress": 0,
       "summary": "9-7 Sponsorship will be arranged in September, and it is expected to be pre-sold in October",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Sponsorship will be arranged in September, and it is expected to be pre-sold in October"
+      "latestUpdateBody": "Group buying in progress"
     },
     {
       "category": "KEYBOARDS",
       "product": "Argo-Tent Alice",
-      "status": "In progress",
+      "status": "Ongoing",
       "eta": "TBD",
       "progress": 0,
       "summary": "9-7 Still waiting for PCB samples",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Still waiting for PCB samples"
+      "latestUpdateBody": "The structure needs to be re-optimized."
     },
     {
       "category": "KEYBOARDS",
-      "product": "hot dog multi-function keyboard chien chaud",
-      "status": "In progress",
+      "product": "chien chaud",
+      "status": "Ongoing",
       "eta": "TBD",
       "progress": 0,
       "summary": "9-7 Test completed, last proofing confirmation in progress",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Test completed, last proofing confirmation in progress"
-    },
-    {
-      "category": "KEYBOARDS",
-      "product": "TOFU PAD",
-      "status": "Completed",
-      "eta": "TBD",
-      "progress": 100,
-      "summary": "9-7 In the successive delivery of the factory, some parts have been received",
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "fulfillment is in progress"
+      "latestUpdateBody": "The final prototypes have been completed, and its promotion is planned for December."
     },
     {
       "category": "KEYBOARDS",
       "product": "Levi TKL",
-      "status": "In progress",
+      "status": "Ongoing",
       "eta": "TBD",
-      "progress": 0,
+      "progress": 50,
       "summary": "7-27 Plan for the second half of the year",
       "latestUpdateDate": "2026-07-27",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "7-27 Plan for the second half of the year"
+      "latestUpdateBody": "Stock expected in January 2027"
     },
     {
       "category": "KEYBOARDS",
@@ -958,6 +947,14 @@
     "382d17bd648a1902c4c35b03": "2026-11-20T07:03:39.147Z",
     "4358dbb25d4489351e3d96cc": "2026-11-20T08:43:16.052Z",
     "0539af89f79175c7e4f6d241": "2026-11-20T08:43:16.461Z",
-    "d649f072c63667d68e41d2ff": "2026-11-20T08:43:16.652Z"
+    "d649f072c63667d68e41d2ff": "2026-11-20T08:43:16.652Z",
+    "5bd2fecb212b291ea2d76fd4": "2026-11-20T09:03:16.204Z",
+    "b569b696ab2b1296aa3232df": "2026-11-20T09:03:16.413Z",
+    "9d7865a1816398b439792525": "2026-11-20T09:03:16.600Z",
+    "1b30ed4d6627bbe1f3511d9b": "2026-11-20T09:03:16.774Z",
+    "2a170f75e230c5314cbaad58": "2026-11-20T09:03:16.961Z",
+    "75e2254d5c944ca51844b85f": "2026-11-20T09:03:17.228Z",
+    "da5154d0a3ee8f04a344c291": "2026-11-20T09:03:17.413Z",
+    "b6eba7f592c5405c688c29cb": "2026-11-20T09:03:17.626Z"
   }
 }
