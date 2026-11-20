@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T06:23:15.104Z",
+  "updatedAt": "2026-11-20T06:33:17.187Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -39,31 +39,31 @@
     {
       "category": "KEYBOARDS",
       "product": "TOFU40",
-      "status": "In progress",
+      "status": "Product definitions",
       "eta": "TBD",
-      "progress": 0,
+      "progress": 25,
       "summary": "Owner: Richard · Status: Normal",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Sample test passed, pre-sale planned for November"
+      "latestUpdateBody": "we plan to start arranging production of the promo prototypes on Nov 4"
     },
     {
       "category": "KEYBOARDS",
       "product": "Agar Micro",
       "status": "In production",
       "eta": "Dec 2026",
-      "progress": 86,
+      "progress": 90,
       "summary": "In production",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "9-7 Factory CNC Stage"
+      "latestUpdateBody": "We expect to complete production in early December"
     },
     {
       "category": "KEYBOARDS",
       "product": "Agar mini Dual-mode version with keycaps",
       "status": "In production",
-      "eta": "November 2026",
-      "progress": 20,
+      "eta": "Dec 2026",
+      "progress": 90,
       "summary": "Keycaps are expected to arrive in November",
       "latestUpdateDate": "2026-11-20",
       "latestUpdateTitle": "Project update",
@@ -386,7 +386,7 @@
       "summary": "Project update",
       "latestUpdateDate": "2026-09-21",
       "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "plan to produce in October"
+      "latestUpdateBody": "production schedule isn't finalized yet"
     },
     {
       "category": "KEYCAPS",
@@ -415,7 +415,7 @@
       "product": "KeyKobo Cross Impact",
       "status": "In Production",
       "eta": "Jan 2027",
-      "progress": 10,
+      "progress": 50,
       "summary": "Project update",
       "latestUpdateDate": "2026-11-20",
       "latestUpdateTitle": "Project update",
@@ -979,6 +979,11 @@
     "b47f571bc6c48cc34301829d": "2026-11-20T06:23:14.427Z",
     "d78b671af571d8036cad315f": "2026-11-20T06:23:14.645Z",
     "b2223ce27c8cc98f6275094c": "2026-11-20T06:23:14.938Z",
-    "41b86dc3fe01d1ca99ed9950": "2026-11-20T06:23:15.103Z"
+    "41b86dc3fe01d1ca99ed9950": "2026-11-20T06:23:15.103Z",
+    "fe062bdd8367df6bf1742400": "2026-11-20T06:33:16.582Z",
+    "9053d6362a23854416eb203f": "2026-11-20T06:33:16.735Z",
+    "91e30958ac79531c9d305688": "2026-11-20T06:33:16.858Z",
+    "fa3b3aedfc1461da6eab5b9c": "2026-11-20T06:33:17.055Z",
+    "a4af3f0074d7e3cf53ef9b79": "2026-11-20T06:33:17.186Z"
   }
 }
