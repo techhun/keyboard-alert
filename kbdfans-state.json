@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T06:33:17.187Z",
+  "updatedAt": "2026-11-20T06:43:41.169Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -73,34 +73,34 @@
       "category": "KEYBOARDS",
       "product": "Agar mini Dual-mode version with PBTfans Astraeus",
       "status": "In production",
-      "eta": "September 20",
-      "progress": 70,
+      "eta": "Dec 2026",
+      "progress": 90,
       "summary": "Keycaps have been queued for the injection molding phase.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "Producing..."
     },
     {
       "category": "KEYBOARDS",
-      "product": "TOFU60 3.0 Pre-order",
+      "product": "TOFU60 3.0",
       "status": "In production",
       "eta": "Q4 2026",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
+      "progress": 95,
+      "summary": "Project update",
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "In-stock sales, with some items available for pre-order"
     },
     {
       "category": "KEYBOARDS",
-      "product": "TOFU65 3.0 Pre-orders",
+      "product": "TOFU65 3.0",
       "status": "In production",
       "eta": "Q4 2026",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
+      "progress": 95,
+      "summary": "Project update",
+      "latestUpdateDate": "2026-11-20",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "In-stock sales, with some items available for pre-order"
     },
     {
       "category": "KEYBOARDS",
@@ -984,6 +984,11 @@
     "9053d6362a23854416eb203f": "2026-11-20T06:33:16.735Z",
     "91e30958ac79531c9d305688": "2026-11-20T06:33:16.858Z",
     "fa3b3aedfc1461da6eab5b9c": "2026-11-20T06:33:17.055Z",
-    "a4af3f0074d7e3cf53ef9b79": "2026-11-20T06:33:17.186Z"
+    "a4af3f0074d7e3cf53ef9b79": "2026-11-20T06:33:17.186Z",
+    "aef41199fb90f95e1191902e": "2026-11-20T06:43:40.327Z",
+    "7e96925cadd66f5de5982ee7": "2026-11-20T06:43:40.513Z",
+    "34b2f3c1b26983db83d8786f": "2026-11-20T06:43:40.758Z",
+    "66f725d056272ab8d4abb4d2": "2026-11-20T06:43:40.979Z",
+    "14b42d4adcaf1650c7ad2dfb": "2026-11-20T06:43:41.169Z"
   }
 }
