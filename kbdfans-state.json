@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T06:03:35.813Z",
+  "updatedAt": "2026-11-20T06:13:38.928Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -118,11 +118,11 @@
       "product": "TOFU TKL R2",
       "status": "In production",
       "eta": "Nov 2026",
-      "progress": 50,
+      "progress": 85,
       "summary": "Project update",
       "latestUpdateDate": "2026-09-21",
       "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "CNC in batches. Top Case: 10% Bottom Case: 17% Internal Cover: 100% Plate: 100% (waiting for anodizing) Weight: 0% (ready for CNC) Wrist Rest: 0% (ready for CNC)"
+      "latestUpdateBody": "Progress is on schedule, and shipment is expected in December."
     },
     {
       "category": "KEYBOARDS",
@@ -974,6 +974,7 @@
     "01ef0c421cb4df06b27b7318": "2026-11-20T05:53:33.429Z",
     "773d72912271c061bd2657f1": "2026-11-20T05:53:33.639Z",
     "d9f452327e7d15dfc914a597": "2026-11-20T05:53:33.855Z",
-    "208c6479053d8ffcea31d17f": "2026-11-20T06:03:35.813Z"
+    "208c6479053d8ffcea31d17f": "2026-11-20T06:03:35.813Z",
+    "e7f8fa8a7f8c0273e08f6827": "2026-11-20T06:13:38.928Z"
   }
 }
