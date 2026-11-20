@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T09:13:58.125Z",
+  "updatedAt": "2026-11-20T09:23:12.104Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -507,29 +507,29 @@
       "summary": "25 September - 2 October",
       "latestUpdateDate": "2026-09-10",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "in-production"
+      "latestUpdateBody": "in production"
     },
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Draco",
       "status": "Prototyping",
       "eta": "Q2 2027",
-      "progress": 25,
-      "summary": "Interest Survey Stage",
-      "latestUpdateDate": "2026-09-07",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Red Devils",
-      "status": "In progress",
-      "eta": "TBD",
       "progress": 0,
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
+      "latestUpdateBody": "GB Date: Nov 27 - Dec 27, 2026"
+    },
+    {
+      "category": "KEYCAPS",
+      "product": "GMK CYL Red Devils",
+      "status": "In production",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "Interest Survey Stage",
+      "latestUpdateDate": "2026-09-07",
+      "latestUpdateTitle": "Graphite Project Progress",
+      "latestUpdateBody": "in production"
     },
     {
       "category": "KEYCAPS",
@@ -540,7 +540,7 @@
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-08-21",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
+      "latestUpdateBody": "Interest Check Stage"
     },
     {
       "category": "KEYCAPS",
@@ -551,18 +551,7 @@
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-08-20",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
-    },
-    {
-      "category": "KEYCAPS",
-      "product": "GMK CYL Noire",
-      "status": "In production",
-      "eta": "TBD",
-      "progress": 0,
-      "summary": "Closed group, in production",
-      "latestUpdateDate": "2026-08-18",
-      "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Closed group, in production"
+      "latestUpdateBody": "Interest Check Stage"
     },
     {
       "category": "KEYCAPS",
@@ -635,11 +624,11 @@
       "product": "GMK CYL Purple",
       "status": "Group buy",
       "eta": "Q2 2027",
-      "progress": 50,
+      "progress": 90,
       "summary": "Start time: October 10th - November 10th",
       "latestUpdateDate": "2026-07-09",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Start time: October 10th - November 10th"
+      "latestUpdateBody": "Start time: October 10th - November 23th"
     },
     {
       "category": "KEYCAPS",
@@ -650,18 +639,18 @@
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-06-26",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
+      "latestUpdateBody": "Interest Check Stage"
     },
     {
       "category": "KEYCAPS",
       "product": "GMK CYL Evil Lime",
-      "status": "Group buy",
+      "status": "In production",
       "eta": "Q2 2027",
       "progress": 50,
       "summary": "Interest Survey Stage",
       "latestUpdateDate": "2026-06-26",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
+      "latestUpdateBody": "in prodcution"
     },
     {
       "category": "KEYCAPS",
@@ -931,6 +920,15 @@
     "a4e5b92fa4e19adb245c6a06": "2026-11-20T09:13:55.538Z",
     "ba213937715e991dec53361f": "2026-11-20T09:13:57.639Z",
     "1fb6f17263175a1d59583a37": "2026-11-20T09:13:57.893Z",
-    "31a55baeb72048d4257a1847": "2026-11-20T09:13:58.124Z"
+    "31a55baeb72048d4257a1847": "2026-11-20T09:13:58.124Z",
+    "66467f073ca3c5e28950cc08": "2026-11-20T09:23:10.110Z",
+    "27fc1365e243c1b6f39cf383": "2026-11-20T09:23:10.429Z",
+    "f356d5ccea2d2d76caf70629": "2026-11-20T09:23:10.663Z",
+    "13ce67810a4c3269d9800932": "2026-11-20T09:23:10.862Z",
+    "3be67c195f64ff75ffb5f4f9": "2026-11-20T09:23:11.116Z",
+    "95ce0a1b7e9ab527c17c9868": "2026-11-20T09:23:11.308Z",
+    "584250581f2f096c5dc5df43": "2026-11-20T09:23:11.538Z",
+    "7ec50cc2232a25b68975c7f8": "2026-11-20T09:23:11.778Z",
+    "072a21de7acb446f719d94bf": "2026-11-20T09:23:12.103Z"
   }
 }
