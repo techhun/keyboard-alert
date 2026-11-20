@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T05:53:33.855Z",
+  "updatedAt": "2026-11-20T06:03:35.813Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -67,7 +67,7 @@
       "summary": "Keycaps are expected to arrive in November",
       "latestUpdateDate": "2026-11-20",
       "latestUpdateTitle": "Project update",
-      "latestUpdateBody": ""
+      "latestUpdateBody": "Producing..."
     },
     {
       "category": "KEYBOARDS",
@@ -973,6 +973,7 @@
     "a04b0fd6bf0f08028361f508": "2026-11-20T05:03:53.836Z",
     "01ef0c421cb4df06b27b7318": "2026-11-20T05:53:33.429Z",
     "773d72912271c061bd2657f1": "2026-11-20T05:53:33.639Z",
-    "d9f452327e7d15dfc914a597": "2026-11-20T05:53:33.855Z"
+    "d9f452327e7d15dfc914a597": "2026-11-20T05:53:33.855Z",
+    "208c6479053d8ffcea31d17f": "2026-11-20T06:03:35.813Z"
   }
 }
