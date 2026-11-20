@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T00:23:38.586Z",
+  "updatedAt": "2026-11-20T01:17:25.197Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -48,9 +48,7 @@
       "SWG Retroguardia",
       "SWG Moomin",
       "SWG Koyo",
-      "SWG 9o_o9",
       "SWG Meadow",
-      "SWG Retro Red Light",
       "SWS Beige",
       "SWS Soware",
       "SWS WoB",
@@ -193,20 +191,10 @@
       "saleStart": "2026-11-30",
       "saleEnd": "2026-12-21"
     },
-    "9oo9": {
-      "product": "SWG 9o_o9",
-      "saleStart": "",
-      "saleEnd": ""
-    },
     "meadow": {
       "product": "SWG Meadow",
       "saleStart": "2026-12-28",
       "saleEnd": "2027-01-25"
-    },
-    "retroredlight": {
-      "product": "SWG Retro Red Light",
-      "saleStart": "",
-      "saleEnd": ""
     },
     "sws:beige": {
       "product": "SWS Beige",
@@ -510,7 +498,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-20T00:23:38.569Z",
+    "updatedAt": "2026-11-20T01:17:24.044Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1050,7 +1038,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1535,19 +1523,13 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
       "키캡|gmk cyl purple|2026-11-23|3": "2026-11-20"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-20T00:23:38.534Z",
-      "instock": "2026-11-20T00:23:38.569Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-20T00:22:58.987Z",
-    "status": "2026-11-20T00:23:38.389Z"
-  }
+  "fallbackSince": {}
 }
