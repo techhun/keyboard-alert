@@ -1,57 +1,13 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T05:03:53.837Z",
+  "updatedAt": "2026-11-20T05:53:33.855Z",
   "rows": [
     {
-      "category": "GMK",
-      "product": "GMK CYL Salamander",
+      "category": "KEYBOARDS",
+      "product": "CAT 60% KEYBOARD KIT",
       "status": "Group buy",
       "eta": "Q2 2027",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "GMK",
-      "product": "GMK CYL Beige Boogaloo",
-      "status": "Group buy",
-      "eta": "Q2 2027",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "GMK",
-      "product": "GMK Red Devils",
-      "status": "In production",
-      "eta": "Q1 2027",
-      "progress": 75,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "GMK",
-      "product": "GMK CYL Zombie",
-      "status": "Group buy",
-      "eta": "Q1 2027",
-      "progress": 50,
-      "summary": "No update summary yet.",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
-    },
-    {
-      "category": "GMK",
-      "product": "GMK CYL Rainy Day R3",
-      "status": "Group buy",
-      "eta": "Q1 2027",
       "progress": 50,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
@@ -345,6 +301,61 @@
       "latestUpdateBody": "5-30 Preparing design draft"
     },
     {
+      "category": "GMK",
+      "product": "GMK CYL Salamander",
+      "status": "Group buy",
+      "eta": "Q2 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Beige Boogaloo",
+      "status": "Group buy",
+      "eta": "Q2 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK Red Devils",
+      "status": "In production",
+      "eta": "Q1 2027",
+      "progress": 75,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Zombie",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "GMK",
+      "product": "GMK CYL Rainy Day R3",
+      "status": "Group buy",
+      "eta": "Q1 2027",
+      "progress": 50,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
       "category": "KEYCAPS",
       "product": "PBTfans 1984 dark",
       "status": "In production",
@@ -368,10 +379,32 @@
     },
     {
       "category": "KEYCAPS",
+      "product": "PBTfans PYGA R2",
+      "status": "Prototyping",
+      "eta": "TBD",
+      "progress": 25,
+      "summary": "Project update",
+      "latestUpdateDate": "2026-09-21",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "plan to produce in October"
+    },
+    {
+      "category": "KEYCAPS",
       "product": "PBTfans Luna",
       "status": "Prototyping",
       "eta": "TBD",
       "progress": 25,
+      "summary": "No update summary yet.",
+      "latestUpdateDate": "",
+      "latestUpdateTitle": "",
+      "latestUpdateBody": ""
+    },
+    {
+      "category": "KEYCAPS",
+      "product": "PBTfans Virtuoso Dark",
+      "status": "In production",
+      "eta": "TBD",
+      "progress": 75,
       "summary": "No update summary yet.",
       "latestUpdateDate": "",
       "latestUpdateTitle": "",
@@ -937,6 +970,9 @@
     "3b9d526ebb6ae585712a31c4": "2026-11-20T04:43:29.324Z",
     "b8e6d79ad037d321edfe6fa4": "2026-11-20T04:43:29.469Z",
     "46226de0238426758b7ef525": "2026-11-20T04:43:29.596Z",
-    "a04b0fd6bf0f08028361f508": "2026-11-20T05:03:53.836Z"
+    "a04b0fd6bf0f08028361f508": "2026-11-20T05:03:53.836Z",
+    "01ef0c421cb4df06b27b7318": "2026-11-20T05:53:33.429Z",
+    "773d72912271c061bd2657f1": "2026-11-20T05:53:33.639Z",
+    "d9f452327e7d15dfc914a597": "2026-11-20T05:53:33.855Z"
   }
 }
