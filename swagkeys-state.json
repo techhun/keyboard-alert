@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T08:23:30.830Z",
+  "updatedAt": "2026-11-23T09:17:38.799Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -480,7 +480,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-23T08:23:30.816Z",
+    "updatedAt": "2026-11-23T09:17:37.452Z",
     "sources": {
       "reservations": {
         "items": [
@@ -971,7 +971,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -985,24 +985,54 @@
             "key": "패드류|cybermat r3"
           },
           {
+            "product": "Smurve80 투명 빌드 에디션",
+            "category": "키보드",
+            "brands": [
+              "Play Keyboard,Swagkeys"
+            ],
+            "status": "판매 예정",
+            "eta": "26년 11월",
+            "key": "키보드|smurve80 투명 빌드 에디션"
+          },
+          {
+            "product": "NV60 빌드 에디션",
+            "category": "키보드",
+            "brands": [
+              "GDK Lab"
+            ],
+            "status": "판매 예정",
+            "eta": "26년 11월",
+            "key": "키보드|nv60 빌드 에디션"
+          },
+          {
             "product": "Eave65 HE",
             "category": "키보드",
             "brands": [
               "Swagkeys"
             ],
-            "status": "배송 중",
+            "status": "판매중",
             "eta": "26년 11월 말",
             "key": "키보드|eave65 he"
           },
           {
-            "product": "Relic80 R1.5",
+            "product": "DP104",
             "category": "키보드",
             "brands": [
-              "Angrymiao"
+              "Ticktype"
             ],
             "status": "배송 중",
             "eta": "26년 11월",
-            "key": "키보드|relic80 r1.5"
+            "key": "키보드|dp104#3cff75d5"
+          },
+          {
+            "product": "DP104",
+            "category": "키보드",
+            "brands": [
+              "Ticktype"
+            ],
+            "status": "배송 중",
+            "eta": "26년 11월",
+            "key": "키보드|dp104#39ff75d5"
           },
           {
             "product": "트랜지션 87",
@@ -1078,41 +1108,11 @@
             "product": "EVO80",
             "category": "키보드",
             "brands": [
-              "Evoworks"
-            ],
-            "status": "생산 중",
-            "eta": "27년 1월",
-            "key": "키보드|evo80"
-          },
-          {
-            "product": "NV60 빌드 에디션",
-            "category": "키보드",
-            "brands": [
-              "GDK Lab"
-            ],
-            "status": "판매 예정",
-            "eta": "26년 11월",
-            "key": "키보드|nv60 빌드 에디션"
-          },
-          {
-            "product": "DP104",
-            "category": "키보드",
-            "brands": [
               "Ticktype"
             ],
-            "status": "생산 중",
-            "eta": "26년 11월",
-            "key": "키보드|dp104#3cff75d5"
-          },
-          {
-            "product": "DP104",
-            "category": "키보드",
-            "brands": [
-              "Ticktype"
-            ],
-            "status": "생산 중",
-            "eta": "26년 11월",
-            "key": "키보드|dp104#39ff75d5"
+            "status": "배송 중",
+            "eta": "27년 11월",
+            "key": "키보드|evo80#3faf75d5"
           },
           {
             "product": "60% 신제품 (GH60 기반)",
@@ -1191,14 +1191,14 @@
             "key": "키보드|트랜지션87 불투명 컬러"
           },
           {
-            "product": "Smurve80 투명 빌드 에디션",
+            "product": "EVO80",
             "category": "키보드",
             "brands": [
-              "Play Keyboard,Swagkeys"
+              "Ticktype"
             ],
-            "status": "판매 예정",
-            "eta": "26년 11월",
-            "key": "키보드|smurve80 투명 빌드 에디션"
+            "status": "생산 중",
+            "eta": "27년 1월",
+            "key": "키보드|evo80#421f75d5"
           },
           {
             "product": "배럴 스프링",
@@ -1235,16 +1235,6 @@
             ],
             "eta": "27년 1분기",
             "key": "스위치|특주 택타일 스위치"
-          },
-          {
-            "product": "Suki",
-            "category": "스위치",
-            "brands": [
-              "Keygeek"
-            ],
-            "status": "판매 예정",
-            "eta": "26년 11월 말",
-            "key": "스위치|suki"
           },
           {
             "product": "각설탕",
@@ -1315,16 +1305,6 @@
             "key": "스위치|머랭"
           },
           {
-            "product": "라이 V2",
-            "category": "스위치",
-            "brands": [
-              "NEO STUDIO,Keygeek"
-            ],
-            "status": "판매 예정",
-            "eta": "26년 4분기",
-            "key": "스위치|라이 v2"
-          },
-          {
             "product": "골든애플",
             "category": "스위치",
             "brands": [
@@ -1353,16 +1333,6 @@
             "status": "생산 중",
             "eta": "생산 지연으로 현지 발송 완료로 확인 시 업데이트 하도록 하겠습니다. 죄송합니다.",
             "key": "스위치|문라이트 레드 (azalea)"
-          },
-          {
-            "product": "거봉",
-            "category": "스위치",
-            "brands": [
-              "HMX"
-            ],
-            "status": "판매 예정",
-            "eta": "26년 4분기",
-            "key": "스위치|거봉"
           },
           {
             "product": "화이트 피치 반저소음",
@@ -1453,7 +1423,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1461,13 +1431,7 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-23T08:23:30.764Z",
-      "instock": "2026-11-23T08:23:30.816Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-23T08:22:51.287Z",
-    "status": "2026-11-23T08:23:30.619Z"
-  }
+  "fallbackSince": {}
 }
