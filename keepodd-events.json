@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-20T04:18:21.856Z",
+  "updatedAt": "2026-11-23T00:00:46.489Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2523,6 +2523,23 @@
       "note": "컬러매칭 Not started",
       "quarter": "Q4",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "df4031e327004cb4bfa6a791375341c0",
+      "source": "GEONWORKS",
+      "name": "TYPFACE KAFKA Barebones Kit",
+      "eventType": "note_changed",
+      "before": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November.",
+      "after": "목재부품 교체분 수령 후 발송예정. 12월 말 경 생산 완료 예정./ We plan to dispatch the order once we have received the replacement wooden parts. Production is expected to be completed around the end of December.",
+      "occurredAt": "2026-11-23T00:00:46.489Z",
+      "categoryHint": "키보드",
+      "maker": "TYPFACE",
+      "saleStart": "2026-01-29",
+      "eta": "2026-09-30",
+      "status": "검수 중 / Inspecting",
+      "note": "목재부품 교체분 수령 후 발송예정. 12월 말 경 생산 완료 예정./ We plan to dispatch the order once we have received the replacement wooden parts. Production is expected to be completed around the end of December.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

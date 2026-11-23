@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-20T03:10:25.899Z",
+  "updatedAt": "2026-11-23T00:00:46.489Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -20,8 +20,8 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 16",
-      "note": "PCB 제외 입고완료 , pcb 11월 3주 경 현지에서 발송 예정. / All items except the PCBs have been received; the PCBs are scheduled to be dispatched from the local site around the third week of November."
+      "update": "2026. 11. 23",
+      "note": "목재부품 교체분 수령 후 발송예정. 12월 말 경 생산 완료 예정./ We plan to dispatch the order once we have received the replacement wooden parts. Production is expected to be completed around the end of December."
     },
     {
       "product": "Atelier Magnus Slate Zero",
@@ -631,6 +631,7 @@
     "86a623fe5e29ee95e1bb814d": "2026-11-18T08:30:37.296Z",
     "0490da30e4709a5adff07cd8": "2026-11-19T00:50:33.290Z",
     "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z",
-    "ca466f942957174bce0d1301": "2026-11-19T07:30:36.641Z"
+    "ca466f942957174bce0d1301": "2026-11-19T07:30:36.641Z",
+    "24a5a1dd135aa358f8b19d00": "2026-11-23T00:00:46.489Z"
   }
 }
