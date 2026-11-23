@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T16:13:35.086Z",
+  "updatedAt": "2026-11-23T16:23:21.316Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -97,21 +97,21 @@
     {
       "category": "Keyboard",
       "product": "Lily R2 MX Keyboard Kit",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q3 2026",
       "url": "https://novelkeys.com/products/lily-r2-mx-keyboard-kit"
     },
     {
       "category": "Keyboard",
       "product": "Lily R2 Extra Components",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q3 2026",
       "url": "https://novelkeys.com/products/lily-r2-extra-components"
     },
     {
       "category": "Keyboard",
       "product": "Lily R2 EC Keyboard Kit",
-      "status": "Estimated to complete end of July and ship to customers early August.",
+      "status": "Shipping to customers.",
       "eta": "Q3 2026",
       "url": "https://novelkeys.com/products/lily-r2"
     },
@@ -380,6 +380,9 @@
     "e3b53af8e580184f96f90d07": "2026-11-23T16:13:34.473Z",
     "8a52129e30c2217d5e096a2f": "2026-11-23T16:13:34.698Z",
     "80ebf600b8a6fbda54258417": "2026-11-23T16:13:34.892Z",
-    "127295f9ad024be1e5cc9c02": "2026-11-23T16:13:35.085Z"
+    "127295f9ad024be1e5cc9c02": "2026-11-23T16:13:35.085Z",
+    "ba2004d4316f30686b9742b2": "2026-11-23T16:23:20.801Z",
+    "5f417ed1a63d83c30d0ea347": "2026-11-23T16:23:21.058Z",
+    "abf68dd1493532ead2676b04": "2026-11-23T16:23:21.316Z"
   }
 }
