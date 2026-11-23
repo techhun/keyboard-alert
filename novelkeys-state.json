@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T14:43:28.842Z",
+  "updatedAt": "2026-11-23T16:13:35.086Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -202,14 +202,14 @@
     {
       "category": "Keycap",
       "product": "GMK CYL Noire",
-      "status": "Order placed.",
+      "status": "In transit to NovelKeys.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-noire-keycaps"
     },
     {
       "category": "Keycap",
       "product": "GMK CYL Hyperfuse Origins R3",
-      "status": "Order placed.",
+      "status": "In production.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/gmk-cyl-hyperfuse-r3-keycaps"
     },
@@ -230,14 +230,14 @@
     {
       "category": "Keycap",
       "product": "GMK 2Pack",
-      "status": "In transit to NovelKeys.",
-      "eta": "Q4 2026",
+      "status": "Fulfilled!",
+      "eta": "",
       "url": "https://novelkeys.com/products/gmk-2pack-keycaps"
     },
     {
       "category": "Keycap",
       "product": "DCS Mudbeam",
-      "status": "Color sampling.",
+      "status": "In production.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/dcs-mudbeam-keycaps"
     },
@@ -376,6 +376,10 @@
     "52f6b811cbda46543f203eb6": "2026-11-18T14:22:36.110Z",
     "00c8bc83f4c49d6da0edad4c": "2026-11-20T15:03:36.859Z",
     "2c447219bc4ce74d12543f0a": "2026-11-23T14:33:20.549Z",
-    "21ec82d35328381e974070ef": "2026-11-23T14:43:28.841Z"
+    "21ec82d35328381e974070ef": "2026-11-23T14:43:28.841Z",
+    "e3b53af8e580184f96f90d07": "2026-11-23T16:13:34.473Z",
+    "8a52129e30c2217d5e096a2f": "2026-11-23T16:13:34.698Z",
+    "80ebf600b8a6fbda54258417": "2026-11-23T16:13:34.892Z",
+    "127295f9ad024be1e5cc9c02": "2026-11-23T16:13:35.085Z"
   }
 }
