@@ -1,11 +1,11 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-17T16:32:36.665Z",
+  "updatedAt": "2026-11-23T06:03:49.911Z",
   "rows": [
     {
       "product": "PBTfans G3",
-      "overview": "These are in transit to us and expected to arrive early-mid December. Order fulfillment will begin upon arrival.",
+      "overview": "These are estimated to arrive to us Q4 2026. | Production completion estimate is November.",
       "components": [],
       "sourceUrl": "https://omnitype.com/pages/product-updates"
     },
@@ -27,7 +27,7 @@
     },
     {
       "product": "Float 65",
-      "overview": "New housing samples that arrived in October were heavily damaged from shipping without sufficient protection. This prevented us from evaluating or testing the housings from the new manu so we have to get another round. New samples have been produced and are shipping to us tomorrow, Nov. 18th.",
+      "overview": "New housing samples that arrived in October were heavily damaged from shipping without sufficient protection. This prevented us from evaluating or testing the housings from the new manu so we have to get another round. Manu has updated us that they expect to have the new samples done on November 10th.",
       "components": [
         "PCBs - ready",
         "Plates - ready",
@@ -75,6 +75,8 @@
   "sentChanges": {
     "782a3641519dbaf465d82854": "2026-11-17T16:23:20.635Z",
     "315bbb8182e0ad064df52cc4": "2026-11-17T16:32:36.279Z",
-    "ab091c45c10f43fb872f2371": "2026-11-17T16:32:36.664Z"
+    "ab091c45c10f43fb872f2371": "2026-11-17T16:32:36.664Z",
+    "b76c91a160af97b7e4c84c92": "2026-11-23T06:03:49.716Z",
+    "de5a48c26438b5ede61bc40b": "2026-11-23T06:03:49.910Z"
   }
 }
