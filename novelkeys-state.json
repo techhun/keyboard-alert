@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T14:33:20.549Z",
+  "updatedAt": "2026-11-23T14:43:28.842Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -55,7 +55,7 @@
     {
       "category": "Keyboard",
       "product": "CLASSIC-TKL Mictlan Edition",
-      "status": "In transit to NovelKeys.",
+      "status": "Shipping to customers.",
       "eta": "Q4 2026",
       "url": "https://novelkeys.com/products/classic-tkl-mictlan-edition-keyboard"
     },
@@ -375,6 +375,7 @@
     "aa10804b71e1a2270f166fbe": "2026-11-18T14:22:35.819Z",
     "52f6b811cbda46543f203eb6": "2026-11-18T14:22:36.110Z",
     "00c8bc83f4c49d6da0edad4c": "2026-11-20T15:03:36.859Z",
-    "2c447219bc4ce74d12543f0a": "2026-11-23T14:33:20.549Z"
+    "2c447219bc4ce74d12543f0a": "2026-11-23T14:33:20.549Z",
+    "21ec82d35328381e974070ef": "2026-11-23T14:43:28.841Z"
   }
 }
