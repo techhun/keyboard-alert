@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T02:23:15.727Z",
+  "updatedAt": "2026-11-23T03:17:32.391Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -480,7 +480,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-23T02:23:15.716Z",
+    "updatedAt": "2026-11-23T03:17:31.814Z",
     "sources": {
       "reservations": {
         "items": [
@@ -971,7 +971,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -983,26 +983,6 @@
             ],
             "status": "IC",
             "key": "패드류|cybermat r3"
-          },
-          {
-            "product": "EVO80",
-            "category": "키보드",
-            "brands": [
-              "Evoworks"
-            ],
-            "status": "판매중",
-            "eta": "26년 11월",
-            "key": "키보드|evo80#3e9f75d5"
-          },
-          {
-            "product": "Zen75",
-            "category": "키보드",
-            "brands": [
-              "Cerakey"
-            ],
-            "status": "판매중",
-            "eta": "26년 11월",
-            "key": "키보드|zen75"
           },
           {
             "product": "Eave65 HE",
@@ -1102,7 +1082,7 @@
             ],
             "status": "생산 중",
             "eta": "27년 1월",
-            "key": "키보드|evo80#3faf75d5"
+            "key": "키보드|evo80"
           },
           {
             "product": "NV60 빌드 에디션",
@@ -1219,6 +1199,13 @@
             "status": "판매 예정",
             "eta": "26년 11월",
             "key": "키보드|smurve80 투명 빌드 에디션"
+          },
+          {
+            "product": "배럴 스프링",
+            "category": "툴",
+            "status": "배송 중",
+            "eta": "26년 12월",
+            "key": "툴|배럴 스프링"
           },
           {
             "product": "세라키 V4 화이트 각인",
@@ -1466,7 +1453,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1474,13 +1461,7 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-23T02:23:15.689Z",
-      "instock": "2026-11-23T02:23:15.715Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-23T02:22:36.602Z",
-    "status": "2026-11-23T02:23:15.608Z"
-  }
+  "fallbackSince": {}
 }
