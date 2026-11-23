@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T00:23:30.771Z",
+  "updatedAt": "2026-11-23T01:17:35.547Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -257,7 +257,7 @@
       "fulfilled": 0,
       "inStock": 0,
       "colorMatching": "Complete",
-      "eta": "2026-11-24",
+      "eta": "2026-11-25",
       "currentStatus": "배송중 (Shipping)"
     },
     {
@@ -319,6 +319,18 @@
       "colorMatching": "In Progress",
       "eta": "",
       "currentStatus": "생산 대기중 (Awaiting Production)"
+    },
+    {
+      "product": "Moomin",
+      "groupBuy": 50,
+      "waitingProduction": 0,
+      "inProduction": 0,
+      "shipping": 0,
+      "fulfilled": 0,
+      "inStock": 0,
+      "colorMatching": "Complete",
+      "eta": "",
+      "currentStatus": "예약판매 진행중 (in GB)"
     },
     {
       "product": "Nerve",
@@ -463,24 +475,12 @@
       "colorMatching": "Not started",
       "eta": "",
       "currentStatus": "예약판매 진행중 (in GB)"
-    },
-    {
-      "product": "Moomin",
-      "groupBuy": 50,
-      "waitingProduction": 0,
-      "inProduction": 0,
-      "shipping": 0,
-      "fulfilled": 0,
-      "inStock": 0,
-      "colorMatching": "Complete",
-      "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
     }
   ],
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-23T00:23:30.759Z",
+    "updatedAt": "2026-11-23T01:17:35.236Z",
     "sources": {
       "reservations": {
         "items": [
@@ -971,7 +971,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1466,7 +1466,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1474,13 +1474,7 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-23T00:23:30.703Z",
-      "instock": "2026-11-23T00:23:30.759Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-23T00:22:51.221Z",
-    "status": "2026-11-23T00:23:30.567Z"
-  }
+  "fallbackSince": {}
 }
