@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-22T23:23:07.166Z",
+  "updatedAt": "2026-11-23T00:17:30.789Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -480,7 +480,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-22T23:23:07.155Z",
+    "updatedAt": "2026-11-23T00:17:29.678Z",
     "sources": {
       "reservations": {
         "items": [
@@ -505,19 +505,6 @@
             "status": "드랍 예정",
             "eta": "26년 2분기",
             "key": "키보드|vida"
-          },
-          {
-            "product": "Paper65",
-            "category": "키보드",
-            "brands": [
-              "WHATEVER STUDIO"
-            ],
-            "status": "판매중",
-            "saleStart": "2026-04-01",
-            "saleEnd": "2026-04-15",
-            "eta": "26년 11월",
-            "url": "https://www.zfrontier.com/app/flow/lJ7EBYXMKMVo",
-            "key": "키보드|paper65"
           },
           {
             "product": "SW x StelLive 하나코 나나 콜라보 굿즈",
@@ -732,6 +719,18 @@
             "key": "키캡|swg cadet 4종"
           },
           {
+            "product": "SWG Retroguardia",
+            "category": "키캡",
+            "brands": [
+              "Swagkeys"
+            ],
+            "status": "공제 중",
+            "saleStart": "2026-11-09",
+            "saleEnd": "2026-11-23",
+            "eta": "27년 9월 말",
+            "key": "키캡|swg retroguardia"
+          },
+          {
             "product": "SWS Beige",
             "category": "키캡",
             "brands": [
@@ -888,18 +887,6 @@
             "key": "키캡|gmk pandemonium"
           },
           {
-            "product": "GMK Gonzales",
-            "category": "키캡",
-            "brands": [
-              "GMK"
-            ],
-            "status": "판매중",
-            "saleStart": "2026-05-04",
-            "saleEnd": "2026-06-03",
-            "eta": "26년 10월",
-            "key": "키캡|gmk gonzales"
-          },
-          {
             "product": "SWG Heartbreaker",
             "category": "키캡",
             "brands": [
@@ -910,18 +897,6 @@
             "saleEnd": "2026-08-03",
             "eta": "27년 1분기",
             "key": "키캡|swg heartbreaker"
-          },
-          {
-            "product": "Bowlpit",
-            "category": "키캡",
-            "brands": [
-              "Bowl Keyboards,signature plastics"
-            ],
-            "status": "판매중",
-            "saleStart": "2026-04-13",
-            "saleEnd": "2026-04-27",
-            "eta": "26년 3분기",
-            "key": "키캡|bowlpit"
           },
           {
             "product": "SWG Nerve",
@@ -946,30 +921,6 @@
             "saleEnd": "2026-06-29",
             "eta": "26년 11월 초",
             "key": "키캡|swg tars"
-          },
-          {
-            "product": "SWG Classic Red",
-            "category": "키캡",
-            "brands": [
-              "Swagkeys"
-            ],
-            "status": "판매중",
-            "saleStart": "2026-03-26",
-            "saleEnd": "2026-04-16",
-            "eta": "26년 9월",
-            "key": "키캡|swg classic red"
-          },
-          {
-            "product": "SWG Classic Blue",
-            "category": "키캡",
-            "brands": [
-              "Swagkeys"
-            ],
-            "status": "판매중",
-            "saleStart": "2026-05-04",
-            "saleEnd": "2026-05-18",
-            "eta": "26년 11월",
-            "key": "키캡|swg classic blue"
           },
           {
             "product": "SWG Midnight Rainbow",
@@ -1020,7 +971,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1270,12 +1221,22 @@
             "key": "키보드|smurve80 투명 빌드 에디션"
           },
           {
+            "product": "세라키 V4 화이트 각인",
+            "category": "키캡",
+            "brands": [
+              "Cerakey"
+            ],
+            "status": "배송 중",
+            "eta": "26년 11월",
+            "key": "키캡|세라키 v4 화이트 각인"
+          },
+          {
             "product": "레인스",
             "category": "스위치",
             "brands": [
               "Gateron"
             ],
-            "status": "생산 중",
+            "status": "배송 중",
             "eta": "26년 11월 말",
             "key": "스위치|레인스"
           },
@@ -1337,14 +1298,14 @@
             "key": "스위치|he evo 유리축"
           },
           {
-            "product": "세라키 V2 블루 크레이즈",
+            "product": "세라키 V2",
             "category": "키캡",
             "brands": [
               "Cerakey"
             ],
-            "status": "생산 중",
+            "status": "배송 중",
             "eta": "26년 11월",
-            "key": "키캡|세라키 v2 블루 크레이즈"
+            "key": "키캡|세라키 v2"
           },
           {
             "product": "레인",
@@ -1505,7 +1466,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1513,13 +1474,7 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-22T23:23:07.136Z",
-      "instock": "2026-11-22T23:23:07.154Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-22T23:22:28.012Z",
-    "status": "2026-11-22T23:23:07.054Z"
-  }
+  "fallbackSince": {}
 }
