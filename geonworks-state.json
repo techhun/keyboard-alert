@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T02:40:29.603Z",
+  "updatedAt": "2026-11-24T05:30:46.795Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -192,16 +192,6 @@
       "status": "제작 중 / In progress",
       "update": "2026. 11. 19",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
-    },
-    {
-      "product": "DCS Grass Valley",
-      "gbStart": "2026. 5. 4",
-      "eta": "2026. 12. 31",
-      "type": "Keycap",
-      "manufacturer": "Signature Plastics",
-      "status": "제작 중 / In progress",
-      "update": "2026. 11. 11",
-      "note": "—"
     },
     {
       "product": "RF-8X",
@@ -626,6 +616,7 @@
     "745665c805897eb037ee744b": "2026-11-24T02:30:38.882Z",
     "e6c044657b3261efa52a16b3": "2026-11-24T02:30:39.074Z",
     "52ac8075e0ba1d0e8645d6f3": "2026-11-24T02:30:39.251Z",
-    "9bca2e536e6593e9d47ac66d": "2026-11-24T02:40:29.603Z"
+    "9bca2e536e6593e9d47ac66d": "2026-11-24T02:40:29.603Z",
+    "31d9a73fed4f195dc4de96f3": "2026-11-24T05:30:46.794Z"
   }
 }
