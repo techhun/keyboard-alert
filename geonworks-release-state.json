@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T02:50:40.407Z",
+  "updatedAt": "2026-11-24T07:20:33.957Z",
   "rows": [
     {
       "product": "Chamber TKL",
@@ -68,12 +68,36 @@
       "fixed": "확정 / Fixed",
       "start": "2026-11-19",
       "end": "2026-12-15"
+    },
+    {
+      "product": "GMK CYL 3077",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-24",
+      "end": "2026-12-20"
+    },
+    {
+      "product": "CAT 60",
+      "manufacturer": "KBDfans",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keyboard",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-24",
+      "end": "2026-12-17"
     }
   ],
   "sentChanges": {
     "daa44fc34718f80be96476cc": "2026-11-18T05:00:45.685Z",
     "3d29596c85c8654812435e94": "2026-11-18T05:00:45.852Z",
     "18b52d7f01eda4782f471339": "2026-11-19T08:30:41.620Z",
-    "64581e4f6a7d107ce76d707e": "2026-11-19T08:30:41.780Z"
+    "64581e4f6a7d107ce76d707e": "2026-11-19T08:30:41.780Z",
+    "174bcb4bb8616f6087e17a56": "2026-11-24T07:20:33.847Z",
+    "7f18167e3a9b9cd3bc3562ee": "2026-11-24T07:20:33.957Z"
   }
 }

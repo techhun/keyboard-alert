@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T02:40:29.603Z",
+  "updatedAt": "2026-11-24T07:20:33.957Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2588,6 +2588,34 @@
       "status": "제작 중 / In progress",
       "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "6f10830e21338529ca8286aca3e21ed4",
+      "source": "GEONWORKS",
+      "name": "GMK CYL 3077",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-24T07:20:33.957Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-24",
+      "saleEnd": "2026-12-20",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-3077-%ED%82%A4%EC%BA%A1/765/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "97415b9bfab23b2d9165b06c04d48502",
+      "source": "GEONWORKS",
+      "name": "CAT 60",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-24T07:20:33.957Z",
+      "categoryHint": "키보드",
+      "maker": "KBDfans",
+      "saleStart": "2026-11-24",
+      "saleEnd": "2026-12-17",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]
