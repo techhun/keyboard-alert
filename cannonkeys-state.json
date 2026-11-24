@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T20:52:34.073Z",
+  "updatedAt": "2026-11-24T21:01:48.313Z",
   "rows": [
     {
       "id": 385,
@@ -3448,7 +3448,5 @@
       "latestUpdateDescription": ""
     }
   ],
-  "sentChanges": {
-    "5f613a2b45e277773671ca60": "2026-11-17T21:01:33.989Z"
-  }
+  "sentChanges": {}
 }
