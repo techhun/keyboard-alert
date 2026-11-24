@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T02:30:39.251Z",
+  "updatedAt": "2026-11-24T02:40:29.603Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -520,8 +520,8 @@
       "type": "Keyboard",
       "manufacturer": "KEZEWA",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 8",
-      "note": "—"
+      "update": "2026. 11. 24",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
     },
     {
       "product": "DCS SMRT R2",
@@ -625,6 +625,7 @@
     "905a3664191fbc5121f771ad": "2026-11-24T02:30:38.738Z",
     "745665c805897eb037ee744b": "2026-11-24T02:30:38.882Z",
     "e6c044657b3261efa52a16b3": "2026-11-24T02:30:39.074Z",
-    "52ac8075e0ba1d0e8645d6f3": "2026-11-24T02:30:39.251Z"
+    "52ac8075e0ba1d0e8645d6f3": "2026-11-24T02:30:39.251Z",
+    "9bca2e536e6593e9d47ac66d": "2026-11-24T02:40:29.603Z"
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T02:30:39.251Z",
+  "updatedAt": "2026-11-24T02:40:29.603Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2571,6 +2571,22 @@
       "eta": "2026-09-30",
       "status": "제작 중 / In progress",
       "note": "생산 완료. 공장에서 캐논키로 이동 중 / Production complete. Currently en route from the factory to Canonkey.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "9dbca1a3b2e87f4f854e78f5a4a6cead",
+      "source": "GEONWORKS",
+      "name": "Nexus60",
+      "eventType": "note_changed",
+      "after": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "occurredAt": "2026-11-24T02:40:29.603Z",
+      "categoryHint": "키보드",
+      "maker": "KEZEWA",
+      "saleStart": "2026-09-21",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
