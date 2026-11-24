@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-23T01:17:35.547Z",
+  "updatedAt": "2026-11-24T02:30:39.251Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2556,6 +2556,22 @@
       "status": "배송중 (Shipping)",
       "note": "컬러매칭 Complete",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "39e4973ee49360d7242d5d84e3afefc7",
+      "source": "GEONWORKS",
+      "name": "PBS-Retro S.M AG",
+      "eventType": "note_changed",
+      "after": "생산 완료. 공장에서 캐논키로 이동 중 / Production complete. Currently en route from the factory to Canonkey.",
+      "occurredAt": "2026-11-24T02:30:39.251Z",
+      "categoryHint": "키캡",
+      "maker": "Keyreative",
+      "saleStart": "2026-04-17",
+      "eta": "2026-09-30",
+      "status": "제작 중 / In progress",
+      "note": "생산 완료. 공장에서 캐논키로 이동 중 / Production complete. Currently en route from the factory to Canonkey.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

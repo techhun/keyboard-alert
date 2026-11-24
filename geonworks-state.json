@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T01:40:33.854Z",
+  "updatedAt": "2026-11-24T02:30:39.251Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -30,7 +30,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 17",
+      "update": "2026. 11. 24",
       "note": "제품 검수 중 / Product inspection in progress"
     },
     {
@@ -120,7 +120,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 11",
+      "update": "2026. 11. 24",
       "note": "PVD 제품 제외 생산 완료."
     },
     {
@@ -150,7 +150,7 @@
       "type": "Keyboard",
       "manufacturer": "Artifact Inderstry",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 10",
+      "update": "2026. 11. 24",
       "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
     },
     {
@@ -180,8 +180,8 @@
       "type": "Keycap",
       "manufacturer": "Keyreative",
       "status": "제작 중 / In progress",
-      "update": "2026. 5. 18",
-      "note": "—"
+      "update": "2026. 11. 24",
+      "note": "생산 완료. 공장에서 캐논키로 이동 중 / Production complete. Currently en route from the factory to Canonkey."
     },
     {
       "product": "Grit Jahre 65",
@@ -621,6 +621,10 @@
     "0490da30e4709a5adff07cd8": "2026-11-19T00:50:33.290Z",
     "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z",
     "ca466f942957174bce0d1301": "2026-11-19T07:30:36.641Z",
-    "24a5a1dd135aa358f8b19d00": "2026-11-23T00:00:46.489Z"
+    "24a5a1dd135aa358f8b19d00": "2026-11-23T00:00:46.489Z",
+    "905a3664191fbc5121f771ad": "2026-11-24T02:30:38.738Z",
+    "745665c805897eb037ee744b": "2026-11-24T02:30:38.882Z",
+    "e6c044657b3261efa52a16b3": "2026-11-24T02:30:39.074Z",
+    "52ac8075e0ba1d0e8645d6f3": "2026-11-24T02:30:39.251Z"
   }
 }
