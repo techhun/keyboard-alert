@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T13:21:36.956Z",
+  "updatedAt": "2026-11-24T13:31:36.957Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -818,48 +818,8 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
-      "product": "GMK TA NEO",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Analog-Dreams-R3-CYL-MTNU-39d042334154802ab50bea4fef0d625d",
-      "product": "GMK Analog Dreams R3 CYL & MTNU",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Noire-Small-Batch-3b2042334154808fb5add3f5469ea2ea",
-      "product": "GMK CYL Noire (Small Batch)",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Distortion-39d042334154809ba93ceae19d0d8f74",
       "product": "GMK CYL Distortion",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q1 2027"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Hyperfuse-Origins-R3-3b2042334154803ba837e5083da7110c",
-      "product": "GMK CYL Hyperfuse Origins R3",
       "status": "In Manufacturing",
       "expectedShipping": "Q1 2027"
     },
@@ -988,18 +948,28 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
-      "product": "GMK CYL Gurokawa",
-      "status": "Shipping to Customers",
-      "expectedShipping": "Q4 2026"
+      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
+      "product": "GMK TA NEO",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "gmk",
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Finer-Things-R2-39d04233415480918f99e5b97933d682",
-      "product": "GMK Finer Things R2",
+      "itemUrl": "https://prototypist.notion.site/GMK-Analog-Dreams-R3-CYL-MTNU-39d042334154802ab50bea4fef0d625d",
+      "product": "GMK Analog Dreams R3 CYL & MTNU",
+      "status": "Shipping to Prototypist",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Noire-Small-Batch-3b2042334154808fb5add3f5469ea2ea",
+      "product": "GMK CYL Noire (Small Batch)",
       "status": "Shipping to Customers",
       "expectedShipping": "Q1 2027"
     },
@@ -1008,9 +978,39 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Hyperfuse-Origins-R3-3b2042334154803ba837e5083da7110c",
+      "product": "GMK CYL Hyperfuse Origins R3",
+      "status": "Completed",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-Finer-Things-R2-39d04233415480918f99e5b97933d682",
+      "product": "GMK Finer Things R2",
+      "status": "Completed",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Gurokawa-24c04233415480088007c686c4908f2b",
+      "product": "GMK CYL Gurokawa",
+      "status": "Completed",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "gmk",
+      "sourceLabel": "GMK",
+      "sourceEmoji": "🇩🇪",
+      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
       "itemUrl": "https://prototypist.notion.site/GMK-CYL-Selene-36404233415480a0b1e6f15b1b16f3c7",
       "product": "GMK CYL Selene",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1224,46 +1224,6 @@
       "expectedShipping": "Q3 2026"
     },
     {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Hammerhead-Small-Batch-31704233415480b78ba9da59431bd2e1",
-      "product": "GMK CYL Hammerhead (Small Batch)",
-      "status": "Completed",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Hi-Viz-R2-31704233415480298ff7c068ae89e885",
-      "product": "GMK Hi Viz R2",
-      "status": "Completed",
-      "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Pompeii-2ca0423341548085b1bcf0d6d1f00241",
-      "product": "GMK CYL Pompeii",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
-    },
-    {
-      "sourceId": "gmk",
-      "sourceLabel": "GMK",
-      "sourceEmoji": "🇩🇪",
-      "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Noel-R2-2f60423341548074a565e33136d2b48a",
-      "product": "GMK Noel R2",
-      "status": "Completed",
-      "expectedShipping": "Q3 2026"
-    },
-    {
       "sourceId": "keyset",
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
@@ -1330,26 +1290,6 @@
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/SWG-Skeletoon-364042334154807da8d8f2269ef9fee6",
       "product": "SWG Skeletoon",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Grass-Valley-3640423341548039b706de325ffcc322",
-      "product": "DCS Grass Valley",
-      "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/DCS-Dream-Alert-39d0423341548035a14fc61b5b421257",
-      "product": "DCS Dream Alert",
       "status": "In Manufacturing",
       "expectedShipping": "Q4 2026"
     },
@@ -1548,6 +1488,26 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/KKB-Cross-Impact-3d604233415480a791d0f745e9c477d3",
+      "product": "KKB Cross Impact",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q1 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/SWG-Feralis-3d60423341548073abc0ec711ae9a7df",
+      "product": "SWG Feralis",
+      "status": "In Manufacturing",
+      "expectedShipping": "Q2 2027"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/KKB-Beige-31704233415480e89f37f396e2164653",
       "product": "KKB Beige",
       "status": "Shipping to Prototypist",
@@ -1638,9 +1598,29 @@
       "sourceLabel": "Keyset",
       "sourceEmoji": "🧢",
       "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Dream-Alert-39d0423341548035a14fc61b5b421257",
+      "product": "DCS Dream Alert",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
+      "itemUrl": "https://prototypist.notion.site/DCS-Grass-Valley-3640423341548039b706de325ffcc322",
+      "product": "DCS Grass Valley",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
+    },
+    {
+      "sourceId": "keyset",
+      "sourceLabel": "Keyset",
+      "sourceEmoji": "🧢",
+      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
       "itemUrl": "https://prototypist.notion.site/DCS-Hangul-PBT-3640423341548099858ef4a14cea25c2",
       "product": "DCS Hangul PBT",
-      "status": "Shipping to Customers",
+      "status": "Completed",
       "expectedShipping": "Q4 2026"
     },
     {
@@ -1882,21 +1862,7 @@
       "product": "DCS After School 1992 40s",
       "status": "Completed",
       "expectedShipping": "Q3 2026"
-    },
-    {
-      "sourceId": "keyset",
-      "sourceLabel": "Keyset",
-      "sourceEmoji": "🧢",
-      "sourceUrl": "https://prototypist.notion.site/119c46c4a89140e98b295ed0102eb94e?v=a13cd09931964dd596b125ea0013f5c6",
-      "itemUrl": "https://prototypist.notion.site/Awekeys-Wild-Ice-Mystery-Artisans-2ca042334154804ca099c2f84b80e3fe",
-      "product": "Awekeys Wild Ice Mystery Artisans",
-      "status": "Completed",
-      "expectedShipping": "Q2 2026"
     }
   ],
-  "fallbackSince": {
-    "keyboard": "2026-11-24T13:21:10.480Z",
-    "gmk": "2026-11-24T13:21:22.961Z",
-    "keyset": "2026-11-24T13:21:35.394Z"
-  }
+  "fallbackSince": {}
 }
