@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-18T11:41:24.790Z",
+  "updatedAt": "2026-11-24T13:41:06.695Z",
   "rows": [
     {
       "project": "GMK CYL Motif",
@@ -76,6 +76,16 @@
     {
       "project": "GMK CYL Evil Dolch R2",
       "lastUpdated": "18 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK CYL Blanks",
+      "lastUpdated": "24 November 2026",
+      "status": "Awaiting production"
+    },
+    {
+      "project": "GMK Spacekeys EC",
+      "lastUpdated": "24 November 2026",
       "status": "Awaiting production"
     },
     {
@@ -192,6 +202,8 @@
     "7f7755ba2578d0c2bec8cf50": "2026-11-18T11:41:23.147Z",
     "0ad1b44401d1f92c596a1214": "2026-11-18T11:41:23.637Z",
     "d2b907c5e6e9ce2aea48683b": "2026-11-18T11:41:23.778Z",
-    "1992dcdd6515b69bf2e9dce2": "2026-11-18T11:41:24.787Z"
+    "1992dcdd6515b69bf2e9dce2": "2026-11-18T11:41:24.787Z",
+    "fd278d52ebeacb21a75e7ea3": "2026-11-24T13:41:06.338Z",
+    "43d6b5aeed2110eae35ad5fc": "2026-11-24T13:41:06.694Z"
   }
 }
