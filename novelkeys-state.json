@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-23T17:13:16.618Z",
+  "updatedAt": "2026-11-24T11:33:10.880Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -167,14 +167,14 @@
     {
       "category": "Keycap",
       "product": "GMK CYL Varenye",
-      "status": "Open for orders",
+      "status": "Order placed.",
       "eta": "Q1 2027",
       "url": "https://novelkeys.com/products/gmk-cyl-varenye"
     },
     {
       "category": "Keycap",
       "product": "GMK CYL Mothman",
-      "status": "Open for orders",
+      "status": "Order placed.",
       "eta": "Q1 2027",
       "url": "https://novelkeys.com/products/gmk-cyl-mothman"
     },
@@ -380,6 +380,8 @@
     "127295f9ad024be1e5cc9c02": "2026-11-23T16:13:35.085Z",
     "ba2004d4316f30686b9742b2": "2026-11-23T16:23:20.801Z",
     "5f417ed1a63d83c30d0ea347": "2026-11-23T16:23:21.058Z",
-    "abf68dd1493532ead2676b04": "2026-11-23T16:23:21.316Z"
+    "abf68dd1493532ead2676b04": "2026-11-23T16:23:21.316Z",
+    "ca4d97b581924ae086d00819": "2026-11-24T11:33:10.678Z",
+    "86816bd3d225bc73fe354419": "2026-11-24T11:33:10.880Z"
   }
 }
