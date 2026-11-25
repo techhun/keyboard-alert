@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T21:01:48.313Z",
+  "updatedAt": "2026-11-25T22:01:19.470Z",
   "rows": [
     {
       "id": 385,
@@ -43,25 +43,25 @@
       "id": 350,
       "displayName": "PBS Black on Black",
       "category": "keyset",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-07-17",
       "endDate": "2026-10-16",
       "eta": "Early Q1 2027",
-      "latestUpdateId": 1904,
-      "latestUpdateDate": "2026-10-21",
-      "latestUpdateDescription": "PBS Black on Black is currently waiting in the factory's production queue."
+      "latestUpdateId": 1991,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "Production is underway for PBS Black on Black. We are hoping to get production samples shipped to us in December for approval."
     },
     {
       "id": 349,
       "displayName": "Optical Illusion Deskmats",
       "category": "deskmat",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-08-21",
       "endDate": "2026-09-21",
       "eta": "November 2026",
-      "latestUpdateId": 1903,
-      "latestUpdateDate": "2026-10-21",
-      "latestUpdateDescription": "Order placed."
+      "latestUpdateId": 1992,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "Optical Illusion Deskmats have entered production!"
     },
     {
       "id": 347,
@@ -167,9 +167,9 @@
       "startDate": "2026-05-22",
       "endDate": "2026-06-21",
       "eta": "Nov/Dec 2026",
-      "latestUpdateId": 1947,
-      "latestUpdateDate": "2026-11-05",
-      "latestUpdateDescription": "Replacement keycaps for the GMK Spark Extension Kits have arrived at our facilities; so all orders containing GMK keycaps and artisans will be shipping soon! Units are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping. Please note, if your order contained a deskmat, we will wait until those have arrived to ship everything together. The manufacturer has informed us that they are currently wrapping up production."
+      "latestUpdateId": 1993,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "Production of the Spark Deskmat has completed and units are currently shipping to us via sea shipping! We expect to receive the shipment in 4-6 weeks!"
     },
     {
       "id": 336,
@@ -227,9 +227,9 @@
       "startDate": "2026-04-17",
       "endDate": "2026-05-17",
       "eta": "Q1 2027",
-      "latestUpdateId": 1905,
-      "latestUpdateDate": "2026-10-23",
-      "latestUpdateDescription": "For PC Plate Customers: We wanted to let you know about a small modification to the Nyawice PC plate design. The final production plate differs slightly from the initial product render and will not include flex cuts. Since Polycarbonate is inherently flexible, we removed these cuts to prevent excessive flex and protect internal components from bottoming out during use. If you have any questions, comments, or concerns regarding this change, please feel free to reach out to our team!"
+      "latestUpdateId": 1994,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "Nyawice has entered the anodization process!"
     },
     {
       "id": 270,
@@ -259,13 +259,13 @@
       "id": 337,
       "displayName": "KAP Capo-Soda",
       "category": "keyset",
-      "status": "ordered",
+      "status": "manufacturing",
       "startDate": "2026-04-29",
       "endDate": "2026-05-10",
       "eta": "ETA Q4 2026",
-      "latestUpdateId": 1862,
-      "latestUpdateDate": "2026-09-21",
-      "latestUpdateDescription": "KAP Capo-Soda has been delayed due to the manufacturer relocating factories and we don't have an updated ETA as of this time."
+      "latestUpdateId": 1995,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "The manufacturer is estimating production will finish in January for KAP Capo-Soda! Sets will ship to CannonKeys via sea shipping upon completion."
     },
     {
       "id": 269,
@@ -335,9 +335,9 @@
       "startDate": "2026-03-13",
       "endDate": "2026-04-13",
       "eta": "Q1 2027",
-      "latestUpdateId": 1881,
-      "latestUpdateDate": "2026-10-09",
-      "latestUpdateDescription": "Touchstone is almost finished with the machining stage of production!"
+      "latestUpdateId": 1997,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "Touchstone has entered the anodization process!"
     },
     {
       "id": 261,
@@ -367,25 +367,25 @@
       "id": 256,
       "displayName": "PFF Verdant Retro",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-02-05",
       "endDate": "2026-03-08",
       "eta": "June/July 2026",
-      "latestUpdateId": 1892,
-      "latestUpdateDate": "2026-10-16",
-      "latestUpdateDescription": "PFF Verdant Retro has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1990,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "All group buy orders for PFF Verdant Retro have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 257,
       "displayName": "PFF WoB",
       "category": "keyset",
-      "status": "shipping",
+      "status": "complete",
       "startDate": "2026-02-03",
       "endDate": "2026-03-08",
       "eta": "June/July 2026",
-      "latestUpdateId": 1891,
-      "latestUpdateDate": "2026-10-16",
-      "latestUpdateDescription": "PFF WoB has arrived at our facilities! Sets are currently being sorted, counted, and packed by our fulfillment team in preparation for shipping."
+      "latestUpdateId": 1996,
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateDescription": "All group buy orders for PFF WoB have been fulfilled and are currently shipping out to participants!"
     },
     {
       "id": 253,
@@ -3448,5 +3448,14 @@
       "latestUpdateDescription": ""
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "799c3a5f9d60f660f2ea8dd2": "2026-11-25T22:01:13.103Z",
+    "3353c7bfaa47afb2be53b610": "2026-11-25T22:01:17.014Z",
+    "e0cc19d16d817fefa2b3f3fd": "2026-11-25T22:01:18.243Z",
+    "b9a01a961971b016e2211141": "2026-11-25T22:01:18.625Z",
+    "dbf60b3067cfa99897ce6e74": "2026-11-25T22:01:18.842Z",
+    "6d11c32f77bca948061ffb50": "2026-11-25T22:01:19.055Z",
+    "492040e8d9c2c2efd617d5b8": "2026-11-25T22:01:19.262Z",
+    "c76f54609e06a7e717f14c12": "2026-11-25T22:01:19.468Z"
+  }
 }
