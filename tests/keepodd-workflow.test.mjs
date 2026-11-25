@@ -34,11 +34,13 @@ test('GEONWORKS Release only advances Keepodd feed after the pending-webhook gua
 });
 
 test('SWAGKEYS only advances Keepodd feed after the pending-webhook guard', () => {
-  const guard = swag.indexOf('Changes remain pending; state was not updated.');
-  const firstAdvance = swag.indexOf('await advanceStateWithKeepoddEvents');
+  const start = swag.indexOf('async function main()');
+  const guard = swag.indexOf('Changes remain pending; state was not updated.', start);
+  const firstAdvance = swag.indexOf('await advanceStateWithKeepoddEvents', start);
   assert.ok(guard >= 0);
   assert.ok(firstAdvance > guard);
   assert.match(swag, /Baseline initialization: storing .* without notifying/);
+  assert.match(swag, /seedReservationScheduleKeepoddEvents/);
 });
 
 test('slow persist compares restored baseline with watcher-state before committing', () => {

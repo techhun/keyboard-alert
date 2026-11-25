@@ -9,6 +9,7 @@ import {
   buildGeonworksKeepoddEvents,
   buildGeonworksReleaseKeepoddEvents,
   buildSwagkeysKeepoddEvents,
+  buildSwagkeysScheduleKeepoddEvents,
   canonicalProductKey,
   deterministicKeepoddEventId,
   enrichKeepoddEventSourceUrls,
@@ -179,7 +180,7 @@ test('GEONWORKS Release already-Fixed addition creates one new_gb event', () => 
   assert.equal(events[0].eventType, 'new_gb');
 });
 
-test('GEONWORKS Release changes on an already-confirmed GB do not create another new_gb', () => {
+test('GEONWORKS Release changes on an already-confirmed GB create a dated change, never another new_gb', () => {
   const before = releaseRow({ end: '2026-11-01' });
   const row = releaseRow({ end: '2026-11-02' });
   const events = buildGeonworksReleaseKeepoddEvents([{
@@ -188,6 +189,69 @@ test('GEONWORKS Release changes on an already-confirmed GB do not create another
     row,
     fields: [{ field: 'end', before: before.end, after: row.end }]
   }], { occurredAt: at });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'sale_end_changed');
+  assert.equal(events[0].before, '2026-11-01');
+  assert.equal(events[0].after, '2026-11-02');
+  assert.equal(events[0].saleStart, '2026-10-13');
+  assert.equal(events[0].saleEnd, '2026-11-02');
+});
+
+test('GEONWORKS Release start correction reaches Keepodd as sale_start_changed', () => {
+  const before = releaseRow({ start: '2026-11-18' });
+  const row = releaseRow({ start: '2026-11-19' });
+  const events = buildGeonworksReleaseKeepoddEvents([{
+    kind: 'changed',
+    before,
+    row,
+    fields: [{ field: 'start', before: before.start, after: row.start }]
+  }], { occurredAt: at });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'sale_start_changed');
+  assert.equal(events[0].before, '2026-11-18');
+  assert.equal(events[0].after, '2026-11-19');
+  assert.equal(events[0].saleStart, '2026-11-19');
+});
+
+test('GEONWORKS schedule GB start correction becomes sale_start_changed', () => {
+  const events = buildGeonworksKeepoddEvents([{
+    kind: 'changed',
+    row: geonRow({ gbStart: '2026. 10. 13' }),
+    fields: [{ field: 'gbStart', before: '2026. 10. 12', after: '2026. 10. 13' }]
+  }], { occurredAt: at });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].eventType, 'sale_start_changed');
+  assert.equal(events[0].before, '2026-10-12');
+  assert.equal(events[0].after, '2026-10-13');
+  assert.equal(events[0].saleStart, '2026-10-13');
+});
+
+test('a row that reappears in the schedule months later is not announced as a new GB', () => {
+  const skipped = [];
+  const events = buildGeonworksKeepoddEvents([{
+    kind: 'added',
+    row: geonRow({ product: 'GEHIRN60 Barebone Kit', gbStart: '2026. 1. 19', status: '제작 중' })
+  }], { occurredAt: at, onSkip: (info) => skipped.push(info) });
+  assert.equal(events.length, 0);
+  assert.equal(skipped.length, 1);
+  assert.equal(skipped[0].reason, 'stale-gb-start');
+
+  const fresh = buildGeonworksKeepoddEvents([{ kind: 'added', row: geonRow({ gbStart: '2026. 10. 1' }) }], { occurredAt: at });
+  assert.equal(fresh.length, 1);
+});
+
+test('SWAGKEYS roadmap reappearance with an old sale start is not a new GB', () => {
+  const events = buildSwagkeysKeepoddEvents({
+    quarterChanges: { added: [{ product: 'SWG Rubber', quarter: 'Q1' }] },
+    snapshot: {
+      rows: [],
+      quarters: { Q1: ['SWG Rubber'] },
+      roadmapDates: { rubber: { product: 'SWG Rubber', saleStart: '2026-01-12', saleEnd: '2026-01-19' } },
+      roadmapFresh: true,
+      statusFresh: true
+    },
+    occurredAt: at
+  });
   assert.equal(events.length, 0);
 });
 
@@ -232,6 +296,25 @@ test('SWAGKEYS roadmap/status addition collapses to one new_gb event', () => {
   assert.equal(events[0].eventType, 'new_gb');
   assert.equal(events[0].name, 'SWG Classic Red');
   assert.equal(events[0].quarter, 'Q1');
+});
+
+test('SWG and SWS products with the same nickname both keep their own new_gb', () => {
+  const quarterEvents = buildSwagkeysKeepoddEvents({
+    quarterChanges: { added: [{ product: 'SWG Beige', quarter: 'Q1' }, { product: 'SWS Beige', quarter: 'Q4' }] },
+    snapshot: {
+      rows: [],
+      quarters: { Q1: ['SWG Beige'], Q4: ['SWS Beige'] },
+      roadmapDates: {
+        beige: { product: 'SWG Beige', saleStart: '2026-10-01', saleEnd: '2026-10-15' },
+        'sws:beige': { product: 'SWS Beige', saleStart: '2026-10-05', saleEnd: '2026-10-19' }
+      },
+      roadmapFresh: true, statusFresh: true
+    },
+    occurredAt: at
+  });
+  const merged = mergeKeepoddEvents({ version: 1, updatedAt: at, events: [] }, quarterEvents, { now: at });
+  assert.equal(merged.added, 2);
+  assert.deepEqual(merged.feed.events.filter((event) => event.eventType === 'new_gb').map((event) => event.name).sort(), ['SWG Beige', 'SWS Beige']);
 });
 
 test('SWAGKEYS new GB carries roadmap sale start/end dates', () => {
@@ -357,6 +440,58 @@ test('SWAGKEYS eta/currentStatus/colorMatching map to supported types and progre
     occurredAt: at
   });
   assert.deepEqual(events.map((event) => event.eventType).sort(), ['eta_changed', 'note_changed', 'status_changed']);
+});
+
+test('SWAGKEYS reservation schedule becomes Keepodd events for products outside the roadmap', () => {
+  const current = [
+    { product: '[Pre-order] NEO80 Cu', category: '키보드', brands: ['Swagkeys'], status: '공제 중', saleStart: '2026-11-06', saleEnd: '2027-02-28', key: '키보드|[pre-order] neo80 cu' },
+    { product: 'GMK Liminal', category: '키캡', brands: ['GMK'], status: '공제 중', saleStart: '2026-11-16', saleEnd: '2026-12-15', key: '키캡|gmk liminal' },
+    { product: 'DP104', category: '키보드', status: '생산 중', saleStart: '2026-11-01', saleEnd: '2026-11-20', key: '키보드|dp104' },
+    { product: 'KEYKOBO', category: '키캡', status: '공제 중', saleStart: '2026-01-02', saleEnd: '2026-01-30', key: '키캡|keykobo' }
+  ];
+  const events = buildSwagkeysScheduleKeepoddEvents({
+    current,
+    changed: [{
+      sourceKey: 'reservations',
+      item: { product: 'SWG Retroguardia', category: '키캡', status: '공제 중', saleStart: '2026-11-09', saleEnd: '2026-11-30', key: '키캡|swg retroguardia' },
+      fields: [{ key: 'sale', label: '판매 일정', before: '2026-11-09 ~ 2026-11-23', after: '2026-11-09 ~ 2026-11-30' }]
+    }],
+    occurredAt: at
+  });
+  const names = events.map((event) => event.name).sort();
+  assert.deepEqual(names, ['GMK Liminal', 'NEO80 Cu', 'SWG Retroguardia']);
+  const neo = events.find((event) => event.name === 'NEO80 Cu');
+  assert.equal(neo.eventType, 'new_gb');
+  assert.equal(neo.saleStart, '2026-11-06');
+  assert.equal(neo.saleEnd, '2027-02-28');
+  assert.equal(neo.categoryHint, '키보드');
+  assert.equal(neo.sourceUrl, 'https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0');
+  const change = events.find((event) => event.name === 'SWG Retroguardia');
+  assert.equal(change.eventType, 'sale_end_changed');
+  assert.equal(change.before, '2026-11-23');
+  assert.equal(change.after, '2026-11-30');
+});
+
+function scheduleEventsFor() {
+  return [
+    { product: '[Pre-order] NEO80 Cu', category: '키보드', brands: ['Swagkeys'], status: '공제 중', saleStart: '2026-11-06', saleEnd: '2027-02-28', key: '키보드|[pre-order] neo80 cu' },
+    { product: 'GMK Liminal', category: '키캡', brands: ['GMK'], status: '공제 중', saleStart: '2026-11-16', saleEnd: '2026-12-15', key: '키캡|gmk liminal' }
+  ];
+}
+
+test('reservation schedule seed and roadmap new_gb for the same product collapse to one entry', () => {
+  const roadmap = buildSwagkeysKeepoddEvents({
+    quarterChanges: { added: [{ product: 'GMK Liminal', quarter: 'Q4' }] },
+    snapshot: {
+      rows: [], quarters: { Q4: ['GMK Liminal'] },
+      roadmapDates: { liminal: { product: 'GMK Liminal', saleStart: '2026-11-16', saleEnd: '2026-12-15' } },
+      roadmapFresh: true, statusFresh: true
+    },
+    occurredAt: at
+  });
+  const schedule = buildSwagkeysScheduleKeepoddEvents({ current: scheduleEventsFor(), occurredAt: at });
+  const merged = mergeKeepoddEvents({ version: 1, updatedAt: at, events: [] }, [...roadmap, ...schedule], { now: at });
+  assert.equal(merged.feed.events.filter((event) => event.name === 'GMK Liminal').length, 1);
 });
 
 test('SWAGKEYS stored fallback sources do not produce events', () => {

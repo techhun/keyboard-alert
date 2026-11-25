@@ -5,10 +5,10 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  GB_REMINDER_OFFSETS, GB_SOURCES,
+  GB_REMINDER_OFFSETS, GB_SOURCES, GB_FALLBACK_MAX_AGE_MS,
   kstDay, daysUntil, validateGbSnapshot, dueGbReminders, dueGbRemindersForSource, reminderKey,
   emptyReminderState, validateReminderState, reservedState, sentState,
-  discordGbReminder,
+  gbSnapshotHealth, discordGbReminder,
 } from "../scripts/gb-deadline-core.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -107,10 +107,12 @@ test("SWAGKEYS split SWG/SWS products do not cross-match, and duplicate quarter 
   assert.notEqual(result[0].key, result[1].key);
 });
 
-test("source snapshots must be verified and recent, never a stale or fallback snapshot", () => {
+test("source snapshots must be verified, and only a recently retained fallback is usable", () => {
   assert.equal(validateGbSnapshot("GEONWORKS", geon(), NOW).version, 1);
   assert.throws(() => validateGbSnapshot("GEONWORKS", { ...geon(), updatedAt: "2026-11-01T00:00:00Z" }, NOW), /Stale GEONWORKS/);
-  assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), fallbackSince: { Q4: "2026-11-08T00:00:00Z" } }, NOW), /fallback/);
+  // Notion 차단으로 fallback이 찍혀도 마지막으로 받아온 표가 72시간 이내면 마감 계산에 쓴다.
+  assert.equal(validateGbSnapshot("SWAGKEYS", { ...swag(), fallbackSince: { roadmap: "2026-11-09T00:00:00Z" } }, NOW).version, 1);
+  assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), fallbackSince: { roadmap: "2026-11-05T00:00:00Z" } }, NOW), /Stale SWAGKEYS.*fallback/);
   assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), roadmapLayoutVersion: 1 }, NOW), /Invalid SWAGKEYS/);
   assert.throws(() => validateGbSnapshot("SWAGKEYS", { ...swag(), updatedAt: "invalid" }, NOW), /Stale SWAGKEYS/);
   assert.throws(() => dueGbRemindersForSource("SWAGKEYS", { ...swag(), quarters: { Q4: null } }, NOW), /quarter/);
@@ -121,7 +123,7 @@ test("source snapshots must be verified and recent, never a stale or fallback sn
   // Every vendor unusable is still a hard failure.
   assert.throws(
     () => dueGbReminders({ ...geon(), updatedAt: "2026-11-01T00:00:00Z" },
-      { ...swag(), fallbackSince: { Q4: "2026-11-08T00:00:00Z" } }, NOW, { onSourceStatus() {} }),
+      { ...swag(), fallbackSince: { roadmap: "2026-11-05T00:00:00Z" } }, NOW, { onSourceStatus() {} }),
     error => {
       assert.match(error.message, /All GB deadline sources failed/);
       assert.match(error.message, /GEONWORKS: Stale GEONWORKS/);
@@ -131,21 +133,30 @@ test("source snapshots must be verified and recent, never a stale or fallback sn
   );
 });
 
-test("a SWAGKEYS fallback snapshot no longer blocks due GEONWORKS closing reminders", () => {
+test("a retained SWAGKEYS fallback still yields closing reminders but is flagged degraded", () => {
   const statuses = [];
   const due = dueGbReminders(
     geon([release("GMK CYL Blanks", "2026-11-13")]),
     {
       ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
-      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" },
+      fallbackSince: { roadmap: "2026-11-09T17:24:19.913Z" },
     },
     NOW,
     { onSourceStatus: status => statuses.push(status) },
   );
-  assert.deepEqual(due.map(x => [x.source, x.name, x.offset]), [["GEONWORKS", "GMK CYL Blanks", 3]]);
-  assert.deepEqual(statuses.map(s => [s.source, s.ok, s.due]), [["GEONWORKS", true, 1], ["SWAGKEYS", false, 0]]);
-  assert.match(statuses[1].error.message, /fallback/);
+  // 예전에는 SWAGKEYS 마감이 통째로 skip됐다(11-20~11-23 Retroguardia/Moomin 누락).
+  assert.deepEqual(due.map(x => [x.source, x.name, x.offset]), [["GEONWORKS", "GMK CYL Blanks", 3], ["SWAGKEYS", "SWG Space Cadet", 3]]);
+  assert.deepEqual(statuses.map(s => [s.source, s.ok, s.due, s.degraded]), [["GEONWORKS", true, 1, false], ["SWAGKEYS", true, 1, true]]);
+  assert.ok(GB_FALLBACK_MAX_AGE_MS > 0);
   assert.deepEqual(GB_SOURCES, ["GEONWORKS", "SWAGKEYS"]);
+});
+
+test("snapshot health reports retained data age without guessing", () => {
+  assert.equal(gbSnapshotHealth("SWAGKEYS", swag(), NOW).degraded, false);
+  const health = gbSnapshotHealth("SWAGKEYS", { ...swag(), fallbackSince: { roadmap: "2026-11-09T08:20:00Z" } }, NOW);
+  assert.equal(health.degraded, true);
+  assert.equal(health.dataAgeHours, 16);
+  assert.match(health.reason, /roadmap/);
 });
 
 test("a stale GEONWORKS snapshot no longer blocks due SWAGKEYS closing reminders", () => {
@@ -168,7 +179,7 @@ test("a skipped vendor is a warning log, never an exception, when both sources a
   try {
     const due = dueGbReminders(
       geon([release("GMK CYL Blanks", "2026-11-13")]),
-      { ...swag(), fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" } },
+      { ...swag(), fallbackSince: { roadmap: "2026-11-01T17:24:19.913Z" } },
       NOW,
     );
     assert.equal(due.length, 1);
@@ -176,7 +187,27 @@ test("a skipped vendor is a warning log, never an exception, when both sources a
     console.warn = originalWarn;
   }
   assert.equal(warnings.length, 1);
-  assert.match(warnings[0], /SWAGKEYS deadline check skipped: SWAGKEYS GB roadmap is using fallback data/);
+  assert.match(warnings[0], /SWAGKEYS deadline check skipped: Stale SWAGKEYS GB schedule fallback/);
+});
+
+test("a degraded (retained) vendor is logged instead of disappearing silently", () => {
+  const warnings = [];
+  const originalWarn = console.warn;
+  console.warn = (...args) => warnings.push(args.join(" "));
+  let result;
+  try {
+    result = dueGbReminders(
+      geon([release("GMK CYL Blanks", "2026-11-13")]),
+      { ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
+        fallbackSince: { roadmap: "2026-11-09T00:00:00Z" } },
+      NOW,
+    );
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.equal(result.length, 2);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /SWAGKEYS deadline check degraded: stored SWAGKEYS schedule in use since roadmap fallback \(24h\)/);
 });
 
 test("event fingerprint is source + product + exact dates + D-stage, not Notion page IDs", () => {
@@ -275,22 +306,38 @@ async function invokeRunner({ geonSnapshot, swagSnapshot, now = NOW }) {
   return { result, error, logs, warnings };
 }
 
-test("runner dry-run keeps GEONWORKS closing reminders while SWAGKEYS is in fallback", async () => {
+test("runner dry-run keeps SWAGKEYS closing reminders from a recently retained fallback and warns about it", async () => {
   const { result, error, logs, warnings } = await invokeRunner({
     geonSnapshot: geon([release("GMK CYL Blanks", "2026-11-13")]),
     swagSnapshot: {
       ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
-      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z", status: "2026-11-12T17:42:40.276Z" },
+      fallbackSince: { roadmap: "2026-11-09T17:24:19.913Z", status: "2026-11-09T17:42:40.276Z" },
     },
   });
   assert.equal(error, undefined);
   assert.equal(result.dryRun, true);
-  assert.equal(result.due, 1);
+  assert.equal(result.due, 2);
   assert.equal(result.sent, 0);
+  assert.deepEqual(result.degraded, ["SWAGKEYS"]);
   assert.ok(logs.some(line => /DRY RUN GEONWORKS D-3: GMK CYL Blanks/.test(line)), logs.join("\n"));
-  assert.ok(logs.some(line => /GEONWORKS: 1 verified due reminder/.test(line)));
+  assert.ok(logs.some(line => /DRY RUN SWAGKEYS D-3: SWG Space Cadet/.test(line)), logs.join("\n"));
+  assert.ok(logs.some(line => /::warning title=Keyboard Alert GB deadlines::SWAGKEYS deadline check used a stored schedule/.test(line)), logs.join("\n"));
   assert.equal(warnings.length, 1);
-  assert.match(warnings[0], /SWAGKEYS deadline check skipped: SWAGKEYS GB roadmap is using fallback data/);
+  assert.match(warnings[0], /SWAGKEYS deadline check degraded: stored SWAGKEYS schedule in use since roadmap, status fallback \(6h old\)/);
+});
+
+test("runner dry-run skips a vendor whose retained schedule is older than the window", async () => {
+  const { result, error, logs } = await invokeRunner({
+    geonSnapshot: geon([release("GMK CYL Blanks", "2026-11-13")]),
+    swagSnapshot: {
+      ...swag({ space: dated("SWG Space Cadet", "2026-11-13") }, { Q4: ["SWG Space Cadet"] }),
+      fallbackSince: { roadmap: "2026-10-30T00:00:00Z", status: "2026-10-30T00:00:00Z" },
+    },
+  });
+  assert.equal(error, undefined);
+  assert.equal(result.due, 1);
+  assert.deepEqual(result.skippedSources, ["SWAGKEYS"]);
+  assert.ok(logs.some(line => /::warning title=Keyboard Alert GB deadlines::SWAGKEYS deadline check skipped/.test(line)), logs.join("\n"));
 });
 
 test("runner dry-run keeps going when one watcher snapshot file cannot be read", async () => {
@@ -308,7 +355,7 @@ test("runner fails only when every vendor snapshot is unusable", async () => {
     geonSnapshot: { ...geon(), updatedAt: "2026-11-01T00:00:00Z" },
     swagSnapshot: {
       ...swag(),
-      fallbackSince: { roadmap: "2026-11-12T17:24:19.913Z" },
+      fallbackSince: { roadmap: "2026-11-01T17:24:19.913Z" },
     },
   });
   assert.equal(result, undefined);

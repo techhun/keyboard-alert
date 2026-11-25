@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
-import { buildSwagkeysKeepoddEvents, canonicalProductKey, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
+import { buildSwagkeysKeepoddEvents, buildSwagkeysScheduleKeepoddEvents, canonicalProductKey, commitStateAndKeepoddEvents, enrichKeepoddEventSourceUrls } from './lib/keepodd-events.mjs';
 import {
   SCHEDULE_SOURCES,
   diffScheduleItems,
@@ -893,6 +893,7 @@ function statePayload(snapshot, updatedAt = new Date().toISOString()) {
     ...(snapshot.roadmapDates ? { roadmapDates: snapshot.roadmapDates } : {}),
     rows: snapshot.rows.map((row) => ({ ...row, eta: normalizeEta(row.eta) })),
     ...(snapshot.schedule ? { schedule: snapshot.schedule } : {}),
+    ...(snapshot.keepoddScheduleSeededAt ? { keepoddScheduleSeededAt: snapshot.keepoddScheduleSeededAt } : {}),
     fallbackSince: snapshot.fallbackSince || {}
   };
 }
@@ -901,9 +902,27 @@ function saveState(snapshot) {
   fs.writeFileSync(STATE_PATH, JSON.stringify(statePayload(snapshot), null, 2) + '\n');
 }
 
-async function advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts = []) {
+// 예약판매 표가 Keepodd 이벤트로 연결되기 전부터 표에 있던 품목은 added diff가 없어
+// 이벤트가 생기지 않는다. 최초 1회만 현재 '공제 중/판매 중' 품목을 시드한다(Discord 발송 없음).
+async function seedReservationScheduleKeepoddEvents(snapshot, scheduleEvents) {
+  snapshot.keepoddScheduleSeededAt = new Date().toISOString();
+  await advanceStateWithKeepoddEvents(snapshot, { added: [], removed: [], datesChanged: [] }, [], [], scheduleEvents);
+  console.log('Keepodd SWAGKEYS reservation schedule seeded once (no Discord messages).');
+}
+
+async function advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts = [], scheduleEvents = null) {
   const occurredAt = new Date().toISOString();
   const candidates = buildSwagkeysKeepoddEvents({ changes, quarterChanges, starts, snapshot, occurredAt });
+  // 예약판매 품목 현황(NEO80 Cu·GMK Liminal·GMK CYL Purple 등)은 로드맵과 다른 표라
+  // 별도 빌더로 Keepodd 이벤트를 만든다. 전에는 디스코드 임베드로만 나갔다.
+  const reservations = scheduleEvents?.nextState?.sources?.reservations;
+  if (reservations?.fresh) {
+    candidates.push(...buildSwagkeysScheduleKeepoddEvents({
+      current: reservations.items || [],
+      changed: (scheduleEvents.changed || []).filter((change) => change.sourceKey === 'reservations'),
+      occurredAt
+    }));
+  }
   const events = await enrichKeepoddEventSourceUrls(candidates);
   const merged = commitStateAndKeepoddEvents({
     statePath: STATE_PATH,
@@ -1406,6 +1425,7 @@ async function main() {
   console.log(`SWAGKEYS schedule events: ${scheduleEvents.added.length} new / ${scheduleEvents.changed.length} changed / ${scheduleEvents.closings.length} closing${scheduleEvents.baseline ? ' (baseline saved without notifications)' : ''}`);
 
   snapshot.gbStartsNotified = { ...(state.gbStartsNotified || {}), ...Object.fromEntries(starts.map(row => [row.key, row.saleStart])) };
+
   if (!announcementChanged && !quartersChanged && changes.length === 0 && starts.length === 0 && scheduleActivity === 0) {
     if (snapshot.fallbackMetadataChanged || roadmapDatesInitialized || snapshot.roadmapLayoutVersion !== (state.roadmapLayoutVersion || 1) || scheduleStateChanged) {
       saveState(snapshot);
@@ -1422,6 +1442,10 @@ async function main() {
     return;
   }
 
+  if (state?.initialized && !state?.keepoddScheduleSeededAt && scheduleEvents.nextState.sources?.reservations?.fresh) {
+    await seedReservationScheduleKeepoddEvents(snapshot, scheduleEvents);
+  }
+
   if (mode === 'discord') {
     if (announcementChanged) await postDiscord(announcementEmbed(snapshot.announcement));
     if (quartersChanged) await postDiscord(quartersEmbed(quarterChanges));
@@ -1435,7 +1459,7 @@ async function main() {
     for (const event of scheduleEvents.changed) await postDiscord(scheduleChangedEmbed(event.sourceKey, event));
     for (const closing of scheduleEvents.closings) await postDiscord(scheduleClosingEmbed(closing));
   }
-  await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts);
+  await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts, scheduleEvents);
   if (mode === 'skip') {
     console.log(`SWAGKEYS_SKIP_DISCORD is enabled: ${changes.length + Number(announcementChanged) + Number(quartersChanged) + starts.length + scheduleActivity} change group(s) reported without Discord, state and Keepodd events updated.`);
     console.log(skipDiscordSummaryLine({

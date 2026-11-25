@@ -34,6 +34,34 @@ const SOURCE_URLS = Object.freeze({
   SWAGKEYS: "https://swagkeys.notion.site/swg-keycap-roadmap",
 });
 const MAX_STATE_AGE_MS = 72 * 60 * 60 * 1000;
+// 수집기가 Notion 차단(429·챌린지)으로 실패하면 마지막으로 성공한 표를 그대로 들고
+// fallbackSince만 새로 찍는다. GB 마감일은 며칠 안에 통째로 뒤집히지 않으므로 저장된
+// 표가 이 기간 안에 갱신된 것이면 마감 알림 계산에 쓴다(그 이상이면 fail closed).
+export const GB_FALLBACK_MAX_AGE_MS = 72 * 60 * 60 * 1000;
+
+// fallbackSince가 찍힌 시점 = 마지막으로 표를 실제로 받아온 시점.
+// 여러 소스가 동시에 fallback이면 가장 오래된 쪽을 기준으로 본다.
+function fallbackAgeMs(snapshot, now = new Date()) {
+  const stamps = Object.values(snapshot?.fallbackSince || {})
+    .map((value) => Date.parse(value))
+    .filter((value) => Number.isFinite(value));
+  if (!stamps.length) return null;
+  return now.getTime() - Math.min(...stamps);
+}
+
+// 이 소스가 저장된(fallback) 표로 계산되는지, 그 표가 얼마나 오래됐는지 알려준다.
+// 운영 로그·워크플로 경고에서 '조용한 skip' 대신 degraded 상태를 남기는 데 쓴다.
+export function gbSnapshotHealth(source, snapshot, now = new Date()) {
+  const ageMs = fallbackAgeMs(snapshot, now);
+  if (ageMs === null) return { source, degraded: false, reason: null, dataAgeHours: 0 };
+  const fallbackSources = Object.keys(snapshot?.fallbackSince || {});
+  return {
+    source,
+    degraded: true,
+    reason: `stored ${source} schedule in use since ${fallbackSources.join(", ")} fallback`,
+    dataAgeHours: Math.floor(ageMs / 3_600_000),
+  };
+}
 
 function nameKey(value) {
   return typeof value === "string"
@@ -56,8 +84,11 @@ export function validateGbSnapshot(source, snapshot, now = new Date()) {
   if (!Number.isFinite(asOf) || age < -2 * 60 * 60 * 1000 || age > MAX_STATE_AGE_MS) {
     throw new Error(`Stale ${source} GB schedule snapshot; fail closed`);
   }
-  if (source === "SWAGKEYS" && Object.keys(snapshot.fallbackSince || {}).length > 0) {
-    throw new Error("SWAGKEYS GB roadmap is using fallback data; skip deadline notifications");
+  const fallbackAge = fallbackAgeMs(snapshot, now);
+  if (fallbackAge !== null && fallbackAge > GB_FALLBACK_MAX_AGE_MS) {
+    throw new Error(
+      `Stale ${source} GB schedule fallback (${Math.floor(fallbackAge / 3_600_000)}h old); skip deadline notifications`,
+    );
   }
   if (source === "GEONWORKS" && snapshot.rows.length > 5000) throw new Error("Unexpected GEONWORKS schedule size");
   if (source === "SWAGKEYS" && Object.keys(snapshot.roadmapDates).length > 5000) throw new Error("Unexpected SWAGKEYS roadmap size");
@@ -149,8 +180,13 @@ function reportSourceStatus(status, options) {
     options.onSourceStatus(status);
     return;
   }
-  if (status.ok) return;
-  console.warn(`Keyboard Alert GB ${status.source} deadline check skipped: ${status.error.message}`);
+  if (!status.ok) {
+    console.warn(`Keyboard Alert GB ${status.source} deadline check skipped: ${status.error.message}`);
+    return;
+  }
+  if (status.degraded) {
+    console.warn(`Keyboard Alert GB ${status.source} deadline check degraded: ${status.health?.reason ?? "stored schedule"} (${status.health?.dataAgeHours ?? 0}h)`);
+  }
 }
 
 // Vendors are fault-isolated: a blocked or stale schedule only loses that vendor's
@@ -169,10 +205,11 @@ export function dueGbReminders(geonRelease, swagkeys, now = new Date(), options 
     } catch (error) {
       const failure = error instanceof Error ? error : new Error(String(error));
       failures.push({ source, error: failure });
-      statuses.push({ source, ok: false, due: 0, error: failure });
+      statuses.push({ source, ok: false, due: 0, error: failure, degraded: true });
       continue;
     }
-    statuses.push({ source, ok: true, due: items.length });
+    const health = gbSnapshotHealth(source, snapshots[source], now);
+    statuses.push({ source, ok: true, due: items.length, degraded: health.degraded, health });
     for (const item of items) {
       if (used.has(item.key)) continue;
       used.add(item.key);
