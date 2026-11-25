@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-25T05:00:51.633Z",
+  "updatedAt": "2026-11-25T06:20:35.366Z",
   "rows": [
     {
       "product": "Chamber TKL",
@@ -90,12 +90,24 @@
       "fixed": "확정 / Fixed",
       "start": "2026-11-24",
       "end": "2026-12-17"
+    },
+    {
+      "product": "GMK CYL Ghostship",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-25",
+      "end": "2026-12-20"
     }
   ],
   "sentChanges": {
     "18b52d7f01eda4782f471339": "2026-11-19T08:30:41.620Z",
     "64581e4f6a7d107ce76d707e": "2026-11-19T08:30:41.780Z",
     "174bcb4bb8616f6087e17a56": "2026-11-24T07:20:33.847Z",
-    "7f18167e3a9b9cd3bc3562ee": "2026-11-24T07:20:33.957Z"
+    "7f18167e3a9b9cd3bc3562ee": "2026-11-24T07:20:33.957Z",
+    "b36721fd7b736969f8f56ddc": "2026-11-25T06:20:35.365Z"
   }
 }
