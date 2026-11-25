@@ -7,6 +7,15 @@ export const GEONWORKS_UPDATE_URL = 'https://geonworks.kr/customhtml/GB_schedule
 export const GEONWORKS_RELEASE_UPDATE_URL = 'https://geonworks.kr/customhtml/release/release.html';
 export const SWAGKEYS_UPDATE_URL = 'https://swagkeys.notion.site/swg-keycap-roadmap';
 export const SWAGKEYS_STATUS_URL = 'https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35';
+export const SWAGKEYS_SCHEDULE_URL = 'https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0';
+// Keepodd 이벤트 종류. 판매 일정 변경(시작/종료)은 상태 변경과 분리해 따로 전달한다.
+export const KEEPODD_EVENT_TYPES = Object.freeze([
+  'new_gb', 'eta_changed', 'status_changed', 'note_changed', 'sale_start_changed', 'sale_end_changed'
+]);
+const DATE_EVENT_TYPES = new Set(['eta_changed', 'sale_start_changed', 'sale_end_changed']);
+// 표에서 잠깐 빠졌다가 다시 들어온 구작이 '신규 GB'로 오탐되지 않도록, GB 시작일이 이 기간보다
+// 오래된 행은 신규로 승격하지 않는다.
+export const GB_NEW_FRESHNESS_DAYS = 45;
 const GEONWORKS_PRODUCTS_URL = 'https://geonworks.kr/category/products/47/';
 const SWAGKEYS_PRODUCTS_JSON_URL = 'https://swagkeys.com/products.json';
 const PRODUCT_CATALOG_MAX_PAGES = 10;
@@ -39,21 +48,65 @@ function stripDecorations(value) {
     .replace(/\[(?:예약판매|예판|group[- ]?buy|pre[- ]?order|in[- ]?stock)\]/gi, ' ')
     .replace(/\((?:국내\s*)?인스탁\s*판매\)/gi, ' ')
     .replace(/\(in[- ]?stock\)/gi, ' ')
-    .replace(/\s+(?:키캡|keycaps?)$/gi, ' ')
+    .replace(/\s+(?:keyboard\s*kit|키캡|keycaps?)$/gi, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
+// 원본 표의 알려진 오타를 보정한다. GMK NTNU Dasher / GMK MTNU Dasher가 두 건으로 갈라지지 않게 한다.
+function correctKnownTypos(value) {
+  return cleanKeepoddValue(value).replace(/\bntnu\b/gi, 'MTNU');
+}
+
 export function canonicalProductKey(source, value) {
-  let text = stripDecorations(value).toLocaleLowerCase('en-US');
+  let text = stripDecorations(correctKnownTypos(value)).toLocaleLowerCase('en-US');
   if (String(source).toUpperCase() === 'SWAGKEYS') {
     text = text.replace(/^(?:swg|sws)\s+/i, '');
   }
   return text.replace(/[^a-z0-9가-힣]+/g, '');
 }
 
+// 이벤트 중복 판정용 키. SWAGKEYS는 SWG/SWS 계열을 남겨 'SWG Beige'와 'SWS Beige'를
+// 서로 다른 제품으로 유지한다(다른 제품이 같은 신규 GB로 합쳐지지 않도록).
+export function eventIdentityKey(source, value) {
+  const key = canonicalProductKey(source, value);
+  if (!key || String(source).toUpperCase() !== 'SWAGKEYS') return key;
+  const raw = cleanKeepoddValue(value);
+  const family = /^sws\b/i.test(raw) ? 'sws' : /^swg\b/i.test(raw) ? 'swg' : '';
+  return family ? `${family}:${key}` : key;
+}
+
 function identityValue(value) {
   return meaningful(value).toLocaleLowerCase('en-US');
+}
+
+const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
+
+// 날짜 필드가 실제 날짜인지 확인하고 아니면 빈 값을 돌려준다('미정' 등).
+function isoDay(value) {
+  const normalized = normalizeKeepoddDate(value);
+  return ISO_DAY.test(normalized) ? normalized : '';
+}
+
+function dayAge(value, nowIso) {
+  const day = isoDay(value);
+  const now = Date.parse(`${isoDay(nowIso) || String(nowIso).slice(0, 10)}T00:00:00Z`);
+  const stamp = Date.parse(`${day}T00:00:00Z`);
+  if (!ISO_DAY.test(day) || !Number.isFinite(now) || !Number.isFinite(stamp)) return null;
+  return Math.round((now - stamp) / 86_400_000);
+}
+
+// GB 시작일이 충분히 최근일 때만 '신규 GB'로 취급한다. 날짜를 알 수 없으면 판단하지 않고 허용한다.
+export function gbStartIsFresh(value, nowIso, maxAgeDays = GB_NEW_FRESHNESS_DAYS) {
+  const age = dayAge(value, nowIso);
+  if (age === null) return true;
+  return age <= maxAgeDays;
+}
+
+function kstDayOf(nowIso) {
+  const stamp = Date.parse(nowIso);
+  if (!Number.isFinite(stamp)) return isoDay(nowIso);
+  return new Date(stamp + 9 * 3_600_000).toISOString().slice(0, 10);
 }
 
 export function deterministicKeepoddEventId(event, canonicalKey = canonicalProductKey(event?.source, event?.name)) {
@@ -80,8 +133,8 @@ function eventFrom({ source, name, eventType, before, after, occurredAt, row = {
     source,
     name: cleanKeepoddValue(name),
     eventType,
-    ...(meaningful(before) ? { before: eventType === 'eta_changed' ? normalizeKeepoddDate(before) : meaningful(before) } : {}),
-    ...(meaningful(after) ? { after: eventType === 'eta_changed' ? normalizeKeepoddDate(after) : meaningful(after) } : {}),
+    ...(meaningful(before) ? { before: DATE_EVENT_TYPES.has(eventType) ? normalizeKeepoddDate(before) : meaningful(before) } : {}),
+    ...(meaningful(after) ? { after: DATE_EVENT_TYPES.has(eventType) ? normalizeKeepoddDate(after) : meaningful(after) } : {}),
     occurredAt,
     ...(cleanCategoryHint(row.type) ? { categoryHint: cleanCategoryHint(row.type) } : {}),
     ...(meaningful(row.manufacturer) ? { maker: meaningful(row.manufacturer) } : {}),
@@ -109,6 +162,11 @@ export function buildGeonworksKeepoddEvents(changes = [], options = {}) {
     const canonicalKey = canonicalProductKey('GEONWORKS', row.product);
 
     if (change.kind === 'added') {
+      // 목록에서 잠깐 빠졌다 다시 들어온 구작은 신규 GB가 아니다.
+      if (!gbStartIsFresh(row.gbStart, occurredAt)) {
+        options.onSkip?.({ source: 'GEONWORKS', name: row.product, reason: 'stale-gb-start', gbStart: normalizeKeepoddDate(row.gbStart) });
+        continue;
+      }
       result.push(eventFrom({
         source: 'GEONWORKS', name: row.product, eventType: 'new_gb', occurredAt, row, fallbackUrl, canonicalKey,
         idAfter: normalizeKeepoddDate(row.gbStart) || 'present'
@@ -121,7 +179,8 @@ export function buildGeonworksKeepoddEvents(changes = [], options = {}) {
       const eventType = field.field === 'eta' ? 'eta_changed'
         : field.field === 'status' ? 'status_changed'
           : field.field === 'note' ? 'note_changed'
-            : '';
+            : field.field === 'gbStart' ? 'sale_start_changed'
+              : '';
       if (!eventType) continue;
       result.push(eventFrom({
         source: 'GEONWORKS', name: row.product, eventType,
@@ -151,21 +210,47 @@ export function buildGeonworksReleaseKeepoddEvents(changes = [], options = {}) {
     const row = change?.row || {};
     if (!meaningful(row.product) || !isConfirmedGeonworksReleaseGroupBuy(row)) continue;
 
+    const canonicalKey = canonicalProductKey('GEONWORKS', row.product);
     const becameConfirmed = change.kind === 'added'
       || (change.kind === 'changed' && !isConfirmedGeonworksReleaseGroupBuy(change.before || {}));
-    if (!becameConfirmed) continue;
 
-    const canonicalKey = canonicalProductKey('GEONWORKS', row.product);
-    result.push(eventFrom({
-      source: 'GEONWORKS',
-      name: row.product,
-      eventType: 'new_gb',
-      occurredAt,
-      row: { ...row, gbStart: row.start },
-      fallbackUrl,
-      canonicalKey,
-      idAfter: normalizeKeepoddDate(row.start) || 'present'
-    }));
+    if (becameConfirmed) {
+      if (!gbStartIsFresh(row.start, occurredAt)) {
+        options.onSkip?.({ source: 'GEONWORKS', name: row.product, reason: 'stale-gb-start', gbStart: normalizeKeepoddDate(row.start) });
+        continue;
+      }
+      result.push(eventFrom({
+        source: 'GEONWORKS',
+        name: row.product,
+        eventType: 'new_gb',
+        occurredAt,
+        row: { ...row, gbStart: row.start },
+        fallbackUrl,
+        canonicalKey,
+        idAfter: normalizeKeepoddDate(row.start) || 'present'
+      }));
+      continue;
+    }
+
+    if (change.kind !== 'changed') continue;
+    // 이미 확정된 GB의 판매 시작·종료일 정정도 Keepodd까지 전달한다.
+    for (const field of change.fields || []) {
+      const eventType = field.field === 'start' ? 'sale_start_changed'
+        : field.field === 'end' ? 'sale_end_changed'
+          : '';
+      if (!eventType) continue;
+      result.push(eventFrom({
+        source: 'GEONWORKS',
+        name: row.product,
+        eventType,
+        before: field.before,
+        after: field.after,
+        occurredAt,
+        row: { ...row, gbStart: row.start },
+        fallbackUrl,
+        canonicalKey
+      }));
+    }
   }
 
   return result;
@@ -215,14 +300,16 @@ function swagRowMap(rows = []) {
 
 function swagEventRow(row = {}, roadmapDates = {}) {
   const colorMatching = meaningful(row.colorMatching);
+  // 로드맵에 아직 날짜가 없을 때는 진행현황 행의 날짜로 보강해, 신규 GB 이벤트에
+  // 판매 일정이 빠지지 않게 한다(SWG Nightshift / SWG Forest Cadet 사례).
   return {
     eta: row.eta,
     currentStatus: row.currentStatus,
     status: row.currentStatus,
     manufacturer: 'Swagkeys',
     type: 'Keycap',
-    saleStart: roadmapDates.saleStart,
-    saleEnd: roadmapDates.saleEnd,
+    saleStart: roadmapDates?.saleStart || row.saleStart,
+    saleEnd: roadmapDates?.saleEnd || row.saleEnd,
     ...(colorMatching ? { note: `컬러매칭 ${colorMatching}` } : {})
   };
 }
@@ -243,7 +330,8 @@ export function buildSwagkeysKeepoddEvents({
   snapshot = {},
   occurredAt = new Date().toISOString(),
   roadmapFallbackUrl = SWAGKEYS_UPDATE_URL,
-  statusFallbackUrl = SWAGKEYS_STATUS_URL
+  statusFallbackUrl = SWAGKEYS_STATUS_URL,
+  onSkip
 } = {}) {
   const events = new Map();
   const rows = Array.isArray(snapshot.rows) ? snapshot.rows : [];
@@ -256,6 +344,10 @@ export function buildSwagkeysKeepoddEvents({
       const name = cleanKeepoddValue(item.product);
       const canonicalKey = canonicalProductKey('SWAGKEYS', name);
       if (!canonicalKey) continue;
+      if (!gbStartIsFresh(swagRoadmapDate(name, roadmapDates)?.saleStart, occurredAt)) {
+        onSkip?.({ source: 'SWAGKEYS', name, reason: 'stale-gb-start' });
+        continue;
+      }
       const row = rowByKey.get(canonicalKey) || {};
       const event = eventFrom({
         source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt,
@@ -316,6 +408,10 @@ export function buildSwagkeysKeepoddEvents({
       const current = swagEventRow(row, swagRoadmapDate(name, roadmapDates));
 
       if (change.kind === 'added') {
+        if (!gbStartIsFresh(swagRoadmapDate(name, roadmapDates)?.saleStart, occurredAt)) {
+          onSkip?.({ source: 'SWAGKEYS', name, reason: 'stale-gb-start' });
+          continue;
+        }
         const event = eventFrom({
           source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt, row: current,
           quarter, fallbackUrl: statusFallbackUrl, canonicalKey, idAfter: quarter || 'present'
@@ -346,9 +442,114 @@ export function buildSwagkeysKeepoddEvents({
   return [...events.values()];
 }
 
+// SWAGKEYS 예약판매 품목 현황(키보드·GMK·스위치 포함)은 로드맵·진행현황과 다른 표다.
+// 디스코드에만 가던 이 표의 변동을 Keepodd 이벤트로도 내려보낸다.
+const SCHEDULE_ACTIVE_STATUS = /^(?:공제\s*중|판매\s*중)$/;
+
+function scheduleDisplayName(value) {
+  return cleanKeepoddValue(value).replace(/^\[[^\]]*\]\s*/, '').trim();
+}
+
+function parseSaleRangeLabel(value) {
+  const text = cleanKeepoddValue(value);
+  const [start, end] = text.split('~').map((part) => normalizeKeepoddDate(part));
+  return { start: isoDay(start), end: isoDay(end) };
+}
+
+function scheduleRow(item = {}) {
+  const start = isoDay(item.saleStart);
+  const end = isoDay(item.saleEnd);
+  const range = start || end ? `${start || '미정'} ~ ${end || '미정'}` : '미정';
+  return {
+    type: item.category,
+    manufacturer: Array.isArray(item.brands) ? item.brands[0] : undefined,
+    status: item.status,
+    saleStart: start,
+    saleEnd: end,
+    note: `예약판매 ${range}`
+  };
+}
+
+export function buildSwagkeysScheduleKeepoddEvents({
+  current = [],
+  changed = [],
+  occurredAt = new Date().toISOString(),
+  fallbackUrl = SWAGKEYS_SCHEDULE_URL
+} = {}) {
+  const events = new Map();
+
+  // 현재 예약판매 중인 품목. 처음 한 번 '신규 GB'로 등장하고,
+  // 같은 제품의 판매일정이 바뀌면 새 이벤트 id가 생기지만 merge 단계에서 신규 GB 중복은 막힌다.
+  const today = kstDayOf(occurredAt);
+  for (const item of current || []) {
+    const rawName = meaningful(item?.product);
+    if (!rawName || !SCHEDULE_ACTIVE_STATUS.test(meaningful(item.status))) continue;
+    if (!gbStartIsFresh(item.saleStart, occurredAt)) continue;
+    // 이미 판매가 끝난 예약판매는 '신규 GB'로 띄우지 않는다.
+    const end = isoDay(item.saleEnd);
+    if (end && today && end < today) continue;
+    const name = scheduleDisplayName(rawName);
+    const canonicalKey = canonicalProductKey('SWAGKEYS', name);
+    if (!canonicalKey) continue;
+    const event = eventFrom({
+      source: 'SWAGKEYS', name, eventType: 'new_gb', occurredAt,
+      row: scheduleRow(item), fallbackUrl, canonicalKey,
+      idAfter: `schedule:${isoDay(item.saleStart)}:${isoDay(item.saleEnd)}`
+    });
+    events.set(event.id, event);
+  }
+
+  for (const change of changed || []) {
+    const item = change?.item || {};
+    const rawName = meaningful(item.product);
+    if (!rawName) continue;
+    const name = scheduleDisplayName(rawName);
+    const canonicalKey = canonicalProductKey('SWAGKEYS', name);
+    if (!canonicalKey) continue;
+    const row = scheduleRow(item);
+
+    for (const field of change.fields || []) {
+      if (field.key === 'sale') {
+        const before = parseSaleRangeLabel(field.before);
+        const after = parseSaleRangeLabel(field.after);
+        if (before.start !== after.start) {
+          const event = eventFrom({
+            source: 'SWAGKEYS', name, eventType: 'sale_start_changed',
+            before: before.start || field.before, after: after.start || field.after,
+            occurredAt, row, fallbackUrl, canonicalKey
+          });
+          events.set(event.id, event);
+        }
+        if (before.end !== after.end) {
+          const event = eventFrom({
+            source: 'SWAGKEYS', name, eventType: 'sale_end_changed',
+            before: before.end || field.before, after: after.end || field.after,
+            occurredAt, row, fallbackUrl, canonicalKey
+          });
+          events.set(event.id, event);
+        }
+        continue;
+      }
+
+      const eventType = field.key === 'status' ? 'status_changed'
+        : field.key === 'eta' ? 'eta_changed'
+          : '';
+      if (!eventType) continue;
+      const event = eventFrom({
+        source: 'SWAGKEYS', name, eventType,
+        before: field.before, after: field.after,
+        occurredAt, row, fallbackUrl, canonicalKey
+      });
+      events.set(event.id, event);
+    }
+  }
+
+  return [...events.values()];
+}
+
 function validEvent(event) {
   return Boolean(event && meaningful(event.id) && ['GEONWORKS', 'SWAGKEYS'].includes(cleanKeepoddValue(event.source).toUpperCase())
-    && ['new_gb', 'eta_changed', 'status_changed', 'note_changed'].includes(cleanKeepoddValue(event.eventType))
+    && KEEPODD_EVENT_TYPES.includes(cleanKeepoddValue(event.eventType))
     && meaningful(event.name));
 }
 
@@ -370,9 +571,13 @@ function eventTime(event) {
 export function mergeKeepoddEvents(feed, newEvents = [], { now = new Date().toISOString(), maxEvents = KEEPODD_MAX_EVENTS } = {}) {
   const existing = Array.isArray(feed?.events) ? feed.events.filter(validEvent) : [];
   const byId = new Map(existing.map((event) => [event.id, event]));
-  const geonworksNewGbKeys = new Set(existing
-    .filter((event) => cleanKeepoddValue(event.source).toUpperCase() === 'GEONWORKS' && cleanKeepoddValue(event.eventType) === 'new_gb')
-    .map((event) => canonicalProductKey('GEONWORKS', event.name))
+  const newGbIdentity = (event) => {
+    const key = eventIdentityKey(event?.source, event?.name);
+    return key ? `${cleanKeepoddValue(event?.source).toUpperCase()}:${key}` : '';
+  };
+  const newGbKeys = new Set(existing
+    .filter((event) => cleanKeepoddValue(event.eventType) === 'new_gb')
+    .map(newGbIdentity)
     .filter(Boolean));
   let added = 0;
 
@@ -380,13 +585,13 @@ export function mergeKeepoddEvents(feed, newEvents = [], { now = new Date().toIS
     if (!raw?.name || !raw?.eventType || !raw?.source) continue;
     const source = cleanKeepoddValue(raw.source).toUpperCase();
     const eventType = cleanKeepoddValue(raw.eventType);
-    const canonicalKey = canonicalProductKey(source, raw.name);
-    if (source === 'GEONWORKS' && eventType === 'new_gb' && canonicalKey && geonworksNewGbKeys.has(canonicalKey)) continue;
+    const identity = newGbIdentity({ ...raw, source });
+    if (eventType === 'new_gb' && identity && newGbKeys.has(identity)) continue;
 
     const id = raw.id || deterministicKeepoddEventId(raw);
     if (!id || byId.has(id)) continue;
     byId.set(id, { ...raw, id, occurredAt: raw.occurredAt || now });
-    if (source === 'GEONWORKS' && eventType === 'new_gb' && canonicalKey) geonworksNewGbKeys.add(canonicalKey);
+    if (eventType === 'new_gb' && identity) newGbKeys.add(identity);
     added += 1;
   }
 

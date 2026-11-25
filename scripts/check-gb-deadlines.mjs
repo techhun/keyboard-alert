@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { appendFile, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { dueGbReminders, discordGbReminder, reservedState, sentState, validateReminderState } from "./gb-deadline-core.mjs";
@@ -102,6 +102,23 @@ async function sendDiscordReminder(url, reminder) {
   }
 }
 
+// 성공으로 끝나는 실행에서도 무엇이 빠졌는지 남긴다(이전에는 fallback skip이 success로 숨었다).
+async function writeStepSummary({ degradedSources, skippedSources, sourceCounts }) {
+  const path = process.env.GITHUB_STEP_SUMMARY;
+  if (!path || (!degradedSources.length && !skippedSources.length)) return;
+  const lines = [
+    "### GB closing reminders",
+    `- verified due: GEONWORKS ${sourceCounts.GEONWORKS}, SWAGKEYS ${sourceCounts.SWAGKEYS}`,
+    ...degradedSources.map((item) => `- ⚠ degraded ${item.source}: stored schedule ${item.dataAgeHours}h old (${item.reason})`),
+    ...skippedSources.map((item) => `- ⚠ skipped ${item.source}: ${item.reason}`),
+  ];
+  try {
+    await appendFile(path, `${lines.join("\n")}\n`);
+  } catch (error) {
+    console.warn(`Keyboard Alert GB step summary write failed: ${error?.message || error}`);
+  }
+}
+
 export async function runGbDeadlineCheck(now = new Date()) {
   const dryRun = (process.env.DRY_RUN ?? "").trim().toLowerCase() !== "false";
   // Read only the two verified watcher snapshots; no inventory/API lookups.
@@ -119,12 +136,25 @@ export async function runGbDeadlineCheck(now = new Date()) {
     readSource("GEONWORKS", GEON_RELEASE_PATH, "GEONWORKS release"),
     readSource("SWAGKEYS", SWAGKEYS_PATH, "SWAGKEYS roadmap"),
   ]);
+  // Skipped/degraded 소스는 러너를 실패시키지 않되 워크플로 화면에 경고로 남긴다.
+  const degradedSources = [];
+  const skippedSources = [];
+  const annotate = (level, message) => {
+    console.log(`::${level} title=Keyboard Alert GB deadlines::${message.replace(/[\r\n]+/g, " ")}`);
+  };
   const due = dueGbReminders(geonRelease, swagkeys, now, {
-    onSourceStatus: ({ source, ok, due: count, error }) => {
+    onSourceStatus: ({ source, ok, due: count, error, degraded, health }) => {
       if (!ok) {
         const reason = readErrors.get(source) ?? error.message;
+        skippedSources.push({ source, reason });
         console.warn(`Keyboard Alert GB ${source} deadline check skipped: ${reason}`);
+        annotate("warning", `${source} deadline check skipped: ${reason}`);
         return;
+      }
+      if (degraded) {
+        degradedSources.push({ source, reason: health?.reason ?? "stored schedule", dataAgeHours: health?.dataAgeHours ?? 0 });
+        console.warn(`Keyboard Alert GB ${source} deadline check degraded: ${health?.reason ?? "stored schedule"} (${health?.dataAgeHours ?? 0}h old)`);
+        annotate("warning", `${source} deadline check used a stored schedule (${health?.dataAgeHours ?? 0}h old); ${count} reminder(s) computed from it`);
       }
       console.log(`Keyboard Alert GB ${source}: ${count} verified due reminder(s).`);
     },
@@ -133,7 +163,8 @@ export async function runGbDeadlineCheck(now = new Date()) {
     GEONWORKS: due.filter(item => item.source === "GEONWORKS").length,
     SWAGKEYS: due.filter(item => item.source === "SWAGKEYS").length,
   };
-  console.log(`Keyboard Alert GB closing check: verified due GEONWORKS=${sourceCounts.GEONWORKS}, SWAGKEYS=${sourceCounts.SWAGKEYS} (KST).`);
+  console.log(`Keyboard Alert GB closing check: verified due GEONWORKS=${sourceCounts.GEONWORKS}, SWAGKEYS=${sourceCounts.SWAGKEYS} (KST); degraded=${degradedSources.map((item) => item.source).join(",") || "none"}, skipped=${skippedSources.map((item) => item.source).join(",") || "none"}.`);
+  await writeStepSummary({ degradedSources, skippedSources, sourceCounts });
   if (due.length > 50) throw new Error("More than 50 GB reminders due; investigate before sending to prevent floods");
 
   if (dryRun) {
@@ -142,7 +173,7 @@ export async function runGbDeadlineCheck(now = new Date()) {
       console.log(`DRY RUN ${item.source} ${label}: ${item.name} (ends ${item.endDay})`);
     }
     console.log(`DRY RUN: ${due.length} eligible GB reminders; no Discord messages or state changes.`);
-    return { dryRun: true, due: due.length, sent: 0 };
+    return { dryRun: true, due: due.length, sent: 0, degraded: degradedSources.map((item) => item.source), skippedSources: skippedSources.map((item) => item.source) };
   }
 
   // Resolve and validate every required webhook before reserving any message.
@@ -176,7 +207,7 @@ export async function runGbDeadlineCheck(now = new Date()) {
   }
 
   console.log(`Keyboard Alert GB deadline results: sent=${sent}, already-handled=${skipped}.`);
-  return { dryRun: false, due: due.length, sent, skipped };
+  return { dryRun: false, due: due.length, sent, skipped, degraded: degradedSources.map((item) => item.source), skippedSources: skippedSources.map((item) => item.source) };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

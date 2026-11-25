@@ -96,8 +96,9 @@ test('skip-mode summary carries schedule DB changes for Pickle', () => {
 });
 
 test('skip mode still commits state and Keepodd events before printing the summary', () => {
-  const guard = swag.indexOf('Changes remain pending; state was not updated.');
-  const advance = swag.indexOf('await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts);');
+  const start = swag.indexOf('async function main()');
+  const guard = swag.indexOf('Changes remain pending; state was not updated.', start);
+  const advance = swag.indexOf('await advanceStateWithKeepoddEvents(snapshot, quarterChanges, changes, starts, scheduleEvents);', start);
   const summary = swag.indexOf('console.log(skipDiscordSummaryLine(');
   assert.ok(guard >= 0 && advance > guard, 'pending guard must stay ahead of the commit path');
   assert.ok(summary > advance, 'summary is printed only after state/Keepodd commit');
