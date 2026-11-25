@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-25T00:41:01.358Z",
+  "updatedAt": "2026-11-25T00:50:52.267Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -149,13 +149,13 @@
     {
       "category": "KEYBOARDS",
       "product": "TOFU TKL x Lucy",
-      "status": "Ongoing",
-      "eta": "TBD",
-      "progress": 90,
-      "summary": "11-17 In assembly, expected to start shipping in late November",
+      "status": "Completed",
+      "eta": "Nov 2026",
+      "progress": 100,
+      "summary": "fulfilling orders",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "11-17 In assembly, expected to start shipping in late November"
+      "latestUpdateBody": "fulfilling orders"
     },
     {
       "category": "KEYBOARDS",
@@ -833,6 +833,7 @@
     "90f85611f206cb1cb9d7348b": "2026-11-20T13:53:41.825Z",
     "3e6a5a51cd652439eca481fc": "2026-11-25T00:40:59.648Z",
     "fa23367462855291a9522e2d": "2026-11-25T00:41:01.090Z",
-    "3c61cc0f045f9ece031fabb1": "2026-11-25T00:41:01.358Z"
+    "3c61cc0f045f9ece031fabb1": "2026-11-25T00:41:01.358Z",
+    "28728d6c4e767be9a2f52832": "2026-11-25T00:50:52.267Z"
   }
 }
