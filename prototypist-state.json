@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-25T10:50:56.078Z",
+  "updatedAt": "2026-11-25T11:21:12.410Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -378,16 +378,6 @@
       "sourceLabel": "Keyboard",
       "sourceEmoji": "⌨️",
       "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
-      "itemUrl": "https://prototypist.notion.site/Seal-TKL-36404233415480139703e58d70cb8964",
-      "product": "Seal TKL",
-      "status": "Shipping to Prototypist",
-      "expectedShipping": "Q4 2026"
-    },
-    {
-      "sourceId": "keyboard",
-      "sourceLabel": "Keyboard",
-      "sourceEmoji": "⌨️",
-      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
       "itemUrl": "https://prototypist.notion.site/Paper-65-3640423341548024b200e7776b4aeeaf",
       "product": "Paper 65",
       "status": "Shipping to Prototypist",
@@ -492,6 +482,16 @@
       "product": "Vida",
       "status": "In Quality Control",
       "expectedShipping": "Q3 2026"
+    },
+    {
+      "sourceId": "keyboard",
+      "sourceLabel": "Keyboard",
+      "sourceEmoji": "⌨️",
+      "sourceUrl": "https://prototypist.notion.site/57d8169dada041f6b52b1d091e3e2c97?v=449c85bd9a29455fa8d1330e23680c5a",
+      "itemUrl": "https://prototypist.notion.site/Seal-TKL-36404233415480139703e58d70cb8964",
+      "product": "Seal TKL",
+      "status": "Shipping to Customers",
+      "expectedShipping": "Q4 2026"
     },
     {
       "sourceId": "keyboard",
@@ -958,9 +958,9 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
-      "product": "GMK TA NEO",
-      "status": "In Quality Control",
+      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Noire-Small-Batch-3b2042334154808fb5add3f5469ea2ea",
+      "product": "GMK CYL Noire (Small Batch)",
+      "status": "Shipping to Customers",
       "expectedShipping": "Q1 2027"
     },
     {
@@ -968,8 +968,8 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-CYL-Noire-Small-Batch-3b2042334154808fb5add3f5469ea2ea",
-      "product": "GMK CYL Noire (Small Batch)",
+      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
+      "product": "GMK TA NEO",
       "status": "Shipping to Customers",
       "expectedShipping": "Q1 2027"
     },
