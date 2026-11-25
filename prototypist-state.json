@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T13:31:36.957Z",
+  "updatedAt": "2026-11-25T09:31:04.221Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -171,7 +171,7 @@
       "itemUrl": "https://prototypist.notion.site/Grit-Jahre-65-3640423341548041b6c8cb6a9b721ad7",
       "product": "Grit Jahre 65%",
       "status": "In Manufacturing",
-      "expectedShipping": "Q4 2026"
+      "expectedShipping": "Q1 2027"
     },
     {
       "sourceId": "keyboard",
