@@ -43,6 +43,12 @@ test('SWAGKEYS only advances Keepodd feed after the pending-webhook guard', () =
   assert.match(swag, /seedReservationScheduleKeepoddEvents/);
 });
 
+test('reservation schedule seed runs once and is persisted in swagkeys state', () => {
+  assert.match(swag, /if \(state\?\.initialized && !state\?\.keepoddScheduleSeededAt && scheduleEvents\.nextState\.sources\?\.reservations\?\.fresh\)/);
+  assert.match(swag, /keepoddScheduleSeededAt: snapshot\.keepoddScheduleSeededAt/);
+  assert.match(swag, /seedReservationScheduleKeepoddEvents/);
+});
+
 test('slow persist compares restored baseline with watcher-state before committing', () => {
   const persist = slow.slice(slow.indexOf('- name: Persist slow watcher state'), slow.indexOf('- name: Signal slow heartbeat success'));
   assert.match(persist, /git cat-file -e "origin\/watcher-state:\$file"/);
