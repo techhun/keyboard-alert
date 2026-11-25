@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-25T09:31:04.221Z",
+  "updatedAt": "2026-11-25T10:50:56.078Z",
   "rows": [
     {
       "sourceId": "keyboard",
@@ -948,8 +948,8 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
-      "product": "GMK TA NEO",
+      "itemUrl": "https://prototypist.notion.site/GMK-Analog-Dreams-R3-CYL-MTNU-39d042334154802ab50bea4fef0d625d",
+      "product": "GMK Analog Dreams R3 CYL & MTNU",
       "status": "Shipping to Prototypist",
       "expectedShipping": "Q1 2027"
     },
@@ -958,9 +958,9 @@
       "sourceLabel": "GMK",
       "sourceEmoji": "🇩🇪",
       "sourceUrl": "https://prototypist.notion.site/dfedac384a2b494c9137be7638b11e93?v=11769ac8c9764aafb907fe3d65fb0c50",
-      "itemUrl": "https://prototypist.notion.site/GMK-Analog-Dreams-R3-CYL-MTNU-39d042334154802ab50bea4fef0d625d",
-      "product": "GMK Analog Dreams R3 CYL & MTNU",
-      "status": "Shipping to Prototypist",
+      "itemUrl": "https://prototypist.notion.site/GMK-TA-NEO-39d04233415480119f42fc22e2409b9c",
+      "product": "GMK TA NEO",
+      "status": "In Quality Control",
       "expectedShipping": "Q1 2027"
     },
     {
