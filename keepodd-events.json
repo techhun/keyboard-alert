@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T07:20:33.957Z",
+  "updatedAt": "2026-11-25T06:10:31.484Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2617,6 +2617,20 @@
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
+    },
+    {
+      "id": "5a3f2a29c2c1c0b658f727ab599d497b",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Ghostship",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-25T06:10:31.484Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-25",
+      "eta": "2027-06-30",
+      "status": "판매 중 / GB on sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-ghostship-%ED%82%A4%EC%BA%A1/769/category/47/display/1/",
+      "sourceUrlType": "product"
     }
   ]
 }

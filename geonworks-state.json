@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-25T01:00:45.021Z",
+  "updatedAt": "2026-11-25T06:10:31.484Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -101,6 +101,16 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 11. 19",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Ghostship",
+      "gbStart": "2026. 11. 25",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 25",
       "note": "—"
     },
     {
@@ -590,7 +600,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 18",
+      "update": "2026. 11. 25",
       "note": "—"
     }
   ],
@@ -606,6 +616,8 @@
     "e6c044657b3261efa52a16b3": "2026-11-24T02:30:39.074Z",
     "52ac8075e0ba1d0e8645d6f3": "2026-11-24T02:30:39.251Z",
     "9bca2e536e6593e9d47ac66d": "2026-11-24T02:40:29.603Z",
-    "31d9a73fed4f195dc4de96f3": "2026-11-24T05:30:46.794Z"
+    "31d9a73fed4f195dc4de96f3": "2026-11-24T05:30:46.794Z",
+    "5488c7e9668ce59a34b4e3ff": "2026-11-25T06:10:31.158Z",
+    "144bf6709b3faa6cdf593f66": "2026-11-25T06:10:31.484Z"
   }
 }
