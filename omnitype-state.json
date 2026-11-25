@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T16:41:29.245Z",
+  "updatedAt": "2026-11-25T18:31:40.727Z",
   "rows": [
     {
       "product": "PBTfans G3",
@@ -27,7 +27,7 @@
     },
     {
       "product": "Float 65",
-      "overview": "New housing samples that arrived in October were heavily damaged from shipping without sufficient protection. This prevented us from evaluating or testing the housings from the new manu so we have to get another round. Manu has updated us that they expect to have the new samples done on November 10th.",
+      "overview": "New housing samples that arrived in October were heavily damaged from shipping without sufficient protection. This prevented us from evaluating or testing the housings from the new manu so we have to get another round. Manu has produced and shipped new samples and we are awaiting their arrival (anticipating early December).",
       "components": [
         "PCBs - ready",
         "Plates - ready",
@@ -74,6 +74,7 @@
   ],
   "sentChanges": {
     "b76c91a160af97b7e4c84c92": "2026-11-23T06:03:49.716Z",
-    "de5a48c26438b5ede61bc40b": "2026-11-23T06:03:49.910Z"
+    "de5a48c26438b5ede61bc40b": "2026-11-23T06:03:49.910Z",
+    "92ddc7680619cd0f4ff3fc24": "2026-11-25T18:31:40.726Z"
   }
 }
