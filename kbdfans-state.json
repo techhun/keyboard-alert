@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-24T09:23:09.468Z",
+  "updatedAt": "2026-11-25T00:41:01.358Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -248,13 +248,13 @@
     {
       "category": "GMK",
       "product": "GMK CYL Salamander",
-      "status": "Group buy",
+      "status": "In production",
       "eta": "Q2 2027",
-      "progress": 50,
-      "summary": "Group purchase period extended to November 24, 2026",
+      "progress": 75,
+      "summary": "in production",
       "latestUpdateDate": "2026-11-20",
       "latestUpdateTitle": "Project update",
-      "latestUpdateBody": "Group purchase period extended to November 24, 2026"
+      "latestUpdateBody": "in production"
     },
     {
       "category": "GMK",
@@ -281,13 +281,13 @@
     {
       "category": "GMK",
       "product": "GMK CYL Zombie",
-      "status": "Group buy",
+      "status": "In production",
       "eta": "Q1 2027",
       "progress": 50,
-      "summary": "",
-      "latestUpdateDate": "",
-      "latestUpdateTitle": "",
-      "latestUpdateBody": ""
+      "summary": "in production",
+      "latestUpdateDate": "2026-11-25",
+      "latestUpdateTitle": "Project update",
+      "latestUpdateBody": "in production"
     },
     {
       "category": "GMK",
@@ -424,13 +424,13 @@
     {
       "category": "GMK",
       "product": "GMK CYL Purple",
-      "status": "Group buy",
+      "status": "In production",
       "eta": "Q2 2027",
-      "progress": 90,
-      "summary": "Start time: October 10th - November 23th",
+      "progress": 0,
+      "summary": "in production",
       "latestUpdateDate": "2026-07-09",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Start time: October 10th - November 23th"
+      "latestUpdateBody": "in production"
     },
     {
       "category": "GMK",
@@ -830,6 +830,9 @@
     "42978a49ae90dfcc8d34a46a": "2026-11-20T13:53:35.897Z",
     "f83180d9db138f769f0e805b": "2026-11-20T13:53:37.818Z",
     "7c828a4c9533642dd32267f4": "2026-11-20T13:53:39.865Z",
-    "90f85611f206cb1cb9d7348b": "2026-11-20T13:53:41.825Z"
+    "90f85611f206cb1cb9d7348b": "2026-11-20T13:53:41.825Z",
+    "3e6a5a51cd652439eca481fc": "2026-11-25T00:40:59.648Z",
+    "fa23367462855291a9522e2d": "2026-11-25T00:41:01.090Z",
+    "3c61cc0f045f9ece031fabb1": "2026-11-25T00:41:01.358Z"
   }
 }
