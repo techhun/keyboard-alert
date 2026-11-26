@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T00:11:03.788Z",
+  "updatedAt": "2026-11-26T02:01:10.172Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2676,6 +2676,74 @@
       "note": "예약판매 2026-11-18 ~ 2026-12-02",
       "sourceUrl": "https://swagkeys.com/products/swg-beige",
       "sourceUrlType": "product"
+    },
+    {
+      "id": "04af3d1cafa0d9666aee3be51df4ee13",
+      "source": "SWAGKEYS",
+      "name": "GMK CYL Purple",
+      "eventType": "status_changed",
+      "before": "공제 중",
+      "after": "생산 중",
+      "occurredAt": "2026-11-26T02:01:10.172Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-10-12",
+      "saleEnd": "2026-11-23",
+      "status": "생산 중",
+      "note": "예약판매 2026-10-12 ~ 2026-11-23",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "4b36bf29ade781f990e208094289828e",
+      "source": "SWAGKEYS",
+      "name": "SWG Moomin",
+      "eventType": "sale_end_changed",
+      "before": "2026-11-23",
+      "after": "2026-12-23",
+      "occurredAt": "2026-11-26T02:01:10.172Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-24",
+      "saleEnd": "2026-12-23",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-24 ~ 2026-12-23",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "e7243830655afe1003d5b61d67f2a7aa",
+      "source": "SWAGKEYS",
+      "name": "SWG Retroguardia",
+      "eventType": "status_changed",
+      "before": "공제 중",
+      "after": "생산 중",
+      "occurredAt": "2026-11-26T02:01:10.172Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-09",
+      "saleEnd": "2026-11-23",
+      "status": "생산 중",
+      "note": "예약판매 2026-11-09 ~ 2026-11-23",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "ece5bcc18477b9c9b37dffeb10b958ab",
+      "source": "SWAGKEYS",
+      "name": "SWG Moomin",
+      "eventType": "sale_start_changed",
+      "before": "2026-11-13",
+      "after": "2026-11-24",
+      "occurredAt": "2026-11-26T02:01:10.172Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-24",
+      "saleEnd": "2026-12-23",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-24 ~ 2026-12-23",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
     }
   ]
 }

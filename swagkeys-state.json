@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T01:37:21.250Z",
+  "updatedAt": "2026-11-26T02:01:10.172Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -480,7 +480,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-26T01:37:20.629Z",
+    "updatedAt": "2026-11-26T02:01:09.565Z",
     "sources": {
       "reservations": {
         "items": [
@@ -724,7 +724,7 @@
             "brands": [
               "Swagkeys"
             ],
-            "status": "공제 중",
+            "status": "생산 중",
             "saleStart": "2026-11-09",
             "saleEnd": "2026-11-23",
             "eta": "27년 9월 말",
@@ -749,8 +749,8 @@
               "Swagkeys"
             ],
             "status": "공제 중",
-            "saleStart": "2026-11-13",
-            "saleEnd": "2026-11-23",
+            "saleStart": "2026-11-24",
+            "saleEnd": "2026-12-23",
             "eta": "27년 3월 말",
             "key": "키캡|swg moomin"
           },
@@ -796,7 +796,7 @@
             "brands": [
               "GMK"
             ],
-            "status": "공제 중",
+            "status": "생산 중",
             "saleStart": "2026-10-12",
             "saleEnd": "2026-11-23",
             "eta": "27년 2분기",
@@ -1474,6 +1474,5 @@
     },
     "fallbackSince": {}
   },
-  "keepoddScheduleSeededAt": "2026-11-26T01:37:20.696Z",
   "fallbackSince": {}
 }
