@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T06:50:28.640Z",
+  "updatedAt": "2026-11-26T07:00:49.995Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -240,7 +240,7 @@
       "type": "Keyboard",
       "manufacturer": "",
       "status": "제작 중 / In progress",
-      "update": "2026. 6. 16",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -626,6 +626,7 @@
     "8dd8e9f4b5b9f2817bc653bc": "2026-11-26T06:10:38.937Z",
     "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z",
     "d4cf6fada7e9a24f8f15d43f": "2026-11-26T06:30:37.861Z",
-    "a3812c9b10ed287ea88739ac": "2026-11-26T06:50:28.639Z"
+    "a3812c9b10ed287ea88739ac": "2026-11-26T06:50:28.639Z",
+    "646ad9eb6e97adf9f0b05c88": "2026-11-26T07:00:49.995Z"
   }
 }
