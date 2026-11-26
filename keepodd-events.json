@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T02:01:10.172Z",
+  "updatedAt": "2026-11-26T02:20:31.820Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2743,6 +2743,23 @@
       "status": "공제 중",
       "note": "예약판매 2026-11-24 ~ 2026-12-23",
       "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "86a76fae4fbfbfa99e45d31d6777a626",
+      "source": "GEONWORKS",
+      "name": "Stratum 80",
+      "eventType": "note_changed",
+      "before": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway.",
+      "after": "제조사에서 노벨키로 출발. 노벨키에서 지온웍스로 발송 예정 / Dispatched from the manufacturer to Nobelkey. Scheduled for dispatch from Nobelkey to Geonworks.",
+      "occurredAt": "2026-11-26T02:20:31.820Z",
+      "categoryHint": "키보드",
+      "maker": "Artifact Inderstry",
+      "saleStart": "2026-03-25",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제조사에서 노벨키로 출발. 노벨키에서 지온웍스로 발송 예정 / Dispatched from the manufacturer to Nobelkey. Scheduled for dispatch from Nobelkey to Geonworks.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

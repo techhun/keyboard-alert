@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T01:00:45.696Z",
+  "updatedAt": "2026-11-26T02:20:31.820Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -160,8 +160,8 @@
       "type": "Keyboard",
       "manufacturer": "Artifact Inderstry",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 24",
-      "note": "PCB 제작 완료, 케이스 가공 완료, 아노다이징 시작. / PCB production complete, case machining complete, anodizing underway."
+      "update": "2026. 11. 26",
+      "note": "제조사에서 노벨키로 출발. 노벨키에서 지온웍스로 발송 예정 / Dispatched from the manufacturer to Nobelkey. Scheduled for dispatch from Nobelkey to Geonworks."
     },
     {
       "product": "BAUER 65",
@@ -615,6 +615,7 @@
     "9bca2e536e6593e9d47ac66d": "2026-11-24T02:40:29.603Z",
     "31d9a73fed4f195dc4de96f3": "2026-11-24T05:30:46.794Z",
     "5488c7e9668ce59a34b4e3ff": "2026-11-25T06:10:31.158Z",
-    "144bf6709b3faa6cdf593f66": "2026-11-25T06:10:31.484Z"
+    "144bf6709b3faa6cdf593f66": "2026-11-25T06:10:31.484Z",
+    "5c91b8cd5dfb2099a929fa9b": "2026-11-26T02:20:31.819Z"
   }
 }
