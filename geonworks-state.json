@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T06:30:37.862Z",
+  "updatedAt": "2026-11-26T06:50:28.640Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -171,7 +171,7 @@
       "manufacturer": "Omnitype",
       "status": "제작 중 / In progress",
       "update": "2026. 11. 26",
-      "note": "가공완료, 후처리 진행 중. PCB 테스트 중 / Machining complete; post-processing in progress. PCB testing in progress."
+      "note": "CASE 가공완료, 후처리 진행 중. PCB 양산 전 테스트 중 / CASE machining complete; post-processing in progress. Testing prior to PCB mass production."
     },
     {
       "product": "Overture 2",
@@ -625,6 +625,7 @@
     "13c307aa288955d0b7e6d155": "2026-11-26T06:10:37.711Z",
     "8dd8e9f4b5b9f2817bc653bc": "2026-11-26T06:10:38.937Z",
     "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z",
-    "d4cf6fada7e9a24f8f15d43f": "2026-11-26T06:30:37.861Z"
+    "d4cf6fada7e9a24f8f15d43f": "2026-11-26T06:30:37.861Z",
+    "a3812c9b10ed287ea88739ac": "2026-11-26T06:50:28.639Z"
   }
 }
