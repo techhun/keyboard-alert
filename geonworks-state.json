@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T02:20:31.820Z",
+  "updatedAt": "2026-11-26T03:10:29.385Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -250,8 +250,8 @@
       "type": "Keyboard",
       "manufacturer": "Nuxroskb",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 4",
-      "note": "케이스 아노다이징 진행 중. 부자재 생산 중 / Case anodising in progress. Production of ancillary materials in progress."
+      "update": "2026. 11. 26",
+      "note": "케이스 QC 중. 그외 생산 완료 /Cases are currently undergoing quality control. All other production has been completed."
     },
     {
       "product": "GMK TA NEO",
@@ -616,6 +616,7 @@
     "31d9a73fed4f195dc4de96f3": "2026-11-24T05:30:46.794Z",
     "5488c7e9668ce59a34b4e3ff": "2026-11-25T06:10:31.158Z",
     "144bf6709b3faa6cdf593f66": "2026-11-25T06:10:31.484Z",
-    "5c91b8cd5dfb2099a929fa9b": "2026-11-26T02:20:31.819Z"
+    "5c91b8cd5dfb2099a929fa9b": "2026-11-26T02:20:31.819Z",
+    "2cb28f2064128043a84fb6e6": "2026-11-26T03:10:29.361Z"
   }
 }
