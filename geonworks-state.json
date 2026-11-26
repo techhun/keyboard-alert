@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T07:00:49.995Z",
+  "updatedAt": "2026-11-26T07:10:39.321Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -208,9 +208,9 @@
       "gbStart": "2026. 5. 26",
       "eta": "2026. 12. 31",
       "type": "Keyboard",
-      "manufacturer": "",
+      "manufacturer": "KTECHS",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 9",
+      "update": "2026. 11. 26",
       "note": "Cnc 85% 완료. 플레이트 완성. pcb 생산 중 / CNC 85% complete. Plate completed. PCB in production."
     },
     {
@@ -310,7 +310,7 @@
       "type": "Keyboard",
       "manufacturer": "",
       "status": "제작 중 / In progress",
-      "update": "2026. 7. 29",
+      "update": "2026. 11. 26",
       "note": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks."
     },
     {
@@ -440,7 +440,7 @@
       "type": "Desk mat",
       "manufacturer": "GEONWORKS",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 31",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -627,6 +627,9 @@
     "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z",
     "d4cf6fada7e9a24f8f15d43f": "2026-11-26T06:30:37.861Z",
     "a3812c9b10ed287ea88739ac": "2026-11-26T06:50:28.639Z",
-    "646ad9eb6e97adf9f0b05c88": "2026-11-26T07:00:49.995Z"
+    "646ad9eb6e97adf9f0b05c88": "2026-11-26T07:00:49.995Z",
+    "f88bdc9a2b94571ba43414b7": "2026-11-26T07:10:39.070Z",
+    "91e001a26842ea8345ed571c": "2026-11-26T07:10:39.219Z",
+    "d99c8cfdfc797e9217450835": "2026-11-26T07:10:39.321Z"
   }
 }
