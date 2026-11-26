@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T07:10:39.321Z",
+  "updatedAt": "2026-11-26T07:20:33.035Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -60,7 +60,7 @@
       "type": "Keyboard",
       "manufacturer": "KBDfans",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 11. 11",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -80,7 +80,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 11. 12",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -360,7 +360,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 16",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -370,7 +370,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 8. 24",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -490,7 +490,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 9. 28",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -605,7 +605,6 @@
     }
   ],
   "sentChanges": {
-    "1f8e80f360629144c4fc1243": "2026-11-19T07:20:31.016Z",
     "ca466f942957174bce0d1301": "2026-11-19T07:30:36.641Z",
     "24a5a1dd135aa358f8b19d00": "2026-11-23T00:00:46.489Z",
     "905a3664191fbc5121f771ad": "2026-11-24T02:30:38.738Z",
@@ -630,6 +629,11 @@
     "646ad9eb6e97adf9f0b05c88": "2026-11-26T07:00:49.995Z",
     "f88bdc9a2b94571ba43414b7": "2026-11-26T07:10:39.070Z",
     "91e001a26842ea8345ed571c": "2026-11-26T07:10:39.219Z",
-    "d99c8cfdfc797e9217450835": "2026-11-26T07:10:39.321Z"
+    "d99c8cfdfc797e9217450835": "2026-11-26T07:10:39.321Z",
+    "8ee2b9b586379d494348f526": "2026-11-26T07:20:32.174Z",
+    "46bfa8b448be2ed3dded0b3f": "2026-11-26T07:20:32.360Z",
+    "390194e071576d5919175df7": "2026-11-26T07:20:32.646Z",
+    "ba2411784e4ca691d1e6de6d": "2026-11-26T07:20:32.811Z",
+    "58cb66735352540d12425432": "2026-11-26T07:20:33.034Z"
   }
 }
