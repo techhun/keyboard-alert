@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-13T17:12:48.433Z",
+  "updatedAt": "2026-11-26T17:51:38.613Z",
   "rows": [
     {
       "category": "Keyboard",
@@ -18,13 +18,13 @@
     {
       "category": "Keyboard",
       "product": "Neo Ergo Keyboard",
-      "notes": "99% Shipping complete",
+      "notes": "Shipping complete",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
       "category": "Keyboard",
       "product": "Evo75 Keyboard",
-      "notes": "80% Shipping complete",
+      "notes": "Shipping complete",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -216,7 +216,7 @@
     {
       "category": "Keyboard",
       "product": "Evo75 Preorder",
-      "notes": "80% Shipping complete.",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -438,7 +438,7 @@
     {
       "category": "Keyboard",
       "product": "Neo Ergo",
-      "notes": "Shipping 99% complete.",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyboard-updates-4856504"
     },
     {
@@ -659,38 +659,20 @@
     },
     {
       "category": "Keyset",
-      "product": "GMK Power 2048",
+      "product": "GMK Gurokawa",
+      "notes": "Has arrived. In processing. Estimated shipping November",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Gonzales",
       "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK British Racing Green R2",
-      "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK Centinela Extensions",
-      "notes": "Almost here. Estimated shipping October",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK Prussian Alert",
-      "notes": "Almost here. Estimated shipping October | Almost here. Estimated shipping October.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
-      "product": "GMK Spark",
-      "notes": "Almost here. Estimated shipping October | Almost here. Estimated shipping October.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
       "category": "Keyset",
       "product": "GMK Masterpiece R2",
-      "notes": "Oct. 14 On its way to us. Estimated shipping October",
+      "notes": "Keyset Shipping complete. Awaiting deskmats. | Shipping complete. Awaiting deskmats.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -702,7 +684,7 @@
     {
       "category": "Keyset",
       "product": "Awekeys Wild Ice",
-      "notes": "New estimated shipping October. | New estimated shipping October 2026",
+      "notes": "Delayed. New estimated shipping December",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -1127,6 +1109,12 @@
     },
     {
       "category": "Keyset",
+      "product": "GMK British Racing Green R2",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
       "product": "GMK Burgundy",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
@@ -1140,7 +1128,7 @@
     {
       "category": "Keyset",
       "product": "GMK Centinela Extension Kit",
-      "notes": "Almost here. Estimated shipping October.",
+      "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -1433,12 +1421,6 @@
     },
     {
       "category": "Keyset",
-      "product": "GMK Gonzales",
-      "notes": "Estimated shipping October 2026",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
-    },
-    {
-      "category": "Keyset",
       "product": "GMK Gorp Keycaps",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
@@ -1470,7 +1452,7 @@
     {
       "category": "Keyset",
       "product": "GMK Gurokawa Keycaps",
-      "notes": "Further Delayed. Designer tweaking purple Alpha colour. All other colours approved. New estimated shipping November 2026",
+      "notes": "Has arrived. In processing. Estimated shipping November",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
     {
@@ -1943,7 +1925,19 @@
     },
     {
       "category": "Keyset",
+      "product": "GMK Power 2048",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
       "product": "GMK Prussian Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Prussian Alert",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
@@ -2088,6 +2082,12 @@
     {
       "category": "Keyset",
       "product": "GMK Space Cadet II Keycaps",
+      "notes": "Shipping complete.",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
+    },
+    {
+      "category": "Keyset",
+      "product": "GMK Spark",
       "notes": "Shipping complete.",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-keyset-updates-4855831"
     },
@@ -2657,6 +2657,12 @@
     },
     {
       "category": "Deskmat",
+      "product": "GMK Masterpiece R2 Deskmats",
+      "notes": "Estimated shipping December 2026 | Estimated shipping Q4 2026",
+      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
+    },
+    {
+      "category": "Deskmat",
       "product": "GMK Nord Deskmats",
       "notes": "Estimated shipping TBD 2026 | Estimated shipping TBD",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
@@ -3163,12 +3169,6 @@
       "category": "Deskmat",
       "product": "GMK Masterpiece Deskmats",
       "notes": "Shipping complete.",
-      "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
-    },
-    {
-      "category": "Deskmat",
-      "product": "GMK Masterpiece R2 Deskmats",
-      "notes": "Estimated shipping Q4 2026",
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-deskmat-updates-4855887"
     },
     {
@@ -3844,5 +3844,20 @@
       "sourceUrl": "https://help.deskhero.ca/en-US/group-buypreorder-accessories-updates-4856503"
     }
   ],
-  "sentChanges": {}
+  "sentChanges": {
+    "5843615123c815fcd47566f9": "2026-11-26T17:51:34.651Z",
+    "2d2789c1deb79467259aea88": "2026-11-26T17:51:34.902Z",
+    "8eeebf2195180be0e432f023": "2026-11-26T17:51:35.077Z",
+    "51ac769fc65c95923c404810": "2026-11-26T17:51:35.276Z",
+    "54fb0956758d31a36e347426": "2026-11-26T17:51:35.459Z",
+    "7289adf647003c7cdb4f8847": "2026-11-26T17:51:35.672Z",
+    "a4cb2c9d6ac464b8330be330": "2026-11-26T17:51:36.067Z",
+    "0c01e61cf60b2f5fd6bcc9f7": "2026-11-26T17:51:36.309Z",
+    "34d764694beda31e54245439": "2026-11-26T17:51:36.531Z",
+    "87cd86bdf2f18a211c139242": "2026-11-26T17:51:36.869Z",
+    "e49f3587917159544f21814a": "2026-11-26T17:51:37.097Z",
+    "ff8b68f354ca413597ce6bbd": "2026-11-26T17:51:37.705Z",
+    "6c6ccafa5544ed6684bb8b5a": "2026-11-26T17:51:37.967Z",
+    "8ed0118ad5ef31367cd19c29": "2026-11-26T17:51:38.612Z"
+  }
 }
