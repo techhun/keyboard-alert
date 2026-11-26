@@ -56,9 +56,10 @@
       "sentAt": "2026-11-26T00:17:32.525Z"
     },
     "f8ad84e6e7a4a2a89dfdfd9b7b73d2ceaed8a9280be70a7de3bcbad85c75eced": {
-      "status": "reserved",
+      "status": "sent",
       "day": "2026-11-26",
-      "at": "2026-11-26T00:17:30.820Z"
+      "at": "2026-11-26T00:17:30.820Z",
+      "sentAt": "2026-11-26T00:17:35.767Z"
     }
   }
 }
