@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T03:10:29.385Z",
+  "updatedAt": "2026-11-26T06:10:39.122Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2776,6 +2776,40 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "케이스 QC 중. 그외 생산 완료 /Cases are currently undergoing quality control. All other production has been completed.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "324b55d8b3391e4f90dfa50bd13a7142",
+      "source": "GEONWORKS",
+      "name": "Nexus60",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "after": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks.",
+      "occurredAt": "2026-11-26T06:10:39.122Z",
+      "categoryHint": "키보드",
+      "maker": "KEZEWA",
+      "saleStart": "2026-09-21",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "bae5b09f9cc55c886b9f5474e6d3d44d",
+      "source": "GEONWORKS",
+      "name": "Grit Jahre 65",
+      "eventType": "note_changed",
+      "before": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre",
+      "after": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks.",
+      "occurredAt": "2026-11-26T06:10:39.122Z",
+      "categoryHint": "키보드",
+      "maker": "Grit",
+      "saleStart": "2026-05-01",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }

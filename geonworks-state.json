@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T03:10:29.385Z",
+  "updatedAt": "2026-11-26T06:10:39.122Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -10,7 +10,7 @@
       "type": "Keyboard",
       "manufacturer": "BAIONLENJA",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 16",
+      "update": "2026. 11. 26",
       "note": "6u HHKB Hotswap PCB 생산중. 그 외 주문 12일 발송 / Production of the 6u HHKB Hotswap PCB is underway. Other orders will be dispatched on the 12th."
     },
     {
@@ -20,7 +20,7 @@
       "type": "Keyboard",
       "manufacturer": "TYPFACE",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 23",
+      "update": "2026. 11. 26",
       "note": "목재부품 교체분 수령 후 발송예정. 12월 말 경 생산 완료 예정./ We plan to dispatch the order once we have received the replacement wooden parts. Production is expected to be completed around the end of December."
     },
     {
@@ -30,7 +30,7 @@
       "type": "Keyboard",
       "manufacturer": "Atelier Magnus",
       "status": "검수 중 / Inspecting",
-      "update": "2026. 11. 24",
+      "update": "2026. 11. 26",
       "note": "제품 검수 중 / Product inspection in progress"
     },
     {
@@ -50,7 +50,7 @@
       "type": "Keyboard",
       "manufacturer": "Vida",
       "status": "판매 중 / GB on sale",
-      "update": "2026. 11. 18",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -200,8 +200,8 @@
       "type": "Keyboard",
       "manufacturer": "Grit",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 19",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
+      "update": "2026. 11. 26",
+      "note": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks."
     },
     {
       "product": "RF-8X",
@@ -260,7 +260,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 10. 29",
+      "update": "2026. 11. 26",
       "note": "—"
     },
     {
@@ -520,8 +520,8 @@
       "type": "Keyboard",
       "manufacturer": "KEZEWA",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 24",
-      "note": "제조사에서 지온웍스 배대지로 출발 / Dispatched from the manufacturer to the Geonworks distribution centre"
+      "update": "2026. 11. 26",
+      "note": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks."
     },
     {
       "product": "DCS SMRT R2",
@@ -617,6 +617,13 @@
     "5488c7e9668ce59a34b4e3ff": "2026-11-25T06:10:31.158Z",
     "144bf6709b3faa6cdf593f66": "2026-11-25T06:10:31.484Z",
     "5c91b8cd5dfb2099a929fa9b": "2026-11-26T02:20:31.819Z",
-    "2cb28f2064128043a84fb6e6": "2026-11-26T03:10:29.361Z"
+    "2cb28f2064128043a84fb6e6": "2026-11-26T03:10:29.361Z",
+    "5dfe9f09416df54855f57a98": "2026-11-26T06:10:34.856Z",
+    "ddca23cc4adc27c5ed804651": "2026-11-26T06:10:35.081Z",
+    "c9ff000c68c9f7818f0b12b8": "2026-11-26T06:10:35.390Z",
+    "13d7ed01ada3bf4ea784e4ba": "2026-11-26T06:10:35.684Z",
+    "13c307aa288955d0b7e6d155": "2026-11-26T06:10:37.711Z",
+    "8dd8e9f4b5b9f2817bc653bc": "2026-11-26T06:10:38.937Z",
+    "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z"
   }
 }
