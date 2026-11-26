@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T06:10:39.122Z",
+  "updatedAt": "2026-11-26T06:30:37.862Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -170,8 +170,8 @@
       "type": "Keyboard",
       "manufacturer": "Omnitype",
       "status": "제작 중 / In progress",
-      "update": "2026. 5. 8",
-      "note": "—"
+      "update": "2026. 11. 26",
+      "note": "가공완료, 후처리 진행 중. PCB 테스트 중 / Machining complete; post-processing in progress. PCB testing in progress."
     },
     {
       "product": "Overture 2",
@@ -624,6 +624,7 @@
     "13d7ed01ada3bf4ea784e4ba": "2026-11-26T06:10:35.684Z",
     "13c307aa288955d0b7e6d155": "2026-11-26T06:10:37.711Z",
     "8dd8e9f4b5b9f2817bc653bc": "2026-11-26T06:10:38.937Z",
-    "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z"
+    "00f5240d57ee23629410391e": "2026-11-26T06:10:39.122Z",
+    "d4cf6fada7e9a24f8f15d43f": "2026-11-26T06:30:37.861Z"
   }
 }

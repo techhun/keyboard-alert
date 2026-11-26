@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T06:10:39.122Z",
+  "updatedAt": "2026-11-26T06:30:37.862Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2810,6 +2810,22 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "배대지에서 지온웍스로 출발. / Departure from Baedaji to Geonworks.",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2d8231012ab1729783ba40d26d886158",
+      "source": "GEONWORKS",
+      "name": "BAUER 65",
+      "eventType": "note_changed",
+      "after": "가공완료, 후처리 진행 중. PCB 테스트 중 / Machining complete; post-processing in progress. PCB testing in progress.",
+      "occurredAt": "2026-11-26T06:30:37.862Z",
+      "categoryHint": "키보드",
+      "maker": "Omnitype",
+      "saleStart": "2026-04-01",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "가공완료, 후처리 진행 중. PCB 테스트 중 / Machining complete; post-processing in progress. PCB testing in progress.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
