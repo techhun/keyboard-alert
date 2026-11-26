@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-25T06:10:31.484Z",
+  "updatedAt": "2026-11-26T00:11:03.788Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2630,6 +2630,51 @@
       "eta": "2027-06-30",
       "status": "판매 중 / GB on sale",
       "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-ghostship-%ED%82%A4%EC%BA%A1/769/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "5a9a319318c7cc9da2bc9a91ef495f66",
+      "source": "SWAGKEYS",
+      "name": "GMK Liminal",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-26T00:11:03.788Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-16",
+      "saleEnd": "2026-12-15",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-16 ~ 2026-12-15",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "758d7b08154a06557a5a7e8d326a7178",
+      "source": "SWAGKEYS",
+      "name": "NEO80 Cu",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-26T00:11:03.788Z",
+      "categoryHint": "키보드",
+      "maker": "NEO STUDIO",
+      "saleStart": "2026-11-06",
+      "saleEnd": "2027-02-28",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-06 ~ 2027-02-28",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "ecdf9160525e94a9077784720cd339d8",
+      "source": "SWAGKEYS",
+      "name": "SWS Beige",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-26T00:11:03.788Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-18",
+      "saleEnd": "2026-12-02",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-18 ~ 2026-12-02",
+      "sourceUrl": "https://swagkeys.com/products/swg-beige",
       "sourceUrlType": "product"
     }
   ]
