@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T01:21:08.442Z",
+  "updatedAt": "2026-11-27T06:00:59.748Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2877,6 +2877,62 @@
       "note": "컬러매칭 Not started",
       "quarter": "Q4",
       "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "20ad2f2d049192dbe4969d324dd22b01",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Draco",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T06:00:59.748Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-27",
+      "saleEnd": "2026-12-27",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-draco-%ED%82%A4%EC%BA%A1/772/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "838f35613f29a57c8e1f3ad92318cf8e",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Pilot",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T06:00:59.748Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-27",
+      "saleEnd": "2026-12-19",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-pilot-%ED%82%A4%EC%BA%A1/771/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "a5394697b41a48affd2187015342b6e1",
+      "source": "GEONWORKS",
+      "name": "GMK CYL Skidolcha R2",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T06:00:59.748Z",
+      "categoryHint": "키캡",
+      "maker": "GMK",
+      "saleStart": "2026-11-27",
+      "saleEnd": "2026-12-11",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/product/%EC%98%88%EC%95%BD%ED%8C%90%EB%A7%A4-gmk-cyl-skidolcha-r2-%ED%82%A4%EC%BA%A1/770/category/47/display/1/",
+      "sourceUrlType": "product"
+    },
+    {
+      "id": "c65b97de7e070a26cf6b671f7e7ea877",
+      "source": "GEONWORKS",
+      "name": "Glare 60 FE",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T06:00:59.748Z",
+      "categoryHint": "키보드",
+      "maker": "GEONWORKS",
+      "saleStart": "2026-11-27",
+      "saleEnd": "2026-12-18",
+      "status": "For Sale",
+      "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
       "sourceUrlType": "update"
     }
   ]

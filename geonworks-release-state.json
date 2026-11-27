@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T08:30:47.642Z",
+  "updatedAt": "2026-11-27T06:00:59.748Z",
   "rows": [
     {
       "product": "Chamber TKL",
@@ -26,7 +26,7 @@
       "end": "2026-11-27"
     },
     {
-      "product": "GMK NTNU Dasher",
+      "product": "GMK MTNU Dasher",
       "manufacturer": "GMK",
       "region": "KR/GLOBAL",
       "saleType": "Group Buy",
@@ -101,11 +101,61 @@
       "fixed": "확정 / Fixed",
       "start": "2026-11-25",
       "end": "2026-12-20"
+    },
+    {
+      "product": "GMK CYL Pilot",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-27",
+      "end": "2026-12-19"
+    },
+    {
+      "product": "GMK CYL Skidolcha R2",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-27",
+      "end": "2026-12-11"
+    },
+    {
+      "product": "GMK CYL Draco",
+      "manufacturer": "GMK",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keycaps",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-27",
+      "end": "2026-12-27"
+    },
+    {
+      "product": "Glare 60 FE",
+      "manufacturer": "GEONWORKS",
+      "region": "KR/GLOBAL",
+      "saleType": "Group Buy",
+      "type": "Keyboard",
+      "status": "For Sale",
+      "fixed": "확정 / Fixed",
+      "start": "2026-11-27",
+      "end": "2026-12-18"
     }
   ],
   "sentChanges": {
     "174bcb4bb8616f6087e17a56": "2026-11-24T07:20:33.847Z",
     "7f18167e3a9b9cd3bc3562ee": "2026-11-24T07:20:33.957Z",
-    "b36721fd7b736969f8f56ddc": "2026-11-25T06:20:35.365Z"
+    "b36721fd7b736969f8f56ddc": "2026-11-25T06:20:35.365Z",
+    "554e89f3b150314f7f46d32b": "2026-11-27T06:00:58.576Z",
+    "0cf88d91395f5d179f1a1df5": "2026-11-27T06:00:58.802Z",
+    "1c9862530350bd6673967440": "2026-11-27T06:00:59.019Z",
+    "6fc5a694524257f65acf2e1b": "2026-11-27T06:00:59.261Z",
+    "75952ab06ca012860eee2a30": "2026-11-27T06:00:59.533Z",
+    "ca4a6096741b150e82f2832a": "2026-11-27T06:00:59.748Z"
   }
 }
