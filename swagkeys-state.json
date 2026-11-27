@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T03:02:45.648Z",
+  "updatedAt": "2026-11-27T03:11:14.458Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T03:02:45.635Z",
+    "updatedAt": "2026-11-27T03:11:14.440Z",
     "sources": {
       "reservations": {
         "items": [
@@ -953,7 +953,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1446,7 +1446,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1454,13 +1454,7 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-27T03:02:45.558Z",
-      "instock": "2026-11-27T03:02:45.635Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-27T03:02:06.122Z",
-    "status": "2026-11-27T03:02:45.412Z"
-  }
+  "fallbackSince": {}
 }
