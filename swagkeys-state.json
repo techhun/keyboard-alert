@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T12:01:20.018Z",
+  "updatedAt": "2026-11-27T15:01:22.050Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T12:01:20.004Z",
+    "updatedAt": "2026-11-27T15:01:21.534Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1445,9 +1445,11 @@
     "closingsNotified": {
       "키캡|gmk cyl purple|2026-11-23|3": "2026-11-20",
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
-      "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
+      "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23",
+      "키보드|[raffle] aria80|2026-11-29|1": "2026-11-28"
     },
     "fallbackSince": {}
   },
+  "keepoddScheduleSeededAt": "2026-11-27T15:01:21.552Z",
   "fallbackSince": {}
 }
