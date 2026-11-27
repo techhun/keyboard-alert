@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T10:37:43.299Z",
+  "updatedAt": "2026-11-27T11:21:09.060Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T10:37:42.799Z",
+    "updatedAt": "2026-11-27T11:21:07.696Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1037,28 +1037,8 @@
               "Swagkeys"
             ],
             "status": "생산 중",
-            "eta": "26년 12월",
+            "eta": "26년 12월 말",
             "key": "키보드|트랜지션 87"
-          },
-          {
-            "product": "트랜지션 106 - 핑크/핑크/이온축",
-            "category": "키보드",
-            "brands": [
-              "Swagkeys"
-            ],
-            "status": "생산 중",
-            "eta": "26년 12월",
-            "key": "키보드|트랜지션 106 - 핑크/핑크/이온축"
-          },
-          {
-            "product": "트랜지션 106 - 핑크/핑크/화이트피치축",
-            "category": "키보드",
-            "brands": [
-              "Swagkeys"
-            ],
-            "status": "생산 중",
-            "eta": "27년 1분기",
-            "key": "키보드|트랜지션 106 - 핑크/핑크/화이트피치축"
           },
           {
             "product": "트랜지션 라이트 베어본 킷",
@@ -1066,7 +1046,7 @@
             "brands": [
               "Swagkeys"
             ],
-            "status": "생산 중",
+            "status": "판매중",
             "eta": "26년 12월",
             "key": "키보드|트랜지션 라이트 베어본 킷"
           },
@@ -1118,6 +1098,15 @@
             ],
             "eta": "26년 4분기~",
             "key": "키보드|60% 신제품 (gh60 기반)"
+          },
+          {
+            "product": "트랜지션 라이트(87) 알루미늄 상판",
+            "category": "키보드",
+            "brands": [
+              "Swagkeys"
+            ],
+            "eta": "27년",
+            "key": "키보드|트랜지션 라이트(87) 알루미늄 상판"
           },
           {
             "product": "트랜지션87 EC (무접점)",
@@ -1188,13 +1177,14 @@
             "key": "키보드|트랜지션87 불투명 컬러"
           },
           {
-            "product": "트랜지션 라이트(87) 알루미늄 상판",
+            "product": "트랜지션106",
             "category": "키보드",
             "brands": [
               "Swagkeys"
             ],
-            "eta": "27년",
-            "key": "키보드|트랜지션 라이트(87) 알루미늄 상판"
+            "status": "생산 중",
+            "eta": "26년 12월 말",
+            "key": "키보드|트랜지션106"
           },
           {
             "product": "세라키 핑크 크레이즈 각인",
@@ -1459,5 +1449,6 @@
     },
     "fallbackSince": {}
   },
+  "keepoddScheduleSeededAt": "2026-11-27T11:21:07.714Z",
   "fallbackSince": {}
 }
