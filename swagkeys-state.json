@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T11:21:09.060Z",
+  "updatedAt": "2026-11-27T11:40:57.205Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T11:21:07.696Z",
+    "updatedAt": "2026-11-27T11:40:57.187Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1439,7 +1439,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": true
+        "fresh": false
       }
     },
     "closingsNotified": {
@@ -1447,8 +1447,9 @@
       "키캡|gmk cyl purple|2026-11-23|1": "2026-11-22",
       "키캡|gmk cyl purple|2026-11-23|0": "2026-11-23"
     },
-    "fallbackSince": {}
+    "fallbackSince": {
+      "instock": "2026-11-27T11:40:57.187Z"
+    }
   },
-  "keepoddScheduleSeededAt": "2026-11-27T11:21:07.714Z",
   "fallbackSince": {}
 }
