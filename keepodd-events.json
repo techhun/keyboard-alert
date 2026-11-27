@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T06:00:59.748Z",
+  "updatedAt": "2026-11-27T06:50:33.437Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2933,6 +2933,22 @@
       "saleEnd": "2026-12-18",
       "status": "For Sale",
       "sourceUrl": "https://geonworks.kr/customhtml/release/release.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "1bf33320ad9d68c54474b78fa61139f1",
+      "source": "GEONWORKS",
+      "name": "Keyboy Advance 50%",
+      "eventType": "note_changed",
+      "before": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks.",
+      "after": "제품 포장 중 / Product packaging in progress",
+      "occurredAt": "2026-11-27T06:50:33.437Z",
+      "categoryHint": "키보드",
+      "saleStart": "2026-07-03",
+      "eta": "2026-12-31",
+      "status": "제작 중 / In progress",
+      "note": "제품 포장 중 / Product packaging in progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
   ]

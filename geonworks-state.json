@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-26T07:30:39.331Z",
+  "updatedAt": "2026-11-27T06:50:33.437Z",
   "rows": [
     {
       "product": "GEHIRN60 Barebone Kit",
@@ -111,6 +111,36 @@
       "manufacturer": "GMK",
       "status": "판매 중 / GB on sale",
       "update": "2026. 11. 25",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Pilot",
+      "gbStart": "2026. 11. 27",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 27",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Skidolcha R2",
+      "gbStart": "2026. 11. 27",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 27",
+      "note": "—"
+    },
+    {
+      "product": "GMK CYL Draco",
+      "gbStart": "2026. 11. 27",
+      "eta": "2027. 6. 30",
+      "type": "Keycap",
+      "manufacturer": "GMK",
+      "status": "판매 중 / GB on sale",
+      "update": "2026. 11. 27",
       "note": "—"
     },
     {
@@ -310,8 +340,8 @@
       "type": "Keyboard",
       "manufacturer": "",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 26",
-      "note": "벤더 주문 취합 중. 지온웍스 발주 완료 / Compiling vendor orders. Order placed with Geonworks."
+      "update": "2026. 11. 27",
+      "note": "제품 포장 중 / Product packaging in progress"
     },
     {
       "product": "GMK Finer Things R2",
@@ -600,7 +630,7 @@
       "type": "Keycap",
       "manufacturer": "GMK",
       "status": "제작 중 / In progress",
-      "update": "2026. 11. 25",
+      "update": "2026. 11. 27",
       "note": "—"
     }
   ],
@@ -633,6 +663,11 @@
     "46bfa8b448be2ed3dded0b3f": "2026-11-26T07:20:32.360Z",
     "390194e071576d5919175df7": "2026-11-26T07:20:32.646Z",
     "ba2411784e4ca691d1e6de6d": "2026-11-26T07:20:32.811Z",
-    "58cb66735352540d12425432": "2026-11-26T07:20:33.034Z"
+    "58cb66735352540d12425432": "2026-11-26T07:20:33.034Z",
+    "a09f35172a8254ed280273fc": "2026-11-27T06:50:32.709Z",
+    "51a9f9b0618e060ae37fb9bb": "2026-11-27T06:50:32.884Z",
+    "6504c54c163f9d745019044f": "2026-11-27T06:50:33.078Z",
+    "cc1d6d4df4be773218e28542": "2026-11-27T06:50:33.275Z",
+    "ca2a3d8c435e97e6eca0f47a": "2026-11-27T06:50:33.437Z"
   }
 }
