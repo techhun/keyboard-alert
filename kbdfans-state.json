@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T00:50:56.297Z",
+  "updatedAt": "2026-11-27T01:10:57.736Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -314,9 +314,9 @@
     {
       "category": "GMK",
       "product": "GMK CYL Draco",
-      "status": "Prototyping",
+      "status": "Group buy",
       "eta": "Q2 2027",
-      "progress": 0,
+      "progress": 5,
       "summary": "GB Date: Nov 27 - Dec 27, 2026",
       "latestUpdateDate": "2026-09-07",
       "latestUpdateTitle": "Graphite Project Progress",
@@ -833,6 +833,7 @@
     "3e6a5a51cd652439eca481fc": "2026-11-25T00:40:59.648Z",
     "fa23367462855291a9522e2d": "2026-11-25T00:41:01.090Z",
     "3c61cc0f045f9ece031fabb1": "2026-11-25T00:41:01.358Z",
-    "28728d6c4e767be9a2f52832": "2026-11-25T00:50:52.267Z"
+    "28728d6c4e767be9a2f52832": "2026-11-25T00:50:52.267Z",
+    "b8a5aee171fb2f8c5bd2c039": "2026-11-27T01:10:57.735Z"
   }
 }
