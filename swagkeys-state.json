@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T01:21:08.442Z",
+  "updatedAt": "2026-11-27T01:31:00.367Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -412,7 +412,7 @@
     },
     {
       "product": "Space Cadet",
-      "groupBuy": 50,
+      "groupBuy": 100,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -424,7 +424,7 @@
     },
     {
       "product": "Crimson Cadet",
-      "groupBuy": 50,
+      "groupBuy": 100,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T01:21:05.378Z",
+    "updatedAt": "2026-11-27T01:30:59.833Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1456,6 +1456,5 @@
     },
     "fallbackSince": {}
   },
-  "keepoddScheduleSeededAt": "2026-11-27T01:21:06.835Z",
   "fallbackSince": {}
 }
