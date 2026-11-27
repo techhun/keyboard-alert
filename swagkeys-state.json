@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T10:10:56.510Z",
+  "updatedAt": "2026-11-27T10:37:43.299Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T10:10:55.765Z",
+    "updatedAt": "2026-11-27T10:37:42.799Z",
     "sources": {
       "reservations": {
         "items": [
@@ -1006,9 +1006,9 @@
             "brands": [
               "Ticktype"
             ],
-            "status": "배송 중",
+            "status": "판매중",
             "eta": "26년 11월",
-            "key": "키보드|dp104#3cff75d5"
+            "key": "키보드|dp104#39ff75d5"
           },
           {
             "product": "DP104",
@@ -1016,9 +1016,19 @@
             "brands": [
               "Ticktype"
             ],
-            "status": "판매중",
+            "status": "배송 중",
             "eta": "26년 11월",
-            "key": "키보드|dp104#39ff75d5"
+            "key": "키보드|dp104#3cff75d5"
+          },
+          {
+            "product": "EVO80",
+            "category": "키보드",
+            "brands": [
+              "Ticktype"
+            ],
+            "status": "배송 중",
+            "eta": "27년 11월",
+            "key": "키보드|evo80#3faf75d5"
           },
           {
             "product": "트랜지션 87",
@@ -1096,9 +1106,9 @@
             "brands": [
               "Ticktype"
             ],
-            "status": "배송 중",
-            "eta": "27년 11월",
-            "key": "키보드|evo80#3faf75d5"
+            "status": "생산 중",
+            "eta": "27년 1월",
+            "key": "키보드|evo80#421f75d5"
           },
           {
             "product": "60% 신제품 (GH60 기반)",
@@ -1178,14 +1188,23 @@
             "key": "키보드|트랜지션87 불투명 컬러"
           },
           {
-            "product": "EVO80",
+            "product": "트랜지션 라이트(87) 알루미늄 상판",
             "category": "키보드",
             "brands": [
-              "Ticktype"
+              "Swagkeys"
             ],
-            "status": "생산 중",
-            "eta": "27년 1월",
-            "key": "키보드|evo80#421f75d5"
+            "eta": "27년",
+            "key": "키보드|트랜지션 라이트(87) 알루미늄 상판"
+          },
+          {
+            "product": "세라키 핑크 크레이즈 각인",
+            "category": "키캡",
+            "brands": [
+              "Cerakey"
+            ],
+            "status": "배송 중",
+            "eta": "26년 12월",
+            "key": "키캡|세라키 핑크 크레이즈 각인"
           },
           {
             "product": "Centifolia Rose",
@@ -1233,16 +1252,6 @@
             "status": "배송 중",
             "eta": "26년 12월",
             "key": "툴|배럴 스프링"
-          },
-          {
-            "product": "세라키 V4 화이트 각인",
-            "category": "키캡",
-            "brands": [
-              "Cerakey"
-            ],
-            "status": "배송 중",
-            "eta": "26년 11월",
-            "key": "키캡|세라키 v4 화이트 각인"
           },
           {
             "product": "레인스",
@@ -1300,16 +1309,6 @@
             "status": "생산 중",
             "eta": "26년 11월",
             "key": "스위치|he evo 유리축"
-          },
-          {
-            "product": "세라키 V2",
-            "category": "키캡",
-            "brands": [
-              "Cerakey"
-            ],
-            "status": "배송 중",
-            "eta": "26년 11월",
-            "key": "키캡|세라키 v2"
           },
           {
             "product": "레인",
@@ -1460,6 +1459,5 @@
     },
     "fallbackSince": {}
   },
-  "keepoddScheduleSeededAt": "2026-11-27T10:10:55.784Z",
   "fallbackSince": {}
 }
