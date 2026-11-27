@@ -31,7 +31,7 @@ final class SwagkeyScript {
             // block. Never mix these with the adjacent delivery-payment dropdown.
             const root = document.querySelector('#prod_options');
             const rows = [...document.querySelectorAll(
-              '#prod_options ._form_select_wrap .dropdown-item > a._requireOption'
+              '#prod_options ._form_select_wrap .dropdown-item a._requireOption'
             )];
             if (rows.length > 0) {
               // Product option pages can have unavailable combinations which do
@@ -48,33 +48,50 @@ final class SwagkeyScript {
               const options = [];
               const seen = new Set();
               for (const row of rows) {
-                const label = textOf(row.querySelector('.margin-bottom-lg')
-                  || row.querySelector('.option_name'));
-                const raw = textOf(row);
-                const onclick = row.getAttribute('onclick') || '';
-                const soldOut = /\\(품절\\)|품절|sold\\s*out/i.test(raw)
-                  || /return\\s+false\\s*;?/.test(onclick)
-                  || row.getAttribute('aria-disabled') === 'true'
-                  || row.hasAttribute('disabled')
-                  || !!row.querySelector('.opacity-40');
-                const call = onclick.match(
-                  /SITE_SHOP_DETAIL\\.selectRequireOption\\(\\s*['"]prod['"]\\s*,\\s*(\\d+)\\s*,/
-                );
-                const selectable = !!call && call[1] === urlIdx;
-                if (!label || seen.has(label) || (!soldOut && !selectable)) {
+                const item = row.closest('.dropdown-item');
+                if (!item) {
                   send({ ok: false, error: 'SWAGKEY_OPTION_DATA_UNVERIFIED', title,
                     pageUrl: location.href });
                   return 'UNVERIFIED';
                 }
-                seen.add(label);
+                // Imweb V2 moves the click handler to an ancestor of the anchor
+                // and the low-stock badge to a sibling inside the same row.
+                // Do not inspect handlers belonging to neighboring options.
+                const ancestry = [];
+                for (let node = row; node; node = node.parentElement) {
+                  ancestry.push(node);
+                  if (node === item) break;
+                }
+                const label = textOf(row.querySelector('.margin-bottom-lg')
+                  || row.querySelector('.option_name')
+                  || row.querySelector('span:not(.low-stock-nudge-option):not(.no-margin)'));
+                const raw = textOf(item);
+                const handlers = ancestry.map(node => node.getAttribute('onclick') || '');
+                const soldOut = /\\(품절\\)|품절|sold\\s*out/i.test(raw)
+                  || handlers.some(handler => /return\\s+false\\s*;?/.test(handler))
+                  || ancestry.some(node => node.getAttribute('aria-disabled') === 'true'
+                    || node.hasAttribute('disabled') || node.classList?.contains('opacity-40'))
+                  || !!item.querySelector('.opacity-40');
+                const calls = handlers.map(handler => handler.match(
+                  /SITE_SHOP_DETAIL\\.selectRequireOption\\(\\s*['"]prod['"]\\s*,\\s*(\\d+)\\s*,/
+                )).filter(Boolean);
+                const selectable = calls.length > 0 && calls.every(call => call[1] === urlIdx);
+                const id = 'imweb:' + label.normalize('NFKC');
+                if (!label || /^[\\d,]+\\s*원$/.test(label)
+                  || /\\d+\\s*개\\s*남았어요/.test(label) || seen.has(id)
+                  || (calls.length > 0 && !selectable) || (!soldOut && !selectable)) {
+                  send({ ok: false, error: 'SWAGKEY_OPTION_DATA_UNVERIFIED', title,
+                    pageUrl: location.href });
+                  return 'UNVERIFIED';
+                }
+                seen.add(id);
 
-                const badge = textOf(row.querySelector('.low-stock-nudge-option'));
+                const badge = textOf(item.querySelector('.low-stock-nudge-option'));
                 const match = badge.match(/([\\d,]+)\\s*개\\s*남았어요/);
-                const quantity = match ? Number(match[1].replace(/,/g, ''))
-                  : (soldOut ? 0 : null);
+                const quantity = soldOut ? 0 : (match ? Number(match[1].replace(/,/g, '')) : null);
                 const available = !soldOut && selectable && (quantity === null || quantity > 0);
                 options.push({
-                  id: 'imweb:' + label.normalize('NFKC'),
+                  id,
                   optionName1: label,
                   optionName2: null,
                   optionName3: null,
