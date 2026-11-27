@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T07:00:45.400Z",
+  "updatedAt": "2026-11-27T10:10:55.784Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2983,6 +2983,38 @@
       "status": "제작 중 / In progress",
       "note": "보강판 생산 오류로 27년 1분기 발송 예정 / Scheduled for dispatch in the first quarter of 27 due to a production error with the plates",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "43dc695ca3c85b55aea97c37fa1d5cb0",
+      "source": "SWAGKEYS",
+      "name": "FAUKWAA [MY-2K] 1999",
+      "eventType": "status_changed",
+      "before": "발송완료",
+      "after": "드랍 예정",
+      "occurredAt": "2026-11-27T10:10:55.784Z",
+      "categoryHint": "키보드",
+      "maker": "Matrix Lab",
+      "saleStart": "2026-05-26",
+      "saleEnd": "2026-05-28",
+      "status": "드랍 예정",
+      "note": "예약판매 2026-05-26 ~ 2026-05-28",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "46d50baae58531c3b60f410536e63beb",
+      "source": "SWAGKEYS",
+      "name": "Aria80",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T10:10:55.784Z",
+      "categoryHint": "키보드",
+      "maker": "Owlab",
+      "saleStart": "2026-11-27",
+      "saleEnd": "2026-11-29",
+      "status": "공제 중",
+      "note": "예약판매 2026-11-27 ~ 2026-11-29",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
       "sourceUrlType": "update"
     }
   ]

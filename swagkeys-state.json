@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T08:21:05.359Z",
+  "updatedAt": "2026-11-27T10:10:56.510Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T08:21:05.343Z",
+    "updatedAt": "2026-11-27T10:10:55.765Z",
     "sources": {
       "reservations": {
         "items": [
@@ -484,7 +484,7 @@
             "brands": [
               "Matrix Lab"
             ],
-            "status": "발송완료",
+            "status": "드랍 예정",
             "saleStart": "2026-05-26",
             "saleEnd": "2026-05-28",
             "eta": "26년 11월",
@@ -659,12 +659,16 @@
             "key": "키보드|[pre-order] neo80 cu"
           },
           {
-            "product": "Aria80",
+            "product": "[Raffle] Aria80",
             "category": "키보드",
             "brands": [
               "Owlab"
             ],
-            "key": "키보드|aria80"
+            "status": "공제 중",
+            "saleStart": "2026-11-27",
+            "saleEnd": "2026-11-29",
+            "eta": "26년 12월 말",
+            "key": "키보드|[raffle] aria80"
           },
           {
             "product": "Bowlttleship",
@@ -1456,5 +1460,6 @@
     },
     "fallbackSince": {}
   },
+  "keepoddScheduleSeededAt": "2026-11-27T10:10:55.784Z",
   "fallbackSince": {}
 }
