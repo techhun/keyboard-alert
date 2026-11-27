@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-27T06:50:33.437Z",
+  "updatedAt": "2026-11-27T07:00:45.400Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2948,6 +2948,40 @@
       "eta": "2026-12-31",
       "status": "제작 중 / In progress",
       "note": "제품 포장 중 / Product packaging in progress",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "5adc0d52a4b4735bb966027abd13285a",
+      "source": "GEONWORKS",
+      "name": "RF-8X",
+      "eventType": "eta_changed",
+      "before": "2026-12-31",
+      "after": "2027-03-31",
+      "occurredAt": "2026-11-27T07:00:45.400Z",
+      "categoryHint": "키보드",
+      "maker": "KTECHS",
+      "saleStart": "2026-05-26",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "note": "보강판 생산 오류로 27년 1분기 발송 예정 / Scheduled for dispatch in the first quarter of 27 due to a production error with the plates",
+      "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "5c4e756bf3ec4bf6d1f3365c470bb248",
+      "source": "GEONWORKS",
+      "name": "RF-8X",
+      "eventType": "note_changed",
+      "before": "Cnc 85% 완료. 플레이트 완성. pcb 생산 중 / CNC 85% complete. Plate completed. PCB in production.",
+      "after": "보강판 생산 오류로 27년 1분기 발송 예정 / Scheduled for dispatch in the first quarter of 27 due to a production error with the plates",
+      "occurredAt": "2026-11-27T07:00:45.400Z",
+      "categoryHint": "키보드",
+      "maker": "KTECHS",
+      "saleStart": "2026-05-26",
+      "eta": "2027-03-31",
+      "status": "제작 중 / In progress",
+      "note": "보강판 생산 오류로 27년 1분기 발송 예정 / Scheduled for dispatch in the first quarter of 27 due to a production error with the plates",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
       "sourceUrlType": "update"
     }
