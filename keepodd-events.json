@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-26T06:50:28.640Z",
+  "updatedAt": "2026-11-27T01:21:08.442Z",
   "events": [
     {
       "id": "54d42acc56c41bf5f67f4d3cc0389da7",
@@ -2844,6 +2844,39 @@
       "status": "제작 중 / In progress",
       "note": "CASE 가공완료, 후처리 진행 중. PCB 양산 전 테스트 중 / CASE machining complete; post-processing in progress. Testing prior to PCB mass production.",
       "sourceUrl": "https://geonworks.kr/customhtml/GB_schedule.html",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "55d9072618b8e712f9d010cb81e376c6",
+      "source": "SWAGKEYS",
+      "name": "SWG Salmon",
+      "eventType": "status_changed",
+      "before": "배송 중",
+      "after": "판매중",
+      "occurredAt": "2026-11-27T01:21:06.835Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-10-13",
+      "saleEnd": "2026-10-16",
+      "status": "판매중",
+      "note": "예약판매 2026-10-13 ~ 2026-10-16",
+      "sourceUrl": "https://swagkeys.notion.site/35df75d536018082bac3f5697dd4bfd0",
+      "sourceUrlType": "update"
+    },
+    {
+      "id": "2ab12d4b178bae00125621685552ca5d",
+      "source": "SWAGKEYS",
+      "name": "SWG Koyo",
+      "eventType": "new_gb",
+      "occurredAt": "2026-11-27T01:21:08.442Z",
+      "categoryHint": "키캡",
+      "maker": "Swagkeys",
+      "saleStart": "2026-11-30",
+      "saleEnd": "2026-12-21",
+      "status": "Not started",
+      "note": "컬러매칭 Not started",
+      "quarter": "Q4",
+      "sourceUrl": "https://swagkeys.notion.site/3b5f75d536018064b051e6a663b41d35",
       "sourceUrlType": "update"
     }
   ]

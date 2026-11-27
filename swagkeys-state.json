@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-27T00:01:25.836Z",
+  "updatedAt": "2026-11-27T01:21:08.442Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -45,7 +45,6 @@
       "SWG Crimson Cadet",
       "SWG Forest Cadet",
       "SWG Nightshift",
-      "SWG Retroguardia",
       "SWG Moomin",
       "SWG Koyo",
       "SWG Meadow",
@@ -172,11 +171,6 @@
       "product": "SWG Nightshift",
       "saleStart": "2026-10-30",
       "saleEnd": "2026-11-13"
-    },
-    "retroguardia": {
-      "product": "SWG Retroguardia",
-      "saleStart": "2026-11-09",
-      "saleEnd": "2026-11-23"
     },
     "moomin": {
       "product": "SWG Moomin",
@@ -442,7 +436,7 @@
     },
     {
       "product": "Forest Cadet",
-      "groupBuy": 50,
+      "groupBuy": 100,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -454,7 +448,7 @@
     },
     {
       "product": "Nightshift",
-      "groupBuy": 50,
+      "groupBuy": 100,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -465,8 +459,8 @@
       "currentStatus": "생산 대기중 (Awaiting Production)"
     },
     {
-      "product": "Retroguardia",
-      "groupBuy": 50,
+      "product": "SWG Koyo",
+      "groupBuy": 0,
       "waitingProduction": 0,
       "inProduction": 0,
       "shipping": 0,
@@ -474,13 +468,13 @@
       "inStock": 0,
       "colorMatching": "Not started",
       "eta": "",
-      "currentStatus": "예약판매 진행중 (in GB)"
+      "currentStatus": "Not started"
     }
   ],
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-27T00:01:25.818Z",
+    "updatedAt": "2026-11-27T01:21:05.378Z",
     "sources": {
       "reservations": {
         "items": [
@@ -719,18 +713,6 @@
             "key": "키캡|swg cadet 4종"
           },
           {
-            "product": "SWG Retroguardia",
-            "category": "키캡",
-            "brands": [
-              "Swagkeys"
-            ],
-            "status": "생산 중",
-            "saleStart": "2026-11-09",
-            "saleEnd": "2026-11-23",
-            "eta": "27년 9월 말",
-            "key": "키캡|swg retroguardia"
-          },
-          {
             "product": "SWS Beige",
             "category": "키캡",
             "brands": [
@@ -784,7 +766,7 @@
             "brands": [
               "Swagkeys"
             ],
-            "status": "배송 중",
+            "status": "판매중",
             "saleStart": "2026-10-13",
             "saleEnd": "2026-10-16",
             "eta": "26년 11월 중순",
@@ -1474,5 +1456,6 @@
     },
     "fallbackSince": {}
   },
+  "keepoddScheduleSeededAt": "2026-11-27T01:21:06.835Z",
   "fallbackSince": {}
 }
