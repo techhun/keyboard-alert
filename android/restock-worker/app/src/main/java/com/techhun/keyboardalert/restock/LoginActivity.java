@@ -71,7 +71,7 @@ public class LoginActivity extends Activity {
         TextView close = new TextView(this);
         close.setText("닫기");
         close.setTextSize(15f);
-        close.setTextColor(Color.rgb(49, 130, 246));
+        close.setTextColor(getColor(R.color.restock_accent));
         close.setGravity(Gravity.CENTER_VERTICAL);
         close.setOnClickListener(v -> finish());
         Motion.press(close);

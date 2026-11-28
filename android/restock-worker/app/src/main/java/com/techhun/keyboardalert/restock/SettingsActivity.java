@@ -6,20 +6,26 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.View;
 import android.view.WindowInsets;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,30 +36,39 @@ import java.util.Date;
 import java.util.Locale;
 
 public class SettingsActivity extends Activity {
-    private static final int BG = Color.rgb(247, 248, 250);
-    private static final int WHITE = Color.WHITE;
-    private static final int TEXT = Color.rgb(25, 31, 40);
-    private static final int SUB = Color.rgb(139, 149, 161);
-    private static final int BLUE = Color.rgb(49, 130, 246);
-    private static final int BLUE_SOFT = Color.rgb(235, 244, 255);
-    private static final int FIELD = Color.rgb(242, 244, 246);
-    private static final int GREEN = Color.rgb(20, 180, 110);
-    private static final int GREEN_SOFT = Color.rgb(232, 249, 241);
     private static final int[] VALUES = {10, 15, 30, 60};
     private static final String[] LABELS = {"10초", "15초", "30초", "60초"};
     private static final int REQUEST_EXPORT = 9201;
     private static final int REQUEST_IMPORT = 9202;
 
+    private int BG;
+    private int WHITE;
+    private int TEXT;
+    private int SUB;
+    private int BLUE;
+    private int FIELD;
+    private int GREEN;
+    private int GREEN_SOFT;
+    private int RED;
+    private int WARN;
+    private int WARN_SOFT;
+    private int LINE;
+
     private TextView[] chips;
-    private TextView notificationStatus;
-    private TextView batteryStatus;
-    private TextView diagnosticStatus;
+    private View statusDot;
+    private TextView statusTitle;
+    private TextView statusCount;
+    private TextView statusDetail;
+    private TextView permissionChip;
+    private TextView batteryChip;
     private TextView lowStockValue;
+    private TextView diagnosticSummary;
     private int interval;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadTokens();
         interval = MonitorPrefs.intervalSeconds(this);
 
         ScrollView scroll = new ScrollView(this);
@@ -74,7 +89,8 @@ public class SettingsActivity extends Activity {
                 top = insets.getSystemWindowInsetTop();
                 bottom = insets.getSystemWindowInsetBottom();
             }
-            view.setPadding(dp(20), top + dp(10), dp(20), bottom + dp(24));
+            int side = Ui.dim(this, R.dimen.restock_screen_padding);
+            view.setPadding(side, top + dp(10), side, bottom + dp(24));
             return insets;
         });
         scroll.addView(root, new ScrollView.LayoutParams(
@@ -84,232 +100,410 @@ public class SettingsActivity extends Activity {
 
         LinearLayout header = new LinearLayout(this);
         header.setGravity(Gravity.CENTER_VERTICAL);
-        root.addView(header, matchWrap());
+        root.addView(header, Ui.matchWrap());
 
-        TextView back = text("‹", 34, TEXT, Typeface.NORMAL);
-        back.setGravity(Gravity.CENTER);
-        back.setPadding(0, 0, dp(14), 0);
+        ImageView back = new ImageView(this);
+        back.setImageResource(R.drawable.ic_chevron_left);
+        back.setColorFilter(TEXT);
+        back.setContentDescription("뒤로");
+        back.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        back.setPadding(dp(12), dp(12), dp(12), dp(12));
         back.setOnClickListener(v -> finish());
         Motion.press(back);
-        header.addView(back, new LinearLayout.LayoutParams(dp(40), dp(46)));
-        header.addView(text("설정", 24, TEXT, Typeface.BOLD));
+        LinearLayout.LayoutParams backLp = Ui.fixed(
+            Ui.dim(this, R.dimen.restock_touch_min),
+            Ui.dim(this, R.dimen.restock_touch_min)
+        );
+        backLp.leftMargin = -dp(12);
+        header.addView(back, backLp);
 
-        LinearLayout intervalCard = surface(20, 18);
-        LinearLayout.LayoutParams intervalLp = matchWrap();
-        intervalLp.topMargin = dp(22);
+        header.addView(Ui.text(this, "설정", R.dimen.restock_text_screen_title, TEXT, Typeface.BOLD));
+
+        LinearLayout statusCard = buildStatusCard();
+        LinearLayout.LayoutParams statusLp = Ui.matchWrap();
+        statusLp.topMargin = dp(18);
+        root.addView(statusCard, statusLp);
+
+        LinearLayout intervalCard = buildIntervalCard();
+        LinearLayout.LayoutParams intervalLp = Ui.matchWrap();
+        intervalLp.topMargin = dp(10);
         root.addView(intervalCard, intervalLp);
-        intervalCard.addView(text("조회 주기", 15, TEXT, Typeface.BOLD));
 
-        LinearLayout intervalRow = new LinearLayout(this);
-        intervalRow.setPadding(0, dp(12), 0, 0);
-        intervalCard.addView(intervalRow, matchWrap());
-        chips = new TextView[VALUES.length];
-        for (int i = 0; i < VALUES.length; i++) {
-            final int value = VALUES[i];
-            TextView chip = text(LABELS[i], 14, SUB, Typeface.BOLD);
-            chip.setGravity(Gravity.CENTER);
-            Motion.press(chip);
-            chip.setOnClickListener(v -> {
-                interval = value;
-                MonitorPrefs.prefs(this).edit().putInt(MonitorPrefs.KEY_INTERVAL, value).apply();
-                refreshChips();
-                Motion.selection(chip);
-            });
-            chips[i] = chip;
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(46), 1f);
-            if (i > 0) lp.leftMargin = dp(8);
-            intervalRow.addView(chip, lp);
-        }
-        refreshChips();
-
-        TextView intervalNote = text("알림 상품을 나눠서 확인하며, 요청 보호를 위해 실제 간격은 더 길어질 수 있어요.", 12, SUB, Typeface.NORMAL);
-        intervalNote.setPadding(0, dp(10), 0, 0);
-        intervalCard.addView(intervalNote);
-
-        LinearLayout lowStockCard = surface(20, 18);
-        LinearLayout.LayoutParams lowStockLp = matchWrap();
+        LinearLayout lowStockCard = buildLowStockCard();
+        LinearLayout.LayoutParams lowStockLp = Ui.matchWrap();
         lowStockLp.topMargin = dp(10);
         root.addView(lowStockCard, lowStockLp);
-        lowStockCard.addView(text("재고 부족 알림", 15, TEXT, Typeface.BOLD));
-        TextView lowStockNote = text(
-            "SmartStore 선택 옵션의 수량이 기준 이하로 줄면 알려줘요. SWAGKEY는 잔여 수량을 제공하지 않아요.",
-            12, SUB, Typeface.NORMAL
+
+        LinearLayout systemCard = buildSystemCard();
+        LinearLayout.LayoutParams systemLp = Ui.matchWrap();
+        systemLp.topMargin = dp(10);
+        root.addView(systemCard, systemLp);
+
+        LinearLayout diagnosticCard = buildDiagnosticCard();
+        LinearLayout.LayoutParams diagnosticLp = Ui.matchWrap();
+        diagnosticLp.topMargin = dp(10);
+        root.addView(diagnosticCard, diagnosticLp);
+
+        TextView version = Ui.text(
+            this,
+            "Restock " + versionName() + " (" + versionCode() + ")",
+            R.dimen.restock_text_caption,
+            SUB,
+            Typeface.NORMAL
         );
-        lowStockNote.setPadding(0, dp(8), 0, 0);
-        lowStockCard.addView(lowStockNote);
-        lowStockValue = actionButton("", BLUE, BLUE_SOFT);
-        lowStockValue.setText("기준 수량  " + MonitorPrefs.lowStockThreshold(this) + "개 이하");
-        LinearLayout.LayoutParams lowStockButtonLp = matchWrap();
-        lowStockButtonLp.topMargin = dp(12);
-        lowStockCard.addView(lowStockValue, lowStockButtonLp);
-        lowStockValue.setOnClickListener(v -> editLowStockThreshold());
+        version.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams versionLp = Ui.matchWrap();
+        versionLp.topMargin = dp(18);
+        root.addView(version, versionLp);
 
-        LinearLayout notificationCard = surface(20, 18);
-        LinearLayout.LayoutParams notificationLp = matchWrap();
-        notificationLp.topMargin = dp(10);
-        root.addView(notificationCard, notificationLp);
+        setContentView(scroll);
+        root.requestApplyInsets();
+        refreshStatusCard();
+        refreshDiagnosticStatus();
 
-        LinearLayout notificationHeader = new LinearLayout(this);
-        notificationHeader.setGravity(Gravity.CENTER_VERTICAL);
-        notificationCard.addView(notificationHeader, matchWrap());
-        notificationHeader.addView(text("알림 권한", 15, TEXT, Typeface.BOLD), new LinearLayout.LayoutParams(
+        Motion.enter(header, 0L);
+        Motion.enter(statusCard, 30L);
+        Motion.enter(intervalCard, 60L);
+        Motion.enter(lowStockCard, 85L);
+        Motion.enter(systemCard, 110L);
+        Motion.enter(diagnosticCard, 135L);
+        Motion.enter(version, 160L);
+    }
+
+    private void loadTokens() {
+        BG = Ui.color(this, R.color.restock_bg);
+        WHITE = Ui.color(this, R.color.restock_surface);
+        TEXT = Ui.color(this, R.color.restock_ink);
+        SUB = Ui.color(this, R.color.restock_ink_2);
+        BLUE = Ui.color(this, R.color.restock_accent);
+        FIELD = Ui.color(this, R.color.restock_field);
+        GREEN = Ui.color(this, R.color.restock_ok);
+        GREEN_SOFT = Ui.color(this, R.color.restock_ok_soft);
+        RED = Ui.color(this, R.color.restock_danger);
+        WARN = Ui.color(this, R.color.restock_warn);
+        WARN_SOFT = Ui.color(this, R.color.restock_warn_soft);
+        LINE = Ui.color(this, R.color.restock_line);
+    }
+
+    /** 감시 상태: 동작 여부 · 감시 개수 · 마지막 확인 · 권한/배터리 칩을 한 카드에 모은다. */
+    private LinearLayout buildStatusCard() {
+        LinearLayout card = Ui.surface(this);
+        card.setPadding(dp(16), dp(16), dp(16), dp(16));
+
+        LinearLayout topRow = new LinearLayout(this);
+        topRow.setGravity(Gravity.CENTER_VERTICAL);
+        card.addView(topRow, Ui.matchWrap());
+
+        statusDot = Ui.dot(this, GREEN, 8);
+        LinearLayout.LayoutParams dotLp = Ui.fixed(dp(8), dp(8));
+        dotLp.rightMargin = dp(8);
+        topRow.addView(statusDot, dotLp);
+
+        statusTitle = Ui.text(this, "", R.dimen.restock_text_card_title, TEXT, Typeface.BOLD);
+        topRow.addView(statusTitle, new LinearLayout.LayoutParams(
             0,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             1f
         ));
-        notificationStatus = text("", 12, SUB, Typeface.BOLD);
-        notificationStatus.setGravity(Gravity.CENTER);
-        notificationStatus.setPadding(dp(10), dp(5), dp(10), dp(5));
-        notificationHeader.addView(notificationStatus);
 
-        TextView notificationNote = text(
-            "재입고·재고 부족 알림을 받으려면 Android 알림 권한이 켜져 있어야 해요.",
-            12,
+        statusCount = Ui.text(this, "", R.dimen.restock_text_label, SUB, Typeface.NORMAL);
+        topRow.addView(statusCount);
+
+        statusDetail = Ui.text(this, "", R.dimen.restock_text_label, SUB, Typeface.NORMAL);
+        statusDetail.setSingleLine(true);
+        LinearLayout.LayoutParams detailLp = Ui.matchWrap();
+        detailLp.topMargin = dp(6);
+        card.addView(statusDetail, detailLp);
+
+        LinearLayout chipRow = new LinearLayout(this);
+        chipRow.setGravity(Gravity.CENTER_VERTICAL);
+        LinearLayout.LayoutParams chipRowLp = Ui.matchWrap();
+        chipRowLp.topMargin = dp(12);
+        card.addView(chipRow, chipRowLp);
+
+        permissionChip = buildPill("");
+        chipRow.addView(permissionChip);
+        batteryChip = buildPill("");
+        LinearLayout.LayoutParams batteryLp = Ui.wrapWrap();
+        batteryLp.leftMargin = dp(8);
+        chipRow.addView(batteryChip, batteryLp);
+
+        return card;
+    }
+
+    private TextView buildPill(String label) {
+        TextView pill = Ui.text(this, label, R.dimen.restock_text_caption, GREEN, Typeface.BOLD);
+        pill.setGravity(Gravity.CENTER);
+        pill.setPadding(dp(10), 0, dp(12), 0);
+        pill.setLayoutParams(new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            Ui.dim(this, R.dimen.restock_pill_height)
+        ));
+        return pill;
+    }
+
+    private LinearLayout buildIntervalCard() {
+        LinearLayout card = Ui.surface(this);
+        card.setPadding(dp(16), dp(16), dp(16), dp(16));
+        card.addView(
+            Ui.text(this, "조회 주기", R.dimen.restock_text_body, TEXT, Typeface.BOLD),
+            Ui.matchWrap()
+        );
+
+        LinearLayout row = new LinearLayout(this);
+        LinearLayout.LayoutParams rowLp = Ui.matchWrap();
+        rowLp.topMargin = dp(12);
+        card.addView(row, rowLp);
+
+        chips = new TextView[VALUES.length];
+        int chipHeight = Ui.dim(this, R.dimen.restock_chip_height);
+        int touch = Ui.dim(this, R.dimen.restock_touch_min);
+        for (int i = 0; i < VALUES.length; i++) {
+            final int value = VALUES[i];
+            FrameLayout box = new FrameLayout(this);
+            box.setMinimumHeight(touch);
+
+            TextView chip = Ui.text(this, LABELS[i], R.dimen.restock_text_body, SUB, Typeface.BOLD);
+            chip.setGravity(Gravity.CENTER);
+            box.addView(chip, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                chipHeight,
+                Gravity.CENTER
+            ));
+            box.setOnClickListener(v -> {
+                interval = value;
+                MonitorPrefs.prefs(this).edit().putInt(MonitorPrefs.KEY_INTERVAL, value).apply();
+                refreshChips();
+                refreshStatusCard();
+                Motion.selection(chip);
+            });
+            Motion.press(chip);
+            chips[i] = chip;
+
+            LinearLayout.LayoutParams boxLp = Ui.row(1f, touch);
+            if (i > 0) boxLp.leftMargin = dp(8);
+            row.addView(box, boxLp);
+        }
+        refreshChips();
+
+        TextView note = Ui.text(
+            this,
+            "알림 상품을 나눠서 확인하며, 요청 보호를 위해 실제 간격은 더 길어질 수 있어요.",
+            R.dimen.restock_text_label,
             SUB,
             Typeface.NORMAL
         );
-        notificationNote.setPadding(0, dp(10), 0, 0);
-        notificationCard.addView(notificationNote);
+        note.setLineSpacing(0f, 1.25f);
+        LinearLayout.LayoutParams noteLp = Ui.matchWrap();
+        noteLp.topMargin = dp(12);
+        card.addView(note, noteLp);
+        return card;
+    }
 
-        TextView notificationSettings = actionButton("알림 설정 열기", BLUE, BLUE_SOFT);
-        LinearLayout.LayoutParams notificationButtonLp = matchWrap();
-        notificationButtonLp.topMargin = dp(12);
-        notificationCard.addView(notificationSettings, notificationButtonLp);
-        notificationSettings.setOnClickListener(v -> {
+    private LinearLayout buildLowStockCard() {
+        LinearLayout card = Ui.surface(this);
+        card.setPadding(dp(16), dp(16), dp(16), dp(16));
+        card.addView(
+            Ui.text(this, "재고 부족 알림", R.dimen.restock_text_body, TEXT, Typeface.BOLD),
+            Ui.matchWrap()
+        );
+
+        TextView note = Ui.text(
+            this,
+            "SmartStore 선택 옵션 수량이 기준 이하로 줄면 알려줘요.\nSWAGKEY는 잔여 수량을 제공하지 않아요.",
+            R.dimen.restock_text_label,
+            SUB,
+            Typeface.NORMAL
+        );
+        note.setLineSpacing(0f, 1.3f);
+        LinearLayout.LayoutParams noteLp = Ui.matchWrap();
+        noteLp.topMargin = dp(6);
+        card.addView(note, noteLp);
+
+        LinearLayout.LayoutParams dividerLp = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            Math.max(1, dp(1))
+        );
+        dividerLp.topMargin = dp(12);
+        card.addView(Ui.hairline(this, LINE), dividerLp);
+
+        LinearLayout valueRow = new LinearLayout(this);
+        valueRow.setGravity(Gravity.CENTER_VERTICAL);
+        valueRow.setMinimumHeight(Ui.dim(this, R.dimen.restock_touch_min));
+        valueRow.setOnClickListener(v -> editLowStockThreshold());
+        Motion.press(valueRow);
+        card.addView(valueRow, Ui.matchWrap());
+
+        valueRow.addView(
+            Ui.text(this, "기준 수량", R.dimen.restock_text_body, TEXT, Typeface.NORMAL),
+            new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+        );
+
+        lowStockValue = Ui.text(
+            this,
+            MonitorPrefs.lowStockThreshold(this) + "개 이하",
+            R.dimen.restock_text_body,
+            BLUE,
+            Typeface.BOLD
+        );
+        valueRow.addView(lowStockValue);
+        valueRow.addView(chevron());
+        return card;
+    }
+
+    private LinearLayout buildSystemCard() {
+        LinearLayout card = Ui.surface(this);
+        card.setPadding(dp(16), dp(14), dp(16), dp(6));
+
+        TextView label = Ui.text(this, "시스템 설정", R.dimen.restock_text_label, SUB, Typeface.BOLD);
+        LinearLayout.LayoutParams labelLp = Ui.matchWrap();
+        labelLp.bottomMargin = dp(6);
+        card.addView(label, labelLp);
+
+        addSystemRow(card, "알림 설정 열기", v -> {
             try {
                 startActivity(NotificationAccess.settingsIntent(this));
             } catch (Exception ignored) {
                 toast("알림 설정을 열지 못했어요.");
             }
-        });
-
-        LinearLayout batteryCard = surface(20, 18);
-        LinearLayout.LayoutParams batteryLp = matchWrap();
-        batteryLp.topMargin = dp(10);
-        root.addView(batteryCard, batteryLp);
-
-        LinearLayout batteryHeader = new LinearLayout(this);
-        batteryHeader.setGravity(Gravity.CENTER_VERTICAL);
-        batteryCard.addView(batteryHeader, matchWrap());
-        batteryHeader.addView(text("백그라운드 실행", 15, TEXT, Typeface.BOLD), new LinearLayout.LayoutParams(
-            0,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            1f
-        ));
-        batteryStatus = text("", 12, SUB, Typeface.BOLD);
-        batteryStatus.setGravity(Gravity.CENTER);
-        batteryStatus.setPadding(dp(10), dp(5), dp(10), dp(5));
-        batteryHeader.addView(batteryStatus);
-
-        TextView batteryNote = text(
-            "장시간 감시가 중단되면 Android 앱 정보 > 배터리에서 '제한 없음'을 권장해요. 기기에 따라 메뉴 이름은 다를 수 있어요.",
-            12,
-            SUB,
-            Typeface.NORMAL
-        );
-        batteryNote.setPadding(0, dp(10), 0, 0);
-        batteryCard.addView(batteryNote);
-
-        TextView batterySettings = actionButton("앱 배터리 설정 열기", BLUE, BLUE_SOFT);
-        LinearLayout.LayoutParams batteryButtonLp = matchWrap();
-        batteryButtonLp.topMargin = dp(12);
-        batteryCard.addView(batterySettings, batteryButtonLp);
-        batterySettings.setOnClickListener(v -> {
+        }, false);
+        addSystemRow(card, "앱 배터리 설정 열기", v -> {
             try {
                 startActivity(BatteryAccess.settingsIntent(this));
             } catch (Exception ignored) {
                 toast("앱 설정을 열지 못했어요.");
             }
-        });
+        }, true);
+        addSystemRow(card, "설정 백업 · 복원", v -> showBackupDialog(), true);
+        return card;
+    }
 
-        LinearLayout diagnosticCard = surface(20, 18);
-        LinearLayout.LayoutParams diagnosticLp = matchWrap();
-        diagnosticLp.topMargin = dp(10);
-        root.addView(diagnosticCard, diagnosticLp);
+    private void addSystemRow(LinearLayout card, String label, View.OnClickListener listener, boolean divider) {
+        if (divider) {
+            card.addView(
+                Ui.hairline(this, LINE),
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Math.max(1, dp(1)))
+            );
+        }
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setMinimumHeight(Ui.dim(this, R.dimen.restock_list_row_height));
+        row.setOnClickListener(listener);
+        Motion.press(row);
+        card.addView(row, Ui.matchWrap());
 
-        LinearLayout diagnosticHeader = new LinearLayout(this);
-        diagnosticHeader.setGravity(Gravity.CENTER_VERTICAL);
-        diagnosticCard.addView(diagnosticHeader, matchWrap());
-        diagnosticHeader.addView(text("진단 로그", 15, TEXT, Typeface.BOLD), new LinearLayout.LayoutParams(
+        TextView text = Ui.text(this, label, R.dimen.restock_text_body, TEXT, Typeface.NORMAL);
+        row.addView(text, new LinearLayout.LayoutParams(
             0,
             LinearLayout.LayoutParams.WRAP_CONTENT,
             1f
         ));
-        diagnosticStatus = text("", 12, SUB, Typeface.BOLD);
-        diagnosticStatus.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
-        diagnosticHeader.addView(diagnosticStatus);
+        row.addView(chevron());
+    }
 
-        TextView diagnosticNote = text(
-            "최근 7일 이벤트와 누적 조회 성공/실패를 기기에만 저장해요. 로그 보기에서 전체 기록을 복사할 수 있어요. 로그인 쿠키·응답 본문·개인정보는 기록하지 않아요.",
-            12,
-            SUB,
-            Typeface.NORMAL
+    private LinearLayout buildDiagnosticCard() {
+        LinearLayout card = Ui.surface(this);
+        card.setPadding(dp(16), dp(14), dp(16), dp(14));
+
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setMinimumHeight(Ui.dim(this, R.dimen.restock_touch_min));
+        row.setOnClickListener(v -> showDiagnostics());
+        Motion.press(row);
+        card.addView(row, Ui.matchWrap());
+
+        row.addView(
+            Ui.text(this, "진단 로그", R.dimen.restock_text_body, TEXT, Typeface.BOLD),
+            new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         );
-        diagnosticNote.setPadding(0, dp(10), 0, 0);
-        diagnosticCard.addView(diagnosticNote);
 
-        LinearLayout diagnosticRow = new LinearLayout(this);
-        diagnosticRow.setPadding(0, dp(12), 0, 0);
-        diagnosticCard.addView(diagnosticRow, matchWrap());
+        diagnosticSummary = Ui.text(this, "", R.dimen.restock_text_label, SUB, Typeface.NORMAL);
+        row.addView(diagnosticSummary);
+        row.addView(chevron());
+        return card;
+    }
 
-        TextView viewDiagnostics = actionButton("로그 보기", BLUE, BLUE_SOFT);
-        viewDiagnostics.setOnClickListener(v -> showDiagnostics());
-        diagnosticRow.addView(viewDiagnostics, new LinearLayout.LayoutParams(0, dp(52), 1f));
+    private ImageView chevron() {
+        ImageView view = new ImageView(this);
+        view.setImageResource(R.drawable.ic_chevron_right);
+        view.setColorFilter(SUB);
+        view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        LinearLayout.LayoutParams lp = Ui.fixed(dp(20), dp(20));
+        lp.leftMargin = dp(6);
+        view.setLayoutParams(lp);
+        return view;
+    }
 
-        TextView clearDiagnostics = actionButton("로그 지우기", TEXT, FIELD);
-        clearDiagnostics.setOnClickListener(v -> confirmClearDiagnostics());
-        LinearLayout.LayoutParams clearDiagnosticsLp = new LinearLayout.LayoutParams(0, dp(52), 1f);
-        clearDiagnosticsLp.leftMargin = dp(8);
-        diagnosticRow.addView(clearDiagnostics, clearDiagnosticsLp);
+    private void refreshStatusCard() {
+        if (statusTitle == null) return;
+        JSONArray products = ProductStore.list(this);
+        int enabled = ProductStatus.enabledCount(products);
+        int failures = ProductStatus.failureCount(products);
+        long lastCheck = ProductStatus.latestCheck(products);
+        boolean allowed = NotificationAccess.isAllowed(this);
+        boolean restricted = BatteryAccess.isBackgroundRestricted(this);
+        boolean running = MonitorPrefs.prefs(this).getBoolean(MonitorPrefs.KEY_RUNNING, false);
 
-                LinearLayout backupCard = surface(20, 18);
-        LinearLayout.LayoutParams backupLp = matchWrap();
-        backupLp.topMargin = dp(10);
-        root.addView(backupCard, backupLp);
-        backupCard.addView(text("데이터 백업", 15, TEXT, Typeface.BOLD));
+        String title;
+        int titleColor;
+        int dotColor;
+        if (enabled <= 0) {
+            title = "감시 중지됨";
+            titleColor = SUB;
+            dotColor = Ui.color(this, R.color.restock_track_off);
+        } else if (!allowed) {
+            title = "알림 권한 필요";
+            titleColor = RED;
+            dotColor = RED;
+        } else if (!running) {
+            title = "감시 대기 중";
+            titleColor = WARN;
+            dotColor = WARN;
+        } else {
+            title = "정상 동작 중";
+            titleColor = TEXT;
+            dotColor = GREEN;
+        }
+        statusTitle.setText(title);
+        statusTitle.setTextColor(titleColor);
+        statusDot.setBackground(Ui.roundRect(this, dotColor, 4));
+        statusCount.setText("감시 중 " + enabled + "개");
 
-        TextView backupNote = text(
-            "등록한 상품, 선택 옵션, 알림 ON/OFF, 조회 주기와 재고 부족 기준을 JSON 파일로 보관할 수 있어요. 로그인 정보는 포함하지 않아요.",
-            12,
-            SUB,
-            Typeface.NORMAL
-        );
-        backupNote.setPadding(0, dp(8), 0, 0);
-        backupCard.addView(backupNote);
+        SpannableStringBuilder detail = new SpannableStringBuilder();
+        detail.append("마지막 확인 ")
+            .append(lastCheck > 0L
+                ? ProductStatus.relativeTime(lastCheck, System.currentTimeMillis())
+                : "기록 없음")
+            .append(" · 조회 주기 ")
+            .append(String.valueOf(MonitorPrefs.intervalSeconds(this)))
+            .append("초");
+        if (failures > 0) {
+            detail.append(" · ");
+            int start = detail.length();
+            detail.append("실패 ").append(String.valueOf(failures)).append("건");
+            detail.setSpan(
+                new ForegroundColorSpan(RED),
+                start,
+                detail.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+        statusDetail.setText(detail);
 
-        LinearLayout backupRow = new LinearLayout(this);
-        backupRow.setPadding(0, dp(12), 0, 0);
-        backupCard.addView(backupRow, matchWrap());
+        bindPill(permissionChip, allowed ? "알림 권한 허용됨" : "알림 권한 꺼짐", allowed);
+        bindPill(batteryChip, restricted ? "배터리 제한 있음" : "배터리 제한 없음", !restricted);
+    }
 
-        TextView export = actionButton("내보내기", BLUE, BLUE_SOFT);
-        export.setOnClickListener(v -> exportBackup());
-        backupRow.addView(export, new LinearLayout.LayoutParams(0, dp(52), 1f));
+    private void bindPill(TextView pill, String label, boolean good) {
+        if (pill == null) return;
+        pill.setText(label);
+        pill.setTextColor(good ? GREEN : WARN);
+        pill.setBackground(Ui.roundRect(this, good ? GREEN_SOFT : WARN_SOFT, 12));
+    }
 
-        TextView restore = actionButton("가져오기", TEXT, FIELD);
-        restore.setOnClickListener(v -> importBackup());
-        LinearLayout.LayoutParams restoreLp = new LinearLayout.LayoutParams(0, dp(52), 1f);
-        restoreLp.leftMargin = dp(8);
-        backupRow.addView(restore, restoreLp);
-
-        TextView version = text("버전  " + versionName(), 13, SUB, Typeface.NORMAL);
-        LinearLayout.LayoutParams versionLp = matchWrap();
-        versionLp.topMargin = dp(22);
-        root.addView(version, versionLp);
-
-        setContentView(scroll);
-        root.requestApplyInsets();
-        refreshNotificationStatus();
-        refreshBatteryStatus();
-        refreshDiagnosticStatus();
-
-        Motion.enter(header, 0L);
-        Motion.enter(intervalCard, 35L);
-        Motion.enter(lowStockCard, 50L);
-        Motion.enter(notificationCard, 70L);
-        Motion.enter(batteryCard, 105L);
-        Motion.enter(diagnosticCard, 140L);
-        Motion.enter(backupCard, 175L);
-        Motion.enter(version, 205L);
+    private void refreshDiagnosticStatus() {
+        if (diagnosticSummary == null) return;
+        diagnosticSummary.setText("최근 이벤트 " + DiagnosticLog.count(this) + "건");
     }
 
     private void editLowStockThreshold() {
@@ -321,7 +515,7 @@ public class SettingsActivity extends Activity {
         int padding = dp(24);
         LinearLayout container = new LinearLayout(this);
         container.setPadding(padding, dp(8), padding, 0);
-        container.addView(input, matchWrap());
+        container.addView(input, Ui.matchWrap());
         AlertDialog dialog = new AlertDialog.Builder(this)
             .setTitle("재고 부족 기준 수량")
             .setMessage("1~999개 중에서 설정해주세요.")
@@ -336,13 +530,24 @@ public class SettingsActivity extends Activity {
                 int previous = MonitorPrefs.lowStockThreshold(this);
                 MonitorPrefs.prefs(this).edit().putInt(MonitorPrefs.KEY_LOW_STOCK_THRESHOLD, value).apply();
                 if (value != previous) ProductStore.resetLowStockState(this);
-                lowStockValue.setText("기준 수량  " + value + "개 이하");
+                if (lowStockValue != null) lowStockValue.setText(value + "개 이하");
                 dialog.dismiss();
             } catch (NumberFormatException error) {
                 input.setError("1~999 사이 숫자를 입력해주세요.");
             }
         }));
         dialog.show();
+    }
+
+    private void showBackupDialog() {
+        new AlertDialog.Builder(this)
+            .setTitle("설정 백업 · 복원")
+            .setMessage("등록한 상품, 선택 옵션, 알림 ON/OFF, 조회 주기, 재고 부족 기준을 JSON 파일로 보관해요. 로그인 정보는 포함하지 않아요.")
+            .setItems(new String[]{"백업 파일로 내보내기", "백업 파일에서 가져오기"}, (dialog, which) -> {
+                if (which == 0) exportBackup();
+                else importBackup();
+            })
+            .show();
     }
 
     private void exportBackup() {
@@ -411,39 +616,13 @@ public class SettingsActivity extends Activity {
             interval = MonitorPrefs.intervalSeconds(this);
             refreshChips();
             if (lowStockValue != null) {
-                lowStockValue.setText("기준 수량  " + MonitorPrefs.lowStockThreshold(this) + "개 이하");
+                lowStockValue.setText(MonitorPrefs.lowStockThreshold(this) + "개 이하");
             }
+            refreshStatusCard();
             toast(count + "개 상품을 가져왔어요.");
         } catch (Exception ignored) {
             toast("Restock 백업 파일을 확인해주세요.");
         }
-    }
-
-    private void refreshNotificationStatus() {
-        if (notificationStatus == null) return;
-        boolean allowed = NotificationAccess.isAllowed(this);
-        String next = allowed ? "허용됨" : "꺼짐";
-        boolean changed = !next.contentEquals(notificationStatus.getText());
-        notificationStatus.setText(next);
-        notificationStatus.setTextColor(allowed ? GREEN : SUB);
-        notificationStatus.setBackground(roundRect(allowed ? GREEN_SOFT : FIELD, 12));
-        if (changed) Motion.valueChange(notificationStatus);
-    }
-
-    private void refreshBatteryStatus() {
-        if (batteryStatus == null) return;
-        boolean restricted = BatteryAccess.isBackgroundRestricted(this);
-        String next = restricted ? "제한됨" : "허용됨";
-        boolean changed = !next.contentEquals(batteryStatus.getText());
-        batteryStatus.setText(next);
-        batteryStatus.setTextColor(restricted ? SUB : GREEN);
-        batteryStatus.setBackground(roundRect(restricted ? FIELD : GREEN_SOFT, 12));
-        if (changed) Motion.valueChange(batteryStatus);
-    }
-
-    private void refreshDiagnosticStatus() {
-        if (diagnosticStatus == null) return;
-        diagnosticStatus.setText("이벤트 " + DiagnosticLog.count(this) + "건");
     }
 
     private void showDiagnostics() {
@@ -454,6 +633,7 @@ public class SettingsActivity extends Activity {
             .setTitle("Restock 진단 로그")
             .setMessage(message)
             .setNeutralButton("로그 복사", (dialog, which) -> copyDiagnostics())
+            .setNegativeButton("로그 지우기", (dialog, which) -> confirmClearDiagnostics())
             .setPositiveButton("닫기", null)
             .show();
     }
@@ -491,58 +671,27 @@ public class SettingsActivity extends Activity {
         }
     }
 
+    private long versionCode() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= 28) return info.getLongVersionCode();
+            return info.versionCode;
+        } catch (Exception ignored) {
+            return 0L;
+        }
+    }
+
     private void refreshChips() {
         if (chips == null) return;
         for (int i = 0; i < chips.length; i++) {
             boolean selected = VALUES[i] == interval;
-            chips[i].setTextColor(selected ? BLUE : SUB);
-            chips[i].setBackground(roundRect(selected ? BLUE_SOFT : FIELD, 12));
+            chips[i].setTextColor(selected ? WHITE : SUB);
+            chips[i].setBackground(Ui.roundRect(this, selected ? BLUE : FIELD, 10));
         }
     }
 
-    private TextView actionButton(String label, int color, int background) {
-        TextView view = text(label, 15, color, Typeface.BOLD);
-        view.setGravity(Gravity.CENTER);
-        view.setMinHeight(dp(54));
-        view.setPadding(dp(16), dp(13), dp(16), dp(13));
-        view.setBackground(roundRect(background, 14));
-        Motion.press(view);
-        return view;
-    }
-
-    private TextView text(String value, float size, int color, int style) {
-        TextView view = new TextView(this);
-        view.setText(value);
-        view.setTextSize(size);
-        view.setTextColor(color);
-        view.setTypeface(null, style);
-        return view;
-    }
-
-    private LinearLayout surface(int radius, int padding) {
-        LinearLayout view = new LinearLayout(this);
-        view.setOrientation(LinearLayout.VERTICAL);
-        view.setPadding(dp(padding), dp(padding), dp(padding), dp(padding));
-        view.setBackground(roundRect(WHITE, radius));
-        return view;
-    }
-
-    private GradientDrawable roundRect(int color, int radius) {
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(color);
-        drawable.setCornerRadius(dp(radius));
-        return drawable;
-    }
-
-    private LinearLayout.LayoutParams matchWrap() {
-        return new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-    }
-
     private int dp(int value) {
-        return Math.round(value * getResources().getDisplayMetrics().density);
+        return Ui.dp(this, value);
     }
 
     private void toast(String message) {
@@ -552,9 +701,9 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshNotificationStatus();
-        refreshBatteryStatus();
+        refreshStatusCard();
         refreshDiagnosticStatus();
+        refreshChips();
     }
 
     @Override
