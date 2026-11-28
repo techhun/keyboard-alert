@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-28T16:52:30.349Z",
+  "updatedAt": "2026-11-28T17:01:23.306Z",
   "roadmapLayoutVersion": 2,
   "gbStartsNotified": {
     "nightshift": "2026-10-30",
@@ -474,7 +474,7 @@
   "schedule": {
     "version": 1,
     "initialized": true,
-    "updatedAt": "2026-11-28T16:52:30.334Z",
+    "updatedAt": "2026-11-28T17:01:23.288Z",
     "sources": {
       "reservations": {
         "items": [
@@ -957,7 +957,7 @@
             "key": "키캡|swg neowell"
           }
         ],
-        "fresh": false
+        "fresh": true
       },
       "instock": {
         "items": [
@@ -1439,7 +1439,7 @@
             "key": "스위치|지음 v3"
           }
         ],
-        "fresh": false
+        "fresh": true
       }
     },
     "closingsNotified": {
@@ -1449,13 +1449,7 @@
       "키보드|[raffle] aria80|2026-11-29|1": "2026-11-28",
       "키보드|[raffle] aria80|2026-11-29|0": "2026-11-29"
     },
-    "fallbackSince": {
-      "reservations": "2026-11-28T16:52:30.259Z",
-      "instock": "2026-11-28T16:52:30.334Z"
-    }
+    "fallbackSince": {}
   },
-  "fallbackSince": {
-    "roadmap": "2026-11-28T16:51:50.753Z",
-    "status": "2026-11-28T16:52:30.065Z"
-  }
+  "fallbackSince": {}
 }
