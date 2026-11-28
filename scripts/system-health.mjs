@@ -124,15 +124,22 @@ function loadDegradedInfo(sourceKey) {
   if (sourceKey !== 'swagkeys') return { sources: [], since: '' };
   try {
     const parsed = JSON.parse(fs.readFileSync('swagkeys-state.json', 'utf8'));
-    const fallbackSince = parsed?.fallbackSince && typeof parsed.fallbackSince === 'object'
-      ? parsed.fallbackSince
-      : {};
-    const entries = Object.entries(fallbackSince)
-      .filter(([, value]) => Number.isFinite(Date.parse(value)));
-    entries.sort((a, b) => Date.parse(a[1]) - Date.parse(b[1]));
+    const fallbackEntries = (value) => value && typeof value === 'object' && !Array.isArray(value)
+      ? Object.entries(value)
+      : [];
+    // Roadmap/status and reservation/stock tables keep separate fallback clocks.
+    const entries = [
+      ...fallbackEntries(parsed?.fallbackSince),
+      ...fallbackEntries(parsed?.schedule?.fallbackSince)
+    ];
+    const timestamp = (value) => typeof value === 'string' && Number.isFinite(Date.parse(value))
+      ? Date.parse(value)
+      : Infinity;
+    entries.sort((a, b) => timestamp(a[1]) - timestamp(b[1]));
     return {
-      sources: entries.map(([key]) => key),
-      since: entries[0]?.[1] || ''
+      // Even a malformed timestamp must not turn an active fallback into a recovery.
+      sources: [...new Set(entries.map(([key]) => key))],
+      since: entries.find(([, value]) => Number.isFinite(timestamp(value)))?.[1] || ''
     };
   } catch {
     return { sources: [], since: '' };
@@ -152,9 +159,13 @@ async function transition(group, sourceKey, status, label, detail = '') {
   const pickleReported = PICKLE_REPORTED_SOURCES.has(sourceKey);
   const canAlert = Boolean(DISCORD_WEBHOOK_URL) && !pickleReported;
 
+  // A successful checker exit may still mean it used retained data. Classify
+  // both sets of fallback sources here, before any failure/recovery transition.
+  const degraded = status !== 'fail' ? loadDegradedInfo(sourceKey) : { sources: [], since: '' };
+  if (status === 'ok' && degraded.sources.length) status = 'degraded';
+
   if (status === 'degraded') {
-    const degraded = loadDegradedInfo(sourceKey);
-    const degradedSince = previous.degradedSince || degraded.since || now;
+    const degradedSince = degraded.since || previous.degradedSince || now;
     const fallbackSources = degraded.sources.length
       ? degraded.sources
       : Array.isArray(previous.fallbackSources) ? previous.fallbackSources : [];
