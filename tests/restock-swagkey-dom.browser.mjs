@@ -9,6 +9,7 @@ const source = readFileSync(new URL(
 const script = source.split('static final String SCRIPT = """')[1]
   .split('""";')[0].replaceAll('\\\\', '\\');
 const legacy = readFileSync(new URL('./fixtures/restock-swagkey-1228-20261113.html', import.meta.url), 'utf8');
+const capturedV2 = readFileSync(new URL('./fixtures/restock-swagkey-1228-v2-20261128.html', import.meta.url), 'utf8');
 const url = 'https://www.swagkey.kr/227/?idx=1228';
 let browser;
 before(async () => {
@@ -80,6 +81,15 @@ test('V2 reported DOM layout: four available, six sold out and three low-stock b
     variants.map(([name,available,qty]) => [name,available,available ? qty : 0]));
   assert.deepEqual(result.options.map(x => x.id), variants.map(([name]) => 'imweb:' + name));
   assert.equal(result.options.some(x => /선결제|착불/.test(x.optionName1)), false);
+});
+
+test('actual 2026-11-28 captured V2 DOM: all ten options and stable IDs', async () => {
+  const result = await parse(capturedV2);
+  assert.equal(result.ok, true);
+  assert.equal(result.source, 'SWAGKEY_DOM');
+  assert.equal(result.options.length, 10);
+  assert.deepEqual(result.options.map(x => [x.id, x.optionName1, x.available, x.stockQuantity]),
+    variants.map(([name, available, qty]) => ['imweb:' + name, name, available, available ? qty : 0]));
 });
 
 test('V2 rejects foreign product and unverified click handlers; no default fallback', async () => {

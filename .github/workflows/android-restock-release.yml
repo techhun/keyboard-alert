@@ -15,6 +15,7 @@ on:
       - 'tests/restock-swagkey-options.test.mjs'
       - 'tests/restock-swagkey-dom.browser.mjs'
       - 'tests/fixtures/restock-swagkey-1228-20261113.html'
+      - 'tests/fixtures/restock-swagkey-1228-v2-20261128.html'
       - '.github/workflows/android-restock-release.yml'
 
 permissions:
