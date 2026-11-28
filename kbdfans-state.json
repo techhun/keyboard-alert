@@ -1,7 +1,7 @@
 {
   "version": 1,
   "initialized": true,
-  "updatedAt": "2026-11-28T03:51:07.721Z",
+  "updatedAt": "2026-11-28T05:41:08.484Z",
   "rows": [
     {
       "category": "KEYBOARDS",
@@ -416,10 +416,10 @@
       "status": "In progress",
       "eta": "TBD",
       "progress": 0,
-      "summary": "Interest Survey Stage",
+      "summary": "Interest Survey Stage GMK CYL Death Knight \"The Pact is sealed!\" Inspired by the death knight hero class from W*rcr*ft MMORPG and its digital collectible card variant The primary colors of this set, attributing death knight’s characteristics, are: Dark scarlet, grey and dark blue, while the red, blue and green each represent DK class’ primary runes: ♥ Blood, ❖ frost and ✦ unholy. For the modifier legends, I opted to choose a full icon mods, which I think compliments the theme visually and aesthetically, with or without the novelties.",
       "latestUpdateDate": "2026-07-13",
       "latestUpdateTitle": "Graphite Project Progress",
-      "latestUpdateBody": "Interest Survey Stage"
+      "latestUpdateBody": "Interest Survey Stage GMK CYL Death Knight \"The Pact is sealed!\" Inspired by the death knight hero class from W*rcr*ft MMORPG and its digital collectible card variant The primary colors of this set, attributing death knight’s characteristics, are: Dark scarlet, grey and dark blue, while the red, blue and green each represent DK class’ primary runes: ♥ Blood, ❖ frost and ✦ unholy. For the modifier legends, I opted to choose a full icon mods, which I think compliments the theme visually and aesthetically, with or without the novelties."
     },
     {
       "category": "GMK",
@@ -648,6 +648,7 @@
     "3c61cc0f045f9ece031fabb1": "2026-11-25T00:41:01.358Z",
     "28728d6c4e767be9a2f52832": "2026-11-25T00:50:52.267Z",
     "b8a5aee171fb2f8c5bd2c039": "2026-11-27T01:10:57.735Z",
-    "7f30e87cc33cd5f90eb919fa": "2026-11-28T03:51:07.721Z"
+    "7f30e87cc33cd5f90eb919fa": "2026-11-28T03:51:07.721Z",
+    "5ba8416fe6bd6ee3c5120942": "2026-11-28T05:41:08.483Z"
   }
 }
