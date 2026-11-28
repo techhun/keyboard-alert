@@ -8,6 +8,9 @@ on:
       - 'tests/restock-inventory-status.test.mjs'
       - 'tests/restock-page-capture.test.mjs'
       - 'tests/restock-swagkey-options.test.mjs'
+      - 'tests/restock-swagkey-dom.browser.mjs'
+      - 'tests/fixtures/restock-swagkey-1228-20261113.html'
+      - 'tests/fixtures/restock-swagkey-1228-v2-20261128.html'
       - '.github/workflows/android-restock-worker.yml'
 
 jobs:
@@ -37,6 +40,16 @@ jobs:
 
       - name: Verify SmartStore inventory status behavior
         run: node --test ../../tests/restock-inventory-status.test.mjs ../../tests/restock-page-capture.test.mjs ../../tests/restock-swagkey-options.test.mjs
+
+      - name: Install locked browser-test dependencies
+        working-directory: .
+        run: npm ci --ignore-scripts
+
+      - name: Verify SWAGKEY DOM in Chromium (offline fixtures)
+        working-directory: .
+        env:
+          RESTOCK_BROWSER_CHANNEL: chrome
+        run: node --test tests/restock-swagkey-dom.browser.mjs
 
       - name: Test, lint and build debug APK
         run: gradle :app:testDebugUnitTest :app:lintDebug :app:assembleDebug --stacktrace

@@ -246,3 +246,13 @@ OUTOFSTOCK 회귀 검증: 저장소 루트에서 `node --test tests/restock-inve
 - 다른 사이트 SmartStore, 모든 10~60초 감시 주기, 429/204 처리, 알림 및 사용자 저장 데이터는 변경하지 않았습니다. 페이지 구조가 변경되면 `STATE_UNKNOWN` 또는 `SWAGKEY_OPTION_DATA_UNVERIFIED`로 안전하게 중단합니다.
 - 테스트: 실제 사용자 보고 상품의 옵션 10개·품절 5개·잔여수량·누락 조합 제외, 재입고 전후 ID 유지, 잘못된 옵션 표시 감지, 무옵션 상품 유지. 실제 기기 Smoke Test는 별도 확인이 필요합니다.
 - 롤백: v0.14.46 소스로 versionCode 증가 재빌드, DB 마이그레이션 없음.
+
+
+### v0.14.48 — SWAGKEY Imweb DOM compatibility hotfix
+
+- Support both direct option anchors and nested V2 anchors, scoped ancestor click handlers and row-local stock badges. Keep existing NFKC option IDs, no-option behavior, failure handling and SmartStore policy. No partial endpoint polling change.
+- Browser regression: historical public HTML captured in `7b18d2c` (styles removed) and V2 fixture reconstructed from the 2026-11-28 Pickle DOM report. Chromium tests use only local fixtures, without shop requests; fresh live DOM / Android device tests remain required.
+- Run row-level tests with the existing Node test command. Browser tests: `npm ci --ignore-scripts`, `npx playwright install chromium`, `node --test tests/restock-swagkey-dom.browser.mjs` (CI uses installed Chrome via `RESTOCK_BROWSER_CHANNEL=chrome`).
+- Rollback: rebuild prior v0.14.47 source with a higher versionCode if needed; no data migration. Prior v0.14.47 has the known SWAGKEY nested DOM bug.
+
+- Independent live verification (Pickle, 2026-11-28): v0.14.47 reproduced STATE_UNKNOWN; v0.14.48 parsed all ten options (4 available, 6 sold out) on the same DOM. The captured V2 product-option nodes are now also preserved in `tests/fixtures/restock-swagkey-1228-v2-20261128.html`; normalized DOM length 4821 and djb2 1378437156 match the supplied evidence. Both reconstructed edge cases and the real capture are covered by offline Chromium regression.

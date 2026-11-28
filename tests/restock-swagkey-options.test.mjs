@@ -22,6 +22,7 @@ function row(label, { soldOut = false, quantity = null, product = 1228,
       return null;
     },
     hasAttribute: () => false,
+    closest(selector) { return selector === '.dropdown-item' ? this : null; },
     querySelector(selector) {
       if (selector === '.margin-bottom-lg') return { textContent: label };
       if (selector === '.option_name') return null;
@@ -54,7 +55,7 @@ function run(rows, { hasOptionHeader = true, idx = 1228, host = 'www.swagkey.kr'
         return null;
       },
       querySelectorAll(selector) {
-        if (selector === '#prod_options ._form_select_wrap .dropdown-item > a._requireOption')
+        if (selector === '#prod_options ._form_select_wrap .dropdown-item a._requireOption')
           return rows;
         if (selector.startsWith('button, a,') && noOptionBuy)
           return [{ innerText: '구매하기', disabled: false, getAttribute: () => null }];
@@ -76,11 +77,11 @@ const BLACK_WKL = row('Black / WKL', {soldOut:true});
 const BLACK_HHKB = row('Black / HHKB', {soldOut:true});
 const GREY_WK = row('Grey / WK', {quantity:2});
 const GREY_HHKB = row('Grey / HHKB', {quantity:1});
-const LIVE_FIXTURE = [CHAMPAGNE_WK,CHAMPAGNE_WKL,CHAMPAGNE_HHKB,
+const LEGACY_ROW_MOCKS = [CHAMPAGNE_WK,CHAMPAGNE_WKL,CHAMPAGNE_HHKB,
   SILVER_WK,SILVER_WKL,SILVER_HHKB,BLACK_WKL,BLACK_HHKB,GREY_WK,GREY_HHKB];
 
-test('JJW Integral: the ten real variant combinations include sold-out options', () => {
-  const result = run(LIVE_FIXTURE);
+test('JJW Integral: legacy row mocks cover ten variant combinations', () => {
+  const result = run(LEGACY_ROW_MOCKS);
   assert.equal(result.ok, true);
   assert.equal(result.source, 'SWAGKEY_DOM');
   assert.equal(result.options.length, 10);
@@ -133,7 +134,13 @@ test('genuine no-option product preserves the prior single-item fallback', () =>
 });
 
 test('rejects untrusted hosts even with a valid product page fixture', () => {
-  const result=run(LIVE_FIXTURE,{host:'fake-swagkey.example'});
+  const result=run(LEGACY_ROW_MOCKS,{host:'fake-swagkey.example'});
   assert.equal(result.ok, false);
   assert.equal(result.error, 'UNTRUSTED_HOST');
+});
+
+test('normalized identifiers cannot collide', () => {
+  const result = run([row('Ａ / WK'), row('A / WK')]);
+  assert.equal(result.ok, false);
+  assert.equal(result.error, 'SWAGKEY_OPTION_DATA_UNVERIFIED');
 });
